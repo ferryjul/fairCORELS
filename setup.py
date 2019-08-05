@@ -21,7 +21,7 @@ def install(gmp):
 
     version = '1.4'
 
-    pyx_file = 'fairules/_corels.pyx'
+    pyx_file = 'fairules/_corels.cpp'
 
     source_dir = 'fairules/src/corels/src/'
     sources = ['utils.cpp', 'rulelib.cpp', 'run.cpp', 'pmap.cpp', 
