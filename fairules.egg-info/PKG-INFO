@@ -1,0 +1,21 @@
+Metadata-Version: 1.2
+Name: fairules
+Version: 1.4
+Summary: FairCORELS, a modified version of CORELS to build fair and interpretable models
+Home-page: https://github.com/aivodji/fairules
+Author: Elaine Angelino, Nicholas Larus-Stone, Hongyu Yang, Cythnia Rudin, Vassilios Kaxiras, Margo Seltzer, Ulrich Aïvodji, Julien Ferry, Sébastien Gambs, Marie-José Huguet, Mohamed Siala
+Author-email: a.u.matchi@gmail.com
+License: GNU General Public License v3 (GPLv3)
+Download-URL: https://github.com/aivodji/fairules/archive/v1.4.tar.gz
+Description: Welcome to FairCorels, a Python library for learning fair and interpretable models
+        using the Certifiably Optimal RulE ListS (CORELS) algorithm! 
+        
+        FairCORELS uses Python, Numpy, GMP, and a C++ compiler.
+        GMP (GNU Multiple Precision library) is not required, but it is *highly recommended*, as it improves performance. 
+        If it is not installed, CORELS will run slower.
+        
+Platform: UNKNOWN
+Classifier: Programming Language :: C++
+Classifier: License :: OSI Approved :: GNU General Public License v3 (GPLv3)
+Classifier: Operating System :: OS Independent
+Requires-Python: >=2.7

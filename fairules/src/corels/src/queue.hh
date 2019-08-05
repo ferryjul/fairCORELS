@@ -167,16 +167,8 @@ extern void evaluate_children(CacheTree* tree,
 
 // confusion matrix and fairness metrics
 
-extern confusion_matrix_groups compute_confusion_matrix(tracking_vector<unsigned short, DataStruct::Tree> parent_prefix, 
-                                                CacheTree* tree, 
-                                                VECTOR parent_not_captured, 
-                                                VECTOR captured,
-                                                int maj_pos,
-                                                int min_pos,
-                                                int prediction, 
-                                                int default_prediction);
 
-extern confusion_matrix_groups compute_confusion_matrix_v2(VECTOR parent_prefix_predictions,
+extern confusion_matrix_groups compute_confusion_matrix(VECTOR parent_prefix_predictions,
                                                 CacheTree* tree,
                                                 VECTOR parent_not_captured, 
                                                 VECTOR captured, 

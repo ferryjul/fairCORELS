@@ -12,191 +12,10 @@ Queue::~Queue() {
 }
 
 /* Computes confusion matrices for both groups */
-confusion_matrix_groups compute_confusion_matrix(tracking_vector<unsigned short, DataStruct::Tree> parent_prefix, 
-                                                CacheTree* tree, 
-                                                VECTOR parent_not_captured, 
-                                                VECTOR captured,
-                                                int maj_pos,
-                                                int min_pos,
-                                                bool prediction, 
-                                                bool default_prediction){
-
-    // datastructures to store the results
-    confusion_matrix_groups cmg;
-    confusion_matrix cm_minority;
-    confusion_matrix cm_majority;
 
 
 
-    VECTOR not_captured;
-    int num_not_captured;
-    rule_vinit(tree->nsamples(), &not_captured);
-    rule_vandnot(not_captured, parent_not_captured, captured, tree->nsamples(), &num_not_captured);
-
-    VECTOR captured_it;
-    VECTOR not_captured_yet;
-    VECTOR captured_zeros;
-    VECTOR preds_prefix;
-    int nb;
-    int nb2;
-    int pm;
-    rule_vinit(tree->nsamples(), &captured_it);
-    rule_vinit(tree->nsamples(), &not_captured_yet);
-    rule_vinit(tree->nsamples(), &preds_prefix);
-    rule_vinit(tree->nsamples(), &captured_zeros);
-
-    // Initially not_captured_yet is full of ones
-    rule_vor(not_captured_yet, tree->label(0).truthtable, tree->label(1).truthtable, tree->nsamples(),&nb);
-    // Initially preds_prefix is full of zeros
-    rule_vand(preds_prefix, tree->label(0).truthtable, tree->label(1).truthtable, tree->nsamples(),&nb);
-    tracking_vector<unsigned short, DataStruct::Tree>::iterator it;
-
-    for (it = parent_prefix.begin(); it != parent_prefix.end(); it++) {
-        //printf("precedent rules : %s\n", tree->rule(*it).features);
-        rule_vand(captured_it, not_captured_yet, tree->rule(*it).truthtable, tree->nsamples(), &nb);
-        rule_vandnot(not_captured_yet, not_captured_yet, captured_it, tree->nsamples(), &pm);
-        rule_vand(captured_zeros, captured_it, tree->label(0).truthtable, tree->nsamples(), &nb2);
-        if(nb2 <= (nb - nb2)) { //then prediction is 1
-            rule_vor(preds_prefix, preds_prefix, captured_it, tree->nsamples(), &nb);
-        }
-    }
-
-    rule_vandnot(not_captured_yet, not_captured_yet, captured, tree->nsamples(), &pm);
-
-    if(default_prediction) { // else it is already OK
-        rule_vor(preds_prefix, preds_prefix, not_captured, tree->nsamples(), &pm);
-    }
-
-    if(prediction) { // else it is already OK
-        rule_vor(preds_prefix, preds_prefix, captured, tree->nsamples(), &pm);
-    }
-
-    // true positives, false negatives, true negatives, and false positives
-    VECTOR TP, FP, FN, TN;
-    rule_vinit(tree->nsamples(), &TP);
-    rule_vinit(tree->nsamples(), &FP);
-    rule_vinit(tree->nsamples(), &FN);
-    rule_vinit(tree->nsamples(), &TN);
-
-    rule_vand(TP, preds_prefix, tree->label(1).truthtable, tree->nsamples(), &pm);
-    rule_vand(FP, preds_prefix, tree->label(0).truthtable, tree->nsamples(), &pm);
-    rule_vandnot(FN, tree->label(1).truthtable, preds_prefix, tree->nsamples(), &pm);
-    rule_vandnot(TN, tree->label(0).truthtable, preds_prefix, tree->nsamples(), &pm);
-
-    // true positives, false negatives, true negatives, and false positives for majority group
-    VECTOR TP_maj, FP_maj, FN_maj, TN_maj;
-    rule_vinit(tree->nsamples(), &TP_maj);
-    rule_vinit(tree->nsamples(), &FP_maj);
-    rule_vinit(tree->nsamples(), &FN_maj);
-    rule_vinit(tree->nsamples(), &TN_maj);
-
-    mpz_and(TP_maj, TP, tree->rule(maj_pos).truthtable);
-    mpz_and(FP_maj, FP, tree->rule(maj_pos).truthtable);
-    mpz_and(FN_maj, FN, tree->rule(maj_pos).truthtable);
-    mpz_and(TN_maj, TN, tree->rule(maj_pos).truthtable);
-
-    // true positives, false negatives, true negatives, and false positives for minority group
-    VECTOR TP_min, FP_min, FN_min, TN_min;
-    rule_vinit(tree->nsamples(), &TP_min);
-    rule_vinit(tree->nsamples(), &FP_min);
-    rule_vinit(tree->nsamples(), &FN_min);
-    rule_vinit(tree->nsamples(), &TN_min);
-
-    mpz_and(TP_min, TP, tree->rule(min_pos).truthtable);
-    mpz_and(FP_min, FP, tree->rule(min_pos).truthtable);
-    mpz_and(FN_min, FN, tree->rule(min_pos).truthtable);
-    mpz_and(TN_min, TN, tree->rule(min_pos).truthtable);
-
-    // stats for majority
-    int nTP_maj = mpz_popcount(TP_maj);
-    int nFP_maj = mpz_popcount(FP_maj);
-
-    int nFN_maj = mpz_popcount(FN_maj);
-    int nTN_maj = mpz_popcount(TN_maj);
-
-    double nPPV_maj = (double) nTP_maj / max((nTP_maj + nFP_maj), 1);
-    double nTPR_maj = (double) nTP_maj / max((nTP_maj + nFN_maj), 1);
-
-    double nFDR_maj = (double) nFP_maj / max((nFP_maj + nTP_maj), 1);
-    double nFPR_maj = (double) nFP_maj / max((nFP_maj + nTN_maj), 1);
-
-    double nFOR_maj = (double) nFN_maj / max((nFN_maj + nTN_maj), 1);
-    double nFNR_maj = (double) nFN_maj / max((nFN_maj + nTP_maj), 1);
-
-    double nNPV_maj = (double) nTN_maj / max((nTN_maj + nFN_maj), 1);
-    double nTNR_maj = (double) nTN_maj / max((nTN_maj + nFP_maj), 1);
-
-    cm_majority.nTP = nTP_maj;
-    cm_majority.nFP = nFP_maj;
-    cm_majority.nFN = nFN_maj;
-    cm_majority.nTN = nTN_maj;
-
-    cm_majority.nPPV = nPPV_maj;
-    cm_majority.nTPR = nTPR_maj;
-    cm_majority.nFDR = nFDR_maj;
-    cm_majority.nFPR = nFPR_maj;
-    cm_majority.nFOR = nFOR_maj;
-    cm_majority.nFNR = nFNR_maj;
-    cm_majority.nNPV = nNPV_maj;
-    cm_majority.nTNR = nTNR_maj;
-
-
-    // stats for minority
-    int nTP_min = mpz_popcount(TP_min);
-    int nFP_min = mpz_popcount(FP_min);
-    int nFN_min = mpz_popcount(FN_min);
-    int nTN_min = mpz_popcount(TN_min);
-
-    double nPPV_min = (double) nTP_min / max((nTP_min + nFP_min), 1);
-    double nTPR_min = (double) nTP_min / max((nTP_min + nFN_min), 1);
-    double nFDR_min = (double) nFP_min / max((nFP_min + nTP_min), 1);
-    double nFPR_min = (double) nFP_min / max((nFP_min + nTN_min), 1);
-    double nFOR_min = (double) nFN_min / max((nFN_min + nTN_min), 1);
-    double nFNR_min = (double) nFN_min / max((nFN_min + nTP_min), 1);
-    double nNPV_min = (double) nTN_min / max((nTN_min + nFN_min), 1);
-    double nTNR_min = (double) nTN_min / max((nTN_min + nFP_min), 1);
-
-    cm_minority.nTP = nTP_min;
-    cm_minority.nFP = nFP_min;
-    cm_minority.nFN = nFN_min;
-    cm_minority.nTN = nTN_min;
-
-    cm_minority.nPPV = nPPV_min;
-    cm_minority.nTPR = nTPR_min;
-    cm_minority.nFDR = nFDR_min;
-    cm_minority.nFPR = nFPR_min;
-    cm_minority.nFOR = nFOR_min;
-    cm_minority.nFNR = nFNR_min;
-    cm_minority.nNPV = nNPV_min;
-    cm_minority.nTNR = nTNR_min;
-
-    cmg.majority = cm_majority;
-    cmg.minority = cm_minority;
-
-
-    rule_vfree(&not_captured);
-    rule_vfree(&captured_it);
-    rule_vfree(&not_captured_yet);
-    rule_vfree(&captured_zeros);
-    rule_vfree(&preds_prefix);
-    rule_vfree(&TP);
-    rule_vfree(&FP);
-    rule_vfree(&FN);
-    rule_vfree(&TN);
-    rule_vfree(&TP_maj);
-    rule_vfree(&FP_maj);
-    rule_vfree(&FN_maj);
-    rule_vfree(&TN_maj);
-    rule_vfree(&TP_min);
-    rule_vfree(&FP_min);
-    rule_vfree(&FN_min);
-    rule_vfree(&TN_min);
-
-    return cmg;
-}
-
-
-confusion_matrix_groups compute_confusion_matrix_v2(VECTOR parent_prefix_predictions,
+confusion_matrix_groups compute_confusion_matrix(VECTOR parent_prefix_predictions,
                                                 CacheTree* tree,
                                                 VECTOR parent_not_captured, 
                                                 VECTOR captured,  
@@ -354,16 +173,16 @@ fairness_metrics compute_fairness_metrics(confusion_matrix_groups cmg){
                                                 max((cmg.minority.nTP + cmg.minority.nFP + cmg.minority.nFN + cmg.minority.nTN),1);
                                 
                                 
-    metrics.statistical_parity =  fabs(statistical_parity_maj - statistical_parity_min);
+    metrics.statistical_parity =  abs(statistical_parity_maj - statistical_parity_min);
 
     // predictive parity
-    metrics.predictive_parity = fabs(cmg.majority.nPPV - cmg.minority.nPPV);
+    metrics.predictive_parity = abs(cmg.majority.nPPV - cmg.minority.nPPV);
 
     // predictive equality
-    metrics.predictive_equality = fabs(cmg.majority.nFPR - cmg.minority.nFPR);
+    metrics.predictive_equality = abs(cmg.majority.nFPR - cmg.minority.nFPR);
 
     // equal opportunity
-    metrics.equal_opportunity = fabs(cmg.majority.nFNR - cmg.minority.nFNR);
+    metrics.equal_opportunity = abs(cmg.majority.nFNR - cmg.minority.nFNR);
 
     return metrics;
 }
@@ -481,7 +300,7 @@ void evaluate_children(CacheTree* tree,
         double misc = (double)(num_not_captured - default_correct) / nsamples;
         double unfairness = 0.0;
 
-        confusion_matrix_groups cmg = compute_confusion_matrix_v2(preds_prefix, tree, parent_not_captured, captured,
+        confusion_matrix_groups cmg = compute_confusion_matrix(preds_prefix, tree, parent_not_captured, captured,
                                                                                  maj_pos, min_pos, prediction, default_prediction);
 
         fairness_metrics fm = compute_fairness_metrics(cmg);
