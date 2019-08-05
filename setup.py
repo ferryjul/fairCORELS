@@ -19,7 +19,7 @@ def install(gmp):
     with open('fairules/README.txt') as f:
         long_description = f.read()
 
-    version = '1.4'
+    version = '1.5'
 
     pyx_file = 'fairules/_corels.cpp'
 
@@ -77,7 +77,7 @@ def install(gmp):
         install_requires = [numpy_version],
         python_requires = '>=2.7',
         url = 'https://github.com/aivodji/fairules',
-        download_url = 'https://github.com/aivodji/fairules/archive/v1.4.tar.gz',
+        download_url = 'https://github.com/aivodji/fairules/archive/v1.5.tar.gz',
         cmdclass = {'build_ext': build_numpy},
         license = "GNU General Public License v3 (GPLv3)",
         classifiers = [
