@@ -184,6 +184,13 @@ fairness_metrics compute_fairness_metrics(confusion_matrix_groups cmg){
     // equal opportunity
     metrics.equal_opportunity = abs(cmg.majority.nFNR - cmg.minority.nFNR);
 
+    // equalized_odds
+    metrics.equalized_odds = abs(cmg.majority.nFNR - cmg.minority.nFNR) + abs(cmg.majority.nFPR - cmg.minority.nFPR);
+
+    // cond_use_acc_equality
+    metrics.cond_use_acc_equality = abs(cmg.majority.nPPV - cmg.minority.nPPV) + abs(cmg.majority.nNPV - cmg.minority.nNPV);
+
+
     return metrics;
 }
 
@@ -318,6 +325,12 @@ void evaluate_children(CacheTree* tree,
                 break;
             case 4:
                 unfairness = fm.equal_opportunity;
+                break;
+            case 5:
+                unfairness = fm.equalized_odds;
+                break;
+            case 6:
+                unfairness = fm.cond_use_acc_equality;
                 break;
             default:
                 break;

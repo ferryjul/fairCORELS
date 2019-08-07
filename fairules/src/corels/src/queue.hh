@@ -139,6 +139,8 @@ struct fairness_metrics {
     double predictive_parity;
     double predictive_equality;
     double equal_opportunity;
+    double equalized_odds;
+    double cond_use_acc_equality;
 };
 
 
