@@ -5,7 +5,7 @@
 *~
 build/
 dist/
-corels.egg-info/
+fairules.egg-info/
 __pycache__/
 *.pyd
 MANIFEST
