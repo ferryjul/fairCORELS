@@ -1,4 +1,4 @@
-from corels import *
+from fairules import *
 from metrics import ConfusionMatrix, Metric
 import pandas as pd
 
@@ -15,7 +15,7 @@ for idx, val in enumerate(features):
 #print(prediction)
 
 
-c = CorelsClassifier(n_iter=1000000, c=0.005, max_card=1, policy="lower_bound", verbosity=["progress"], beta=0.1, fairness=1, maj_pos=20, min_pos=19)
+c = CorelsClassifier(n_iter=10000000, c=0.0001, max_card=1, policy="bfs", verbosity=["loud"], fairness=1, maj_pos=19, min_pos=18, epsilon=0.95, mode=4)
 
 c.fit(X, y, features=features, prediction_name="(income:>50K)")
 
@@ -24,9 +24,9 @@ print("-------------------------- Learned rulelist -----------------------------
 print(c.rl())
 
 
-dataset = pd.read_csv("data/adult_test_binary.csv")
+dataset = pd.read_csv("data/adult_train_binary.csv")
 
-dataset["predictions"] = c.predict(X_test)
+dataset["predictions"] = c.predict(X)
 
 
 cm = ConfusionMatrix(dataset["gender:Female"], dataset["gender:Male"], dataset["predictions"], dataset["income"])

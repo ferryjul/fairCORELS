@@ -81,6 +81,27 @@ class CorelsClassifier:
     min_pos: int optional (default=2)
         The position of the rule that defined the minority group
 
+    mode: int optional (default=3)
+        Method used for the multi-ojective framework
+        1: weigted sum, 2: maximum fairness, 3: epsilon-constraint, 4: maximum accuracy
+
+    useUnfairnessLB: bool optional (default=False)
+        Use the unfairness lower bound
+    
+    epsilon: float optional (default=0.05)
+        max acceptable unfairness
+    
+    kbest: int optional (default=1)
+        Use the k-th best objective
+    
+    bfs_mode: int optinal (default=0)
+        BFS strategy
+        0: original CORELS, 1:FIFO, 2:objective_aware, 3:lower_bound, 4:random
+
+    random_state: int optional (default=42)
+        Random seed for randomized search
+
+
     References
     ----------
     Elaine Angelino, Nicholas Larus-Stone, Daniel Alabi, Margo Seltzer, and Cynthia Rudin.
@@ -104,7 +125,8 @@ class CorelsClassifier:
 
     def __init__(self, c=0.01, n_iter=10000, map_type="prefix", policy="lower_bound",
                  verbosity=["rulelist"], ablation=0, max_card=2, min_support=0.01,
-                 beta=0.0, fairness=1, maj_pos=1, min_pos=2):
+                 beta=0.0, fairness=1, maj_pos=1, min_pos=2,
+                 mode=4, useUnfairnessLB=False, epsilon=0.0, kbest=1, bfs_mode=0, random_state=42):
         self.c = c
         self.n_iter = n_iter
         self.map_type = map_type
@@ -118,6 +140,13 @@ class CorelsClassifier:
         self.fairness = fairness
         self.maj_pos = maj_pos
         self.min_pos = min_pos
+
+        self.mode = mode
+        self.useUnfairnessLB = useUnfairnessLB
+        self.epsilon = epsilon
+        self.kbest = kbest
+        self.bfs_mode = bfs_mode
+        self.random_state = random_state
 
     def fit(self, X, y, features=[], prediction_name="prediction"):
         """
@@ -181,6 +210,8 @@ class CorelsClassifier:
             raise TypeError("The position maj_pos of the rule that defined the majority group  must be an integer, got: " + str(type(self.maj_pos)))
         if not isinstance(self.min_pos, int):
             raise TypeError("The position min_pos of the rule that defined the minority group  must be an integer, got: " + str(type(self.min_pos)))
+
+        # Todo checking mode, ....
        
        
         label = check_array(y, ndim=1)
@@ -250,12 +281,12 @@ class CorelsClassifier:
         fr = fit_wrap_begin(samples.astype(np.uint8, copy=False),
                              labels.astype(np.uint8, copy=False), rl.features,
                              self.max_card, self.min_support, verbose, mine_verbose, minor_verbose,
-                             self.c, policy_id, map_id, self.ablation, False)
+                             self.c, policy_id, map_id, self.ablation, False, self.bfs_mode, self.random_state)
         
         if fr:
             early = False
             try:
-                while fit_wrap_loop(self.n_iter, self.beta, self.fairness, self.maj_pos, self.min_pos):
+                while fit_wrap_loop(self.n_iter, self.beta, self.fairness, self.maj_pos, self.min_pos, self.mode, self.useUnfairnessLB, self.epsilon, self.kbest):
                     pass
             except:
                 print("\nExiting early")
@@ -360,7 +391,13 @@ class CorelsClassifier:
             "beta": self.beta,
             "fairness": self.fairness,
             "maj_pos": self.maj_pos,
-            "min_pos": self.min_pos
+            "min_pos": self.min_pos,
+            "mode": self.mode,
+            "useUnfairnessLB": self.useUnfairnessLB,
+            "epsilon": self.epsilon,
+            "kbest": self.kbest,
+            "bfs_mode": self.bfs_mode,
+            "random_sate": self.random_state
         }
 
     def set_params(self, **params):

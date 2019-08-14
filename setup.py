@@ -3,7 +3,7 @@ from setuptools.command.build_ext import build_ext
 import os
 import sys
 
-#from Cython.Build import cythonize
+from Cython.Build import cythonize
 
 
 class build_numpy(build_ext):
@@ -19,9 +19,9 @@ def install(gmp):
     with open('fairules/README.txt') as f:
         long_description = f.read()
 
-    version = '1.6'
+    version = '1.7'
 
-    pyx_file = 'fairules/_corels.cpp'
+    pyx_file = 'fairules/_corels.pyx'
 
     source_dir = 'fairules/src/corels/src/'
     sources = ['utils.cpp', 'rulelib.cpp', 'run.cpp', 'pmap.cpp', 
@@ -57,7 +57,7 @@ def install(gmp):
                 extra_compile_args = cpp_args)
 
     extensions = [extension]
-    #extensions = cythonize(extensions)
+    extensions = cythonize(extensions)
 
     numpy_version = 'numpy'
 

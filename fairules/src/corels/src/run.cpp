@@ -16,7 +16,7 @@ static std::set<std::string> g_verbosity;
 
 int run_corels_begin(double c, char* vstring, int curiosity_policy,
                   int map_type, int ablation, int calculate_size, int nrules, int nlabels,
-                  int nsamples, rule_t* rules, rule_t* labels, rule_t* meta, int freq, char* log_fname, int BFSmode=0, int seed=10)
+                  int nsamples, rule_t* rules, rule_t* labels, rule_t* meta, int freq, char* log_fname, int BFSmode, int seed)
 {
     srand(seed);
     // Check arguments
@@ -160,7 +160,7 @@ int run_corels_begin(double c, char* vstring, int curiosity_policy,
 }
 
 int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int maj_pos, int min_pos, int mode, bool useUnfairnessLB,
-                        double min_fairness_acceptable, int kBest=1) {
+                        double min_fairness_acceptable, int kBest) {
     // Check arguments
     if(mode < 1 || mode > 4) {
         printf("Error : mode should be in {1, 2, 3, 4}\n");
