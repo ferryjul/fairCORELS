@@ -21,7 +21,7 @@ def install(gmp):
 
     version = '1.7'
 
-    pyx_file = 'fairules/_corels.pyx'
+    pyx_file = 'fairules/_corels.cpp'
 
     source_dir = 'fairules/src/corels/src/'
     sources = ['utils.cpp', 'rulelib.cpp', 'run.cpp', 'pmap.cpp', 
@@ -57,7 +57,7 @@ def install(gmp):
                 extra_compile_args = cpp_args)
 
     extensions = [extension]
-    extensions = cythonize(extensions)
+    #extensions = cythonize(extensions)
 
     numpy_version = 'numpy'
 
