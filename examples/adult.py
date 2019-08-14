@@ -15,7 +15,7 @@ for idx, val in enumerate(features):
 #print(prediction)
 
 
-c = CorelsClassifier(n_iter=10000000, c=0.0001, max_card=1, policy="bfs", verbosity=["loud"], fairness=1, maj_pos=19, min_pos=18, epsilon=0.95, mode=4)
+c = CorelsClassifier(n_iter=1000000, c=0.0045, max_card=1, policy="bfs", fairness=1, maj_pos=19, min_pos=18, epsilon=0.99, mode=3)
 
 c.fit(X, y, features=features, prediction_name="(income:>50K)")
 
