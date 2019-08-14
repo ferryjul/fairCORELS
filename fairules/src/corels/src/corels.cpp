@@ -13,7 +13,7 @@ Queue::~Queue() {
 
 /* Computes confusion matrices for both groups */
 
-
+int pushingTicket = 0;
 
 confusion_matrix_groups compute_confusion_matrix(VECTOR parent_prefix_predictions,
                                                 CacheTree* tree,
@@ -69,10 +69,18 @@ confusion_matrix_groups compute_confusion_matrix(VECTOR parent_prefix_prediction
     rule_vinit(tree->nsamples(), &TN_maj);
 
     int nTP_maj, nFP_maj, nFN_maj, nTN_maj;
-    rule_vand(TP_maj, TP, tree->rule(maj_pos).truthtable, nsamples, &nTP_maj);
-    rule_vand(FP_maj, FP, tree->rule(maj_pos).truthtable, nsamples, &nFP_maj);
-    rule_vand(FN_maj, FN, tree->rule(maj_pos).truthtable, nsamples, &nFN_maj);
-    rule_vand(TN_maj, TN, tree->rule(maj_pos).truthtable, nsamples, &nTN_maj);
+    if(maj_pos < 0) {
+        rule_vandnot(TP_maj, TP, tree->rule(min_pos).truthtable, nsamples, &nTP_maj);
+        rule_vandnot(FP_maj, FP, tree->rule(min_pos).truthtable, nsamples, &nFP_maj);
+        rule_vandnot(FN_maj, FN, tree->rule(min_pos).truthtable, nsamples, &nFN_maj);
+        rule_vandnot(TN_maj, TN, tree->rule(min_pos).truthtable, nsamples, &nTN_maj);
+    } else {
+        rule_vand(TP_maj, TP, tree->rule(maj_pos).truthtable, nsamples, &nTP_maj);
+        rule_vand(FP_maj, FP, tree->rule(maj_pos).truthtable, nsamples, &nFP_maj);
+        rule_vand(FN_maj, FN, tree->rule(maj_pos).truthtable, nsamples, &nFN_maj);
+        rule_vand(TN_maj, TN, tree->rule(maj_pos).truthtable, nsamples, &nTN_maj);
+    }
+    
 
     // true positives, false negatives, true negatives, and false positives for minority group
     VECTOR TP_min, FP_min, FN_min, TN_min;
@@ -142,6 +150,60 @@ confusion_matrix_groups compute_confusion_matrix(VECTOR parent_prefix_prediction
     cmg.majority = cm_majority;
     cmg.minority = cm_minority;
 
+    /* UPPER BOUND CALC */
+    // true positives, false negatives, true negatives, and false positives tables for minority group
+    VECTOR TP_min_ub, FN_min_ub, TN_min_ub, FP_min_ub;
+    rule_vinit(tree->nsamples(), &TP_min_ub);
+    rule_vinit(tree->nsamples(), &FN_min_ub);
+    rule_vinit(tree->nsamples(), &TN_min_ub);
+    rule_vinit(tree->nsamples(), &FP_min_ub);
+    VECTOR TP_maj_ub, FN_maj_ub, TN_maj_ub, FP_maj_ub;
+    rule_vinit(tree->nsamples(), &TP_maj_ub);
+    rule_vinit(tree->nsamples(), &FN_maj_ub);
+    rule_vinit(tree->nsamples(), &TN_maj_ub);
+    rule_vinit(tree->nsamples(), &FP_maj_ub);
+
+    int nTP_maj_ub;
+    int nFN_maj_ub;
+    int nTN_maj_ub;
+    int nFP_maj_ub;
+
+    rule_vandnot(TP_maj_ub, TP_maj, not_captured, tree->nsamples(), &nTP_maj_ub);
+    rule_vandnot(FN_maj_ub, FN_maj, not_captured, tree->nsamples(), &nFN_maj_ub);
+    rule_vandnot(FP_maj_ub, FP_maj, not_captured, tree->nsamples(), &nFP_maj_ub);
+    rule_vandnot(TN_maj_ub, TN_maj, not_captured, tree->nsamples(), &nTN_maj_ub);
+
+    int nTP_min_ub;
+    int nFN_min_ub;
+    int nTN_min_ub;
+    int nFP_min_ub;
+
+    rule_vandnot(TP_min_ub, TP_min, not_captured, tree->nsamples(), &nTP_min_ub);
+    rule_vandnot(FN_min_ub, FN_min, not_captured, tree->nsamples(), &nFN_min_ub);
+    rule_vandnot(FP_min_ub, FP_min, not_captured, tree->nsamples(), &nFP_min_ub);
+    rule_vandnot(TN_min_ub, TN_min, not_captured, tree->nsamples(), &nTN_min_ub);
+
+    int totMAJ = nTP_maj + nFN_maj + nFP_maj + nTN_maj;
+    int totMIN = nTP_min + nFN_min + nFP_min + nTN_min;
+
+    double B1 = (double)((double)(totMAJ - nFN_maj_ub - nTN_maj_ub)/(double)totMAJ);
+    double B2 = (double) ((double)(nTP_maj_ub + nFP_maj_ub)/(double)totMAJ);
+    double B3 = (double) ((double)(totMIN - nFN_min_ub - nTN_min_ub)/(double)totMIN);
+    double B4 = (double) ((double)(nTP_min_ub + nFP_min_ub)/(double)totMIN);
+    double min_val = 0;
+    if(B1 < B2 || B3 < B4) {
+        printf("problem !\n");
+        exit(-1);
+    }
+    if(B3 < B2) {
+        min_val = (B2-B3);
+    } else if(B4 > B1) {
+        min_val = (B4-B1);
+    } else {
+        min_val = 0;
+    }
+
+    cmg.unfairnessLB = min_val;
 
     rule_vfree(&not_captured);
     rule_vfree(&preds_prefix);
@@ -157,6 +219,14 @@ confusion_matrix_groups compute_confusion_matrix(VECTOR parent_prefix_prediction
     rule_vfree(&FP_min);
     rule_vfree(&FN_min);
     rule_vfree(&TN_min);
+    rule_vfree(&TP_maj_ub);
+    rule_vfree(&FN_maj_ub);
+    rule_vfree(&TN_maj_ub);
+    rule_vfree(&FP_maj_ub);
+    rule_vfree(&TP_min_ub);
+    rule_vfree(&FN_min_ub);
+    rule_vfree(&TN_min_ub);
+    rule_vfree(&FP_min_ub);
 
     return cmg;
 }
@@ -212,7 +282,10 @@ void evaluate_children(CacheTree* tree,
                         double beta,
                         int fairness,
                         int maj_pos,
-                        int min_pos){
+                        int min_pos,
+                        int mode,
+                        bool useUnfairnessLB,
+                        double min_fairness_acceptable){
 
     VECTOR captured, captured_zeros, not_captured, not_captured_zeros, not_captured_equivalent;
     int num_captured, c0, c1, captured_correct;
@@ -272,7 +345,7 @@ void evaluate_children(CacheTree* tree,
         // captured represents data captured by the new rule
         rule_vand(captured, parent_not_captured, tree->rule(i).truthtable, nsamples, &num_captured);
         // lower bound on antecedent support
-        if ((tree->ablation() != 1) && (num_captured < threshold)) 
+        if ((tree->ablation() != 1 && tree->ablation() != 3) && (num_captured < threshold))
             continue;
         rule_vand(captured_zeros, captured, tree->label(0).truthtable, nsamples, &c0);
         c1 = num_captured - c0;
@@ -284,7 +357,7 @@ void evaluate_children(CacheTree* tree,
             captured_correct = c1;
         }
         // lower bound on accurate antecedent support
-        if ((tree->ablation() != 1) && (captured_correct < threshold))
+        if ((tree->ablation() != 1 && tree->ablation() != 3) && (captured_correct < threshold))
             continue;
         // subtract off parent equivalent points bound because we want to use pure lower bound from parent
         lower_bound = parent_lower_bound - parent_equivalent_minority + (double)(num_captured - captured_correct) / nsamples + c;
@@ -319,40 +392,80 @@ void evaluate_children(CacheTree* tree,
                 break;
             case 2:
                 unfairness = fm.predictive_parity;
+                cmg.unfairnessLB = 0;
                 break;
             case 3:
                 unfairness = fm.predictive_equality;
+                cmg.unfairnessLB = 0;
                 break;
             case 4:
                 unfairness = fm.equal_opportunity;
+                cmg.unfairnessLB = 0;
                 break;
             case 5:
                 unfairness = fm.equalized_odds;
+                cmg.unfairnessLB = 0;
                 break;
             case 6:
                 unfairness = fm.cond_use_acc_equality;
+                cmg.unfairnessLB = 0;
                 break;
             default:
                 break;
         }
         
-        // compute the objective function
-        objective =  (1 - beta)*misc + beta*unfairness + lower_bound;
+        /* --- compute the objective function --- */
+        if(mode == 2) { // Max fairness
+            objective = unfairness + lower_bound;
+        } else if(mode == 3) { // Espilon Constraint mode
+            double misc = (double)(num_not_captured - default_correct) / nsamples;
+            objective =  misc + lower_bound;
+        } else if(mode == 4) { // Max accuracy 
+            double misc = (double)(num_not_captured - default_correct) / nsamples;
+            objective =  misc + lower_bound;
+        } else { // Regularized mode
+            double misc = (double)(num_not_captured - default_correct) / nsamples;
+            /* Distance-to-a-reference objective function */
+            /*double unfairnessObjective = 0.0;
+            double accuracyObjective = 1.0;
+            double distance = sqrt((beta*squareCalc(unfairness - unfairnessObjective)) + ((1-beta)*squareCalc((1 - misc) - accuracyObjective)));
+            objective = distance + lower_bound;*/
+            /* Weighted sum of objective functions */
+            //objective = distance + lower_bound;
+            objective =  (1-beta)*misc + beta*unfairness + lower_bound;
+        }
 
+        /* --- unfairness lower bound */
+        double fairnesslb = 1.0;
+        if(mode == 3) {
+            if(useUnfairnessLB) {
+                fairnesslb = 1 - cmg.unfairnessLB;
+            }
+        }
         logger->addToObjTime(time_diff(t2));
         logger->incObjNum();
         if (objective < tree->min_objective()) {
-            if (verbosity >= 1) {
+            if(mode == 3) { // if mode 3 we check if the constraint on fairness is satisfied
+                if((1-unfairness) > min_fairness_acceptable) {
+                    printf("min(objective): %1.5f -> %1.5f, length: %d, cache size: %zu\n",
+                    tree->min_objective(), objective, len_prefix, tree->num_nodes());
+                    printf("(1-unfairness) = %lf, min_fairness_acceptable = %lf\n",(1-unfairness),min_fairness_acceptable);
+                    logger->setTreeMinObj(objective);
+                    tree->update_min_objective(objective);
+                    tree->update_opt_rulelist(parent_prefix, i);
+                    tree->update_opt_predictions(parent, prediction, default_prediction);
+                    logger->dumpState();            
+                }
+            } else {                
                 printf("min(objective): %1.5f -> %1.5f, length: %d, cache size: %zu\n",
-                   tree->min_objective(), objective, len_prefix, tree->num_nodes());
+                tree->min_objective(), objective, len_prefix, tree->num_nodes());
+                logger->setTreeMinObj(objective);
+                tree->update_min_objective(objective);
+                tree->update_opt_rulelist(parent_prefix, i);
+                tree->update_opt_predictions(parent, prediction, default_prediction);
+                // dump state when min objective is updated
+                logger->dumpState();
             }
-
-            logger->setTreeMinObj(objective);
-            tree->update_min_objective(objective);
-            tree->update_opt_rulelist(parent_prefix, i);
-            tree->update_opt_predictions(parent, prediction, default_prediction);
-            // dump state when min objective is updated
-            logger->dumpState();
         }
         // calculate equivalent points bound to capture the fact that the minority points can never be captured correctly
         if (tree->has_minority()) {
@@ -360,12 +473,12 @@ void evaluate_children(CacheTree* tree,
             equivalent_minority = (double)(num_not_captured_equivalent) / nsamples;
             lower_bound += equivalent_minority;
         }
-        if (tree->ablation() != 2)
+        if (tree->ablation() != 2 && tree->ablation() != 3)
             lookahead_bound = lower_bound + c;
         else
             lookahead_bound = lower_bound;
         // only add node to our datastructures if its children will be viable
-        if (lookahead_bound < tree->min_objective()) {
+        if ((lookahead_bound < tree->min_objective()) && (fairnesslb>=min_fairness_acceptable)) {
             double t3 = timestamp();
             // check permutation bound
             Node* n = p->insert(i, nrules, prediction, default_prediction,
@@ -374,6 +487,8 @@ void evaluate_children(CacheTree* tree,
             logger->addToPermMapInsertionTime(time_diff(t3));
             // n is NULL if this rule fails the permutaiton bound
             if (n) {
+                pushingTicket++;
+                n->set_num(pushingTicket);
                 double t4 = timestamp();
                 tree->insert(n);
                 logger->incTreeInsertionNum();
@@ -449,13 +564,17 @@ void bbound_loop(CacheTree* tree,
                 double beta,
                 int fairness,
                 int maj_pos,
-                int min_pos){
+                int min_pos,
+                int mode,
+                bool useUnfairnessLB,
+                double min_fairness_acceptable,
+                int kBest){
 
     double t0 = timestamp();
     int verbosity = logger->getVerbosity();
     size_t queue_min_length = logger->getQueueMinLen();
     int cnt;
-    std::pair<Node*, tracking_vector<unsigned short, DataStruct::Tree> > node_ordered = q->select(tree, captured);
+    std::pair<Node*, tracking_vector<unsigned short, DataStruct::Tree> > node_ordered = q->select(kBest, tree, captured);
     logger->addToNodeSelectTime(time_diff(t0));
     logger->incNodeSelectNum();
     if (node_ordered.first) {
@@ -464,7 +583,8 @@ void bbound_loop(CacheTree* tree,
         rule_vandnot(not_captured,
                      tree->rule(0).truthtable, captured,
                      tree->nsamples(), &cnt);
-        evaluate_children(tree, node_ordered.first, node_ordered.second, not_captured, q, p, beta, fairness, maj_pos, min_pos);
+        evaluate_children(tree, node_ordered.first, node_ordered.second, not_captured, q, p, beta, fairness, maj_pos, min_pos, mode, useUnfairnessLB,
+                        min_fairness_acceptable);
         logger->addToEvalChildrenTime(time_diff(t1));
         logger->incEvalChildrenNum();
 

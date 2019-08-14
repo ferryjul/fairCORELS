@@ -16,8 +16,15 @@ static std::set<std::string> g_verbosity;
 
 int run_corels_begin(double c, char* vstring, int curiosity_policy,
                   int map_type, int ablation, int calculate_size, int nrules, int nlabels,
-                  int nsamples, rule_t* rules, rule_t* labels, rule_t* meta, int freq, char* log_fname)
+                  int nsamples, rule_t* rules, rule_t* labels, rule_t* meta, int freq, char* log_fname, int BFSmode=0, int seed=10)
 {
+    srand(seed);
+    // Check arguments
+    if(BFSmode < 0 || BFSmode > 4) {
+        printf("Error : BFSmode should be in {1, 2, 3, 4}\n");
+        exit(-1);
+    }
+    
     g_verbosity.clear();
 
     const char *voptions = "rule|label|minor|samples|progress|loud";
@@ -110,7 +117,23 @@ int run_corels_begin(double c, char* vstring, int curiosity_policy,
         g_queue = new Queue(dfs_cmp, run_type);
     } else {
         strcat(run_type, "BFS");
-        g_queue = new Queue(base_cmp, run_type);
+        switch(BFSmode) {
+            case 0:
+                g_queue = new Queue(base_cmp, run_type);
+                break;
+            case 1:
+                g_queue = new Queue(base_cmp_fifo, run_type);
+                break;
+            case 2:
+                g_queue = new Queue(base_cmp_obj, run_type);
+                break;
+            case 3:
+                g_queue = new Queue(base_cmp_lb, run_type);
+                break;
+            case 4:
+                g_queue = new Queue(base_cmp_random, run_type);
+                break;
+        }
     }
 
     if (map_type == 1) {
@@ -136,9 +159,24 @@ int run_corels_begin(double c, char* vstring, int curiosity_policy,
     return 0;
 }
 
-int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int maj_pos, int min_pos) {
+int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int maj_pos, int min_pos, int mode, bool useUnfairnessLB,
+                        double min_fairness_acceptable, int kBest=1) {
+    // Check arguments
+    if(mode < 1 || mode > 4) {
+        printf("Error : mode should be in {1, 2, 3, 4}\n");
+        exit(-1);
+    }
+    if(kBest < 0) {
+        printf("Error : kBest should be > 0\n");
+        exit(-1);
+    }
+    if(min_fairness_acceptable < 0 || min_fairness_acceptable > 1) {
+        printf("Error : min_fairness_acceptable should be in [0,1]\n");
+        exit(-1);
+    }
     if((g_tree->num_nodes() < max_num_nodes) && !g_queue->empty()) {
-        bbound_loop(g_tree, g_queue, g_pmap, beta, fairness, maj_pos, min_pos);
+        bbound_loop(g_tree, g_queue, g_pmap, beta, fairness, maj_pos, min_pos, mode, useUnfairnessLB,
+                        min_fairness_acceptable, kBest);
         return 0;
     }
     return -1;

@@ -5,7 +5,7 @@
 #include <functional>
 #include <queue>
 #include <set>
-
+#include <cstdlib>
 // pass custom allocator function to track memory allocations in the queue
 typedef std::priority_queue<Node*, tracking_vector<Node*, DataStruct::Queue>, 
         std::function<bool(Node*, Node*)> > q;
@@ -13,6 +13,43 @@ typedef std::priority_queue<Node*, tracking_vector<Node*, DataStruct::Queue>,
 // orders based on depth (BFS)
 static std::function<bool(Node*, Node*)> base_cmp = [](Node* left, Node* right) {
     return left->depth() >= right->depth();
+};
+
+// Custom BFS policies
+static std::function<bool(Node*, Node*)> base_cmp_fifo = [](Node* left, Node* right) {
+    if(left->depth() == right->depth()) {
+        return (left->get_num() >= right->get_num());
+    } else {
+        return left->depth() >= right->depth();
+    }
+};
+
+static std::function<bool(Node*, Node*)> base_cmp_obj = [](Node* left, Node* right) {
+    if(left->depth() == right->depth()) {
+        return (left->objective() >= right->objective());
+    } else {
+        return left->depth() >= right->depth();
+    }
+};
+
+static std::function<bool(Node*, Node*)> base_cmp_lb = [](Node* left, Node* right) {
+    if(left->depth() == right->depth()) {
+        return (left->lower_bound() >= right->lower_bound());
+    } else {
+        return left->depth() >= right->depth();
+    }
+};
+
+static std::function<bool(Node*, Node*)> base_cmp_random = [](Node* left, Node* right) {
+    if(left->depth() == right->depth()) {
+        if((rand() % 2)) {
+            return false;
+        } else {
+            return true;
+        }
+    } else {
+        return left->depth() >= right->depth();
+    }
 };
 
 // orders based on curiosity metric.
@@ -60,15 +97,41 @@ class Queue {
             return type_;
         }
 
-        std::pair<Node*, tracking_vector<unsigned short, DataStruct::Tree> > select(CacheTree* tree, VECTOR captured) {
+        std::pair<Node*, tracking_vector<unsigned short, DataStruct::Tree> > select(int kBest, CacheTree* tree, VECTOR captured) {
             int cnt;
             tracking_vector<unsigned short, DataStruct::Tree> prefix;
             Node *selected_node, *node;
             bool valid = true;
             double lb;
+            int nb = 0;
+            if(kBest > 1) {
+                nb = (rand() % kBest);
+            }
             do {
                 selected_node = q_->top();
                 q_->pop();
+                if(q_->size() < nb) { // if less elements in queue than random number found
+                    nb = q_->size(); // we take the last one of the queue
+                }
+                if(nb > 0) {
+                    int ind = nb;
+                    // k nodes + the first popped
+                    Node * kBest[nb+1];
+                    kBest[nb] = selected_node;
+                    // extract the best element k times
+                    while(nb > 0) {
+                        nb--;
+                        kBest[nb] = q_->top();
+                        q_->pop();
+                    }
+                    // keep the kTh extracted as the best
+                    selected_node = kBest[0];
+                    // push back the k others
+                    while(ind > 0) {
+                        q_->push(kBest[ind]);
+                        ind--;
+                    }
+                }
                 if (tree->ablation() != 2)
                     lb = selected_node->lower_bound() + tree->c();
                 else
@@ -105,6 +168,7 @@ class Queue {
     private:
         q* q_;
         char const *type_;
+        int kBest_;
 };
 
 
@@ -132,6 +196,7 @@ struct confusion_matrix {
 struct confusion_matrix_groups {
     confusion_matrix minority;
     confusion_matrix majority;
+    double unfairnessLB;
 };
 
 struct fairness_metrics {
@@ -152,7 +217,11 @@ extern void bbound_loop(CacheTree* tree,
                             double beta,
                             int fairness,
                             int maj_pos,
-                            int min_pos);
+                            int min_pos,
+                            int mode, 
+                            bool useUnfairnessLB,
+                            double min_fairness_acceptable,
+                            int kBest);
 
 extern void evaluate_children(CacheTree* tree, 
                                 Node* parent, 
@@ -163,7 +232,10 @@ extern void evaluate_children(CacheTree* tree,
                                 double beta,
                                 int fairness,
                                 int maj_pos,
-                                int min_pos);
+                                int min_pos,
+                                int mode,
+                                bool useUnfairnessLB,
+                                double min_fairness_acceptable);
 
 
 

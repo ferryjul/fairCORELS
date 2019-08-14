@@ -29,6 +29,8 @@ class Node {
     inline void set_done();
     inline bool deleted() const;
     inline void set_deleted(); 
+    inline int get_num();
+    inline int set_num(int val);
 
     // Returns pair of prefixes and predictions for the path from this node to the root
     inline std::pair<tracking_vector<unsigned short, DataStruct::Tree>, tracking_vector<bool, DataStruct::Tree> >
@@ -53,6 +55,7 @@ class Node {
     std::map<unsigned short, Node*, std::less<unsigned short>, track_alloc<std::pair<const unsigned short, Node*>, DataStruct::Tree> > children_;
     Node* parent_;
     double lower_bound_;
+    int num_insert;
     double objective_;
     double equivalent_minority_;
     size_t depth_;
@@ -182,6 +185,14 @@ inline void Node::set_done() {
 
 inline bool Node::deleted() const{
     return deleted_;
+}
+
+inline int Node::get_num(){
+    return num_insert;
+}
+
+inline int Node::set_num(int val){
+    num_insert = val;
 }
 
 inline void Node::set_deleted() {
