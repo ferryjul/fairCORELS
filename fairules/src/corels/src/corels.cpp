@@ -14,6 +14,8 @@ Queue::~Queue() {
 /* Computes confusion matrices for both groups */
 
 int pushingTicket = 0;
+int pruningCnt = 0;
+int exploredNodes = 0;
 
 confusion_matrix_groups compute_confusion_matrix(VECTOR parent_prefix_predictions,
                                                 CacheTree* tree,
@@ -434,12 +436,14 @@ void evaluate_children(CacheTree* tree,
             //objective = distance + lower_bound;
             objective =  (1-beta)*misc + beta*unfairness + lower_bound;
         }
-
+        exploredNodes++;
         /* --- unfairness lower bound */
         double fairnesslb = 1.0;
         if(mode == 3) {
             if(useUnfairnessLB) {
                 fairnesslb = 1 - cmg.unfairnessLB;
+                if(fairnesslb < min_fairness_acceptable)
+                    pruningCnt++;
             }
         }
         logger->addToObjTime(time_diff(t2));
@@ -450,6 +454,7 @@ void evaluate_children(CacheTree* tree,
                     printf("min(objective): %1.5f -> %1.5f, length: %d, cache size: %zu\n",
                     tree->min_objective(), objective, len_prefix, tree->num_nodes());
                     printf("(1-unfairness) = %lf, min_fairness_acceptable = %lf\n",(1-unfairness),min_fairness_acceptable);
+                    printf("explored %d nodes before best solution.\n", exploredNodes);
                     logger->setTreeMinObj(objective);
                     tree->update_min_objective(objective);
                     tree->update_opt_rulelist(parent_prefix, i);
@@ -459,6 +464,7 @@ void evaluate_children(CacheTree* tree,
             } else {                
                 printf("min(objective): %1.5f -> %1.5f, length: %d, cache size: %zu\n",
                 tree->min_objective(), objective, len_prefix, tree->num_nodes());
+                printf("explored %d nodes before best solution.\n", exploredNodes);
                 logger->setTreeMinObj(objective);
                 tree->update_min_objective(objective);
                 tree->update_opt_rulelist(parent_prefix, i);
@@ -621,6 +627,8 @@ int bbound_end(CacheTree* tree, Queue* q, PermutationMap* p, bool early) {
     int verbosity = logger->getVerbosity();
     bool print_queue = 0;
     logger->dumpState(); // second last log record (before queue elements deleted)
+    if(pruningCnt > 0)
+        printf("Pruned %d subtrees with unfairness lower bound.\n", pruningCnt);
     if (verbosity >= 5)
         printf("iter: %zu, tree: %zu, queue: %zu, pmap: %zu, time elapsed: %f\n",
                num_iter, tree->num_nodes(), q->size(), p->size(), time_diff(start));
