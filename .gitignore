@@ -5,7 +5,7 @@
 *~
 build/
 dist/
-fairules.egg-info/
+faircorels.egg-info/
 __pycache__/
 *.pyd
 MANIFEST
@@ -17,3 +17,4 @@ tox.ini
 upload.sh
 env.sh
 env/
+*.vscode

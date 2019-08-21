@@ -1,7 +1,7 @@
 include LICENSE
-include fairules/README.txt
-include fairules/_corels.cpp
-include fairules/*.py
-include fairules/src/utils*
-include fairules/src/corels/src/*.hh
-include fairules/src/corels/src/*.cpp
+include faircorels/README.txt
+include faircorels/_corels.cpp
+include faircorels/*.py
+include faircorels/src/utils*
+include faircorels/src/corels/src/*.hh
+include faircorels/src/corels/src/*.cpp

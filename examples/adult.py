@@ -5,15 +5,6 @@ import pandas as pd
 X, y, features, prediction = load_from_csv("data/adult_train_binary.csv")
 X_test, y_test, features_test, prediction_test = load_from_csv("data/adult_test_binary.csv")
 
-"""
-print(features)
-
-for idx, val in enumerate(features):
-    print("{} ------ {}".format(idx + 1, val))
-
-"""
-#print(prediction)
-
 
 c = CorelsClassifier(n_iter=1000000, c=0.0045, max_card=1, policy="bfs", fairness=1, maj_pos=19, min_pos=18, epsilon=0.99, mode=3)
 

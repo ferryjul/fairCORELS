@@ -3,8 +3,7 @@ from setuptools.command.build_ext import build_ext
 import os
 import sys
 
-from Cython.Build import cythonize
-
+#from Cython.Build import cythonize
 
 class build_numpy(build_ext):
     def finalize_options(self):
@@ -16,14 +15,14 @@ class build_numpy(build_ext):
 def install(gmp):
     description = 'FairCORELS, a modified version of CORELS to build fair and interpretable models'
     long_description = description
-    with open('fairules/README.txt') as f:
+    with open('faircorels/README.txt') as f:
         long_description = f.read()
 
-    version = '1.7'
+    version = '0.1'
 
-    pyx_file = 'fairules/_corels.cpp'
+    pyx_file = 'faircorels/_corels.cpp'
 
-    source_dir = 'fairules/src/corels/src/'
+    source_dir = 'faircorels/src/corels/src/'
     sources = ['utils.cpp', 'rulelib.cpp', 'run.cpp', 'pmap.cpp', 
                'corels.cpp', 'cache.cpp']
     
@@ -32,7 +31,7 @@ def install(gmp):
     
     sources.append(pyx_file)
 
-    sources.append('fairules/src/utils.cpp')
+    sources.append('faircorels/src/utils.cpp')
 
     cpp_args = ['-Wall', '-O3', '-std=c++11']
     libraries = []
@@ -49,10 +48,10 @@ def install(gmp):
         if sys.version_info[0] < 3:
             raise Exception("Python 3.x is required on Windows")
 
-    extension = Extension("fairules._corels", 
+    extension = Extension("faircorels._corels", 
                 sources = sources,
                 libraries = libraries,
-                include_dirs = ['fairules/src/', 'fairules/src/corels/src'],
+                include_dirs = ['faircorels/src/', 'faircorels/src/corels/src'],
                 language = "c++",
                 extra_compile_args = cpp_args)
 
@@ -65,19 +64,19 @@ def install(gmp):
         numpy_version = 'numpy<=1.16'
 
     setup(
-        name = 'fairules',
-        packages = ['fairules'],
+        name = 'faircorels',
+        packages = ['faircorels'],
         ext_modules = extensions,
         version = version,
-        author = 'Elaine Angelino, Nicholas Larus-Stone, Hongyu Yang, Cythnia Rudin, Vassilios Kaxiras, Margo Seltzer, Ulrich Aïvodji, Julien Ferry, Sébastien Gambs, Marie-José Huguet, Mohamed Siala',
+        author = 'Ulrich Aïvodji, Julien Ferry, Sébastien Gambs, Marie-José Huguet, Mohamed Siala',
         author_email = 'a.u.matchi@gmail.com',
         description = description,
         long_description = long_description,
         setup_requires = [numpy_version],
         install_requires = [numpy_version],
         python_requires = '>=2.7',
-        url = 'https://github.com/aivodji/fairules',
-        download_url = 'https://github.com/aivodji/fairules/archive/v1.6.tar.gz',
+        url = 'https://github.com/aivodji/pyFairCORELS',
+        download_url = 'https://github.com/aivodji/pyFairCORELS/archive/v0.1.tar.gz',
         cmdclass = {'build_ext': build_numpy},
         license = "GNU General Public License v3 (GPLv3)",
         classifiers = [
