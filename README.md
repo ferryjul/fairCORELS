@@ -4,10 +4,7 @@ Welcome to the python binding of the FairCORELS algorithm!
 
 ## Overview
 
-CORELS (Certifiably Optimal RulE ListS) is a custom discrete optimization technique for building rule lists over a categorical feature space. Using algorithmic bounds and efficient data structures, our approach produces optimal rule lists on practical problems in seconds.
-
-The CORELS pipeline is simple. Given a dataset matrix of size `n_samples x n_features` and a labels vector of size `n_samples`, it will compute a rulelist (similar to a series of if-then statements) to predict the labels with the highest accuracy.
-
+FairCORELS is a modified version of CORELS to learn fair rule list. 
 
 
 ## Installation
