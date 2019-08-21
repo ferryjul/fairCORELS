@@ -18,7 +18,7 @@ def install(gmp):
     with open('faircorels/README.txt') as f:
         long_description = f.read()
 
-    version = '0.1'
+    version = '0.2'
 
     pyx_file = 'faircorels/_corels.cpp'
 
@@ -68,7 +68,7 @@ def install(gmp):
         packages = ['faircorels'],
         ext_modules = extensions,
         version = version,
-        author = 'Ulrich A{\"\i}vodji, Julien Ferry, S{\'e}bastien Gambs, Marie-Jos{\'e} Huguet, Mohamed Siala',
+        author = 'Ulrich Aivodji, Julien Ferry, Sebastien Gambs, Marie-Jose Huguet, Mohamed Siala',
         author_email = 'a.u.matchi@gmail.com, julienferry12@gmail.com',
         description = description,
         long_description = long_description,
@@ -76,7 +76,7 @@ def install(gmp):
         install_requires = [numpy_version],
         python_requires = '>=2.7',
         url = 'https://github.com/aivodji/pyFairCORELS',
-        download_url = 'https://github.com/aivodji/pyFairCORELS/archive/v0.1.tar.gz',
+        download_url = 'https://github.com/aivodji/pyFairCORELS/archive/v0.2.tar.gz',
         cmdclass = {'build_ext': build_numpy},
         license = "GNU General Public License v3 (GPLv3)",
         classifiers = [
