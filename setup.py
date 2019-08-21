@@ -68,7 +68,7 @@ def install(gmp):
         packages = ['faircorels'],
         ext_modules = extensions,
         version = version,
-        author = 'Ulrich Aïvodji, Julien Ferry, Sébastien Gambs, Marie-José Huguet, Mohamed Siala',
+        author = 'Ulrich A{\"\i}vodji, Julien Ferry, S{\'e}bastien Gambs, Marie-Jos{\'e} Huguet, Mohamed Siala',
         author_email = 'a.u.matchi@gmail.com',
         description = description,
         long_description = long_description,
