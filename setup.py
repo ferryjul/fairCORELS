@@ -69,7 +69,7 @@ def install(gmp):
         ext_modules = extensions,
         version = version,
         author = 'Ulrich A{\"\i}vodji, Julien Ferry, S{\'e}bastien Gambs, Marie-Jos{\'e} Huguet, Mohamed Siala',
-        author_email = 'a.u.matchi@gmail.com',
+        author_email = 'a.u.matchi@gmail.com, julienferry12@gmail.com',
         description = description,
         long_description = long_description,
         setup_requires = [numpy_version],
