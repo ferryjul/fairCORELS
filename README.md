@@ -1,4 +1,4 @@
-# Pycorels
+# Faircorels
 
 Welcome to the python binding of the FairCORELS algorithm!
 
