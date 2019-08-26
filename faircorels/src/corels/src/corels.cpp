@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <iostream>
 #include <stdio.h>
+#include <math.h>
 
 Queue::Queue(std::function<bool(Node*, Node*)> cmp, char const *type)
     : q_(new q (cmp)), type_(type) {}
@@ -245,23 +246,22 @@ fairness_metrics compute_fairness_metrics(confusion_matrix_groups cmg){
                                                 max((cmg.minority.nTP + cmg.minority.nFP + cmg.minority.nFN + cmg.minority.nTN),1);
                                 
                                 
-    metrics.statistical_parity =  abs(statistical_parity_maj - statistical_parity_min);
+    metrics.statistical_parity =  fabs(statistical_parity_maj - statistical_parity_min);
 
     // predictive parity
-    metrics.predictive_parity = abs(cmg.majority.nPPV - cmg.minority.nPPV);
+    metrics.predictive_parity = fabs(cmg.majority.nPPV - cmg.minority.nPPV);
 
     // predictive equality
-    metrics.predictive_equality = abs(cmg.majority.nFPR - cmg.minority.nFPR);
+    metrics.predictive_equality = fabs(cmg.majority.nFPR - cmg.minority.nFPR);
 
     // equal opportunity
-    metrics.equal_opportunity = abs(cmg.majority.nFNR - cmg.minority.nFNR);
+    metrics.equal_opportunity = fabs(cmg.majority.nFNR - cmg.minority.nFNR);
 
     // equalized_odds
-    metrics.equalized_odds = abs(cmg.majority.nFNR - cmg.minority.nFNR) + abs(cmg.majority.nFPR - cmg.minority.nFPR);
+    metrics.equalized_odds = fabs(cmg.majority.nFNR - cmg.minority.nFNR) + fabs(cmg.majority.nFPR - cmg.minority.nFPR);
 
     // cond_use_acc_equality
-    metrics.cond_use_acc_equality = abs(cmg.majority.nPPV - cmg.minority.nPPV) + abs(cmg.majority.nNPV - cmg.minority.nNPV);
-
+    metrics.cond_use_acc_equality = fabs(cmg.majority.nPPV - cmg.minority.nPPV) + fabs(cmg.majority.nNPV - cmg.minority.nNPV);
 
     return metrics;
 }

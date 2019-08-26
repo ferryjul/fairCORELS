@@ -225,9 +225,9 @@ int main(int argc, char *argv[]) {
     int ret = 0;
 
     if(run_corels_begin(c, &verbstr[0], curiosity_policy, map_type, ablation, calculate_size,
-                        nrules, nlabels, nsamples, rules, labels, meta, freq, &log_fname[0]) == 0)
+                        nrules, nlabels, nsamples, rules, labels, meta, freq, &log_fname[0],2,20) == 0)
     {
-        while(run_corels_loop(max_num_nodes) == 0) { }
+        while(run_corels_loop(max_num_nodes, 0,0,0,0,1,true,0,1) == 0) { }
 
         int* rulelist = NULL;
         int rulelist_size = 0;
