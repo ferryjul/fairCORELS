@@ -18,9 +18,9 @@ def install(gmp):
     with open('faircorels/README.txt') as f:
         long_description = f.read()
 
-    version = '0.2'
+    version = '0.3'
 
-    pyx_file = 'faircorels/_corels.cpp'
+    pyx_file = 'faircorels/_corels.pyx'
 
     source_dir = 'faircorels/src/corels/src/'
     sources = ['utils.cpp', 'rulelib.cpp', 'run.cpp', 'pmap.cpp', 
@@ -75,8 +75,8 @@ def install(gmp):
         setup_requires = [numpy_version],
         install_requires = [numpy_version],
         python_requires = '>=2.7',
-        url = 'https://github.com/aivodji/pyFairCORELS',
-        download_url = 'https://github.com/aivodji/pyFairCORELS/archive/v0.2.tar.gz',
+        url = 'https://github.com/ferryjul/fairCORELS',
+        download_url = 'https://github.com/ferryjul/fairCORELS/archive/v0.3.tar.gz',
         cmdclass = {'build_ext': build_numpy},
         license = "GNU General Public License v3 (GPLv3)",
         classifiers = [
