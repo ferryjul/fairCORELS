@@ -126,6 +126,7 @@ int run_corels_begin(double c, char* vstring, int curiosity_policy,
                 break;
             case 2:
                 g_queue = new Queue(base_cmp_obj, run_type);
+                printf("Using objective-aware BFS");
                 break;
             case 3:
                 g_queue = new Queue(base_cmp_lb, run_type);

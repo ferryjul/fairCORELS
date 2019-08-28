@@ -17,6 +17,23 @@ Queue::~Queue() {
 int pushingTicket = 0;
 int pruningCnt = 0;
 int exploredNodes = 0;
+bool firstPass = true;
+
+double max2El(double e1, double e2) {
+    if(e1 < e2) {
+        return e2;
+    } else {
+        return e1;
+    }
+}
+
+double min2El(double e1, double e2) {
+    if(e1 > e2) {
+        return e2;
+    } else {
+        return e1;
+    }
+}
 
 confusion_matrix_groups compute_confusion_matrix(VECTOR parent_prefix_predictions,
                                                 CacheTree* tree,
@@ -32,6 +49,15 @@ confusion_matrix_groups compute_confusion_matrix(VECTOR parent_prefix_prediction
     confusion_matrix cm_minority;
     confusion_matrix cm_majority;
 
+    if(firstPass) {
+        printf("Fairness calc infos :\n");
+        printf("Sensitive attribute : %s, unsensitive attribute : %s\n", tree->rule(min_pos).features, tree->rule(maj_pos).features);
+    }
+    if(firstPass)
+        printf("Number of rules = %d\n", tree->nrules());
+    firstPass = false;
+
+
     int nsamples = tree->nsamples();
     int pm, num_not_captured;
     VECTOR preds_prefix, not_captured;
@@ -42,7 +68,6 @@ confusion_matrix_groups compute_confusion_matrix(VECTOR parent_prefix_prediction
     rule_vandnot(not_captured, parent_not_captured, captured, nsamples, &num_not_captured);
 
     rule_copy(preds_prefix, parent_prefix_predictions, nsamples);
-
     
     if(default_prediction) { // else it is already OK
         rule_vor(preds_prefix, preds_prefix, not_captured, nsamples, &pm);
@@ -84,7 +109,6 @@ confusion_matrix_groups compute_confusion_matrix(VECTOR parent_prefix_prediction
         rule_vand(TN_maj, TN, tree->rule(maj_pos).truthtable, nsamples, &nTN_maj);
     }
     
-
     // true positives, false negatives, true negatives, and false positives for minority group
     VECTOR TP_min, FP_min, FN_min, TN_min;
     rule_vinit(nsamples, &TP_min);
@@ -208,6 +232,159 @@ confusion_matrix_groups compute_confusion_matrix(VECTOR parent_prefix_prediction
 
     cmg.unfairnessLB = min_val;
 
+    /* OTHER METRICS */
+    
+    int totPos_maj = nTP_maj + nFN_maj;
+    int totPos_min = nTP_min + nFN_min;
+    int totNeg_maj = nTN_maj + nFP_maj;
+    int totNeg_min = nTN_min + nFP_min;
+
+    int maxFP_maj = totNeg_maj - nTN_maj_ub;
+    int maxFP_min = totNeg_min - nTN_min_ub;
+    int minFP_maj = nFP_maj_ub;
+    int minFP_min = nFP_min_ub;
+
+    int maxTP_maj = totPos_maj - nFN_maj_ub;
+    int maxTP_min = totPos_min - nFN_min_ub;
+    int minTP_maj = nTP_maj_ub;
+    int minTP_min = nTP_min_ub;
+
+    int maxTN_maj = totNeg_maj - nFP_maj_ub;
+    int maxTN_min = totNeg_min - nFP_min_ub;
+    int minTN_maj = nTN_maj_ub;
+    int minTN_min = nTN_min_ub;
+
+    int maxFN_maj = totPos_maj - nTP_maj_ub;
+    int maxFN_min = totPos_min - nTP_min_ub;
+    int minFN_maj = nFN_maj_ub;
+    int minFN_min = nFN_min_ub;
+
+    /* Predictive parity */
+    // Bound (A)
+    double PPV_maj_min1 = (double) (minTP_maj) / (double) (maxTP_maj + maxFP_maj);
+    double PPV_maj_max1 = (double) (maxTP_maj) / (double) (minTP_maj + minFP_maj);
+    double PPV_min_min1 = (double) (minTP_min) / (double) (maxTP_min + maxFP_min);
+    double PPV_min_max1 = (double) (maxTP_min) / (double) (minTP_min + minFP_min);
+    // Bound (B)
+    double PPV_maj_min2 = ((double) (minTP_maj + minFP_maj - maxFP_maj))/((double) (minTP_maj + minFP_maj));
+    double PPV_maj_max2 = ((double) (maxTP_maj + maxFP_maj - minFP_maj))/((double)(maxTP_maj + maxFP_maj));
+    double PPV_min_min2 = ((double) (minTP_min + minFP_min - maxFP_min))/((double) (minTP_min + minFP_min));
+    double PPV_min_max2 = ((double) (maxTP_min + maxFP_min - minFP_min))/((double)(maxTP_min + maxFP_min));
+    // Take the best bound
+    double PPV_maj_min = max2El(PPV_maj_min1, PPV_maj_min2);
+    double PPV_maj_max = min2El(PPV_maj_max1, PPV_maj_max2);
+    double PPV_min_min = max2El(PPV_min_min1, PPV_min_min2);
+    double PPV_min_max = min2El(PPV_min_max1, PPV_min_max2);
+    // Corrects max values in case they are too big (max value might be very bad)
+    if(PPV_maj_max > 1)
+        PPV_maj_max = 1;
+    if(PPV_min_max > 1)
+        PPV_min_max = 1;
+
+    // Compute distance between intervals
+    double min_pred_par = 0;
+    if(PPV_maj_min > PPV_min_max) {
+        min_pred_par = PPV_maj_min - PPV_min_max;
+    }
+    if(PPV_min_min > PPV_maj_max) {
+        min_pred_par = PPV_min_min - PPV_maj_max;
+    }
+    cmg.predparityLB = min_pred_par;
+
+    /* Predictive equality */
+    // Bound (A)
+    double FPR_maj_min1 = (double) (minFP_maj) / (double) (maxTN_maj + maxFP_maj);
+    double FPR_maj_max1 = (double) (maxFP_maj) / (double) (minTN_maj + minFP_maj);
+    double FPR_min_min1 = (double) (minFP_min) / (double) (maxTN_min + maxFP_min);
+    double FPR_min_max1 = (double) (maxFP_min) / (double) (minTN_min + minFP_min);
+    // Bound (B)
+    double FPR_maj_min2 = ((double) (minFP_maj + minTN_maj - maxTN_maj))/((double) (minFP_maj + minTN_maj));
+    double FPR_maj_max2 = ((double) (maxFP_maj + maxTN_maj - minTN_maj))/((double)(maxFP_maj + maxTN_maj));
+    double FPR_min_min2 = ((double) (minFP_min + minTN_min - maxTN_min))/((double) (minFP_min + minTN_min));
+    double FPR_min_max2 = ((double) (maxFP_min + maxTN_min - minTN_min))/((double)(maxFP_min + maxTN_min));
+    // Take the best bound
+    double FPR_maj_min = max2El(FPR_maj_min1, FPR_maj_min2);
+    double FPR_maj_max = min2El(FPR_maj_max1, FPR_maj_max2);
+    double FPR_min_min = max2El(FPR_min_min1, FPR_min_min2);
+    double FPR_min_max = min2El(FPR_min_max1, FPR_min_max2);
+    // Corrects max values in case they are too big (max value might be very bad)
+    if(FPR_maj_max > 1)
+        FPR_maj_max = 1;
+    if(FPR_min_max > 1)
+        FPR_min_max = 1;
+    
+    // Compute distance between intervals
+    double min_pred_equ = 0;
+    if(FPR_maj_min > FPR_min_max) {
+        min_pred_equ = FPR_maj_min - FPR_min_max;
+    }
+    if(FPR_min_min > FPR_maj_max) {
+        min_pred_equ = FPR_min_min - FPR_maj_max;
+    }
+    cmg.predequalityLB = min_pred_equ;
+
+    /* Equal opportunity */
+    // Bound (A)
+    double FNR_maj_min1 = (double) (minFN_maj) / (double) (maxTP_maj + maxFN_maj);
+    double FNR_maj_max1 = (double) (maxFN_maj) / (double) (minTP_maj + minFN_maj);
+    double FNR_min_min1 = (double) (minFN_min) / (double) (maxTP_min + maxFN_min);
+    double FNR_min_max1 = (double) (maxFN_min) / (double) (minTP_min + minFN_min);
+    // Bound (B)
+    double FNR_maj_min2 = ((double) (minFN_maj + minTP_maj - maxTP_maj))/((double) (minFN_maj + minTP_maj));
+    double FNR_maj_max2 = ((double) (maxFN_maj + maxTP_maj - minTP_maj))/((double)(maxFN_maj + maxTP_maj));
+    double FNR_min_min2 = ((double) (minFN_min + minTP_min - maxTP_min))/((double) (minFN_min + minTP_min));
+    double FNR_min_max2 = ((double) (maxFN_min + maxTP_min - minTP_min))/((double)(maxFN_min + maxTP_min));
+    // Take the best bound
+    double FNR_maj_min = max2El(FNR_maj_min1, FNR_maj_min2);
+    double FNR_maj_max = min2El(FNR_maj_max1, FNR_maj_max2);
+    double FNR_min_min = max2El(FNR_min_min1, FNR_min_min2);
+    double FNR_min_max = min2El(FNR_min_max1, FNR_min_max2);
+    // Corrects max values in case they are too big (max value might be very bad)
+    if(FNR_maj_max > 1)
+        FNR_maj_max = 1;
+    if(FNR_min_max > 1)
+        FNR_min_max = 1;
+
+    // Compute distance between intervals
+    double min_equ_op = 0;
+
+    if(FNR_maj_min > FNR_min_max) {
+        min_equ_op = FNR_maj_min - FNR_min_max;
+    }
+    if(FNR_min_min > FNR_maj_max) {
+        min_equ_op = FNR_min_min - FNR_maj_max;
+    }
+    cmg.equalOppLB = min_equ_op;
+
+    /* ADDITIONNAL INFO, FOR DEBUGGING */
+    cmg.minority.min_ppv = PPV_min_min;
+    cmg.minority.max_ppv = PPV_min_max;
+    cmg.majority.min_ppv = PPV_maj_min;
+    cmg.majority.max_ppv = PPV_maj_max;
+    cmg.minority.min_fpr = FPR_min_min;
+    cmg.minority.max_fpr = FPR_min_max;
+    cmg.majority.min_fpr = FPR_maj_min;
+    cmg.majority.max_fpr = FPR_maj_max;
+    cmg.minority.min_fnr = FNR_min_min;
+    cmg.minority.max_fnr = FNR_min_max;
+    cmg.majority.min_fnr = FNR_maj_min;
+    cmg.majority.max_fnr = FNR_maj_max;
+    cmg.minority.min_tp = minTP_min;
+    cmg.majority.min_tp = minTP_maj;
+    cmg.minority.max_tp = maxTP_min;
+    cmg.majority.max_tp = maxTP_maj;
+    cmg.minority.min_fp = minFP_min;
+    cmg.majority.min_fp = minFP_maj;
+    cmg.minority.max_fp = maxFP_min;
+    cmg.majority.max_fp = maxFP_maj;
+    cmg.minority.min_tn = minTN_min;
+    cmg.majority.min_tn = minTN_maj;
+    cmg.minority.max_tn = maxTN_min;
+    cmg.majority.max_tn = maxTN_maj;
+    cmg.minority.min_fn = minFN_min;
+    cmg.majority.min_fn = minFN_maj;
+    cmg.minority.max_fn = maxFN_min;
+    cmg.majority.max_fn = maxFN_maj;
     rule_vfree(&not_captured);
     rule_vfree(&preds_prefix);
     rule_vfree(&TP);
@@ -237,7 +414,7 @@ confusion_matrix_groups compute_confusion_matrix(VECTOR parent_prefix_prediction
 /* Computes fairness metrics given confusion matrices of both groups */
 fairness_metrics compute_fairness_metrics(confusion_matrix_groups cmg){
     fairness_metrics metrics;
-
+    
     // statistical_parity
     double statistical_parity_maj = (double) (cmg.majority.nTP + cmg.majority.nFP) / 
                                                 max((cmg.majority.nTP + cmg.majority.nFP + cmg.majority.nFN + cmg.majority.nTN),1);
@@ -394,15 +571,15 @@ void evaluate_children(CacheTree* tree,
                 break;
             case 2:
                 unfairness = fm.predictive_parity;
-                cmg.unfairnessLB = 0;
+                cmg.unfairnessLB = cmg.predparityLB; // lower bound is now for fairness metric nb 2
                 break;
             case 3:
                 unfairness = fm.predictive_equality;
-                cmg.unfairnessLB = 0;
+                cmg.unfairnessLB = cmg.predequalityLB;
                 break;
             case 4:
                 unfairness = fm.equal_opportunity;
-                cmg.unfairnessLB = 0;
+                cmg.unfairnessLB = cmg.equalOppLB;
                 break;
             case 5:
                 unfairness = fm.equalized_odds;
@@ -415,7 +592,25 @@ void evaluate_children(CacheTree* tree,
             default:
                 break;
         }
-        
+        if(useUnfairnessLB) {
+            if(unfairness < cmg.unfairnessLB) {
+                printf("error : unfairness = %lf, unfairness lb = %lf...\n");
+                printf("PPV_min = %lf (in [%lf,%lf]), PPV_maj = %lf (in [%lf,%lf])\n",
+                cmg.minority.nPPV, cmg.minority.min_ppv, cmg.minority.max_ppv, cmg.majority.nPPV, cmg.majority.min_ppv, cmg.majority.max_ppv);
+                printf("TP_min = %d (in [%d,%d]), TP_maj = %d (in [%d,%d])\n",
+                cmg.minority.nTP, cmg.minority.min_tp,cmg.minority.max_tp , cmg.majority.nTP, cmg.majority.min_tp, cmg.majority.max_tp);
+                printf("FP_min = %d (in [%d,%d]), FP_maj = %d (in [%d,%d])\n",
+                cmg.minority.nFP, cmg.minority.min_fp,cmg.minority.max_fp , cmg.majority.nFP, cmg.majority.min_fp, cmg.majority.max_fp);
+                printf("FPR_min = %lf (in [%lf,%lf]), FPR_maj = %lf (in [%lf,%lf])\n",
+                cmg.minority.nFPR, cmg.minority.min_fpr, cmg.minority.max_fpr, cmg.majority.nFPR, cmg.majority.min_fpr, cmg.majority.max_fpr);
+                printf("TN_min = %d (in [%d,%d]), TN_maj = %d (in [%d,%d])\n",
+                cmg.minority.nTN, cmg.minority.min_tn,cmg.minority.max_tn , cmg.majority.nTN, cmg.majority.min_tn, cmg.majority.max_tn);
+                printf("FN_min = %d (in [%d,%d]), FN_maj = %d (in [%d,%d])\n",
+                cmg.minority.nFN, cmg.minority.min_fn,cmg.minority.max_fn , cmg.majority.nFN, cmg.majority.min_fn, cmg.majority.max_fn);
+                printf("FNR_min = %lf (in [%lf,%lf]), FNR_maj = %lf (in [%lf,%lf])\n",
+                cmg.minority.nFNR, cmg.minority.min_fnr, cmg.minority.max_fnr, cmg.majority.nFNR, cmg.majority.min_fnr, cmg.majority.max_fnr);
+            }
+        }
         /* --- compute the objective function --- */
         if(mode == 2) { // Max fairness
             objective = unfairness + lower_bound;
@@ -451,9 +646,10 @@ void evaluate_children(CacheTree* tree,
         if (objective < tree->min_objective()) {
             if(mode == 3) { // if mode 3 we check if the constraint on fairness is satisfied
                 if((1-unfairness) > min_fairness_acceptable) {
-                    printf("min(objective): %1.5f -> %1.5f, length: %d, cache size: %zu\n",
+                    printf("min(objectivee): %1.5f -> %1.5f, length: %d, cache size: %zu\n",
                     tree->min_objective(), objective, len_prefix, tree->num_nodes());
-                    printf("(1-unfairness) = %lf, min_fairness_acceptable = %lf\n",(1-unfairness),min_fairness_acceptable);
+                    printf("(1-unfairness) = %lf, min_fairness_acceptable = %lf, fairnessLB=%lf\n",(1-unfairness),min_fairness_acceptable,fairnesslb);
+                    //printf("TPmaj=%d, FPmaj=%d, TNmaj=%d, FNmaj=%d, TPmin=%d, FPmin=%d, TNmin=%d, FNmin=%d\n", cmg.majority.nTP,cmg.majority.nFP,cmg.majority.nTN,cmg.majority.nFN,cmg.minority.nTP,cmg.minority.nFP,cmg.minority.nTN,cmg.minority.nFN);
                     printf("explored %d nodes before best solution.\n", exploredNodes);
                     logger->setTreeMinObj(objective);
                     tree->update_min_objective(objective);
@@ -462,7 +658,7 @@ void evaluate_children(CacheTree* tree,
                     logger->dumpState();            
                 }
             } else {                
-                printf("min(objective): %1.5f -> %1.5f, length: %d, cache size: %zu\n",
+                printf("min(objectivee): %1.5f -> %1.5f, length: %d, cache size: %zu\n",
                 tree->min_objective(), objective, len_prefix, tree->num_nodes());
                 printf("explored %d nodes before best solution.\n", exploredNodes);
                 logger->setTreeMinObj(objective);
@@ -627,7 +823,7 @@ int bbound_end(CacheTree* tree, Queue* q, PermutationMap* p, bool early) {
     int verbosity = logger->getVerbosity();
     bool print_queue = 0;
     logger->dumpState(); // second last log record (before queue elements deleted)
-    if(pruningCnt > 0)
+   // if(pruningCnt > 0)
         printf("Pruned %d subtrees with unfairness lower bound.\n", pruningCnt);
     if (verbosity >= 5)
         printf("iter: %zu, tree: %zu, queue: %zu, pmap: %zu, time elapsed: %f\n",

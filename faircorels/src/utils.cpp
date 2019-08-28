@@ -155,6 +155,7 @@ int getnextperm(int n, int r, int *arr, int first)
 int mine_rules(char **features, rule_t *samples, int nfeatures, int nsamples, 
                 int max_card, double min_support, rule_t **rules_out, int verbose)
 {
+  min_support = 0.00; //to be deleted
   if(!samples || !features) {
     return -1;
   }
@@ -206,7 +207,7 @@ int mine_rules(char **features, rule_t *samples, int nfeatures, int nsamples,
   }
   
   // File rules_vec, the mpz_t version of the rules array
-  for(int i = 0; i < nrules; i++) {
+  for(int i = 0; i < nfeatures; i++) { // TODO nfeatures should be nrules
     int ones = count_ones_vector(rules_vec[i + 1].truthtable, nsamples);
     
     // If the rule satisfies the threshold requirements, add it to the out file.

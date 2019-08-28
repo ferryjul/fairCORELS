@@ -30,7 +30,7 @@ def performKFold(foldID):
     X_fold_test = X_tot[startTest:endTest,:]
     y_fold_test = y_tot[startTest:endTest]
     print("%d instances in test set, %d instances in train set" %(len(X_fold_test),len(X_fold_train)))
-    c = CorelsClassifier(n_iter=100000, c=0.001, max_card=1, policy="bfs", bfs_mode=2, useUnfairnessLB=True, fairness=1, maj_pos=UnprotectedIndex, min_pos=ProtectedIndex, epsilon=0.99, mode=3)
+    c = CorelsClassifier(map_type="prefix", n_iter=10000000, c=0.0001, max_card=1, policy="bfs", bfs_mode=2, useUnfairnessLB=True, fairness=4, maj_pos=UnprotectedIndex+1, min_pos=ProtectedIndex+1, epsilon=0.99, mode=3)
     c.fit(X_fold_train, y_fold_train, features=features_tot, prediction_name="(income:>50K)")
     # Accuracy sur le train set
     accuracy_train = (c.score(X_fold_train, y_fold_train))
@@ -41,6 +41,7 @@ def performKFold(foldID):
     cmTrain = ConfusionMatrix(X_fold_train[:,ProtectedIndex], X_fold_train[:,UnprotectedIndex], y_pred_train, y_fold_train)
     cm_minorityTrain, cm_majorityTrain = cmTrain.get_matrix()
     fmTrain = Metric(cm_minorityTrain, cm_majorityTrain)
+    #print("training set : TPmaj = %d, FPmaj = %d, TNmaj = %d, FNmaj = %d, TPmin = %d, FPmin = %d, TNmin = %d, FNmin = %d" %(cm_majorityTrain['TP'],cm_majorityTrain['FP'],cm_majorityTrain['TN'],cm_majorityTrain['FN'],cm_minorityTrain['TP'],cm_minorityTrain['FP'],cm_minorityTrain['TN'],cm_minorityTrain['FN']))
     # Fairness metrics sur le test set
     y_pred_test = c.predict(X_fold_test)
     cmTest = ConfusionMatrix(X_fold_test[:,ProtectedIndex], X_fold_test[:,UnprotectedIndex], y_pred_test, y_fold_test)

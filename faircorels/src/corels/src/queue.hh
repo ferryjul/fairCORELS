@@ -191,12 +191,29 @@ struct confusion_matrix {
     double nFNR;
     double nNPV;
     double nTNR;
+    double min_ppv;
+    double max_ppv;
+    double min_fpr;
+    double max_fpr;
+    double min_fnr;
+    double max_fnr;
+    int min_tp;
+    int max_tp;
+    int min_fp;
+    int max_fp;
+    int min_tn;
+    int max_tn;
+    int min_fn;
+    int max_fn;
 };
 
 struct confusion_matrix_groups {
     confusion_matrix minority;
     confusion_matrix majority;
     double unfairnessLB;
+    double predparityLB;
+    double predequalityLB;
+    double equalOppLB;
 };
 
 struct fairness_metrics {
