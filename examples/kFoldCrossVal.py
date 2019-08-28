@@ -63,7 +63,7 @@ setSize = (len(X_tot)) / kFold
 print("Fold size = %d instances" %setSize)
 
 
-returnList = Parallel(n_jobs=-1)(delayed(performKFold)(foldID=_foldID) for _foldID in range(kFold))
+returnList = Parallel(n_jobs=-1)(delayed(performKFold)(foldID=_foldID) for _foldID in [0])#range(kFold))
     
 
 accuracy_list_test = []

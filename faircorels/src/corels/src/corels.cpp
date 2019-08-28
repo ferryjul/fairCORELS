@@ -293,15 +293,15 @@ confusion_matrix_groups compute_confusion_matrix(VECTOR parent_prefix_prediction
 
     /* Predictive equality */
     // Bound (A)
-    double FPR_maj_min1 = (double) (minFP_maj) / (double) (maxTN_maj + maxFP_maj);
+    double FPR_maj_min1 = (double) (minFP_maj) / (double) min2El((maxTN_maj + maxFP_maj),totNeg_maj);
     double FPR_maj_max1 = (double) (maxFP_maj) / (double) (minTN_maj + minFP_maj);
-    double FPR_min_min1 = (double) (minFP_min) / (double) (maxTN_min + maxFP_min);
+    double FPR_min_min1 = (double) (minFP_min) / (double) min2El((maxTN_min + maxFP_min),totNeg_min);
     double FPR_min_max1 = (double) (maxFP_min) / (double) (minTN_min + minFP_min);
     // Bound (B)
-    double FPR_maj_min2 = ((double) (minFP_maj + minTN_maj - maxTN_maj))/((double) (minFP_maj + minTN_maj));
-    double FPR_maj_max2 = ((double) (maxFP_maj + maxTN_maj - minTN_maj))/((double)(maxFP_maj + maxTN_maj));
-    double FPR_min_min2 = ((double) (minFP_min + minTN_min - maxTN_min))/((double) (minFP_min + minTN_min));
-    double FPR_min_max2 = ((double) (maxFP_min + maxTN_min - minTN_min))/((double)(maxFP_min + maxTN_min));
+    double FPR_maj_min2 = ((double) (max2El((minFP_maj + minTN_maj),totNeg_maj) - maxTN_maj))/((double) max2El((minFP_maj + minTN_maj),totNeg_maj));
+    double FPR_maj_max2 = ((double) (min2El((maxTN_maj + maxFP_maj),totNeg_maj) - minTN_maj))/((double) min2El((maxTN_maj + maxFP_maj),totNeg_maj));
+    double FPR_min_min2 = ((double) (max2El((minFP_min + minTN_min),totNeg_min) - maxTN_min))/((double) max2El((minFP_min + minTN_min),totNeg_min));
+    double FPR_min_max2 = ((double) (min2El((maxTN_min + maxFP_min),totNeg_min) - minTN_min))/((double) min2El((maxTN_min + maxFP_min),totNeg_min));
     // Take the best bound
     double FPR_maj_min = max2El(FPR_maj_min1, FPR_maj_min2);
     double FPR_maj_max = min2El(FPR_maj_max1, FPR_maj_max2);
@@ -325,15 +325,15 @@ confusion_matrix_groups compute_confusion_matrix(VECTOR parent_prefix_prediction
 
     /* Equal opportunity */
     // Bound (A)
-    double FNR_maj_min1 = (double) (minFN_maj) / (double) (maxTP_maj + maxFN_maj);
+    double FNR_maj_min1 = (double) (minFN_maj) / (double) min2El((maxTP_maj + maxFN_maj), totPos_maj);
     double FNR_maj_max1 = (double) (maxFN_maj) / (double) (minTP_maj + minFN_maj);
-    double FNR_min_min1 = (double) (minFN_min) / (double) (maxTP_min + maxFN_min);
+    double FNR_min_min1 = (double) (minFN_min) / (double) min2El((maxTP_min + maxFN_min), totPos_min);
     double FNR_min_max1 = (double) (maxFN_min) / (double) (minTP_min + minFN_min);
     // Bound (B)
-    double FNR_maj_min2 = ((double) (minFN_maj + minTP_maj - maxTP_maj))/((double) (minFN_maj + minTP_maj));
-    double FNR_maj_max2 = ((double) (maxFN_maj + maxTP_maj - minTP_maj))/((double)(maxFN_maj + maxTP_maj));
-    double FNR_min_min2 = ((double) (minFN_min + minTP_min - maxTP_min))/((double) (minFN_min + minTP_min));
-    double FNR_min_max2 = ((double) (maxFN_min + maxTP_min - minTP_min))/((double)(maxFN_min + maxTP_min));
+    double FNR_maj_min2 = ((double) (max2El((minFN_maj + minTP_maj),totPos_maj) - maxTP_maj))/((double) max2El((minFN_maj + minTP_maj),totPos_maj));
+    double FNR_maj_max2 = ((double) (min2El((maxTP_maj + maxFN_maj), totPos_maj) - minTP_maj))/((double)(min2El((maxTP_maj + maxFN_maj), totPos_maj)));
+    double FNR_min_min2 = ((double) (max2El((minFN_min + minTP_min),totPos_min) - maxTP_min))/((double) max2El((minFN_min + minTP_min),totPos_min));
+    double FNR_min_max2 = ((double) (min2El((maxTP_min + maxFN_min), totPos_min) - minTP_min))/((double)(min2El((maxTP_min + maxFN_min), totPos_min)));
     // Take the best bound
     double FNR_maj_min = max2El(FNR_maj_min1, FNR_maj_min2);
     double FNR_maj_max = min2El(FNR_maj_max1, FNR_maj_max2);
