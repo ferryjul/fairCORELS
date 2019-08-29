@@ -646,11 +646,11 @@ void evaluate_children(CacheTree* tree,
         if (objective < tree->min_objective()) {
             if(mode == 3) { // if mode 3 we check if the constraint on fairness is satisfied
                 if((1-unfairness) > min_fairness_acceptable) {
-                    printf("min(objectivee): %1.5f -> %1.5f, length: %d, cache size: %zu\n",
-                    tree->min_objective(), objective, len_prefix, tree->num_nodes());
-                    printf("(1-unfairness) = %lf, min_fairness_acceptable = %lf, fairnessLB=%lf\n",(1-unfairness),min_fairness_acceptable,fairnesslb);
+                    //printf("min(objectivee): %1.5f -> %1.5f, length: %d, cache size: %zu\n",
+                    //tree->min_objective(), objective, len_prefix, tree->num_nodes());
+                    //printf("(1-unfairness) = %lf, min_fairness_acceptable = %lf, fairnessLB=%lf\n",(1-unfairness),min_fairness_acceptable,fairnesslb);
                     //printf("TPmaj=%d, FPmaj=%d, TNmaj=%d, FNmaj=%d, TPmin=%d, FPmin=%d, TNmin=%d, FNmin=%d\n", cmg.majority.nTP,cmg.majority.nFP,cmg.majority.nTN,cmg.majority.nFN,cmg.minority.nTP,cmg.minority.nFP,cmg.minority.nTN,cmg.minority.nFN);
-                    printf("explored %d nodes before best solution.\n", exploredNodes);
+                    //printf("explored %d nodes before best solution.\n", exploredNodes);
                     logger->setTreeMinObj(objective);
                     tree->update_min_objective(objective);
                     tree->update_opt_rulelist(parent_prefix, i);
@@ -658,9 +658,9 @@ void evaluate_children(CacheTree* tree,
                     logger->dumpState();            
                 }
             } else {                
-                printf("min(objectivee): %1.5f -> %1.5f, length: %d, cache size: %zu\n",
-                tree->min_objective(), objective, len_prefix, tree->num_nodes());
-                printf("explored %d nodes before best solution.\n", exploredNodes);
+                //printf("min(objectivee): %1.5f -> %1.5f, length: %d, cache size: %zu\n",
+                //tree->min_objective(), objective, len_prefix, tree->num_nodes());
+                //printf("explored %d nodes before best solution.\n", exploredNodes);
                 logger->setTreeMinObj(objective);
                 tree->update_min_objective(objective);
                 tree->update_opt_rulelist(parent_prefix, i);
@@ -824,7 +824,7 @@ int bbound_end(CacheTree* tree, Queue* q, PermutationMap* p, bool early) {
     bool print_queue = 0;
     logger->dumpState(); // second last log record (before queue elements deleted)
    // if(pruningCnt > 0)
-        printf("Pruned %d subtrees with unfairness lower bound.\n", pruningCnt);
+        //printf("Pruned %d subtrees with unfairness lower bound.\n", pruningCnt);
     if (verbosity >= 5)
         printf("iter: %zu, tree: %zu, queue: %zu, pmap: %zu, time elapsed: %f\n",
                num_iter, tree->num_nodes(), q->size(), p->size(), time_diff(start));

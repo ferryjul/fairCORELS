@@ -30,7 +30,7 @@ def performKFold(foldID):
     X_fold_test = X_tot[startTest:endTest,:]
     y_fold_test = y_tot[startTest:endTest]
     print("%d instances in test set, %d instances in train set" %(len(X_fold_test),len(X_fold_train)))
-    c = CorelsClassifier(map_type="prefix", n_iter=10000000, c=0.0001, max_card=1, policy="bfs", bfs_mode=2, useUnfairnessLB=True, fairness=4, maj_pos=UnprotectedIndex+1, min_pos=ProtectedIndex+1, epsilon=0.99, mode=3)
+    c = CorelsClassifier(map_type="prefix", n_iter=10000, c=0.0001, max_card=1, policy="bfs", bfs_mode=2, useUnfairnessLB=True, fairness=4, maj_pos=UnprotectedIndex+1, min_pos=ProtectedIndex+1, epsilon=0.99, mode=3)
     c.fit(X_fold_train, y_fold_train, features=features_tot, prediction_name="(income:>50K)")
     # Accuracy sur le train set
     accuracy_train = (c.score(X_fold_train, y_fold_train))
