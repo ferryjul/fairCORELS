@@ -35,8 +35,9 @@ cdef extern from "src/corels/src/run.hh":
     int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int maj_pos, int min_pos,
                     int mode, int useUnfairnessLB, double min_fairness_acceptable, int kBest)
 
-    double run_corels_end(int** rulelist, int* rulelist_size, int** classes, int early,
-                          int latex_out, rule_t* rules, rule_t* labels, char* opt_fname)
+    double run_corels_end(int** rulelist, int* rulelist_size, 
+    int** classes, double** confScores, int early, int latex_out, 
+    rule_t rules[], rule_t labels[], char* opt_fname)
 
 cdef extern from "src/utils.hh":
     int mine_rules(char **features, rule_t *samples, int nfeatures, int nsamples, 
@@ -100,6 +101,68 @@ def predict_wrap(np.ndarray[np.uint8_t, ndim=2] X, rules):
     free(antecedent_lengths)
 
     return out
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+def predict_score_wrap(np.ndarray[np.uint8_t, ndim=2] X, rules):
+    cdef int nsamples = X.shape[0]
+    cdef int nfeatures = X.shape[1]
+    
+    cdef np.ndarray out = np.zeros(nsamples, dtype=np.uint8)
+    cdef np.ndarray out2 = np.zeros(nsamples, dtype=np.double)
+    cdef int n_rules = len(rules) - 1
+    if n_rules < 0:
+        return out
+
+    cdef int s, r, next_rule, nidx, a, idx, c
+    cdef int default = bool(rules[n_rules]["prediction"])
+
+    cdef int* antecedent_lengths = <int*>malloc(sizeof(int) * n_rules)
+    cdef int* predictions = <int*>malloc(sizeof(int) * n_rules)
+    cdef int** antecedents = <int**>malloc(sizeof(int*) * n_rules)
+    cdef double* scores = <double*>malloc(sizeof(double) * (n_rules+1))
+    
+    for r in range(n_rules):
+        antecedent_lengths[r] = len(rules[r]["antecedents"])
+        predictions[r] = int(rules[r]["prediction"])
+        scores[r] = float(rules[r]["score"])
+        antecedents[r] = <int*>malloc(sizeof(int) * antecedent_lengths[r])
+        for a in range(antecedent_lengths[r]):
+            antecedents[r][a] = rules[r]["antecedents"][a]
+    scores[n_rules] = float(rules[n_rules]["score"])
+    # This compiles to C, so it's pretty fast!
+    for s in range(nsamples):
+        for r in range(n_rules):
+            next_rule = 0
+            nidx = antecedent_lengths[r]
+            for a in range(nidx):
+                idx = antecedents[r][a]
+                c = 1
+                if idx < 0:
+                    idx = -idx
+                    c = 0
+
+                idx = idx - 1
+                if idx >= nfeatures or X[s, idx] != c:
+                    next_rule = 1
+                    break
+
+            if next_rule == 0:
+                out[s] = predictions[r];
+                out2[s] = scores[r];
+                break
+
+        if next_rule == 1:
+            out[s] = default
+            out2[s] = scores[n_rules]
+
+    for r in range(n_rules):
+        free(antecedents[r])
+    free(antecedents)
+    free(predictions)
+    free(scores)
+    free(antecedent_lengths)
+    return out, out2
 
 cdef rule_t* _to_vector(np.ndarray[np.uint8_t, ndim=2] X, int* ncount_out):
     d0 = X.shape[0]
@@ -344,7 +407,8 @@ def fit_wrap_end(int early):
     cdef int rulelist_size = 0
     cdef int* rulelist = NULL
     cdef int* classes = NULL
-    run_corels_end(&rulelist, &rulelist_size, &classes, early, 0, NULL, NULL, NULL)
+    cdef double* scores = NULL
+    run_corels_end(&rulelist, &rulelist_size, &classes, &scores, early, 0, NULL, NULL, NULL)
 
     r_out = []
     if classes != NULL and rules != NULL:
@@ -354,10 +418,10 @@ def fit_wrap_end(int early):
                 r_out[i]["antecedents"] = []
                 for j in range(rules[rulelist[i]].cardinality):
                     r_out[i]["antecedents"].append(rules[rulelist[i]].ids[j])
-
+                r_out[i]["score"] = float(scores[i])
                 r_out[i]["prediction"] = bool(classes[i])
 
-        r_out.append({ "antecedents": [0], "prediction": bool(classes[rulelist_size]) })
+        r_out.append({ "antecedents": [0], "prediction": bool(classes[rulelist_size]), "score":scores[rulelist_size]})
         if rulelist != NULL:
             free(rulelist)
         free(classes)

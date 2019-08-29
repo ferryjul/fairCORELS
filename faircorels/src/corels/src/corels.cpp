@@ -819,7 +819,7 @@ void bbound_loop(CacheTree* tree,
     }
 }
     
-int bbound_end(CacheTree* tree, Queue* q, PermutationMap* p, bool early) {
+int bbound_end(CacheTree* tree, Queue* q, PermutationMap* p, bool early, rule_t* rules, rule_t* labels) {
     int verbosity = logger->getVerbosity();
     bool print_queue = 0;
     logger->dumpState(); // second last log record (before queue elements deleted)
@@ -885,6 +885,16 @@ int bbound_end(CacheTree* tree, Queue* q, PermutationMap* p, bool early) {
             }
         }
     }
+    
+    /* Compute confidence scores and exact accuracy */
+    compData res = computeFinalFairness(tree->nsamples(), 
+                         tree->opt_rulelist(), 
+                         tree->opt_predictions(),
+                         rules,
+                         labels);
+    
+    tree->setConfScores(res.conf_scores);
+    tree->setFinalAcc(res.accuracy);
     if (verbosity >= 1)
         printf("minimum lower bound in queue: %1.10f\n\n", min_lower_bound);
     

@@ -399,6 +399,7 @@ class Logger : public NullLogger {
             subtreeSize(tot, len_prefix, lower_bound);
         mpz_sub(_state.remaining_space_size, _state.remaining_space_size, tot);
         mpz_clear(tot);
+ 
     }
     inline void initRemainingSpaceSize() override {
         // Proposition 2 (upper bound on total number of prefix evaluations)
@@ -440,7 +441,18 @@ signed long long m_getline(char** lineptr, size_t* n, FILE* stream);
 char* m_strsep(char** stringp, char delim);
 char* m_strdup(char* str);
 
+struct compData{
+    double* conf_scores;
+    double accuracy;
+};
 #include "alloc.hh"
+compData computeFinalFairness(int nsamples,
+                          const tracking_vector<unsigned short, DataStruct::Tree>& rulelist,
+                          const tracking_vector<bool, DataStruct::Tree>& preds,
+                          rule_t  rules[],
+                          rule_t  labels[]);
+
+
 /*
  * Prints the final rulelist that CORELS returns.
  * rulelist -- rule ids of optimal rulelist
@@ -451,4 +463,6 @@ void print_final_rulelist(const tracking_vector<unsigned short, DataStruct::Tree
                           const bool latex_out,
                           const rule_t rules[],
                           const rule_t labels[],
-                          char fname[]);
+                          char fname[],
+                          double* confScores);
+

@@ -117,7 +117,6 @@ class RuleList:
         self.rules = rules
         self.features = features
         self.prediction_name = prediction_name
-
     def save(self, fname):
         """
         Save the rulelist to a file, using python's pickle module.
@@ -167,24 +166,22 @@ class RuleList:
             self.rules = rl.rules
             self.features = rl.features
             self.prediction_name = rl.prediction_name
-
         return self
 
     def __str__(self):
         check_rulelist(self)
 
         tot = "RULELIST:\n"
-        
+        #print("number of scores in scores list = %d" %len(self.scores))
         if len(self.rules) == 1:
-            tot += self.prediction_name + " = " + str(self.rules[0]["prediction"])
+            tot += self.prediction_name + " = " + str(self.rules[0]["prediction"]) + " (conf score = " + str(self.rules[0]["score"]) + ")"
         else:    
             for i in range(len(self.rules) - 1):
                 feat = get_feature(self.features, self.rules[i]["antecedents"][0])
                 for j in range(1, len(self.rules[i]["antecedents"])):
                     feat += " && " + get_feature(self.features, self.rules[i]["antecedents"][j])
-                tot += " if [" + feat + "]: " + self.prediction_name + " = " + str(bool(self.rules[i]["prediction"])) + "\nelse"
-
-            tot += " " + self.prediction_name + " = " + str(bool(self.rules[-1]["prediction"]))
+                tot += " if [" + feat + "]: " + self.prediction_name + " = " + str(bool(self.rules[i]["prediction"])) + " (conf score = " + str(self.rules[i]["score"]) + ")" + "\nelse"
+            tot += " " + self.prediction_name + " = " + str(bool(self.rules[-1]["prediction"])) + " (conf score = " + str(str(self.rules[-1]["score"])) + ")"
 
 
         return tot

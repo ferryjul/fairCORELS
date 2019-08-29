@@ -195,6 +195,82 @@ char* m_strdup(char* str)
     return buf;
 }
 
+compData computeFinalFairness(int nsamples,
+                          const tracking_vector<unsigned short, DataStruct::Tree>& rulelist,
+                          const tracking_vector<bool, DataStruct::Tree>& preds,                  
+                          rule_t rules[],
+                          rule_t labels[]) {
+    compData result;
+    // 1) We build the predictions' matrix
+    VECTOR captured_it;
+    VECTOR not_captured_yet;
+    VECTOR captured_zeros;
+    VECTOR preds_prefix;
+    int nb;
+    int nb2;
+    int pm;
+    double comp_scores[1+rulelist.size()];
+    rule_vinit(nsamples, &captured_it);
+    rule_vinit(nsamples, &not_captured_yet);
+    rule_vinit(nsamples, &preds_prefix);
+    rule_vinit(nsamples, &captured_zeros);
+    // Initially not_captured_yet is full of ones
+    rule_vor(not_captured_yet, labels[0].truthtable, labels[1].truthtable, nsamples ,&nb);
+    // Initially preds_prefix is full of zeros
+    rule_vand(preds_prefix, labels[0].truthtable, labels[1].truthtable, nsamples, &nb);
+    tracking_vector<unsigned short, DataStruct::Tree>::iterator it;
+    int totCaptured = 0;
+    for (size_t i = 0; i < rulelist.size(); ++i) {
+        rule_vand(captured_it, not_captured_yet, rules[rulelist[i]].truthtable, nsamples, &nb);
+        rule_vandnot(not_captured_yet, not_captured_yet, captured_it, nsamples, &pm);
+        rule_vand(captured_zeros, captured_it, labels[0].truthtable, nsamples, &nb2);
+        totCaptured += nb;
+        if(nb2 <= (nb - nb2)) { //then prediction is 1
+            rule_vor(preds_prefix, preds_prefix, captured_it, nsamples, &nb);
+            comp_scores[i] = (double) (nb - nb2) / (double) nb;
+        } else {
+            comp_scores[i] = (double) (nb2) / (double) nb;
+        }
+    }
+    // number of zeros labeled instances falling into default decision
+    rule_vand(captured_zeros, not_captured_yet, labels[0].truthtable, nsamples, &nb2);
+    if(preds.back() == 1) { // else it is already OK
+        rule_vor(preds_prefix, preds_prefix, not_captured_yet, nsamples, &pm);
+        comp_scores[rulelist.size()] = (double) ((double) ((nsamples - totCaptured) - nb2)) /(double) (nsamples - totCaptured);
+    }
+    else {
+        comp_scores[rulelist.size()] = (double) ((double) (nb2)) /(double) (nsamples - totCaptured);
+    }
+    // true positives, false negatives, true negatives, and false positives tables (for this rule)
+    VECTOR A, B, D, C;
+    int tp, tn, fp, fn;
+    rule_vinit(nsamples, &A);
+    //rule_vinit(nsamples, &B);
+    rule_vinit(nsamples, &D);
+    //rule_vinit(nsamples, &C);
+
+    rule_vand(A, preds_prefix, labels[1].truthtable, nsamples, &tp);
+    //rule_vandnot(B, labels[1].truthtable, preds_prefix, nsamples, &fn);
+    rule_vandnot(D, labels[0].truthtable, preds_prefix, nsamples, &tn);
+    //rule_vand(C, preds_prefix, labels[0].truthtable, nsamples, &fp);
+
+    double acc = (double) (tp + tn)/nsamples;
+    // 3) We compute group-specific metrics for the model
+
+    // Free allocated VECTORS
+    rule_vfree(&captured_it);
+    rule_vfree(&not_captured_yet);
+    rule_vfree(&captured_zeros);
+    rule_vfree(&preds_prefix);
+    rule_vfree(&A);
+    //rule_vfree(&B);
+    rule_vfree(&D);
+   //rule_vfree(&C);
+    result.conf_scores = comp_scores;
+    result.accuracy = acc;
+    return result;
+}
+
 /*
  * Given a rulelist and predictions, will output a human-interpretable form to a file.
  */
@@ -203,18 +279,19 @@ void print_final_rulelist(const tracking_vector<unsigned short, DataStruct::Tree
                           const bool latex_out,
                           const rule_t rules[],
                           const rule_t labels[],
-                          char fname[]) {
+                          char fname[],
+                          double* confScores) {
     assert(rulelist.size() == preds.size() - 1);
 
     printf("\nOPTIMAL RULE LIST\n");
     if (rulelist.size() > 0) {
-        printf("if (%s) then (%s)\n", rules[rulelist[0]].features,
-               labels[preds[0]].features);
+        printf("if (%s) then (%s) (conf %lf)\n", rules[rulelist[0]].features,
+               labels[preds[0]].features, confScores[0]);
         for (size_t i = 1; i < rulelist.size(); ++i) {
-            printf("else if (%s) then (%s)\n", rules[rulelist[i]].features,
-                   labels[preds[i]].features);
+            printf("else if (%s) then (%s) (conf %lf)\n", rules[rulelist[i]].features,
+                   labels[preds[i]].features, confScores[i]);
         }
-        printf("else (%s)\n\n", labels[preds.back()].features);
+        printf("else (%s) (conf %lf)\n\n", labels[preds.back()].features, confScores[rulelist.size()]);
 
         if (latex_out) {
             printf("\nLATEX form of OPTIMAL RULE LIST\n");
@@ -230,7 +307,7 @@ void print_final_rulelist(const tracking_vector<unsigned short, DataStruct::Tree
             printf("\\end{algorithmic}\n\n");
         }
     } else {
-        printf("if (1) then (%s)\n\n", labels[preds.back()].features);
+        printf("if (1) then (%s) (conf %lf)\n\n", labels[preds.back()].features, confScores[0]);
 
         if (latex_out) {
             printf("\nLATEX form of OPTIMAL RULE LIST\n");

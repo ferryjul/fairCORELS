@@ -116,6 +116,12 @@ class CacheTree {
     inline Node* root() const;
 
     void update_min_objective(double objective);
+
+    inline double* getConfScores() const;
+    inline void setConfScores(double* _conf_scores);
+    inline double getFinalAcc() const;
+    inline void setFinalAcc(double _final_acc);
+
     void update_opt_rulelist(tracking_vector<unsigned short, DataStruct::Tree>& parent_prefix,
                              unsigned short new_rule_id);
     void update_opt_predictions(Node* parent, bool new_pred, bool new_default_pred);
@@ -136,6 +142,8 @@ class CacheTree {
     Node* root_;
     size_t nsamples_;
     size_t nrules_;
+    double* conf_scores;
+    double final_acc;
     double c_;
 
     size_t num_nodes_;
@@ -261,6 +269,22 @@ inline double CuriousNode::get_curiosity() {
 
 inline double CacheTree::min_objective() const {
     return min_objective_;
+}
+
+inline double* CacheTree::getConfScores() const {
+    return conf_scores;
+}
+
+inline void CacheTree::setConfScores(double* _conf_scores) {
+    conf_scores = _conf_scores;
+}
+
+inline double CacheTree::getFinalAcc() const {
+    return final_acc;
+}
+
+inline void CacheTree::setFinalAcc(double _final_acc) {
+    final_acc = _final_acc;
 }
 
 inline tracking_vector<unsigned short, DataStruct::Tree> CacheTree::opt_rulelist() const {

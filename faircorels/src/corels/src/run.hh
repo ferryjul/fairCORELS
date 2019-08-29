@@ -14,7 +14,7 @@ int run_corels_begin(double c, char* vstring, int curiosity_policy,
 int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int maj_pos, int min_pos, int mode, bool useUnfairnessLB,
                         double min_fairness_acceptable, int kBest);
 
-double run_corels_end(int** rulelist, int* rulelist_size, int** classes, int early, int latex_out, rule_t* rules, rule_t* labels, char* opt_fname);
+double run_corels_end(int** rulelist, int* rulelist_size, int** classes, double** confScores, int early, int latex_out, rule_t* rules, rule_t* labels, char* opt_fname);
 
 #ifdef __cplusplus
 }

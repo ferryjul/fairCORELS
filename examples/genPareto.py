@@ -85,9 +85,9 @@ def performKFold(foldID, minFairness=0.0, modeC=3):
 kFold = 10 # Enter here the number of folds for the k-fold cross-validation
 UnprotectedIndex = 19
 ProtectedIndex = 18
-NBPoints = 100
+NBPoints = 20
 fairnessMetric = 4
-NBNodes = 1500000
+NBNodes = 1000000
 dataset_name = "Adult"
 X_tot, y_tot, features_tot, prediction_tot = load_from_csv("data/adult_full_binary.csv")
 print("--- DATASET INFO --- ")

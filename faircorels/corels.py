@@ -1,5 +1,5 @@
 from __future__ import print_function, division, with_statement
-from ._corels import fit_wrap_begin, fit_wrap_end, fit_wrap_loop, predict_wrap
+from ._corels import fit_wrap_begin, fit_wrap_end, fit_wrap_loop, predict_wrap, predict_score_wrap
 from .utils import check_consistent_length, check_array, check_is_fitted, get_feature, check_in, check_features, check_rulelist, RuleList
 import numpy as np
 import pickle
@@ -335,6 +335,36 @@ class CorelsClassifier:
 
         return np.array(predict_wrap(samples.astype(np.uint8, copy=False), self.rl_.rules), dtype=np.int32)
 
+    def predict_with_scores(self, X):
+        """
+        Predict classifications of the input samples X.
+
+        Arguments
+        ---------
+        X : array-like, shape = [n_samples, n_features]
+            The training input samples. All features must be binary, and the matrix
+            is internally converted to dtype=np.uint8. The features must be the same
+            as those of the data used to train the model.
+
+        Returns
+        -------
+        p : array of shape = [n_samples].
+            The classifications of the input samples.
+        """
+
+        check_is_fitted(self, "rl_")
+        check_rulelist(self.rl_)        
+
+        samples = check_array(X, ndim=2)
+        
+        if samples.shape[1] != len(self.rl_.features):
+            raise ValueError("Feature count mismatch between eval data (" + str(X.shape[1]) + 
+                             ") and feature names (" + str(len(self.rl_.features)) + ")")
+        preds, scores = predict_score_wrap(samples.astype(np.uint8, copy=False), self.rl_.rules)
+        predsArray = np.array(preds, dtype=np.int32)
+        scoresArray = np.array(scores, dtype=np.double)
+        return np.array((predsArray, scoresArray))
+    
     def score(self, X, y):
         """
         Score the algorithm on the input samples X with the labels y. Alternatively,

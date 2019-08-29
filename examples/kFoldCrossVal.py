@@ -30,7 +30,7 @@ def performKFold(foldID):
     X_fold_test = X_tot[startTest:endTest,:]
     y_fold_test = y_tot[startTest:endTest]
     print("%d instances in test set, %d instances in train set" %(len(X_fold_test),len(X_fold_train)))
-    c = CorelsClassifier(map_type="prefix", n_iter=10000, c=0.0001, max_card=1, policy="bfs", bfs_mode=2, useUnfairnessLB=True, fairness=4, maj_pos=UnprotectedIndex+1, min_pos=ProtectedIndex+1, epsilon=0.99, mode=3)
+    c = CorelsClassifier(verbosity=[], map_type="prefix", n_iter=1000000, c=0.00001, max_card=1, policy="bfs", bfs_mode=2, useUnfairnessLB=True, fairness=4, maj_pos=UnprotectedIndex+1, min_pos=ProtectedIndex+1, epsilon=1.00, mode=3)
     c.fit(X_fold_train, y_fold_train, features=features_tot, prediction_name="(income:>50K)")
     # Accuracy sur le train set
     accuracy_train = (c.score(X_fold_train, y_fold_train))
@@ -47,6 +47,23 @@ def performKFold(foldID):
     cmTest = ConfusionMatrix(X_fold_test[:,ProtectedIndex], X_fold_test[:,UnprotectedIndex], y_pred_test, y_fold_test)
     cm_minorityTest, cm_majorityTest = cmTest.get_matrix()
     fmTest = Metric(cm_minorityTest, cm_majorityTest)
+    print(c.rl())
+    resultat = c.predict_with_scores(X_fold_train)
+    r1 = 0
+    r2 = 0
+    r3 = 0
+    default = 0
+    '''for i in range(len(resultat[0])):
+        #print("(" + str(resultat[0][i]) + "," + str(resultat[1][i]) + ")")
+        if (abs(0.7195488721804512 - resultat[1][i])) <= 0.001:
+            default = default + 1
+        if (abs(0.8023559153376543 - resultat[1][i])) <= 0.001:
+            r2 = r2 + 1
+        if (abs(0.9868871151653363 - resultat[1][i])) <= 0.001:
+            r1 = r1 + 1
+        if (abs(0.9953596287703016 - resultat[1][i])) <= 0.001:
+            r3 = r3 + 1
+    print("r1 : ", r1, ", r2 : ", r2, ", r3 : ", r3, ", default : ", default)'''
     return [accuracy_train, accuracy_test, fmTrain.statistical_parity(), fmTrain.predictive_parity(), fmTrain.predictive_equality(), fmTrain.equal_opportunity(), fmTest.statistical_parity(), fmTest.predictive_parity(), fmTest.predictive_equality(), fmTest.equal_opportunity()]
 
 kFold = 10 # Enter here the number of folds for the k-fold cross-validation
@@ -91,7 +108,7 @@ for aReturn in returnList:
     equal_opportunity_list_test.append(aReturn[9])
 
 #print("-------------------------- Learned rulelist ------------------------------")
-#print(c.rl())
+
 
 print("----------- Training set metrics : ----------- ")
 print("Accuracy: %lf" %average(accuracy_list_train))

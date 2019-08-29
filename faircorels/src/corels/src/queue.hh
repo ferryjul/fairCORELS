@@ -175,7 +175,7 @@ class Queue {
 
 extern void bbound_begin(CacheTree* tree, Queue* q);
 
-extern int bbound_end(CacheTree* tree, Queue* q, PermutationMap* p, bool early);
+extern int bbound_end(CacheTree* tree, Queue* q, PermutationMap* p, bool early, rule_t* rules, rule_t* labels);
 
 // datastructures
 struct confusion_matrix {

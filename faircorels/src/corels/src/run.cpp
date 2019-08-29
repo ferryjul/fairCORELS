@@ -13,11 +13,14 @@ static CacheTree* g_tree = nullptr;
 static Queue* g_queue = nullptr;
 static double g_init = 0.0;
 static std::set<std::string> g_verbosity;
-
+rule_t * Grules;
+rule_t * Glabels;
 int run_corels_begin(double c, char* vstring, int curiosity_policy,
                   int map_type, int ablation, int calculate_size, int nrules, int nlabels,
                   int nsamples, rule_t* rules, rule_t* labels, rule_t* meta, int freq, char* log_fname, int BFSmode, int seed)
 {
+    Grules = rules;
+    Glabels = labels;
     srand(seed);
     // Check arguments
     if(BFSmode < 0 || BFSmode > 4) {
@@ -183,24 +186,27 @@ int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int maj_pos
     return -1;
 }
 
-double run_corels_end(int** rulelist, int* rulelist_size, int** classes, int early, int latex_out, rule_t* rules, rule_t* labels, char* opt_fname)
+double run_corels_end(int** rulelist, int* rulelist_size, int** classes, double** confScores, int early, int latex_out, rule_t* rules, rule_t* labels, char* opt_fname)
 {
-    bbound_end(g_tree, g_queue, g_pmap, early);
-
+    
+    bbound_end(g_tree, g_queue, g_pmap, early, Grules, Glabels);
+    
     const tracking_vector<unsigned short, DataStruct::Tree>& r_list = g_tree->opt_rulelist();
     const tracking_vector<bool, DataStruct::Tree>& preds = g_tree->opt_predictions();
-
-    double accuracy = 1.0 - g_tree->min_objective() + g_tree->c() * r_list.size();
-
-    *rulelist = (int*)malloc(sizeof(int) * r_list.size());
-    *classes = (int*)malloc(sizeof(int) * (1 + r_list.size()));
+    const double* scores = g_tree->getConfScores();
+    //double accuracy = 1.0 - g_tree->min_objective() + g_tree->c() * r_list.size();
+    double accuracy = g_tree->getFinalAcc();
+    *rulelist = (int*)malloc(sizeof(int) * r_list.size()); // Antecedents
+    *classes = (int*)malloc(sizeof(int) * (1 + r_list.size())); // Consequents
+    *confScores = (double*)malloc(sizeof(double) * (1 + r_list.size())); // Confidence scores
     *rulelist_size = r_list.size();
     for(size_t i = 0; i < r_list.size(); i++) {
-        (*rulelist)[i] = r_list[i];
-        (*classes)[i] = preds[i];
+        (*rulelist)[i] = r_list[i]; // Condition i
+        (*confScores)[i] = scores[i]; // Confidence score for rule i
+        (*classes)[i] = preds[i]; // Pred i
     }
-    (*classes)[r_list.size()] = preds.back();
-
+    (*confScores)[r_list.size()] = (scores)[r_list.size()];
+    (*classes)[r_list.size()] = preds.back(); // Default prediction
     if (g_verbosity.count("progress")) {
         printf("final num_nodes: %zu\n", g_tree->num_nodes());
         printf("final num_evaluated: %zu\n", g_tree->num_evaluated());
@@ -210,11 +216,10 @@ double run_corels_end(int** rulelist, int* rulelist_size, int** classes, int ear
     }
 
     if(opt_fname) {
-        print_final_rulelist(r_list, g_tree->opt_predictions(), latex_out, rules, labels, opt_fname);
+        print_final_rulelist(r_list, g_tree->opt_predictions(), latex_out, Grules, Glabels, opt_fname, g_tree->getConfScores());
         logger->dumpState();
         logger->closeFile();
     }
-
     if(g_tree)
         delete g_tree;
     g_tree = nullptr;
@@ -226,6 +231,5 @@ double run_corels_end(int** rulelist, int* rulelist_size, int** classes, int ear
     if(g_queue)
         delete g_queue;
     g_queue = nullptr;
-
     return accuracy;
 }
