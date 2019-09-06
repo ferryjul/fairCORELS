@@ -49,13 +49,13 @@ confusion_matrix_groups compute_confusion_matrix(VECTOR parent_prefix_prediction
     confusion_matrix cm_minority;
     confusion_matrix cm_majority;
 
-    if(firstPass) {
+    /*if(firstPass) {
         printf("Fairness calc infos :\n");
         printf("Sensitive attribute : %s, unsensitive attribute : %s\n", tree->rule(min_pos).features, tree->rule(maj_pos).features);
     }
     if(firstPass)
         printf("Number of rules = %d\n", tree->nrules());
-    firstPass = false;
+    firstPass = false;*/
 
 
     int nsamples = tree->nsamples();

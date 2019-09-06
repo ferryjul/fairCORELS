@@ -33,7 +33,7 @@ cdef extern from "src/corels/src/run.hh":
                       int freq, char* log_fname, int BFSmode, int seed)
 
     int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int maj_pos, int min_pos,
-                    int mode, int useUnfairnessLB, double min_fairness_acceptable, int kBest)
+                    int mode, int useUnfairnessLB, double min_fairness_acceptable, int kBest, int restart, int initNBNodes, double geomReason)
 
     double run_corels_end(int** rulelist, int* rulelist_size, 
     int** classes, double** confScores, int early, int latex_out, 
@@ -53,11 +53,11 @@ def predict_wrap(np.ndarray[np.uint8_t, ndim=2] X, rules):
     
     cdef np.ndarray out = np.zeros(nsamples, dtype=np.uint8)
     cdef int n_rules = len(rules) - 1
-    if n_rules < 0:
-        return out
-
     cdef int s, r, next_rule, nidx, a, idx, c
     cdef int default = bool(rules[n_rules]["prediction"])
+    
+    if n_rules < 0:
+        return out
 
     cdef int* antecedent_lengths = <int*>malloc(sizeof(int) * n_rules)
     cdef int* predictions = <int*>malloc(sizeof(int) * n_rules)
@@ -72,6 +72,7 @@ def predict_wrap(np.ndarray[np.uint8_t, ndim=2] X, rules):
 
     # This compiles to C, so it's pretty fast!
     for s in range(nsamples):
+        next_rule = 1
         for r in range(n_rules):
             next_rule = 0
             nidx = antecedent_lengths[r]
@@ -96,6 +97,7 @@ def predict_wrap(np.ndarray[np.uint8_t, ndim=2] X, rules):
 
     for r in range(n_rules):
         free(antecedents[r])
+
     free(antecedents)
     free(predictions)
     free(antecedent_lengths)
@@ -111,11 +113,12 @@ def predict_score_wrap(np.ndarray[np.uint8_t, ndim=2] X, rules):
     cdef np.ndarray out = np.zeros(nsamples, dtype=np.uint8)
     cdef np.ndarray out2 = np.zeros(nsamples, dtype=np.double)
     cdef int n_rules = len(rules) - 1
-    if n_rules < 0:
-        return out
-
     cdef int s, r, next_rule, nidx, a, idx, c
     cdef int default = bool(rules[n_rules]["prediction"])
+    
+
+    if n_rules < 0:
+        return out
 
     cdef int* antecedent_lengths = <int*>malloc(sizeof(int) * n_rules)
     cdef int* predictions = <int*>malloc(sizeof(int) * n_rules)
@@ -132,6 +135,7 @@ def predict_score_wrap(np.ndarray[np.uint8_t, ndim=2] X, rules):
     scores[n_rules] = float(rules[n_rules]["score"])
     # This compiles to C, so it's pretty fast!
     for s in range(nsamples):
+        next_rule = 1
         for r in range(n_rules):
             next_rule = 0
             nidx = antecedent_lengths[r]
@@ -382,21 +386,22 @@ def fit_wrap_begin(np.ndarray[np.uint8_t, ndim=2] samples,
 
 
 def fit_wrap_loop(size_t max_nodes, double beta, int fairness, int maj_pos, int min_pos,
-                int mode, int useUnfairnessLB, double min_fairness_acceptable, int kBest):
+                int mode, int useUnfairnessLB, double min_fairness_acceptable, int kBest, int restart, int initNBNodes, double geomReason):
     
     cdef size_t max_num_nodes = max_nodes
     cdef double beta_val = beta
     cdef int fairness_metric = fairness
     cdef int maj_pos_val = maj_pos
     cdef int min_pos_val = min_pos
-
     cdef int mode_val = mode
     cdef int useUnfairnessLB_val = useUnfairnessLB
     cdef double min_fairness_acceptable_val = min_fairness_acceptable
     cdef int kBest_val = kBest
-
+    cdef int restart_val = restart
+    cdef double geomReason_val = geomReason
+    cdef int initNBNodes_val = initNBNodes
     # This is where the magic happens
-    return (run_corels_loop(max_num_nodes, beta_val, fairness_metric, maj_pos_val, min_pos_val, mode_val, useUnfairnessLB_val, min_fairness_acceptable_val, kBest_val) != -1)
+    return (run_corels_loop(max_num_nodes, beta_val, fairness_metric, maj_pos_val, min_pos_val, mode_val, useUnfairnessLB_val, min_fairness_acceptable_val, kBest_val, restart_val, initNBNodes_val, geomReason_val) != -1)
 
 def fit_wrap_end(int early):
     global rules

@@ -92,7 +92,7 @@ class CorelsClassifier:
         max acceptable unfairness
     
     kbest: int optional (default=1)
-        Use the k-th best objective
+        Randomly use one of the k best objectives
     
     bfs_mode: int optinal (default=0)
         BFS strategy
@@ -101,6 +101,19 @@ class CorelsClassifier:
     random_state: int optional (default=42)
         Random seed for randomized search
 
+    Arguments for .fit :
+
+    performRestarts : int optional (default=0)
+        0 : Does not perform any restarts
+        1 : Performs geometric restarts
+        2 : Performs Luby restarts
+
+    initNBNodes : int optional (default=1000)
+        Initial limit for the number of nodes in the trie.
+
+    geomRReason : double optional (default=1.5)
+        When performRestarts=True, geomRReason is the reason used 
+        for the geometric restart calculation
 
     References
     ----------
@@ -148,7 +161,7 @@ class CorelsClassifier:
         self.bfs_mode = bfs_mode
         self.random_state = random_state
 
-    def fit(self, X, y, features=[], prediction_name="prediction"):
+    def fit(self, X, y, features=[], prediction_name="prediction", performRestarts=0, initNBNodes=1000, geomRReason=1.5):
         """
         Build a CORELS classifier from the training set (X, y).
 
@@ -286,7 +299,7 @@ class CorelsClassifier:
         if fr:
             early = False
             try:
-                while fit_wrap_loop(self.n_iter, self.beta, self.fairness, self.maj_pos, self.min_pos, self.mode, self.useUnfairnessLB, self.epsilon, self.kbest):
+                while fit_wrap_loop(self.n_iter, self.beta, self.fairness, self.maj_pos, self.min_pos, self.mode, self.useUnfairnessLB, self.epsilon, self.kbest, performRestarts, initNBNodes, geomRReason):
                     pass
             except:
                 print("\nExiting early")
@@ -304,7 +317,6 @@ class CorelsClassifier:
                 print(self.rl_)
         else:
             print("Error running model! Exiting")
-
         return self
 
     def predict(self, X):
@@ -323,7 +335,6 @@ class CorelsClassifier:
         p : array of shape = [n_samples].
             The classifications of the input samples.
         """
-
         check_is_fitted(self, "rl_")
         check_rulelist(self.rl_)        
 
@@ -332,9 +343,8 @@ class CorelsClassifier:
         if samples.shape[1] != len(self.rl_.features):
             raise ValueError("Feature count mismatch between eval data (" + str(X.shape[1]) + 
                              ") and feature names (" + str(len(self.rl_.features)) + ")")
-
         return np.array(predict_wrap(samples.astype(np.uint8, copy=False), self.rl_.rules), dtype=np.int32)
-
+                
     def predict_with_scores(self, X):
         """
         Predict classifications of the input samples X.

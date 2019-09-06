@@ -13,21 +13,48 @@ static CacheTree* g_tree = nullptr;
 static Queue* g_queue = nullptr;
 static double g_init = 0.0;
 static std::set<std::string> g_verbosity;
-rule_t * Grules;
-rule_t * Glabels;
+static rule_t * Grules;
+static rule_t * Glabels;
+static rule_t * Gmeta;
+static int SPolicy = -1;
+static int modeBFS = -1;
+static int map_type_arg = -1;
+static int currLimit = -1;
+static CacheTree* best_tree = nullptr;
+static Queue* best_queue = nullptr;
+static bool usedRestart = false;
+static bool first = true;
+static int nsamplesG = -1;
+static int nrulesG = -1;
+static int ablationG = -1;
+static int calculate_sizeG = -1;
+static double Gc = -1;
+int *lubySeq;
+int indLuby = -1;
+int lubySeqSize = -1;
 int run_corels_begin(double c, char* vstring, int curiosity_policy,
                   int map_type, int ablation, int calculate_size, int nrules, int nlabels,
                   int nsamples, rule_t* rules, rule_t* labels, rule_t* meta, int freq, char* log_fname, int BFSmode, int seed)
 {
     Grules = rules;
     Glabels = labels;
+    currLimit = -1;
+    Gmeta = meta;
+    Gc = c;
+    SPolicy = curiosity_policy;
+    nsamplesG = nsamples;
+    nrulesG = nrules;
+    ablationG = ablation;
+    calculate_sizeG = calculate_size;
+    //printf("seed = %d\n", seed);
     srand(seed);
     // Check arguments
     if(BFSmode < 0 || BFSmode > 4) {
         printf("Error : BFSmode should be in {1, 2, 3, 4}\n");
         exit(-1);
     }
-    
+    modeBFS = BFSmode;
+    map_type_arg = map_type;
     g_verbosity.clear();
 
     const char *voptions = "rule|label|minor|samples|progress|loud";
@@ -157,14 +184,12 @@ int run_corels_begin(double c, char* vstring, int curiosity_policy,
     g_tree = new CacheTree(nsamples, nrules, c, rules, labels, meta, ablation, calculate_size, type);
     if (g_verbosity.count("progress"))
         printf("%s", run_type);
-
     bbound_begin(g_tree, g_queue);
-
     return 0;
 }
 
 int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int maj_pos, int min_pos, int mode, bool useUnfairnessLB,
-                        double min_fairness_acceptable, int kBest) {
+                        double min_fairness_acceptable, int kBest, int restart, int initNBNodes, double geomReason) {
     // Check arguments
     if(mode < 1 || mode > 4) {
         printf("Error : mode should be in {1, 2, 3, 4}\n");
@@ -178,19 +203,253 @@ int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int maj_pos
         printf("Error : min_fairness_acceptable should be in [0,1]\n");
         exit(-1);
     }
-    if((g_tree->num_nodes() < max_num_nodes) && !g_queue->empty()) {
-        bbound_loop(g_tree, g_queue, g_pmap, beta, fairness, maj_pos, min_pos, mode, useUnfairnessLB,
-                        min_fairness_acceptable, kBest);
-        return 0;
+    if(restart < 0 || restart > 2) {
+        printf("Error : restart must be exactly one of {0,1,2}");
+    }
+    if(restart == 1){ // Perform geometric restart
+        //printf("[WARNING] Geometric restart is a beta feature.\n", initNBNodes, geomReason);
+        /* INITIAL ITERATION */
+        if(currLimit == -1) {
+            currLimit = initNBNodes;
+            usedRestart = true;
+            //printf("Initial limit = %d \n", currLimit);
+        }
+        if((g_tree->num_nodes() < currLimit) && !g_queue->empty()) {
+            bbound_loop(g_tree, g_queue, g_pmap, beta, fairness, maj_pos, min_pos, mode, useUnfairnessLB,
+                            min_fairness_acceptable, kBest); 
+            return 0;
+        } else {
+            if(first) { // Update best known solution
+                best_tree = g_tree;
+                best_queue = g_queue;
+                //printf("(First) Best solution updated : %lf\n", best_tree->min_objective());
+                first = false;
+            } else {
+                if(g_tree->min_objective() < best_tree->min_objective()) {
+                    // delete former best tree & queue and update it
+                    Node* node;
+                    while (!best_queue->empty()) {
+                        node = best_queue->front();
+                        best_queue->pop();
+                        if (node->deleted()) {
+                            best_tree->decrement_num_nodes();
+                            logger->removeFromMemory(sizeof(*node), DataStruct::Tree);
+                            delete node;
+                        }
+                    }
+                    if(best_queue)
+                        delete best_queue;
+                    if(best_tree)
+                        delete(best_tree);
+                    best_tree = g_tree;
+                    best_queue = g_queue;
+                    //printf("Best solution updated : %lf\n", best_tree->min_objective());
+                } else {
+                    Node* node;
+                    while (!g_queue->empty()) {
+                        node = g_queue->front();
+                        g_queue->pop();
+                        if (node->deleted()) {
+                            g_tree->decrement_num_nodes();
+                            logger->removeFromMemory(sizeof(*node), DataStruct::Tree);
+                            delete node;
+                        }
+                    }
+                    if(g_queue)
+                        delete g_queue;
+                    if(g_tree)
+                        delete(g_tree);
+                }
+            }
+            currLimit *= geomReason;
+            if(currLimit > max_num_nodes) {
+                return -1;
+            } else {
+                //printf("New limit = %d \n", currLimit);
+            }
+            // Clear data structures
+            if(g_pmap)
+                delete g_pmap;
+            g_pmap = nullptr;
+            
+            // Init new data structures for next iteration
+            g_init = timestamp();
+            char run_type[BUFSZ];
+            strcpy(run_type, "LEARNING RULE LIST via ");
+            char const *type = "node";
+            strcat(run_type, "BFS");
+            g_queue = new Queue(base_cmp_random, run_type);
+            if (map_type_arg == 1) {
+                strcat(run_type, " Prefix Map\n");
+                PrefixPermutationMap* prefix_pmap = new PrefixPermutationMap;
+                g_pmap = (PermutationMap*) prefix_pmap;
+            } else if (map_type_arg == 2) {
+                strcat(run_type, " Captured Symmetry Map\n");
+                CapturedPermutationMap* cap_pmap = new CapturedPermutationMap;
+                g_pmap = (PermutationMap*) cap_pmap;
+            } else {
+                strcat(run_type, " No Permutation Map\n");
+                NullPermutationMap* null_pmap = new NullPermutationMap;
+                g_pmap = (PermutationMap*) null_pmap;
+            }
+            g_tree = new CacheTree(nsamplesG, nrulesG, Gc, Grules, Glabels, Gmeta, ablationG, calculate_sizeG, type);
+
+            bbound_begin(g_tree, g_queue);
+            return 0;
+        }
+    } else if(restart == 2) { // Perform luby restart
+                //printf("[WARNING] Luby restart is a beta feature.\n", initNBNodes, geomReason);
+        /* INITIAL ITERATION */
+        if(currLimit == -1) {
+            printf("Will perform Luby restarts from %d to %d!\n",initNBNodes,max_num_nodes);
+            //Compute luby sequence
+            // 1) Compute size
+            int v = 1;
+            int nbEls = 1;
+            while((v*2)*initNBNodes <= max_num_nodes) {
+                v = 2*v;
+            }
+            // 2) Init array
+            lubySeq = (int*) malloc(v*sizeof(int));
+            lubySeqSize = v;
+            // 3) Fill in array
+            v = 1;
+            lubySeq[0] = 1;
+            int ind0 = 1;
+            // Fill in the (juxtaposed) precedent terms
+            while(((v*2)*2)*initNBNodes <= max_num_nodes) {
+                v = v * 2;
+                int p = 0;
+                while(p < (v-1)){
+                    lubySeq[ind0+p] = lubySeq[ind0+p-(v-1)];
+                    p++;
+                }
+                ind0+=(v-1);
+                lubySeq[ind0] = v;
+                ind0++;
+            }
+            // Finally print the last number to terminate the sequence
+            lubySeq[lubySeqSize-1]=lubySeqSize;
+            // 4) Print Luby seq
+            printf("--- Final Luby Sequence : ---\n");
+            int * printer = lubySeq;
+            int cnt = 0;
+            while(printer != 0 && cnt<lubySeqSize) {
+                printf("%d ",*printer);
+                printer++;
+                cnt++;
+            }
+            printf("\n----------------------------\n");
+            // Initialize the limit
+            indLuby = 0;
+            currLimit = initNBNodes*lubySeq[indLuby];
+            usedRestart = true;
+            printf("Initial limit = %d \n", currLimit);
+        }
+        if((g_tree->num_nodes() < currLimit) && !g_queue->empty()) {
+            bbound_loop(g_tree, g_queue, g_pmap, beta, fairness, maj_pos, min_pos, mode, useUnfairnessLB,
+                            min_fairness_acceptable, kBest); 
+            return 0;
+        } else {
+            if(first) { // Update best known solution
+                best_tree = g_tree;
+                best_queue = g_queue;
+                printf("(First) Best solution updated : %lf\n", best_tree->min_objective());
+                first = false;
+            } else {
+                if(g_tree->min_objective() < best_tree->min_objective()) {
+                    // delete former best tree & queue and update it
+                    Node* node;
+                    while (!best_queue->empty()) {
+                        node = best_queue->front();
+                        best_queue->pop();
+                        if (node->deleted()) {
+                            best_tree->decrement_num_nodes();
+                            logger->removeFromMemory(sizeof(*node), DataStruct::Tree);
+                            delete node;
+                        }
+                    }
+                    if(best_queue)
+                        delete best_queue;
+                    if(best_tree)
+                        delete(best_tree);
+                    best_tree = g_tree;
+                    best_queue = g_queue;
+                    printf("Best solution updated : %lf\n", best_tree->min_objective());
+                } else {
+                    Node* node;
+                    while (!g_queue->empty()) {
+                        node = g_queue->front();
+                        g_queue->pop();
+                        if (node->deleted()) {
+                            g_tree->decrement_num_nodes();
+                            logger->removeFromMemory(sizeof(*node), DataStruct::Tree);
+                            delete node;
+                        }
+                    }
+                    if(g_queue)
+                        delete g_queue;
+                    if(g_tree)
+                        delete(g_tree);
+                }
+            }
+            indLuby++;
+            currLimit = initNBNodes*lubySeq[indLuby];
+            if(indLuby >= lubySeqSize) {
+                return -1;
+            } else {
+                printf("New limit = %d \n", currLimit);
+            }
+            // Clear data structures
+            if(g_pmap)
+                delete g_pmap;
+            g_pmap = nullptr;
+            
+            // Init new data structures for next iteration
+            g_init = timestamp();
+            char run_type[BUFSZ];
+            strcpy(run_type, "LEARNING RULE LIST via ");
+            char const *type = "node";
+            strcat(run_type, "BFS");
+            g_queue = new Queue(base_cmp_random, run_type);
+            if (map_type_arg == 1) {
+                strcat(run_type, " Prefix Map\n");
+                PrefixPermutationMap* prefix_pmap = new PrefixPermutationMap;
+                g_pmap = (PermutationMap*) prefix_pmap;
+            } else if (map_type_arg == 2) {
+                strcat(run_type, " Captured Symmetry Map\n");
+                CapturedPermutationMap* cap_pmap = new CapturedPermutationMap;
+                g_pmap = (PermutationMap*) cap_pmap;
+            } else {
+                strcat(run_type, " No Permutation Map\n");
+                NullPermutationMap* null_pmap = new NullPermutationMap;
+                g_pmap = (PermutationMap*) null_pmap;
+            }
+            g_tree = new CacheTree(nsamplesG, nrulesG, Gc, Grules, Glabels, Gmeta, ablationG, calculate_sizeG, type);
+
+            bbound_begin(g_tree, g_queue);
+            return 0;
+        }
+
+
+    } 
+    else { // Normal run (no restart)
+                if((g_tree->num_nodes() < max_num_nodes) && !g_queue->empty()) {
+            bbound_loop(g_tree, g_queue, g_pmap, beta, fairness, maj_pos, min_pos, mode, useUnfairnessLB,
+                            min_fairness_acceptable, kBest);
+            return 0;
+        }
     }
     return -1;
 }
 
 double run_corels_end(int** rulelist, int* rulelist_size, int** classes, double** confScores, int early, int latex_out, rule_t* rules, rule_t* labels, char* opt_fname)
 {
-    
+    if(usedRestart) {
+        g_tree = best_tree;
+        g_queue = best_queue;
+    }
     bbound_end(g_tree, g_queue, g_pmap, early, Grules, Glabels);
-    
     const tracking_vector<unsigned short, DataStruct::Tree>& r_list = g_tree->opt_rulelist();
     const tracking_vector<bool, DataStruct::Tree>& preds = g_tree->opt_predictions();
     const double* scores = g_tree->getConfScores();
@@ -214,7 +473,6 @@ double run_corels_end(int** rulelist, int* rulelist_size, int** classes, double*
         printf("final accuracy: %1.5f\n", accuracy);
         printf("final total time: %f\n", time_diff(g_init));
     }
-
     if(opt_fname) {
         print_final_rulelist(r_list, g_tree->opt_predictions(), latex_out, Grules, Glabels, opt_fname, g_tree->getConfScores());
         logger->dumpState();
@@ -223,7 +481,6 @@ double run_corels_end(int** rulelist, int* rulelist_size, int** classes, double*
     if(g_tree)
         delete g_tree;
     g_tree = nullptr;
-
     if(g_pmap)
         delete g_pmap;
     g_pmap = nullptr;
@@ -231,5 +488,24 @@ double run_corels_end(int** rulelist, int* rulelist_size, int** classes, double*
     if(g_queue)
         delete g_queue;
     g_queue = nullptr;
+
+    // Re init all variables
+    first = true;
+    SPolicy = -1;
+    modeBFS = -1;
+    map_type_arg = -1;
+    currLimit = -1;
+    usedRestart = false;
+    nsamplesG = -1;
+    nrulesG = -1;
+    ablationG = -1;
+    calculate_sizeG = -1;
+    Gc = -1;
+    if(lubySeqSize!= -1){
+        free(lubySeq);
+        lubySeqSize = -1;
+        indLuby = -1;
+    }  
+    printf("Final accuracy = %lf\n", accuracy);
     return accuracy;
 }
