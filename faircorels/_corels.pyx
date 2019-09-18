@@ -30,7 +30,7 @@ cdef extern from "src/corels/src/run.hh":
     int run_corels_begin(double c, char* vstring, int curiosity_policy,
                       int map_type, int ablation, int calculate_size, int nrules, int nlabels,
                       int nsamples, rule_t* rules, rule_t* labels, rule_t* meta, 
-                      int freq, char* log_fname, int BFSmode, int seed)
+                      int freq, char* log_fname, int BFSmode, int seed, int forbidSensAttr_val)
 
     int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int maj_pos, int min_pos,
                     int mode, int useUnfairnessLB, double min_fairness_acceptable, int kBest, int restart, int initNBNodes, double geomReason)
@@ -226,7 +226,7 @@ def fit_wrap_begin(np.ndarray[np.uint8_t, ndim=2] samples,
              np.ndarray[np.uint8_t, ndim=2] labels,
              features, int max_card, double min_support, verbosity_str, int mine_verbose,
              int minor_verbose, double c, int policy, int map_type, int ablation,
-             int calculate_size, int BFSmode, int seed):
+             int calculate_size, int forbidSensAttr, int BFSmode, int seed):
     global rules
     global labels_vecs
     global minor
@@ -237,7 +237,7 @@ def fit_wrap_begin(np.ndarray[np.uint8_t, ndim=2] samples,
 
     cdef int BFSmode_val = BFSmode
     cdef int seed_val = seed
-
+    cdef int forbidSensAttr_val = forbidSensAttr
     nsamples = samples.shape[0]
 
     if nfeatures > len(features):
@@ -365,7 +365,7 @@ def fit_wrap_begin(np.ndarray[np.uint8_t, ndim=2] samples,
             minor = NULL
     """
     cdef int rb = run_corels_begin(c, verbosity, policy, map_type, ablation, calculate_size,
-                   n_rules, 2, nsamples, rules, labels_vecs, minor, 0, NULL, BFSmode_val, seed_val)
+                   n_rules, 2, nsamples, rules, labels_vecs, minor, 0, NULL, BFSmode_val, seed_val, forbidSensAttr_val)
 
     if rb == -1:
         if labels_vecs != NULL:

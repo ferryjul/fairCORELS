@@ -11,31 +11,35 @@ NullLogger* logger = nullptr;
 static PermutationMap* g_pmap = nullptr;
 static CacheTree* g_tree = nullptr;
 static Queue* g_queue = nullptr;
-static double g_init = 0.0;
-static std::set<std::string> g_verbosity;
-static rule_t * Grules;
-static rule_t * Glabels;
-static rule_t * Gmeta;
-static int SPolicy = -1;
-static int modeBFS = -1;
-static int map_type_arg = -1;
-static int currLimit = -1;
+double g_init = 0.0;
+std::set<std::string> g_verbosity;
+rule_t * Grules;
+rule_t * Glabels;
+rule_t * Gmeta;
+int SPolicy = -1;
+int modeBFS = -1;
+int map_type_arg = -1;
+int currLimit = -1;
 static CacheTree* best_tree = nullptr;
 static Queue* best_queue = nullptr;
-static bool usedRestart = false;
-static bool first = true;
-static int nsamplesG = -1;
-static int nrulesG = -1;
-static int ablationG = -1;
-static int calculate_sizeG = -1;
-static double Gc = -1;
+static PermutationMap* best_map = nullptr;
+bool usedRestart = false;
+bool first = true;
+int nsamplesG = -1;
+int nrulesG = -1;
+int ablationG = -1;
+int calculate_sizeG = -1;
+double Gc = -1;
 int *lubySeq;
 int indLuby = -1;
+bool forbidSensAttr = false;
 int lubySeqSize = -1;
 int run_corels_begin(double c, char* vstring, int curiosity_policy,
                   int map_type, int ablation, int calculate_size, int nrules, int nlabels,
-                  int nsamples, rule_t* rules, rule_t* labels, rule_t* meta, int freq, char* log_fname, int BFSmode, int seed)
+                  int nsamples, rule_t* rules, rule_t* labels, rule_t* meta, int freq, 
+                  char* log_fname, int BFSmode, int seed, bool forbidSensAttr_val)
 {
+    forbidSensAttr = forbidSensAttr_val;
     Grules = rules;
     Glabels = labels;
     currLimit = -1;
@@ -204,7 +208,7 @@ int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int maj_pos
         exit(-1);
     }
     if(restart < 0 || restart > 2) {
-        printf("Error : restart must be exactly one of {0,1,2}");
+        printf("Error : restart must be exactly one of {0,1,2}\n");
     }
     if(restart == 1){ // Perform geometric restart
         //printf("[WARNING] Geometric restart is a beta feature.\n", initNBNodes, geomReason);
@@ -212,11 +216,11 @@ int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int maj_pos
         if(currLimit == -1) {
             currLimit = initNBNodes;
             usedRestart = true;
-            //printf("Initial limit = %d \n", currLimit);
+            printf("Will perform geometric restarts from %d to %d.\n", currLimit, max_num_nodes);
         }
         if((g_tree->num_nodes() < currLimit) && !g_queue->empty()) {
             bbound_loop(g_tree, g_queue, g_pmap, beta, fairness, maj_pos, min_pos, mode, useUnfairnessLB,
-                            min_fairness_acceptable, kBest); 
+                            min_fairness_acceptable, kBest, forbidSensAttr); 
             return 0;
         } else {
             if(first) { // Update best known solution
@@ -227,7 +231,7 @@ int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int maj_pos
             } else {
                 if(g_tree->min_objective() < best_tree->min_objective()) {
                     // delete former best tree & queue and update it
-                    Node* node;
+                  /*  Node* node;
                     while (!best_queue->empty()) {
                         node = best_queue->front();
                         best_queue->pop();
@@ -236,7 +240,7 @@ int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int maj_pos
                             logger->removeFromMemory(sizeof(*node), DataStruct::Tree);
                             delete node;
                         }
-                    }
+                  }*/
                     if(best_queue)
                         delete best_queue;
                     if(best_tree)
@@ -245,7 +249,7 @@ int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int maj_pos
                     best_queue = g_queue;
                     //printf("Best solution updated : %lf\n", best_tree->min_objective());
                 } else {
-                    Node* node;
+                 /*   Node* node;
                     while (!g_queue->empty()) {
                         node = g_queue->front();
                         g_queue->pop();
@@ -254,13 +258,14 @@ int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int maj_pos
                             logger->removeFromMemory(sizeof(*node), DataStruct::Tree);
                             delete node;
                         }
-                    }
+                    }*/
                     if(g_queue)
                         delete g_queue;
                     if(g_tree)
                         delete(g_tree);
                 }
             }
+            
             currLimit *= geomReason;
             if(currLimit > max_num_nodes) {
                 return -1;
@@ -298,7 +303,6 @@ int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int maj_pos
             return 0;
         }
     } else if(restart == 2) { // Perform luby restart
-                //printf("[WARNING] Luby restart is a beta feature.\n", initNBNodes, geomReason);
         /* INITIAL ITERATION */
         if(currLimit == -1) {
             printf("Will perform Luby restarts from %d to %d!\n",initNBNodes,max_num_nodes);
@@ -331,7 +335,7 @@ int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int maj_pos
             // Finally print the last number to terminate the sequence
             lubySeq[lubySeqSize-1]=lubySeqSize;
             // 4) Print Luby seq
-            printf("--- Final Luby Sequence : ---\n");
+            /*printf("--- Final Luby Sequence : ---\n");
             int * printer = lubySeq;
             int cnt = 0;
             while(printer != 0 && cnt<lubySeqSize) {
@@ -339,27 +343,28 @@ int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int maj_pos
                 printer++;
                 cnt++;
             }
-            printf("\n----------------------------\n");
+            printf("\n----------------------------\n");*/
             // Initialize the limit
             indLuby = 0;
             currLimit = initNBNodes*lubySeq[indLuby];
             usedRestart = true;
-            printf("Initial limit = %d \n", currLimit);
+            //printf("Initial limit = %d \n", currLimit);
         }
         if((g_tree->num_nodes() < currLimit) && !g_queue->empty()) {
             bbound_loop(g_tree, g_queue, g_pmap, beta, fairness, maj_pos, min_pos, mode, useUnfairnessLB,
-                            min_fairness_acceptable, kBest); 
+                            min_fairness_acceptable, kBest, forbidSensAttr); 
             return 0;
         } else {
             if(first) { // Update best known solution
                 best_tree = g_tree;
                 best_queue = g_queue;
-                printf("(First) Best solution updated : %lf\n", best_tree->min_objective());
+                best_map = g_pmap;
+                //printf("(First) Best solution updated : %lf\n", best_tree->min_objective());
                 first = false;
             } else {
                 if(g_tree->min_objective() < best_tree->min_objective()) {
                     // delete former best tree & queue and update it
-                    Node* node;
+                    /* Node* node;
                     while (!best_queue->empty()) {
                         node = best_queue->front();
                         best_queue->pop();
@@ -368,16 +373,23 @@ int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int maj_pos
                             logger->removeFromMemory(sizeof(*node), DataStruct::Tree);
                             delete node;
                         }
-                    }
+                    }*/
                     if(best_queue)
                         delete best_queue;
+                    best_queue = nullptr;
                     if(best_tree)
                         delete(best_tree);
+                    best_tree = nullptr;
+                    if(best_map)
+                        delete best_map;
+                    best_map = nullptr;
+
                     best_tree = g_tree;
                     best_queue = g_queue;
-                    printf("Best solution updated : %lf\n", best_tree->min_objective());
+                    best_map = g_pmap;
+                    //printf("Best solution updated : %lf\n", best_tree->min_objective());
                 } else {
-                    Node* node;
+                    /*Node* node;
                     while (!g_queue->empty()) {
                         node = g_queue->front();
                         g_queue->pop();
@@ -386,25 +398,25 @@ int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int maj_pos
                             logger->removeFromMemory(sizeof(*node), DataStruct::Tree);
                             delete node;
                         }
-                    }
+                    }*/
                     if(g_queue)
                         delete g_queue;
+                    g_queue = nullptr;
                     if(g_tree)
                         delete(g_tree);
+                    g_tree = nullptr;
+                    if(g_pmap)
+                        delete g_pmap;
+                    g_pmap = nullptr;
                 }
             }
             indLuby++;
-            currLimit = initNBNodes*lubySeq[indLuby];
             if(indLuby >= lubySeqSize) {
                 return -1;
             } else {
-                printf("New limit = %d \n", currLimit);
-            }
-            // Clear data structures
-            if(g_pmap)
-                delete g_pmap;
-            g_pmap = nullptr;
-            
+                currLimit = initNBNodes*lubySeq[indLuby];
+                //printf("New limit = %d \n", currLimit);
+            }           
             // Init new data structures for next iteration
             g_init = timestamp();
             char run_type[BUFSZ];
@@ -430,13 +442,11 @@ int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int maj_pos
             bbound_begin(g_tree, g_queue);
             return 0;
         }
-
-
     } 
     else { // Normal run (no restart)
                 if((g_tree->num_nodes() < max_num_nodes) && !g_queue->empty()) {
             bbound_loop(g_tree, g_queue, g_pmap, beta, fairness, maj_pos, min_pos, mode, useUnfairnessLB,
-                            min_fairness_acceptable, kBest);
+                            min_fairness_acceptable, kBest, forbidSensAttr);
             return 0;
         }
     }
@@ -448,6 +458,7 @@ double run_corels_end(int** rulelist, int* rulelist_size, int** classes, double*
     if(usedRestart) {
         g_tree = best_tree;
         g_queue = best_queue;
+        g_pmap = best_map;
     }
     bbound_end(g_tree, g_queue, g_pmap, early, Grules, Glabels);
     const tracking_vector<unsigned short, DataStruct::Tree>& r_list = g_tree->opt_rulelist();
@@ -484,12 +495,10 @@ double run_corels_end(int** rulelist, int* rulelist_size, int** classes, double*
     if(g_pmap)
         delete g_pmap;
     g_pmap = nullptr;
-
     if(g_queue)
         delete g_queue;
     g_queue = nullptr;
-
-    // Re init all variables
+    // Reset all variables' values
     first = true;
     SPolicy = -1;
     modeBFS = -1;
@@ -506,6 +515,6 @@ double run_corels_end(int** rulelist, int* rulelist_size, int** classes, double*
         lubySeqSize = -1;
         indLuby = -1;
     }  
-    printf("Final accuracy = %lf\n", accuracy);
+    //printf("Final accuracy = %lf\n", accuracy);
     return accuracy;
 }

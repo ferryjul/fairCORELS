@@ -18,7 +18,7 @@ int pushingTicket = 0;
 int pruningCnt = 0;
 int exploredNodes = 0;
 bool firstPass = true;
-
+bool firstPass2 = true;
 double max2El(double e1, double e2) {
     if(e1 < e2) {
         return e2;
@@ -49,13 +49,13 @@ confusion_matrix_groups compute_confusion_matrix(VECTOR parent_prefix_prediction
     confusion_matrix cm_minority;
     confusion_matrix cm_majority;
 
-    /*if(firstPass) {
+    if(firstPass) {
         printf("Fairness calc infos :\n");
         printf("Sensitive attribute : %s, unsensitive attribute : %s\n", tree->rule(min_pos).features, tree->rule(maj_pos).features);
     }
-    if(firstPass)
-        printf("Number of rules = %d\n", tree->nrules());
-    firstPass = false;*/
+    /*if(firstPass)
+        printf("Number of rules = %d\n", tree->nrules());*/
+    firstPass = false;
 
 
     int nsamples = tree->nsamples();
@@ -464,7 +464,8 @@ void evaluate_children(CacheTree* tree,
                         int min_pos,
                         int mode,
                         bool useUnfairnessLB,
-                        double min_fairness_acceptable){
+                        double min_fairness_acceptable,
+                        bool forbidSensAttr){
 
     VECTOR captured, captured_zeros, not_captured, not_captured_zeros, not_captured_equivalent;
     int num_captured, c0, c1, captured_correct;
@@ -517,6 +518,16 @@ void evaluate_children(CacheTree* tree,
     
     // begin evaluating children
     for (i = 1; i < nrules; i++) {
+        /* IF RULE CORRESPONDS TO PROTECTED OR UNPROTECTED ATTRIBUTES, IT IS PRUNED */
+        if(forbidSensAttr) {
+            if(i == maj_pos || i == min_pos) {
+                if(firstPass2) {
+                    //printf("pruning subtree with rules %s or %s\n", tree->rule(maj_pos).features, tree->rule(min_pos).features);
+                    firstPass2 = false;
+                }
+                continue;
+            }
+        }
         double t1 = timestamp();
         // check if this rule is already in the prefix
         if (std::find(parent_prefix.begin(), parent_prefix.end(), i) != parent_prefix.end())
@@ -770,7 +781,8 @@ void bbound_loop(CacheTree* tree,
                 int mode,
                 bool useUnfairnessLB,
                 double min_fairness_acceptable,
-                int kBest){
+                int kBest,
+                bool forbidSensAttr){
 
     double t0 = timestamp();
     int verbosity = logger->getVerbosity();
@@ -786,7 +798,7 @@ void bbound_loop(CacheTree* tree,
                      tree->rule(0).truthtable, captured,
                      tree->nsamples(), &cnt);
         evaluate_children(tree, node_ordered.first, node_ordered.second, not_captured, q, p, beta, fairness, maj_pos, min_pos, mode, useUnfairnessLB,
-                        min_fairness_acceptable);
+                        min_fairness_acceptable, forbidSensAttr);
         logger->addToEvalChildrenTime(time_diff(t1));
         logger->incEvalChildrenNum();
 

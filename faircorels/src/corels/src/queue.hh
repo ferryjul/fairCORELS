@@ -238,7 +238,8 @@ extern void bbound_loop(CacheTree* tree,
                             int mode, 
                             bool useUnfairnessLB,
                             double min_fairness_acceptable,
-                            int kBest);
+                            int kBest,
+                            bool forbidSensAttr);
 
 extern void evaluate_children(CacheTree* tree, 
                                 Node* parent, 

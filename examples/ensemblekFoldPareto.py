@@ -5,6 +5,7 @@ import numpy as np
 from joblib import Parallel, delayed
 import sys
 import random
+import csv
 
 def average(aList):
     nb = 0
@@ -52,7 +53,7 @@ def runCORELS(X, Y, baggingNB, lambdaV, modeC, epsilon, foldNB, YtestS, testS):
     #print("returning")
     return test
 
-def performKFold(foldID):
+def performKFold(foldID, epsGlob, modeGlob):
     startTest = int(foldID*setSize)
     endTest =  int((foldID+1)*setSize)
     startTrain1 = int(0)
@@ -74,7 +75,7 @@ def performKFold(foldID):
     baggRes = [] # List of (pred, score) arrays
     eps = epsGlob
     mode = modeGlob
-    baggRes = Parallel(n_jobs=8)(delayed(runCORELS)(X=X_fold_train, Y=y_fold_train, baggingNB=b, lambdaV=lambdaF, modeC=mode,epsilon=eps, foldNB=foldID, testS=X_fold_test, YtestS=y_fold_test) for b in range(nbSamples))
+    baggRes = Parallel(n_jobs=12)(delayed(runCORELS)(X=X_fold_train, Y=y_fold_train, baggingNB=b, lambdaV=lambdaF, modeC=mode,epsilon=eps, foldNB=foldID, testS=X_fold_test, YtestS=y_fold_test) for b in range(nbSamples))
     #print("%d models computed" %len(baggRes))
     # Compute aggregation prediction
     #print("size of test preds : %d" %len(baggRes[0][0]))
@@ -135,17 +136,20 @@ def performKFold(foldID):
     
     return [[acc, fmTest.statistical_parity(), fmTest.predictive_parity(), fmTest.predictive_equality(), fmTest.equal_opportunity()],[acc_bis, fmTest_bis.statistical_parity(), fmTest_bis.predictive_parity(), fmTest_bis.predictive_equality(), fmTest_bis.equal_opportunity()]]
 
-dataset_name = "Adult"
-#dataset_name = "Compas"
+dataset_name = sys.argv[3]
 fairnessMetric = int(sys.argv[1])
-NBNodes = 1500000
+NBNodes = 15000
 nbSamples = 24 # Bootstrap sampling built sets
 relativeSizeSamples = 0.9
 lambdaF = 0.0001
 kFold = 10 # Enter here the number of folds for the k-fold cross-validation
-epsGlob = 0
-modeGlob = 3
-forbidArg = False
+NBPoints = 5
+if(int(sys.argv[2]) == 0):
+    forbidArg = False
+    fStr = "sens_arg"
+elif(int(sys.argv[2]) == 1):
+    forbidArg = True
+    fStr = "no_sens_arg"
 if dataset_name == "Adult":
     X_tot, y_tot, features_tot, prediction_tot = load_from_csv("data/adult_full_binary.csv")
     prediction_name_ = "(income)"
@@ -185,19 +189,142 @@ predictive_parity_list_test_bis = []
 predictive_equality_list_test_bis = []
 equal_opportunity_list_test_bis = []
 
-returnList = Parallel(n_jobs=1)(delayed(performKFold)(foldID=_foldID) for _foldID in range(kFold))
-for aReturn in returnList:
-    accuracy_list_test.append(aReturn[0][0])
-    statistical_parity_list_test.append(aReturn[0][1])
-    predictive_parity_list_test.append(aReturn[0][2])
-    predictive_equality_list_test.append(aReturn[0][3])
-    equal_opportunity_list_test.append(aReturn[0][4])
-    accuracy_list_test_bis.append(aReturn[1][0])
-    statistical_parity_list_test_bis.append(aReturn[1][1])
-    predictive_parity_list_test_bis.append(aReturn[1][2])
-    predictive_equality_list_test_bis.append(aReturn[1][3])
-    equal_opportunity_list_test_bis.append(aReturn[1][4])
+accuracy_list_test_temp = []
+statistical_parity_list_test_temp = []
+predictive_parity_list_test_temp = []
+predictive_equality_list_test_temp = []
+equal_opportunity_list_test_temp = []
 
+accuracy_list_test_bis_temp = []
+statistical_parity_list_test_bis_temp = []
+predictive_parity_list_test_bis_temp = []
+predictive_equality_list_test_bis_temp = []
+equal_opportunity_list_test_bis_temp = []
+
+# Max fairness
+returnList = Parallel(n_jobs=1)(delayed(performKFold)(foldID=_foldID, modeGlob=3, epsGlob=1) for _foldID in range(kFold))
+for aReturn in returnList:
+    accuracy_list_test_temp.append(aReturn[0][0])
+    statistical_parity_list_test_temp.append(aReturn[0][1])
+    predictive_parity_list_test_temp.append(aReturn[0][2])
+    predictive_equality_list_test_temp.append(aReturn[0][3])
+    equal_opportunity_list_test_temp.append(aReturn[0][4])
+    accuracy_list_test_bis_temp.append(aReturn[1][0])
+    statistical_parity_list_test_bis_temp.append(aReturn[1][1])
+    predictive_parity_list_test_bis_temp.append(aReturn[1][2])
+    predictive_equality_list_test_bis_temp.append(aReturn[1][3])
+    equal_opportunity_list_test_bis_temp.append(aReturn[1][4])
+accuracy_list_test.append(average(accuracy_list_test_temp))
+statistical_parity_list_test.append(average(statistical_parity_list_test_temp))
+predictive_parity_list_test.append(average(predictive_parity_list_test_temp))
+predictive_equality_list_test.append(average(predictive_equality_list_test_temp))
+equal_opportunity_list_test.append(average(equal_opportunity_list_test_temp))
+accuracy_list_test_bis.append(average(accuracy_list_test_bis_temp))
+statistical_parity_list_test_bis.append(average(statistical_parity_list_test_bis_temp))
+predictive_parity_list_test_bis.append(average(predictive_parity_list_test_bis_temp))
+predictive_equality_list_test_bis.append(average(predictive_equality_list_test_bis_temp))
+equal_opportunity_list_test_bis.append(average(equal_opportunity_list_test_bis_temp))
+# Max acc
+returnList = Parallel(n_jobs=1)(delayed(performKFold)(foldID=_foldID, modeGlob=3, epsGlob=0) for _foldID in range(kFold))
+for aReturn in returnList:
+    accuracy_list_test_temp.append(aReturn[0][0])
+    statistical_parity_list_test_temp.append(aReturn[0][1])
+    predictive_parity_list_test_temp.append(aReturn[0][2])
+    predictive_equality_list_test_temp.append(aReturn[0][3])
+    equal_opportunity_list_test_temp.append(aReturn[0][4])
+    accuracy_list_test_bis_temp.append(aReturn[1][0])
+    statistical_parity_list_test_bis_temp.append(aReturn[1][1])
+    predictive_parity_list_test_bis_temp.append(aReturn[1][2])
+    predictive_equality_list_test_bis_temp.append(aReturn[1][3])
+    equal_opportunity_list_test_bis_temp.append(aReturn[1][4])
+accuracy_list_test.append(average(accuracy_list_test_temp))
+statistical_parity_list_test.append(average(statistical_parity_list_test_temp))
+predictive_parity_list_test.append(average(predictive_parity_list_test_temp))
+predictive_equality_list_test.append(average(predictive_equality_list_test_temp))
+equal_opportunity_list_test.append(average(equal_opportunity_list_test_temp))
+accuracy_list_test_bis.append(average(accuracy_list_test_bis_temp))
+statistical_parity_list_test_bis.append(average(statistical_parity_list_test_bis_temp))
+predictive_parity_list_test_bis.append(average(predictive_parity_list_test_bis_temp))
+predictive_equality_list_test_bis.append(average(predictive_equality_list_test_bis_temp))
+equal_opportunity_list_test_bis.append(average(equal_opportunity_list_test_bis_temp))
+
+if(fairnessMetric == 1):
+    minF = statistical_parity_list_test[1]
+    maxF = statistical_parity_list_test[0]
+elif(fairnessMetric == 2):
+    minF = predictive_parity_list_test[1]
+    maxF = predictive_parity_list_test[0]
+elif(fairnessMetric == 3):
+    minF = predictive_equality_list_test[1]
+    maxF = predictive_equality_list_test[0]
+elif(fairnessMetric == 4):
+    minF = equal_opportunity_list_test[1]
+    maxF = equal_opportunity_list_test[0]
+minF = 1 - minF
+maxF = 1 - maxF
+delta = abs(minF - maxF)/NBPoints
+epsList = [1,0]
+eps = minF + delta
+print("minF:", minF, "delta : ", delta)
+while eps < maxF:
+    epsList.append(eps)
+    returnList = Parallel(n_jobs=1)(delayed(performKFold)(foldID=_foldID, modeGlob=3, epsGlob=eps) for _foldID in range(kFold))
+    for aReturn in returnList:
+        accuracy_list_test_temp.append(aReturn[0][0])
+        statistical_parity_list_test_temp.append(aReturn[0][1])
+        predictive_parity_list_test_temp.append(aReturn[0][2])
+        predictive_equality_list_test_temp.append(aReturn[0][3])
+        equal_opportunity_list_test_temp.append(aReturn[0][4])
+        accuracy_list_test_bis_temp.append(aReturn[1][0])
+        statistical_parity_list_test_bis_temp.append(aReturn[1][1])
+        predictive_parity_list_test_bis_temp.append(aReturn[1][2])
+        predictive_equality_list_test_bis_temp.append(aReturn[1][3])
+        equal_opportunity_list_test_bis_temp.append(aReturn[1][4])
+    accuracy_list_test.append(average(accuracy_list_test_temp))
+    statistical_parity_list_test.append(average(statistical_parity_list_test_temp))
+    predictive_parity_list_test.append(average(predictive_parity_list_test_temp))
+    predictive_equality_list_test.append(average(predictive_equality_list_test_temp))
+    equal_opportunity_list_test.append(average(equal_opportunity_list_test_temp))
+    accuracy_list_test_bis.append(average(accuracy_list_test_bis_temp))
+    statistical_parity_list_test_bis.append(average(statistical_parity_list_test_bis_temp))
+    predictive_parity_list_test_bis.append(average(predictive_parity_list_test_bis_temp))
+    predictive_equality_list_test_bis.append(average(predictive_equality_list_test_bis_temp))
+    equal_opportunity_list_test_bis.append(average(equal_opportunity_list_test_bis_temp))
+    eps = eps + delta
+with open('./testsEnsembleNoAware/results_%s_%d_%s_debug.csv' %(fStr,fairnessMetric,dataset_name), mode='w') as csv_file:
+    csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+    csv_writer.writerow(['(Lambda = %lf)' %lambdaF, 'FairnessMetric = %d' %fairnessMetric, '%d models' %nbSamples, '%d max nodes in trie' %NBNodes])
+    csv_writer.writerow(['Epsilon', 'Accuracy (aggr 1)', 'Statistical parity (aggr 1)', 
+    'Predictive Parity (aggr 1)', 'Predictive Equality (aggr 1)', 
+    'Equal Opportunity (aggr 1)', 'Accuracy (aggr 2)', 
+    'Statistical parity (aggr 2)', 'Predictive Parity (aggr 2)', 
+    'Predictive Equality (aggr 2)', 'Equal Opportunity (aggr 2)'])
+    index = 0
+    print("lengths  should all be equal :") # Debug
+    print(len(epsList))
+    print(len(accuracy_list_test))
+    print(len(statistical_parity_list_test))
+    print(len(predictive_parity_list_test))
+    print(len(predictive_equality_list_test))
+    print(len(equal_opportunity_list_test_bis))
+    print(len(accuracy_list_test_bis))
+    print(len(statistical_parity_list_test_bis))
+    for i in range(len(epsList)):
+        #print("index = %d, i = %d\n" %(index,i))
+        csv_writer.writerow([epsList[i], 
+        accuracy_list_test[i], 
+        statistical_parity_list_test[i], 
+        predictive_parity_list_test[i], 
+        predictive_equality_list_test[i],
+        equal_opportunity_list_test_bis[i],
+        accuracy_list_test_bis[i], 
+        statistical_parity_list_test_bis[i], 
+        predictive_parity_list_test_bis[i], 
+        predictive_equality_list_test_bis[i],
+        equal_opportunity_list_test_bis[i]])
+    index = index + 1
+    csv_writer.writerow(["", "", "", "", "", "", "", "", "", "", ""])
+'''
 #print("-------------------------- Learned rulelist ------------------------------")
 print("------------------ SIMPLE VOTE AGGREG : ------------------")
 print("accuracy list : ", accuracy_list_test)
@@ -213,3 +340,4 @@ print("=========> Statistical parity %lf" %average(statistical_parity_list_test_
 print("=========> Predictive parity %lf" %average(predictive_parity_list_test_bis))
 print("=========> Predictive equality %lf" %average(predictive_equality_list_test_bis))
 print("=========> Equal opportunity %lf" %average(equal_opportunity_list_test_bis))
+'''

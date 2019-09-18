@@ -243,7 +243,7 @@ compData computeFinalFairness(int nsamples,
     }
     // true positives, false negatives, true negatives, and false positives tables (for this rule)
     VECTOR A, B, D, C;
-    int tp, tn, fp, fn;
+    int tp, tn; //fp, fn;
     rule_vinit(nsamples, &A);
     //rule_vinit(nsamples, &B);
     rule_vinit(nsamples, &D);

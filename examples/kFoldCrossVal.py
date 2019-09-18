@@ -3,6 +3,7 @@ from metrics import ConfusionMatrix, Metric
 import pandas as pd
 import numpy
 from joblib import Parallel, delayed
+import sys
 
 def average(aList):
     nb = 0
@@ -30,8 +31,8 @@ def performKFold(foldID):
     X_fold_test = X_tot[startTest:endTest,:]
     y_fold_test = y_tot[startTest:endTest]
     print("%d instances in test set, %d instances in train set" %(len(X_fold_test),len(X_fold_train)))
-    c = CorelsClassifier(verbosity=[], map_type="prefix", n_iter=1000000, c=0.00001, max_card=1, policy="bfs", bfs_mode=2, useUnfairnessLB=True, fairness=4, maj_pos=UnprotectedIndex+1, min_pos=ProtectedIndex+1, epsilon=1.00, mode=3)
-    c.fit(X_fold_train, y_fold_train, features=features_tot, prediction_name="(income:>50K)")
+    c = CorelsClassifier(verbosity=[], map_type="prefix", forbidSensAttr=False, n_iter=1500000, c=0.003, max_card=1, policy="bfs", bfs_mode=2, useUnfairnessLB=True, fairness=int(sys.argv[1]), maj_pos=UnprotectedIndex+1, min_pos=ProtectedIndex+1, epsilon=0, mode=3)
+    c.fit(X_fold_train, y_fold_train, features=features_tot, prediction_name=prediction_name_) #income:>50K
     # Accuracy sur le train set
     accuracy_train = (c.score(X_fold_train, y_fold_train))
     # Accuracy sur le test set
@@ -53,6 +54,7 @@ def performKFold(foldID):
     r2 = 0
     r3 = 0
     default = 0
+    
     '''for i in range(len(resultat[0])):
         #print("(" + str(resultat[0][i]) + "," + str(resultat[1][i]) + ")")
         if (abs(0.7195488721804512 - resultat[1][i])) <= 0.001:
@@ -67,9 +69,24 @@ def performKFold(foldID):
     return [accuracy_train, accuracy_test, fmTrain.statistical_parity(), fmTrain.predictive_parity(), fmTrain.predictive_equality(), fmTrain.equal_opportunity(), fmTest.statistical_parity(), fmTest.predictive_parity(), fmTest.predictive_equality(), fmTest.equal_opportunity()]
 
 kFold = 10 # Enter here the number of folds for the k-fold cross-validation
-UnprotectedIndex = 19
-ProtectedIndex = 18
-X_tot, y_tot, features_tot, prediction_tot = load_from_csv("data/adult_full_binary.csv")
+
+dataset_name = "Adult" #"German_credit"
+if dataset_name == "Adult":
+    X_tot, y_tot, features_tot, prediction_tot = load_from_csv("data/adult_full_binary.csv")
+    prediction_name_ = "(income)"
+    UnprotectedIndex = 19
+    ProtectedIndex = 18
+elif dataset_name == "German_credit":
+    X_tot, y_tot, features_tot, prediction_tot = load_from_csv("data/german_credit_binary.csv")
+    UnprotectedIndex = -1
+    ProtectedIndex = 47
+    prediction_name_ = "(credit_rating)"
+elif dataset_name == "Compas":
+    X_tot, y_tot, features_tot, prediction_tot = load_from_csv("data/compas_full_binary.csv")
+    UnprotectedIndex = 9
+    ProtectedIndex = 7
+    prediction_name_ = "(two_year_recid)"
+
 print("--- DATASET INFO --- ")
 print("Nombre d'attributs : %d, Nombre d'instances : %d" % (len(features_tot),len(X_tot)))
 print("Prediction : %s" %prediction_tot)
@@ -79,8 +96,7 @@ print("Will perform %d-folds cross-validation" %kFold)
 setSize = (len(X_tot)) / kFold
 print("Fold size = %d instances" %setSize)
 
-
-returnList = Parallel(n_jobs=-1)(delayed(performKFold)(foldID=_foldID) for _foldID in [0])#range(kFold))
+returnList = Parallel(n_jobs=-1)(delayed(performKFold)(foldID=_foldID) for _foldID in range(kFold))
     
 
 accuracy_list_test = []

@@ -5,6 +5,8 @@ import numpy as np
 from joblib import Parallel, delayed
 import sys
 import random
+from hyperopt import fmin, tpe, hp
+from functools import partial
 
 def average(aList):
     nb = 0
@@ -14,7 +16,22 @@ def average(aList):
         sumTot = sumTot + El
     return sumTot/nb
 
-def runCORELS(X, Y, baggingNB, lambdaV, modeC, epsilon, foldNB, YtestS, testS):
+def computeObjectiveWithCV(lambdaFactor, r_nb, unfairnessLim, modeC, trainX, trainY, valSetX, valSetY):
+    print("entering obj func")
+    lambdaV = lambdaFactor[0]
+    #print("lambda tested = %lf" %lambdaV)
+    c = CorelsClassifier(kbest=1, random_state=r_nb, verbosity=[], map_type="prefix", n_iter=NBNodes, c=lambdaV, max_card=1, policy="bfs", bfs_mode=4, useUnfairnessLB=True, fairness=fairnessMetric, maj_pos=UnprotectedIndex+1, min_pos=ProtectedIndex+1, epsilon=unfairnessLim, mode=modeC)
+    c.fit(trainX, trainY, performRestarts=1, initNBNodes=11550, geomRReason=1.5, features=features_tot, prediction_name="(credit_rating)")
+    print("middle of obj func")
+    # Accuracy sur le train set
+    accuracy_train = (c.score(trainX, trainY))
+    # Accuracy sur le validation set
+    accuracy_validation = (c.score(valSetX, valSetY))
+    ret = 2 - (accuracy_train + accuracy_validation) # We take into account both values equally
+    print("leaving obj func")
+    return ret
+
+def runCORELS(X, Y, baggingNB, modeC, epsilon, foldNB, YtestS, testS):
     r_nb = baggingNB #(baggingNB+1)*(baggingNB+1)*10*(foldNB+1)
     #print("--- ENTERING FOLD %d (bag %d seed %lf) ---" %(foldNB,baggingNB, r_nb))
     random.seed(r_nb)
@@ -24,32 +41,36 @@ def runCORELS(X, Y, baggingNB, lambdaV, modeC, epsilon, foldNB, YtestS, testS):
         print(" --------- BEFORE --------- ")
         print(X)
         print(Y)'''
+    indices_list = []
     for ind in range(sizeSamples):
         inst = random.randrange(len(X)-1) #pick a random instance
         inst = inst + 1 # the len(XX-1) and then +1 allows to avoid the 0 value
+        if not inst in indices_list:
+            indices_list.append(inst)
         X_bag_list.append(X[inst])
         y_bag_list.append(Y[inst])
+    validation_set_X = []
+    validation_set_Y = []
+    for ind in range(1,len(X)-1):
+        if not ind in indices_list: # If element is not already in training set
+            validation_set_X.append(X[ind])
+            validation_set_Y.append(Y[ind])
+    print("Set of out-of-bag instances len = %d" %len(validation_set_X))
     X_bag_train = np.array(X_bag_list)
     y_bag_train = np.array(y_bag_list)
-    #if(baggingNB == 0):
-    #    print(X_bag_train)
-    '''if foldNB == 0:
-        print(" --------- AFTER --------- ")
-        print(X_bag_train)
-        print(y_bag_train)'''
-    #print("%d instances in initial train, %d in initial test (bagging)" %(len(X),len(Y)))
-    #print("%d instances in train, %d in test (bagging)" %(len(X_bag_train),len(y_bag_train)))
-    #print("Calling CORELS with parameters : NBNOdes = %d, lambda = %lf, mode = %d" %(NBNodes,lambdaF,modeC))
-    #print("random state = %d" %r_nb)
-    #print("Will call fairCORELS")
-    c = CorelsClassifier(kbest=1, random_state=r_nb, verbosity=[], map_type="prefix", forbidSensAttr=forbidArg, n_iter=NBNodes, c=lambdaV, max_card=1, policy="bfs", bfs_mode=2, useUnfairnessLB=True, fairness=fairnessMetric, maj_pos=UnprotectedIndex+1, min_pos=ProtectedIndex+1, epsilon=epsilon, mode=modeC)
-    c.fit(X_bag_train, y_bag_train, performRestarts=0, initNBNodes=46000, geomRReason=1.5, features=features_tot, prediction_name="(credit_rating)")
+    # Find Lambda which optimizes both acc on train and validation set
+    computeObjectiveWithCVPartial = partial(computeObjectiveWithCV,r_nb=r_nb, unfairnessLim=epsilon, modeC=modeC, trainX=X_bag_train, trainY=y_bag_train, valSetX=validation_set_X, valSetY=validation_set_Y)
+    bestLam = fmin(fn=computeObjectiveWithCVPartial,
+    space=[hp.uniform('lambdaFactor', 0.00001, 0.05)],
+    algo=tpe.suggest,
+    max_evals=max_evals).get('lambdaFactor')
+    print("best lambda = %lf" %bestLam)
+    # Find associated solution
+    c = CorelsClassifier(kbest=1, random_state=r_nb, verbosity=[], map_type="prefix", n_iter=NBNodes, c=bestLam, max_card=1, policy="bfs", bfs_mode=4, useUnfairnessLB=True, fairness=fairnessMetric, maj_pos=UnprotectedIndex+1, min_pos=ProtectedIndex+1, epsilon=epsilon, mode=modeC)
+    c.fit(X_bag_train, y_bag_train, performRestarts=1, initNBNodes=11550, geomRReason=1.5, features=features_tot, prediction_name=prediction_name_)
     # Load unique test set and compute the model's evaluation on it
     print("Fold ", foldNB, " bag nb ", baggingNB, c.rl())
-    #print("Hey Train accuracy {}".format(c.score(X_bag_train, y_bag_train)))
-    #print("Hey Test accuracy {}".format(c.score(testS, YtestS)))
     test = c.predict_with_scores(testS)
-    #print("returning")
     return test
 
 def performKFold(foldID):
@@ -72,9 +93,9 @@ def performKFold(foldID):
     #print("%d instances in test set, %d instances in train set" %(len(X_fold_test),len(X_fold_train)))
     #print("%d instances in test set, %d instances in train set" %(len(y_fold_test),len(y_fold_train)))
     baggRes = [] # List of (pred, score) arrays
-    eps = epsGlob
-    mode = modeGlob
-    baggRes = Parallel(n_jobs=8)(delayed(runCORELS)(X=X_fold_train, Y=y_fold_train, baggingNB=b, lambdaV=lambdaF, modeC=mode,epsilon=eps, foldNB=foldID, testS=X_fold_test, YtestS=y_fold_test) for b in range(nbSamples))
+    eps = 0.95
+    mode = 3
+    baggRes = Parallel(n_jobs=4)(delayed(runCORELS)(X=X_fold_train, Y=y_fold_train, baggingNB=b, modeC=mode,epsilon=eps, foldNB=foldID, testS=X_fold_test, YtestS=y_fold_test) for b in range(nbSamples))
     #print("%d models computed" %len(baggRes))
     # Compute aggregation prediction
     #print("size of test preds : %d" %len(baggRes[0][0]))
@@ -135,22 +156,20 @@ def performKFold(foldID):
     
     return [[acc, fmTest.statistical_parity(), fmTest.predictive_parity(), fmTest.predictive_equality(), fmTest.equal_opportunity()],[acc_bis, fmTest_bis.statistical_parity(), fmTest_bis.predictive_parity(), fmTest_bis.predictive_equality(), fmTest_bis.equal_opportunity()]]
 
-dataset_name = "Adult"
-#dataset_name = "Compas"
+#dataset_name = "Adult"
+#dataset_name = "German_credit"
+dataset_name = "Compas"
 fairnessMetric = int(sys.argv[1])
-NBNodes = 1500000
-nbSamples = 24 # Bootstrap sampling built sets
+NBNodes = 1000000
+nbSamples = 48 # Bootstrap sampling built sets
 relativeSizeSamples = 0.9
-lambdaF = 0.0001
+max_evals = 10
 kFold = 10 # Enter here the number of folds for the k-fold cross-validation
-epsGlob = 0
-modeGlob = 3
-forbidArg = False
+UnprotectedIndex = -1
+ProtectedIndex = 47
 if dataset_name == "Adult":
     X_tot, y_tot, features_tot, prediction_tot = load_from_csv("data/adult_full_binary.csv")
     prediction_name_ = "(income)"
-    UnprotectedIndex = 19
-    ProtectedIndex = 18
 elif dataset_name == "German_credit":
     X_tot, y_tot, features_tot, prediction_tot = load_from_csv("data/german_credit_binary.csv")
     UnprotectedIndex = -1
@@ -172,6 +191,7 @@ print("Will perform %d-folds cross-validation" %kFold)
 setSize = (len(X_tot)) / kFold
 print("Fold size = %d instances" %setSize)
 
+returnList = Parallel(n_jobs=1)(delayed(performKFold)(foldID=_foldID) for _foldID in range(kFold))
 
 accuracy_list_test = []
 statistical_parity_list_test = []
@@ -185,7 +205,6 @@ predictive_parity_list_test_bis = []
 predictive_equality_list_test_bis = []
 equal_opportunity_list_test_bis = []
 
-returnList = Parallel(n_jobs=1)(delayed(performKFold)(foldID=_foldID) for _foldID in range(kFold))
 for aReturn in returnList:
     accuracy_list_test.append(aReturn[0][0])
     statistical_parity_list_test.append(aReturn[0][1])

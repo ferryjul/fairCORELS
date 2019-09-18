@@ -77,6 +77,7 @@ class CorelsClassifier:
 
     maj_pos: int optional (default=1)
         The position of the rule that defined the majority group
+        If not specified, all individuals not in minority group are in majority group
 
     min_pos: int optional (default=2)
         The position of the rule that defined the minority group
@@ -94,6 +95,9 @@ class CorelsClassifier:
     kbest: int optional (default=1)
         Randomly use one of the k best objectives
     
+    forbidSensAttr: bool optional (default=False)
+        Forbid the use of the sensitive and (if specified) unsensitive attributes in the produced rule lists
+
     bfs_mode: int optinal (default=0)
         BFS strategy
         0: original CORELS, 1:FIFO, 2:objective_aware, 3:lower_bound, 4:random
@@ -109,7 +113,7 @@ class CorelsClassifier:
         2 : Performs Luby restarts
 
     initNBNodes : int optional (default=1000)
-        Initial limit for the number of nodes in the trie.
+        Initial limit for the number of nodes in the trie when perfomring
 
     geomRReason : double optional (default=1.5)
         When performRestarts=True, geomRReason is the reason used 
@@ -139,7 +143,8 @@ class CorelsClassifier:
     def __init__(self, c=0.01, n_iter=10000, map_type="prefix", policy="lower_bound",
                  verbosity=["rulelist"], ablation=0, max_card=2, min_support=0.01,
                  beta=0.0, fairness=1, maj_pos=1, min_pos=2,
-                 mode=4, useUnfairnessLB=False, epsilon=0.0, kbest=1, bfs_mode=0, random_state=42):
+                 mode=4, useUnfairnessLB=False, epsilon=0.0, kbest=1, forbidSensAttr=False,
+                 bfs_mode=0, random_state=42):
         self.c = c
         self.n_iter = n_iter
         self.map_type = map_type
@@ -148,7 +153,7 @@ class CorelsClassifier:
         self.ablation = ablation
         self.max_card = max_card
         self.min_support = min_support
-
+        self.forbidSensAttr=forbidSensAttr
         self.beta = beta
         self.fairness = fairness
         self.maj_pos = maj_pos
@@ -294,7 +299,7 @@ class CorelsClassifier:
         fr = fit_wrap_begin(samples.astype(np.uint8, copy=False),
                              labels.astype(np.uint8, copy=False), rl.features,
                              self.max_card, self.min_support, verbose, mine_verbose, minor_verbose,
-                             self.c, policy_id, map_id, self.ablation, False, self.bfs_mode, self.random_state)
+                             self.c, policy_id, map_id, self.ablation, False, self.forbidSensAttr, self.bfs_mode, self.random_state)
         
         if fr:
             early = False
