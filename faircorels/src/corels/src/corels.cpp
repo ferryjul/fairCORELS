@@ -528,6 +528,7 @@ void evaluate_children(CacheTree* tree,
                 continue;
             }
         }
+        //printf("rule : %d/%d, %s\n", i, nrules, tree->rule(i).features);
         double t1 = timestamp();
         // check if this rule is already in the prefix
         if (std::find(parent_prefix.begin(), parent_prefix.end(), i) != parent_prefix.end())
