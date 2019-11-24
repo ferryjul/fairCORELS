@@ -11,7 +11,7 @@ from metrics import ConfusionMatrix, Metric
 
 N_ITER = 1*10**5
 
-X, y, features, prediction = load_from_csv("./data/adult_undersampled.csv")
+X, y, features, prediction = load_from_csv("./data/adult_full.csv")
 
 
 
@@ -44,7 +44,8 @@ def trainFold(X_train, y_train, X_test, y_test):
                             epsilon=0.0,
                             maj_pos=34, 
                             min_pos=33,
-                            verbosity=["rulelist"]
+                            verbosity=["rulelist"],
+                            min_support = 0.01
                             )
 
 

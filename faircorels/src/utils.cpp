@@ -155,7 +155,6 @@ int getnextperm(int n, int r, int *arr, int first)
 int mine_rules(char **features, rule_t *samples, int nfeatures, int nsamples, 
                 int max_card, double min_support, rule_t **rules_out, int verbose)
 {
-  min_support = 0.00; //to be deleted
   if(!samples || !features) {
     return -1;
   }
