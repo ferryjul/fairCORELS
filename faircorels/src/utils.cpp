@@ -254,7 +254,7 @@ int mine_rules(char **features, rule_t *samples, int nfeatures, int nsamples,
       }
    
       ntotal_rules++;
-      
+     
       if(verbose)
         printf("(%d) %s generated with support %f\n", ntotal_rules, rules_vec_mine[nrules_mine].features, (double)ones / (double)nsamples);
     }
@@ -377,7 +377,7 @@ end:
 
   if(verbose)
     printf("Generated %d rules\n", ntotal_rules - 1);
-
+  printf("Generated %d rules.", ntotal_rules - 1);
   if (ret == -1) {
     if(rules_vec) {
       for(int i = 0; i < ntotal_rules; i++) {

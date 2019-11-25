@@ -39,8 +39,8 @@ confusion_matrix_groups compute_confusion_matrix(VECTOR parent_prefix_prediction
                                                 CacheTree* tree,
                                                 VECTOR parent_not_captured, 
                                                 VECTOR captured,  
-                                                int maj_pos,
-                                                int min_pos,
+                                                VECTOR maj_v,
+                                                VECTOR min_v,
                                                 bool prediction, 
                                                 bool default_prediction){
 
@@ -49,10 +49,10 @@ confusion_matrix_groups compute_confusion_matrix(VECTOR parent_prefix_prediction
     confusion_matrix cm_minority;
     confusion_matrix cm_majority;
 
-    if(firstPass) {
+    /*if(firstPass) { // TODO : Update display ? (with group vectors there isn't an attribute name to display ?)
         printf("Fairness calc infos :\n");
         printf("Sensitive attribute : %s, unsensitive attribute : %s\n", tree->rule(min_pos).features, tree->rule(maj_pos).features);
-    }
+    }*/
     /*if(firstPass)
         printf("Number of rules = %d\n", tree->nrules());*/
     firstPass = false;
@@ -97,17 +97,11 @@ confusion_matrix_groups compute_confusion_matrix(VECTOR parent_prefix_prediction
     rule_vinit(tree->nsamples(), &TN_maj);
 
     int nTP_maj, nFP_maj, nFN_maj, nTN_maj;
-    if(maj_pos < 0) {
-        rule_vandnot(TP_maj, TP, tree->rule(min_pos).truthtable, nsamples, &nTP_maj);
-        rule_vandnot(FP_maj, FP, tree->rule(min_pos).truthtable, nsamples, &nFP_maj);
-        rule_vandnot(FN_maj, FN, tree->rule(min_pos).truthtable, nsamples, &nFN_maj);
-        rule_vandnot(TN_maj, TN, tree->rule(min_pos).truthtable, nsamples, &nTN_maj);
-    } else {
-        rule_vand(TP_maj, TP, tree->rule(maj_pos).truthtable, nsamples, &nTP_maj);
-        rule_vand(FP_maj, FP, tree->rule(maj_pos).truthtable, nsamples, &nFP_maj);
-        rule_vand(FN_maj, FN, tree->rule(maj_pos).truthtable, nsamples, &nFN_maj);
-        rule_vand(TN_maj, TN, tree->rule(maj_pos).truthtable, nsamples, &nTN_maj);
-    }
+    rule_vand(TP_maj, TP, maj_v, nsamples, &nTP_maj);
+    rule_vand(FP_maj, FP, maj_v, nsamples, &nFP_maj);
+    rule_vand(FN_maj, FN, maj_v, nsamples, &nFN_maj);
+    rule_vand(TN_maj, TN, maj_v, nsamples, &nTN_maj);
+    
     
     // true positives, false negatives, true negatives, and false positives for minority group
     VECTOR TP_min, FP_min, FN_min, TN_min;
@@ -117,10 +111,10 @@ confusion_matrix_groups compute_confusion_matrix(VECTOR parent_prefix_prediction
     rule_vinit(nsamples, &TN_min);
 
     int nTP_min, nFP_min, nFN_min, nTN_min;
-    rule_vand(TP_min, TP, tree->rule(min_pos).truthtable, nsamples, &nTP_min);
-    rule_vand(FP_min, FP, tree->rule(min_pos).truthtable, nsamples, &nFP_min);
-    rule_vand(FN_min, FN, tree->rule(min_pos).truthtable, nsamples, &nFN_min);
-    rule_vand(TN_min, TN, tree->rule(min_pos).truthtable, nsamples, &nTN_min);
+    rule_vand(TP_min, TP, min_v, nsamples, &nTP_min);
+    rule_vand(FP_min, FP, min_v, nsamples, &nFP_min);
+    rule_vand(FN_min, FN, min_v, nsamples, &nFN_min);
+    rule_vand(TN_min, TN, min_v, nsamples, &nTN_min);
 
     // stats for majority
     double nPPV_maj = (double) nTP_maj / max((nTP_maj + nFP_maj), 1);
@@ -460,8 +454,8 @@ void evaluate_children(CacheTree* tree,
                         PermutationMap* p,
                         double beta,
                         int fairness,
-                        int maj_pos,
-                        int min_pos,
+                        VECTOR maj_v,
+                        VECTOR min_v,
                         int mode,
                         bool useUnfairnessLB,
                         double min_fairness_acceptable,
@@ -519,7 +513,7 @@ void evaluate_children(CacheTree* tree,
     // begin evaluating children
     for (i = 1; i < nrules; i++) {
         /* IF RULE CORRESPONDS TO PROTECTED OR UNPROTECTED ATTRIBUTES, IT IS PRUNED */
-        if(forbidSensAttr) {
+        /*if(forbidSensAttr) { // TODO : RE IMPLEMENT THIS PART WITH GROUP VECTORS (?) - OR DELETE IF REPLACED BY RULE MINING
             if(i == maj_pos || i == min_pos) {
                 if(firstPass2) {
                     //printf("pruning subtree with rules %s or %s\n", tree->rule(maj_pos).features, tree->rule(min_pos).features);
@@ -527,7 +521,7 @@ void evaluate_children(CacheTree* tree,
                 }
                 continue;
             }
-        }
+        }*/
         //printf("rule : %d/%d, %s\n", i, nrules, tree->rule(i).features);
         double t1 = timestamp();
         // check if this rule is already in the prefix
@@ -572,7 +566,7 @@ void evaluate_children(CacheTree* tree,
         double unfairness = 0.0;
 
         confusion_matrix_groups cmg = compute_confusion_matrix(preds_prefix, tree, parent_not_captured, captured,
-                                                                                 maj_pos, min_pos, prediction, default_prediction);
+                                                                                 maj_v, min_v, prediction, default_prediction);
 
         fairness_metrics fm = compute_fairness_metrics(cmg);
         
@@ -777,8 +771,8 @@ void bbound_loop(CacheTree* tree,
                 PermutationMap* p,
                 double beta,
                 int fairness,
-                int maj_pos,
-                int min_pos,
+                VECTOR maj_v,
+                VECTOR min_v,
                 int mode,
                 bool useUnfairnessLB,
                 double min_fairness_acceptable,
@@ -798,7 +792,7 @@ void bbound_loop(CacheTree* tree,
         rule_vandnot(not_captured,
                      tree->rule(0).truthtable, captured,
                      tree->nsamples(), &cnt);
-        evaluate_children(tree, node_ordered.first, node_ordered.second, not_captured, q, p, beta, fairness, maj_pos, min_pos, mode, useUnfairnessLB,
+        evaluate_children(tree, node_ordered.first, node_ordered.second, not_captured, q, p, beta, fairness, maj_v, min_v, mode, useUnfairnessLB,
                         min_fairness_acceptable, forbidSensAttr);
         logger->addToEvalChildrenTime(time_diff(t1));
         logger->incEvalChildrenNum();

@@ -34,11 +34,56 @@ int *lubySeq;
 int indLuby = -1;
 bool forbidSensAttr = false;
 int lubySeqSize = -1;
+VECTOR Gmaj_vect;
+VECTOR Gmin_vect;
+
+
 int run_corels_begin(double c, char* vstring, int curiosity_policy,
                   int map_type, int ablation, int calculate_size, int nrules, int nlabels,
                   int nsamples, rule_t* rules, rule_t* labels, rule_t* meta, int freq, 
-                  char* log_fname, int BFSmode, int seed, bool forbidSensAttr_val)
+                  char* log_fname, int BFSmode, int seed, bool forbidSensAttr_val, VECTOR maj_v, int nmaj_v,
+                  VECTOR  min_v, int nmin_v)
 {
+    // Check correctness
+    if(nmaj_v != nmin_v){
+        printf("nmaj and nmin should be equal\n");
+        exit(-1);
+    }
+    int nbMaj = count_ones_vector(maj_v, nmaj_v);
+    int nbMin = count_ones_vector(min_v, nmin_v);
+    printf("Maj vector : captures %d/%d instances.\n", nbMaj, nmaj_v);
+    printf("Min vector : captures %d/%d instances.\n", nbMin, nmin_v);
+
+    Gmaj_vect = maj_v;
+    Gmin_vect = min_v;
+    /*
+    for(int e = 0; e < nmaj_v; e++){
+        unsigned long val = *(maj_v+e);
+        if(val != 0 && val != 1){
+            printf("incorrect value found (%d) in maj vector at position %d\n", val, e);
+            exit(-1);
+        }
+    } 
+    for(int e = 0; e < nmin_v; e++){
+        unsigned long val = *(min_v+e);
+        if(val != 0 && val != 1){
+            printf("incorrect value found (%d) in min vector at position %d\n", val, e);
+            exit(-1);
+        }
+    } */
+    // Build vector objects
+
+    //Gmaj_vect = maj_v;
+    //Gmin_vect = min_v;
+    /*Gmaj_vect = (VECTOR) malloc(nmaj_v*sizeof(unsigned int));
+    Gmin_vect = (VECTOR) malloc(nmin_v*sizeof(unsigned int));
+    memcpy(&Gmaj_vect, &maj_v, nmaj_v);
+    memcpy(&Gmin_vect, &min_v, nmin_v);*/
+    //Gmaj_vect = &maj_v;
+   //Gmin_vect = &min_v;
+   
+    /*Gmaj_vect = *(maj_v);
+    Gmin_vect = *(min_v);*/
     forbidSensAttr = forbidSensAttr_val;
     Grules = rules;
     Glabels = labels;
@@ -192,7 +237,7 @@ int run_corels_begin(double c, char* vstring, int curiosity_policy,
     return 0;
 }
 
-int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int maj_pos, int min_pos, int mode, bool useUnfairnessLB,
+int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int mode, bool useUnfairnessLB,
                         double min_fairness_acceptable, int kBest, int restart, int initNBNodes, double geomReason) {
     // Check arguments
     if(mode < 1 || mode > 4) {
@@ -219,7 +264,7 @@ int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int maj_pos
             printf("Will perform geometric restarts from %d to %d.\n", currLimit, max_num_nodes);
         }
         if((g_tree->num_nodes() < currLimit) && !g_queue->empty()) {
-            bbound_loop(g_tree, g_queue, g_pmap, beta, fairness, maj_pos, min_pos, mode, useUnfairnessLB,
+            bbound_loop(g_tree, g_queue, g_pmap, beta, fairness, Gmaj_vect, Gmin_vect, mode, useUnfairnessLB,
                             min_fairness_acceptable, kBest, forbidSensAttr); 
             return 0;
         } else {
@@ -351,7 +396,7 @@ int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int maj_pos
             //printf("Initial limit = %d \n", currLimit);
         }
         if((g_tree->num_nodes() < currLimit) && !g_queue->empty()) {
-            bbound_loop(g_tree, g_queue, g_pmap, beta, fairness, maj_pos, min_pos, mode, useUnfairnessLB,
+            bbound_loop(g_tree, g_queue, g_pmap, beta, fairness, Gmaj_vect, Gmin_vect, mode, useUnfairnessLB,
                             min_fairness_acceptable, kBest, forbidSensAttr); 
             return 0;
         } else {
@@ -445,7 +490,7 @@ int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int maj_pos
     } 
     else { // Normal run (no restart)
                 if((g_tree->num_nodes() < max_num_nodes) && !g_queue->empty()) {
-            bbound_loop(g_tree, g_queue, g_pmap, beta, fairness, maj_pos, min_pos, mode, useUnfairnessLB,
+            bbound_loop(g_tree, g_queue, g_pmap, beta, fairness, Gmaj_vect, Gmin_vect, mode, useUnfairnessLB,
                             min_fairness_acceptable, kBest, forbidSensAttr);
             return 0;
         }
@@ -510,6 +555,7 @@ double run_corels_end(int** rulelist, int* rulelist_size, int** classes, double*
     ablationG = -1;
     calculate_sizeG = -1;
     Gc = -1;
+    // TODO : free vectors (?)
     if(lubySeqSize!= -1){
         free(lubySeq);
         lubySeqSize = -1;

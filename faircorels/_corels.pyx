@@ -30,9 +30,10 @@ cdef extern from "src/corels/src/run.hh":
     int run_corels_begin(double c, char* vstring, int curiosity_policy,
                       int map_type, int ablation, int calculate_size, int nrules, int nlabels,
                       int nsamples, rule_t* rules, rule_t* labels, rule_t* meta, 
-                      int freq, char* log_fname, int BFSmode, int seed, int forbidSensAttr_val)
+                      int freq, char* log_fname, int BFSmode, int seed, int forbidSensAttr_val,
+                      VECTOR maj_v, int nmaj_v, VECTOR min_v, int nmin_v)
 
-    int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int maj_pos, int min_pos,
+    int run_corels_loop(size_t max_num_nodes, double beta, int fairness,
                     int mode, int useUnfairnessLB, double min_fairness_acceptable, int kBest, int restart, int initNBNodes, double geomReason)
 
     double run_corels_end(int** rulelist, int* rulelist_size, 
@@ -226,15 +227,41 @@ def fit_wrap_begin(np.ndarray[np.uint8_t, ndim=2] samples,
              np.ndarray[np.uint8_t, ndim=2] labels,
              features, int max_card, double min_support, verbosity_str, int mine_verbose,
              int minor_verbose, double c, int policy, int map_type, int ablation,
-             int calculate_size, int forbidSensAttr, int BFSmode, int seed):
+             int calculate_size, int forbidSensAttr, int BFSmode, int seed, np.ndarray[np.uint8_t, ndim=1] maj_vect,  np.ndarray[np.uint8_t, ndim=1] min_vect):
     global rules
     global labels_vecs
     global minor
     global n_rules
 
+
     cdef int nfeatures = 0
     cdef rule_t* samples_vecs = _to_vector(samples, &nfeatures)
 
+    cdef int nones1, nones2
+    cdef VECTOR maj_vect_
+    cdef int n_maj_vect
+    arrstr = ""
+    for j in range(len(maj_vect)):
+        if maj_vect[j]:
+            arrstr += "1"
+        else:
+            arrstr += "0"
+    bytestr = arrstr.encode("ascii")
+    n_maj_vect = len(bytestr)
+    ascii_to_vector(bytestr, n_maj_vect, &n_maj_vect, &nones1, &maj_vect_)
+
+    cdef VECTOR min_vect_
+    cdef int n_min_vect
+    arrstr = ""
+    for j in range(len(min_vect)):
+        if min_vect[j]:
+            arrstr += "1"
+        else:
+            arrstr += "0"
+    bytestr = arrstr.encode("ascii")
+    n_min_vect = len(bytestr)
+    ascii_to_vector(bytestr, n_min_vect, &n_min_vect, &nones2, &min_vect_)
+   
     cdef int BFSmode_val = BFSmode
     cdef int seed_val = seed
     cdef int forbidSensAttr_val = forbidSensAttr
@@ -365,7 +392,7 @@ def fit_wrap_begin(np.ndarray[np.uint8_t, ndim=2] samples,
             minor = NULL
     """
     cdef int rb = run_corels_begin(c, verbosity, policy, map_type, ablation, calculate_size,
-                   n_rules, 2, nsamples, rules, labels_vecs, minor, 0, NULL, BFSmode_val, seed_val, forbidSensAttr_val)
+                   n_rules, 2, nsamples, rules, labels_vecs, minor, 0, NULL, BFSmode_val, seed_val, forbidSensAttr_val, maj_vect_, n_maj_vect, min_vect_, n_min_vect)
 
     if rb == -1:
         if labels_vecs != NULL:
@@ -385,14 +412,12 @@ def fit_wrap_begin(np.ndarray[np.uint8_t, ndim=2] samples,
 
 
 
-def fit_wrap_loop(size_t max_nodes, double beta, int fairness, int maj_pos, int min_pos,
+def fit_wrap_loop(size_t max_nodes, double beta, int fairness,
                 int mode, int useUnfairnessLB, double min_fairness_acceptable, int kBest, int restart, int initNBNodes, double geomReason):
     
     cdef size_t max_num_nodes = max_nodes
     cdef double beta_val = beta
     cdef int fairness_metric = fairness
-    cdef int maj_pos_val = maj_pos
-    cdef int min_pos_val = min_pos
     cdef int mode_val = mode
     cdef int useUnfairnessLB_val = useUnfairnessLB
     cdef double min_fairness_acceptable_val = min_fairness_acceptable
@@ -401,13 +426,17 @@ def fit_wrap_loop(size_t max_nodes, double beta, int fairness, int maj_pos, int 
     cdef double geomReason_val = geomReason
     cdef int initNBNodes_val = initNBNodes
     # This is where the magic happens
-    return (run_corels_loop(max_num_nodes, beta_val, fairness_metric, maj_pos_val, min_pos_val, mode_val, useUnfairnessLB_val, min_fairness_acceptable_val, kBest_val, restart_val, initNBNodes_val, geomReason_val) != -1)
+    return (run_corels_loop(max_num_nodes, beta_val, fairness_metric, mode_val, useUnfairnessLB_val, min_fairness_acceptable_val, kBest_val, restart_val, initNBNodes_val, geomReason_val) != -1)
 
 def fit_wrap_end(int early):
     global rules
     global labels_vecs
     global minor
     global n_rules
+    global maj_vect_
+    global nmaj_vect
+    global n_min_vect
+    global min_vect_
 
     cdef int rulelist_size = 0
     cdef int* rulelist = NULL

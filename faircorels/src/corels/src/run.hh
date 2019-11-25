@@ -10,9 +10,10 @@ extern "C" {
 int run_corels_begin(double c, char* vstring, int curiosity_policy,
                   int map_type, int ablation, int calculate_size, int nrules, int nlabels,
                   int nsamples, rule_t* rules, rule_t* labels, rule_t* meta, int freq, 
-                  char* log_fname, int BFSmode, int seed, bool forbidSensAttr_val);
+                  char* log_fname, int BFSmode, int seed, bool forbidSensAttr_val, VECTOR maj_v, 
+                  int nmaj_v, VECTOR min_v, int nmin_v);
 
-int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int maj_pos, int min_pos, int mode, bool useUnfairnessLB,
+int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int mode, bool useUnfairnessLB,
                         double min_fairness_acceptable, int kBest, int restart, int initNBNodes, double geomReason);
 
 double run_corels_end(int** rulelist, int* rulelist_size, int** classes, double** confScores, int early, int latex_out, rule_t* rules, rule_t* labels, char* opt_fname);

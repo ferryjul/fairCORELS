@@ -1,19 +1,19 @@
 import pandas as pd
 import numpy as np
-
+import matplotlib.pyplot as plt
 from sklearn.model_selection import KFold
 from joblib import Parallel, delayed
 from collections import Counter
 
 from faircorels import load_from_csv, CorelsClassifier
 from metrics import ConfusionMatrix, Metric
-
+import csv
 
 N_ITER = 1*10**5
 
 X, y, features, prediction = load_from_csv("./data/adult_full.csv")
 
-
+fairnessMetric = 1
 
 kf = KFold(n_splits=5, shuffle=True, random_state=42)
 accuracy = []
@@ -30,25 +30,26 @@ for train_index, test_index in kf.split(X):
 
 
 
-def trainFold(X_train, y_train, X_test, y_test):
-
+def trainFold(X_train, y_train, X_test, y_test, min_supp):
+    sensVect =  [row[32] for row in X_train]
+    unSensVect =  [row[33] for row in X_train]
+    print("Sensitive attributes vector : captures ", sensVect.count(1) ,"/", len(sensVect), " instances", "Unsensitive attributes vector : captures ", unSensVect.count(1) ,"/", len(unSensVect), " instances")
+    
     clf = CorelsClassifier(n_iter=N_ITER, 
                             c=1e-3, 
-                            max_card=2, 
+                            max_card=1, 
                             policy="bfs",
                             bfs_mode=2,
                             mode=3,
                             useUnfairnessLB=True,
                             forbidSensAttr=False,
-                            fairness=1, 
-                            epsilon=0.0,
-                            maj_pos=34, 
-                            min_pos=33,
-                            verbosity=["rulelist"],
-                            min_support = 0.01
+                            fairness=fairnessMetric, 
+                            epsilon=0.9,
+                            verbosity=[],
+                            #maj_vect=unSensVect,
+                            min_pos=32,
+                            min_support = min_supp
                             )
-
-
     clf.fit(X_train, y_train, features=features, prediction_name="(income:>50K)")
     df_test = pd.DataFrame(X_test, columns=features)
     df_test['income'] = y_test
@@ -65,20 +66,38 @@ def trainFold(X_train, y_train, X_test, y_test):
 
     return [acc, unf]
 
+mList = [0.01]#, 0.0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.10]
+meanAcc = []
+meanUnf = []
+medianAcc = []
+medianUnf = []
+for m in mList:
+    output = Parallel(n_jobs=-1)(delayed(trainFold)(X_train=fold[0], y_train=fold[1], X_test=fold[2], y_test=fold[3], min_supp=m) for fold in folds)
+    accuracy = []
+    unfairness = []
+    for res in output:
+        accuracy.append(res[0])
+        unfairness.append(res[1])
+    
+    print("-------------- min_support = ", m, " ------------")
+    print("=========> median accuracy {}".format(np.median(accuracy)))
+    print("=========> median unfairness {}".format(np.median(unfairness)))
 
+    print("=========> mean accuracy {}".format(np.mean(accuracy)))
+    print("=========> mean unfairness {}".format(np.mean(unfairness)))
+    
+    meanAcc.append(np.mean(accuracy))
+    meanUnf.append(np.mean(unfairness))
+    medianAcc.append(np.median(accuracy))
+    medianUnf.append(np.median(unfairness))
 
-output = Parallel(n_jobs=-1)(delayed(trainFold)(X_train=fold[0], y_train=fold[1], X_test=fold[2], y_test=fold[3]) for fold in folds)
-
-accuracy = []
-unfairness = []
-
-for res in output:
-    accuracy.append(res[0])
-    unfairness.append(res[1])
-
-
-print("=========> median accuracy {}".format(np.median(accuracy)))
-print("=========> median unfairness {}".format(np.median(unfairness)))
-
-print("=========> mean accuracy {}".format(np.mean(accuracy)))
-print("=========> mean unfairness {}".format(np.mean(unfairness)))
+name_csv = './results_min_support.csv'
+with open(name_csv, mode='w') as csv_file:
+    csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+    csv_writer.writerow(['Min_support', 'Mean accuracy', 'Mean unfairness(%d)' %fairnessMetric, 'Median accuracy', 'Median unfairness(%d)' %fairnessMetric])
+    index = 0
+    for i in range(len(mList)):
+        csv_writer.writerow([mList[i], meanAcc[i], meanUnf[i], medianAcc[i], medianUnf[i]])
+    index = index + 1
+    csv_writer.writerow(["", "", "", "", ""])
+print("csv file saved : %s" %name_csv)

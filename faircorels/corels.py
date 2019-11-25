@@ -75,12 +75,22 @@ class CorelsClassifier:
         The type of fairness metric used. 
         1 : statistical parity, 2 : predictive parity, 3 : predictive equality, 4 : equal opportunity
 
-    maj_pos: int optional (default=1)
+    maj_pos: int optional (default=-1)
         The position of the rule that defined the majority group
         If not specified, all individuals not in minority group are in majority group
+        Not used if maj_vect is used
 
     min_pos: int optional (default=2)
         The position of the rule that defined the minority group
+        Not used if min_vect is used
+
+    maj_vect: int list optional (default=[-1])
+        List of integers in {0,1} indicating if instances belong to the majority group
+        If not specified, this vector is computed using maj_pos
+
+    min_vect: int list optional (default=[-1])
+        List of integers in {0,1} indicating if instances belong to the minority group
+        If not specified, this vector is computed using min_pos
 
     mode: int optional (default=3)
         Method used for the multi-ojective framework
@@ -142,7 +152,7 @@ class CorelsClassifier:
 
     def __init__(self, c=0.01, n_iter=10000, map_type="prefix", policy="lower_bound",
                  verbosity=["rulelist"], ablation=0, max_card=2, min_support=0.01,
-                 beta=0.0, fairness=1, maj_pos=1, min_pos=2,
+                 beta=0.0, fairness=1, maj_pos=-1, min_pos=2, maj_vect = [-1], min_vect = [-1],
                  mode=4, useUnfairnessLB=False, epsilon=0.0, kbest=1, forbidSensAttr=False,
                  bfs_mode=0, random_state=42):
         self.c = c
@@ -156,9 +166,28 @@ class CorelsClassifier:
         self.forbidSensAttr=forbidSensAttr
         self.beta = beta
         self.fairness = fairness
-        self.maj_pos = maj_pos
-        self.min_pos = min_pos
+        if(maj_vect == [-1]):
+            # Majority group is not explicitely defined
+            # We will have to use maj_pos to compute the associated vector
+            self.maj_pos = maj_pos
+            if(maj_pos != -1):
+                print("maj vect not specified, position ", maj_pos, " will be used.")
+            else:
+                print("no majority group defined, maj group will be all instances except minority group ones.")
+                self.maj_vect = []
+        else:
+            self.maj_pos = -2
+            self.maj_vect = maj_vect
 
+        if(min_vect == [-1]):
+            # Majority group is not explicitely defined
+            # We will have to use maj_pos to compute the associated vector
+            self.min_pos = min_pos
+            print("min vect not specified, position ", min_pos, " will be used.")
+        else:
+            self.min_pos = -2
+            self.min_vect = min_vect
+            print("min vect specified")
         self.mode = mode
         self.useUnfairnessLB = useUnfairnessLB
         self.epsilon = epsilon
@@ -296,15 +325,30 @@ class CorelsClassifier:
         map_id = map_types.index(self.map_type)
         policy_id = policies.index(self.policy)
 
+        if(self.min_pos != -2):
+            self.min_vect = [row[self.min_pos] for row in X]
+        print(len(self.min_vect), " elements in min_vect, %d captured" %(self.min_vect.count(1)))
+        if(self.maj_pos != -2):
+            if self.maj_pos == -1: # Nor vector for majority group given neither column number => all instances not in min group are in maj group
+                for e in range(len(self.min_vect)):
+                    if self.min_vect[e] == 1:
+                        self.maj_vect.append(0)
+                    else:
+                        self.maj_vect.append(1)
+            else:
+                self.maj_vect =  [row[self.maj_pos] for row in X]
+        print(len(self.maj_vect), " elements in maj_vect, %d captured" %(self.maj_vect.count(1)))
+        
         fr = fit_wrap_begin(samples.astype(np.uint8, copy=False),
                              labels.astype(np.uint8, copy=False), rl.features,
                              self.max_card, self.min_support, verbose, mine_verbose, minor_verbose,
-                             self.c, policy_id, map_id, self.ablation, False, self.forbidSensAttr, self.bfs_mode, self.random_state)
+                             self.c, policy_id, map_id, self.ablation, False, self.forbidSensAttr, self.bfs_mode, self.random_state,
+                             np.array(self.maj_vect, dtype=np.uint8), np.array(self.min_vect, dtype=np.uint8))
         
         if fr:
             early = False
             try:
-                while fit_wrap_loop(self.n_iter, self.beta, self.fairness, self.maj_pos, self.min_pos, self.mode, self.useUnfairnessLB, self.epsilon, self.kbest, performRestarts, initNBNodes, geomRReason):
+                while fit_wrap_loop(self.n_iter, self.beta, self.fairness, self.mode, self.useUnfairnessLB, self.epsilon, self.kbest, performRestarts, initNBNodes, geomRReason):
                     pass
             except:
                 print("\nExiting early")
@@ -437,6 +481,8 @@ class CorelsClassifier:
             "fairness": self.fairness,
             "maj_pos": self.maj_pos,
             "min_pos": self.min_pos,
+            "maj_vect": self.maj_vect,
+            "min_vect": self.min_vect,
             "mode": self.mode,
             "useUnfairnessLB": self.useUnfairnessLB,
             "epsilon": self.epsilon,
