@@ -9,7 +9,7 @@ from faircorels import load_from_csv, CorelsClassifier
 from metrics import ConfusionMatrix, Metric
 import csv
 
-N_ITER = 1*10**5
+N_ITER = 1*10**6
 
 X, y, features, prediction = load_from_csv("./data/adult_full.csv")
 
@@ -66,7 +66,7 @@ def trainFold(X_train, y_train, X_test, y_test, min_supp):
 
     return [acc, unf]
 
-mList = [0.01]#, 0.0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.10]
+mList = [0.0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.10, 0.11, 0.12, 0.13, 0.14, 0.15, 0.16]
 meanAcc = []
 meanUnf = []
 medianAcc = []
