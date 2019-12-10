@@ -327,7 +327,7 @@ class CorelsClassifier:
 
         if(self.min_pos != -2):
             self.min_vect = [row[self.min_pos] for row in X]
-        print(len(self.min_vect), " elements in min_vect, %d captured" %(self.min_vect.count(1)))
+        #print(len(self.min_vect), " elements in min_vect, %d captured" %(self.min_vect.count(1)))
         if(self.maj_pos != -2):
             if self.maj_pos == -1: # Nor vector for majority group given neither column number => all instances not in min group are in maj group
                 for e in range(len(self.min_vect)):
@@ -337,7 +337,7 @@ class CorelsClassifier:
                         self.maj_vect.append(1)
             else:
                 self.maj_vect =  [row[self.maj_pos] for row in X]
-        print(len(self.maj_vect), " elements in maj_vect, %d captured" %(self.maj_vect.count(1)))
+        #print(len(self.maj_vect), " elements in maj_vect, %d captured" %(self.maj_vect.count(1)))
         
         fr = fit_wrap_begin(samples.astype(np.uint8, copy=False),
                              labels.astype(np.uint8, copy=False), rl.features,

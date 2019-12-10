@@ -51,8 +51,8 @@ int run_corels_begin(double c, char* vstring, int curiosity_policy,
     }
     int nbMaj = count_ones_vector(maj_v, nmaj_v);
     int nbMin = count_ones_vector(min_v, nmin_v);
-    printf("Maj vector : captures %d/%d instances.\n", nbMaj, nmaj_v);
-    printf("Min vector : captures %d/%d instances.\n", nbMin, nmin_v);
+    //printf("Maj vector : captures %d/%d instances.\n", nbMaj, nmaj_v);
+    //printf("Min vector : captures %d/%d instances.\n", nbMin, nmin_v);
 
     Gmaj_vect = maj_v;
     Gmin_vect = min_v;

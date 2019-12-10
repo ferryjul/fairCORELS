@@ -34,7 +34,7 @@ for train_index, test_index in kf.split(X):
 def trainFold(X_train, y_train, X_test, y_test, min_supp):
     sensVect =  [row[32] for row in X_train]
     unSensVect =  [row[33] for row in X_train]
-    print("Sensitive attributes vector : captures ", sensVect.count(1) ,"/", len(sensVect), " instances", "Unsensitive attributes vector : captures ", unSensVect.count(1) ,"/", len(unSensVect), " instances")
+    #print("Sensitive attributes vector : captures ", sensVect.count(1) ,"/", len(sensVect), " instances", "Unsensitive attributes vector : captures ", unSensVect.count(1) ,"/", len(unSensVect), " instances")
     
     clf = CorelsClassifier(n_iter=N_ITER, 
                             c=1e-3, 
@@ -62,6 +62,7 @@ def trainFold(X_train, y_train, X_test, y_test, min_supp):
     acc = clf.score(X_test, y_test)
     unf = fm.statistical_parity()
     length = len(clf.rl_.rules)
+    print(clf.rl_)
     #print("=========> accuracy {}".format(acc))
     #print("=========> unfairness {}".format(unf))
 
