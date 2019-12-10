@@ -68,46 +68,49 @@ def trainFold(X_train, y_train, X_test, y_test, min_supp, cardi):
 
     return [acc, unf, length]
 
-cardList = [1,2,3,4,5]
-for card in cardList:
-    mList = [0.0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.10, 0.11, 0.12, 0.13, 0.14, 0.15, 0.16, 0.17, 0.18, 0.19, 0.20]
-    meanAcc = []
-    meanUnf = []
-    medianAcc = []
-    medianUnf = []
-    times = []
-    meanLength = []
+    def computeForCard(card):
+        mList = [0.0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.10, 0.11, 0.12, 0.13, 0.14, 0.15, 0.16, 0.17, 0.18, 0.19, 0.20]
+        meanAcc = []
+        meanUnf = []
+        medianAcc = []
+        medianUnf = []
+        times = []
+        meanLength = []
 
-    for m in mList:
-        start_time = time.time()
-        output = Parallel(n_jobs=-1)(delayed(trainFold)(X_train=fold[0], y_train=fold[1], X_test=fold[2], y_test=fold[3], min_supp=m, cardi=card) for fold in folds)
-        accuracy = []
-        unfairness = []
-        length = []
-        for res in output:
-            accuracy.append(res[0])
-            unfairness.append(res[1])
-            length.append(res[2])
-        print("-------------- min_support = ", m, " ------------")
-        print("=========> median accuracy {}".format(np.median(accuracy)))
-        print("=========> median unfairness {}".format(np.median(unfairness)))
+        for m in mList:
+            start_time = time.time()
+            output = Parallel(n_jobs=5)(delayed(trainFold)(X_train=fold[0], y_train=fold[1], X_test=fold[2], y_test=fold[3], min_supp=m, cardi=card) for fold in folds)
+            accuracy = []
+            unfairness = []
+            length = []
+            for res in output:
+                accuracy.append(res[0])
+                unfairness.append(res[1])
+                length.append(res[2])
+            print("-------------- min_support = ", m, " ------------")
+            print("=========> median accuracy {}".format(np.median(accuracy)))
+            print("=========> median unfairness {}".format(np.median(unfairness)))
 
-        print("=========> mean accuracy {}".format(np.mean(accuracy)))
-        print("=========> mean unfairness {}".format(np.mean(unfairness)))
-        meanLength.append(np.mean(length))
-        meanAcc.append(np.mean(accuracy))
-        meanUnf.append(np.mean(unfairness))
-        medianAcc.append(np.median(accuracy))
-        medianUnf.append(np.median(unfairness))
-        times.append(time.time() - start_time)
+            print("=========> mean accuracy {}".format(np.mean(accuracy)))
+            print("=========> mean unfairness {}".format(np.mean(unfairness)))
+            meanLength.append(np.mean(length))
+            meanAcc.append(np.mean(accuracy))
+            meanUnf.append(np.mean(unfairness))
+            medianAcc.append(np.median(accuracy))
+            medianUnf.append(np.median(unfairness))
+            times.append(time.time() - start_time)
 
-    name_csv = './results/results_min_support_new_%d.csv' %card
-    with open(name_csv, mode='w') as csv_file:
-        csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-        csv_writer.writerow(['Min_support', 'Mean accuracy', 'Mean unfairness(%d)' %fairnessMetric, 'Median accuracy', 'Median unfairness(%d)' %fairnessMetric, 'Running time', 'Mean length'])
-        index = 0
-        for i in range(len(mList)):
-            csv_writer.writerow([mList[i], meanAcc[i], meanUnf[i], medianAcc[i], medianUnf[i], times[i], meanLength[i]])
-        index = index + 1
-        csv_writer.writerow(["", "", "", "", ""])
-    print("csv file saved : %s" %name_csv)
+        name_csv = './results/results_min_support_new_%d.csv' %card
+        with open(name_csv, mode='w') as csv_file:
+            csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            csv_writer.writerow(['Min_support', 'Mean accuracy', 'Mean unfairness(%d)' %fairnessMetric, 'Median accuracy', 'Median unfairness(%d)' %fairnessMetric, 'Running time', 'Mean length'])
+            index = 0
+            for i in range(len(mList)):
+                csv_writer.writerow([mList[i], meanAcc[i], meanUnf[i], medianAcc[i], medianUnf[i], times[i], meanLength[i]])
+            index = index + 1
+            csv_writer.writerow(["", "", "", "", ""])
+        print("csv file saved : %s" %name_csv)
+
+cardList = [1,2,3,4]
+Parallel(n_jobs=2)(delayed(computeForCard)(card=cc) for cc in cardList)
+print("Done !")
