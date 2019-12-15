@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 from sklearn.model_selection import KFold
-from joblib import Parallel, delayed
+from joblib import Parallel, delayed, parallel_backend
 
 from faircorels import load_from_csv, CorelsClassifier
 from metrics import ConfusionMatrix, Metric
@@ -131,6 +131,7 @@ def trainFold(X_train, y_train, X_test, y_test, epsilon, fairness_metric):
     
     return [acc, unf, acc_train, unf_train,  mdl]
 
+
     
 
 # method to run experimer per epsilon and per fairness metric
@@ -167,10 +168,12 @@ def per_epsilon(epsilon, fairness_metric):
 
 
 
+
+
 # 1- experiment for statistical_parity
 def statistical_parity():
     filename = './results/{}_statistical_parity.csv'.format(dataset)
-    row_list = Parallel(n_jobs=-1)(delayed(per_epsilon)(epsilon=eps, fairness_metric=1) for eps in epsilon_range)
+    row_list = Parallel(n_jobs=-1, backend='multiprocessing')(delayed(per_epsilon)(epsilon=eps, fairness_metric=1) for eps in epsilon_range)
     df = pd.DataFrame(row_list)
     df.to_csv(filename, encoding='utf-8', index=False)
 
