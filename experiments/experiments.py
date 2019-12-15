@@ -59,12 +59,12 @@ if args.id==4:
     maj_pos = 2
 
 # parameters
-N_ITER = 5*10**6
+N_ITER = 5*10**0
 epsilon_low_regime = np.linspace(0.89, 0.949, num=10) 
 epsilon_high_regime = np.linspace(0.95, 0.999, num=60)
 epsilon_range = [0.0] + [x for x in epsilon_low_regime] + [x for x in epsilon_high_regime] + [1.0]
 
-epsilon_range = [0.0, 1.0]
+epsilon_range = [0.0, 0.80, 0.90]
 
 # loading dataset
 
@@ -135,9 +135,9 @@ def trainFold(X_train, y_train, X_test, y_test, epsilon, fairness_metric):
     
 
 # method to run experimer per epsilon and per fairness metric
-def per_epsilon(espsilon, fairness_metric, writer):
+def per_epsilon(epsilon, fairness_metric, writer):
     
-    output = Parallel(n_jobs=-1)(delayed(trainFold)(X_train=fold[0], y_train=fold[1], X_test=fold[2], y_test=fold[3], epsilon=espsilon, fairness_metric=fairness_metric) for fold in folds)
+    output = Parallel(n_jobs=-1)(delayed(trainFold)(X_train=fold[0], y_train=fold[1], X_test=fold[2], y_test=fold[3], epsilon=epsilon, fairness_metric=fairness_metric) for fold in folds)
 
     accuracy = []
     unfairness = []
@@ -159,12 +159,11 @@ def per_epsilon(espsilon, fairness_metric, writer):
          'unfairness': np.mean(unfairness),
          'accuracy_train': np.mean(accuracy_train),
          'unfairness_train': np.mean(unfairness_train),
-         'epsilon' : espsilon,
+         'epsilon' : epsilon,
          'models' : model
          })
     #print("=========> mean accuracy {}".format(np.mean(accuracy)))
     #print("=========> mean unfairness {}".format(np.mean(unfairness)))
-
 
 
 # 1- experiment for statistical_parity
