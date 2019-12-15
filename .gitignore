@@ -1,3 +1,5 @@
+get_result.sh
+experiments/results
 experiments/slurm*
 experiments/core.*
 *.o
