@@ -1,6 +1,5 @@
 #!/bin/bash
-#SBATCH --time=3:00:00
-#SBATCH --nodes=8
+#SBATCH --time=48:00:00
 #SBATCH --mincpus=10
 #SBATCH --mem-per-cpu=3072M    
 #SBATCH --account=def-gambsseb

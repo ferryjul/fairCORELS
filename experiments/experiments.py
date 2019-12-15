@@ -136,7 +136,7 @@ def trainFold(X_train, y_train, X_test, y_test, epsilon, fairness_metric):
 # method to run experimer per epsilon and per fairness metric
 def per_epsilon(epsilon, fairness_metric, writer):
     
-    output = Parallel(n_jobs=-1)(delayed(trainFold)(X_train=fold[0], y_train=fold[1], X_test=fold[2], y_test=fold[3], epsilon=epsilon, fairness_metric=fairness_metric) for fold in folds)
+    output = Parallel(n_jobs=5)(delayed(trainFold)(X_train=fold[0], y_train=fold[1], X_test=fold[2], y_test=fold[3], epsilon=epsilon, fairness_metric=fairness_metric) for fold in folds)
 
     accuracy = []
     unfairness = []
