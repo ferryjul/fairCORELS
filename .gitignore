@@ -1,3 +1,5 @@
+experiments/slurm*
+experiments/core.*
 *.o
 *.pyc
 *.swp
