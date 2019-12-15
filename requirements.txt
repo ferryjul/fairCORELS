@@ -2,7 +2,4 @@ numpy
 pandas
 requests
 sklearn
-imbalanced-learn
-setuptools
-pytest
-
+scipy

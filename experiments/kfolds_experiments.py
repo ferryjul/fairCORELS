@@ -58,12 +58,9 @@ if args.id==4:
 
 # parameters
 N_ITER = 5*10**6
-epsilon_low_regime = np.linspace(0.0, 0.949, num=10) 
-epsilon_high_regime = np.linspace(0.95, 0.99, num=50)
+epsilon_low_regime = np.linspace(0.89, 0.949, num=10) 
+epsilon_high_regime = np.linspace(0.95, 0.999, num=60)
 epsilon_range = [x for x in epsilon_low_regime] + [x for x in epsilon_high_regime]
-
-
-
 
 
 # loading dataset
@@ -73,7 +70,7 @@ X, y, features, prediction = load_from_csv("../data/{}/{}_rules_full.csv".format
 print('nbr features ----------------------->', len(features))
 
 # creating k-folds
-kf = KFold(n_splits=10, shuffle=True, random_state=42)
+kf = KFold(n_splits=5, shuffle=True, random_state=42)
 accuracy = []
 unfairness = []
 
@@ -124,14 +121,12 @@ def trainFold(X_train, y_train, X_test, y_test, epsilon, fairness_metric):
 
     acc = clf.score(X_test, y_test)
     unf = fm.fairness_metric(fairness_metric)
+
     acc_train = clf.score(X_train, y_train)
     unf_train = fm_train.fairness_metric(fairness_metric)
     mdl = {'accuracy': acc, 'unfairness':unf, 'accuracy_train': acc_train, 'unfairness_train':unf_train, 'description': clf.rl().__str__()}
 
     
-
-
-
     return [acc, unf, acc_train, unf_train,  mdl]
 
     
@@ -164,6 +159,8 @@ def per_epsilon(espsilon, fairness_metric, writer):
          'epsilon' : espsilon,
          'models' : model
          })
+    #print("=========> mean accuracy {}".format(np.mean(accuracy)))
+    #print("=========> mean unfairness {}".format(np.mean(unfairness)))
 
 
 
@@ -173,6 +170,7 @@ with open('./results/{}_statistical_parity.csv'.format(dataset), 'a+', newline='
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     writer.writeheader()
     for eps in epsilon_range:
+        print('>>>>>>'*20, eps)
         per_epsilon(eps, 1, writer)
 
 
@@ -182,6 +180,7 @@ with open('./results/{}_predictive_parity.csv'.format(dataset), 'a+', newline=''
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     writer.writeheader()
     for eps in epsilon_range:
+        print('>>>>>>'*20, eps)
         per_epsilon(eps, 2, writer)
 
 
@@ -191,6 +190,7 @@ with open('./results/{}_predictive_equality.csv'.format(dataset), 'a+', newline=
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     writer.writeheader()
     for eps in epsilon_range:
+        print('>>>>>>'*20, eps)
         per_epsilon(eps, 3, writer)
 
 
@@ -200,6 +200,7 @@ with open('./results/{}_equal_opportunity.csv'.format(dataset), 'a+', newline=''
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     writer.writeheader()
     for eps in epsilon_range:
+        print('>>>>>>'*20, eps)
         per_epsilon(eps, 4, writer)
 
 
@@ -209,6 +210,7 @@ with open('./results/{}_conditional_procedure_accuracy_equality.csv'.format(data
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     writer.writeheader()
     for eps in epsilon_range:
+        print('>>>>>>'*20, eps)
         per_epsilon(eps, 5, writer)
 
 
@@ -218,6 +220,7 @@ with open('./results/{}_conditional_use_accuracy_equality.csv'.format(dataset), 
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     writer.writeheader()
     for eps in epsilon_range:
+        print('>>>>>>'*20, eps)
         per_epsilon(eps, 6, writer)
 
 

@@ -1,0 +1,36 @@
+# .bashrc
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+    . /etc/bashrc
+fi
+
+# CLUMEQ 
+for i in /clumeq/etc/profile.d/*.sh ; do
+    if [ -r "$i" ]; then
+        . $i
+    fi
+done
+
+# User specific environment and startup programs
+PATH=$PATH:$HOME/bin
+export PATH
+
+###-------- Module loading --------###
+module load python/3.6.3
+module load gcc
+module load gmp
+
+##--------- Software --------###
+
+# Python
+source ~/env/bin/activate
+
+###-------- Alias --------###
+alias ll='ls -l'
+alias l='ls -lah'
+alias alloc="helios-info | head -n 8 | tail -n 4"
+alias i="showq -i -u $USER"
+alias r="showq -r -u $USER"
+alias b="showq -b -u $USER"
+alias tu="top -u $USER -i -M -d 1"
