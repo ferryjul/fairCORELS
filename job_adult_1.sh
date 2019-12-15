@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --time=3:00:00
-#SBATCH --nodes=3
-#SBATCH --mincpus=72
+#SBATCH --nodes=8
+#SBATCH --mincpus=10
 #SBATCH --mem-per-cpu=3072M    
 #SBATCH --account=def-gambsseb
 #SBATCH --mail-user=a.u.matchi@gmail.com

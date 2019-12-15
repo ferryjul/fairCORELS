@@ -134,9 +134,9 @@ def trainFold(X_train, y_train, X_test, y_test, epsilon, fairness_metric):
     
 
 # method to run experimer per epsilon and per fairness metric
-def per_epsilon(espsilon, fairness_metric):
+def per_epsilon(epsilon, fairness_metric):
     
-    output = Parallel(n_jobs=-1)(delayed(trainFold)(X_train=fold[0], y_train=fold[1], X_test=fold[2], y_test=fold[3], epsilon=espsilon, fairness_metric=fairness_metric) for fold in folds)
+    output = Parallel(n_jobs=-1)(delayed(trainFold)(X_train=fold[0], y_train=fold[1], X_test=fold[2], y_test=fold[3], epsilon=epsilon, fairness_metric=fairness_metric) for fold in folds)
 
     accuracy = []
     unfairness = []
@@ -158,7 +158,7 @@ def per_epsilon(espsilon, fairness_metric):
             'unfairness': np.mean(unfairness),
             'accuracy_train': np.mean(accuracy_train),
             'unfairness_train': np.mean(unfairness_train),
-            'epsilon' : espsilon,
+            'epsilon' : epsilon,
             'models' : model
          }
 
