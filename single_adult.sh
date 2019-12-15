@@ -8,5 +8,5 @@
 
 cd experiments
 
-python experiments_parallel.py --id=1 --metric=1
+python experiments.py --id=1 --metric=1
     
