@@ -1,6 +1,7 @@
 #!/bin/bash
-#SBATCH --time=24:00:00
-#SBATCH --mincpus=10
+#SBATCH --time=3:00:00
+#SBATCH --nodes=3
+#SBATCH --mincpus=72
 #SBATCH --mem-per-cpu=3072M    
 #SBATCH --account=def-gambsseb
 #SBATCH --mail-user=a.u.matchi@gmail.com
@@ -8,5 +9,5 @@
 
 cd experiments
 
-python experiments.py --id=1 --metric=1
+python experiments_parallel.py --id=1 --metric=1
     
