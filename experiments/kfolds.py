@@ -59,17 +59,19 @@ if args.id==4:
 
 
 # parameters
-N_ITER = 5*10**6
-fairness_metric = 1
-epsilon = 0.95
+N_ITER = 1*10**6
+fairness_metric = 4
+epsilon = 0.99999
+_lambda = 1e-3
+forbidSensAttr = True
 
 
 
-X, y, features, prediction = load_from_csv("../data/{}/{}_rules_full.csv".format(dataset, dataset))
+X, y, features, prediction = load_from_csv("../data/{}/{}_rules_full_bench.csv".format(dataset, dataset))
 
 print('nbr features ----------------------->', len(features))
 
-kf = KFold(n_splits=2, shuffle=True, random_state=42)
+kf = KFold(n_splits=5, shuffle=True, random_state=42)
 accuracy = []
 unfairness = []
 
@@ -78,9 +80,9 @@ for train_index, test_index in kf.split(X):
     X_train, X_test = X[train_index], X[test_index]
     y_train, y_test = y[train_index], y[test_index]
     folds.append([X_train, y_train, X_test, y_test])
-    print('------------------------------>>>>>>>>>>')
+    """print('------------------------------>>>>>>>>>>')
     print('train distribution ------', sorted(Counter(y_train).items()))
-    print('test distribution ------', sorted(Counter(y_test).items()))
+    print('test distribution ------', sorted(Counter(y_test).items()))"""
 
 
 
@@ -88,13 +90,13 @@ def trainFold(X_train, y_train, X_test, y_test):
 
     clf = CorelsClassifier(n_iter=N_ITER, 
                             min_support=0.01,
-                            c=1e-3, 
+                            c=_lambda, 
                             max_card=1, 
                             policy="bfs",
                             bfs_mode=2,
                             mode=3,
                             useUnfairnessLB=True,
-                            forbidSensAttr=True,
+                            forbidSensAttr=forbidSensAttr,
                             fairness=fairness_metric, 
                             epsilon=epsilon,
                             maj_pos=maj_pos, 
@@ -104,6 +106,8 @@ def trainFold(X_train, y_train, X_test, y_test):
 
 
     clf.fit(X_train, y_train, features=features, prediction_name=prediction_name)
+    
+    #test
     df_test = pd.DataFrame(X_test, columns=features)
     df_test[decision] = y_test
     df_test["predictions"] = clf.predict(X_test)
@@ -111,13 +115,23 @@ def trainFold(X_train, y_train, X_test, y_test):
     cm_minority, cm_majority = cm.get_matrix()
     fm = Metric(cm_minority, cm_majority)
 
+    #train 
+    df_train = pd.DataFrame(X_train, columns=features)
+    df_train[decision] = y_train
+    df_train["predictions"] = clf.predict(X_train)
+    cm_train = ConfusionMatrix(df_train[min_feature], df_train[maj_feature], df_train["predictions"], df_train[decision])
+    cm_minority_train, cm_majority_train = cm_train.get_matrix()
+    fm_train = Metric(cm_minority_train, cm_majority_train)
+
     acc = clf.score(X_test, y_test)
-    unf = fm.statistical_parity()
+    unf = fm.fairness_metric(fairness_metric)
 
-    #print("=========> accuracy {}".format(acc))
-    #print("=========> unfairness {}".format(unf))
+    acc_train = clf.score(X_train, y_train)
+    unf_train = fm_train.fairness_metric(fairness_metric)
 
-    return [acc, unf]
+    
+    return [acc, unf, acc_train, unf_train]
+
 
 
 
@@ -125,14 +139,18 @@ output = Parallel(n_jobs=-1)(delayed(trainFold)(X_train=fold[0], y_train=fold[1]
 
 accuracy = []
 unfairness = []
+accuracy_train = []
+unfairness_train = []
 
 for res in output:
     accuracy.append(res[0])
     unfairness.append(res[1])
+    accuracy_train.append(res[2])
+    unfairness_train.append(res[3])
 
 
-#print("=========> median accuracy {}".format(np.median(accuracy)))
-#print("=========> median unfairness {}".format(np.median(unfairness)))
-
-print("=========> mean accuracy {}".format(np.mean(accuracy)))
-print("=========> mean unfairness {}".format(np.mean(unfairness)))
+print("=========>  accuracy test {}".format(np.mean(accuracy)))
+print("=========>  unfairness test {}".format(np.mean(unfairness)))
+print('----'*20)
+print("=========>  accuracy train {}".format(np.mean(accuracy_train)))
+print("=========>  unfairness train {}".format(np.mean(unfairness_train)))
