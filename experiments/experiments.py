@@ -244,5 +244,5 @@ experiments = {
 }
 
 
-
+#run experiment for a particular dataset/fairness metric
 experiments[args.metric]()
