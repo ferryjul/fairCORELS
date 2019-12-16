@@ -72,7 +72,7 @@ X, y, features, prediction = load_from_csv("../data/{}/{}_rules_full.csv".format
 print('nbr features ----------------------->', len(features))
 
 # creating k-folds
-kf = KFold(n_splits=10, shuffle=True, random_state=42)
+kf = KFold(n_splits=5, shuffle=True, random_state=42)
 accuracy = []
 unfairness = []
 
