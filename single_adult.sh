@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH --time=48:00:00
-#SBATCH --mincpus=10
-#SBATCH --mem-per-cpu=3072M    
+#SBATCH --time=24:00:00
+#SBATCH --mincpus=5
+#SBATCH --mem-per-cpu=6000M    
 #SBATCH --account=def-gambsseb
 #SBATCH --mail-user=a.u.matchi@gmail.com
 #SBATCH --mail-type=ALL
