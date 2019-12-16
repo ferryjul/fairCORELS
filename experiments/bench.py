@@ -65,10 +65,8 @@ epsilon_high_regime = np.linspace(0.95, 0.999, num=60)
 epsilon_range = [0.0] + [x for x in epsilon_low_regime] + [x for x in epsilon_high_regime]
 
 
-epsilon_range = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
-
-
-epsilon_range = [0.0]
+#epsilon_range = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
+#epsilon_range = [0.0]
 
 # loading dataset
 

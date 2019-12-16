@@ -8,5 +8,5 @@
 
 cd experiments
 
-python bench.py --id=1 --metric=4
+python bench.py --id=1 --metric=1
     
