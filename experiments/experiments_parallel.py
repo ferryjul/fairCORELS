@@ -66,6 +66,8 @@ epsilon_low_regime = np.linspace(0.89, 0.949, num=10)
 epsilon_high_regime = np.linspace(0.95, 0.999, num=20)
 epsilon_range = [0.0] + [x for x in epsilon_low_regime] + [x for x in epsilon_high_regime] + [1.0]
 
+epsilon_range = [0.0, 0.2, 0.3]
+
 njobs = len(epsilon_range)
 nfolds = 5
 
@@ -181,8 +183,8 @@ def per_epsilon(epsilon, fairness_metric):
 def statistical_parity():
     filename = './results/{}_statistical_parity_{}.csv'.format(dataset,suffix)
     row_list = Parallel(n_jobs=njobs)(delayed(per_epsilon)(epsilon=eps, fairness_metric=1) for eps in epsilon_range)
-    df = pd.DataFrame(row_list)
-    df.to_csv(filename, encoding='utf-8', index=False)
+    #df = pd.DataFrame(row_list)
+    #df.to_csv(filename, encoding='utf-8', index=False)
 
 # 2- experiment for predictive_parity
 def predictive_parity():
