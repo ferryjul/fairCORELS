@@ -70,6 +70,7 @@ epsilon_range = [0.0, 0.2, 0.3]
 
 njobs = len(epsilon_range)
 nfolds = 5
+njobs = 5
 
 
 # use sens. attri
