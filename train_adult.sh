@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --time=00:03:00
+#SBATCH --time=01:00:00
 #SBATCH --cpus-per-task=10
 #SBATCH --mem=30G  
 
@@ -10,6 +10,6 @@
 
 cd experiments
 
-python experiments.py --id=1 --metric=1
+python experiments.py --id=1 --metric=1 --attr=1
     
 

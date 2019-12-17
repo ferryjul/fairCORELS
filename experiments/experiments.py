@@ -12,8 +12,10 @@ import argparse
 
 # parser initialization
 parser = argparse.ArgumentParser(description='Evaluation of FairCORELS')
-parser.add_argument('--id', type=int, default=1, help='dataset id: 1 for Adult Income, 2 for Compas, 3 for German Credit and 4 for Default Credit')
+parser.add_argument('--id', type=int, default=1, help='dataset id: 1 Adult Income, 2 Compas, 3 German and 4 Default')
 parser.add_argument('--metric', type=int, default=1, help='fairness metric: 1 - 6')
+parser.add_argument('--attr', type=int, default=1, help='use sensitive attribute: 1 no, 2 yes')
+
 
 
 args = parser.parse_args()
@@ -59,13 +61,17 @@ if args.id==4:
     maj_pos = 2
 
 # parameters
-N_ITER = 1*10**0
+N_ITER = 1*10**6
 epsilon_low_regime = np.linspace(0.89, 0.949, num=10) 
 epsilon_high_regime = np.linspace(0.95, 0.999, num=60)
 epsilon_range = [0.0] + [x for x in epsilon_low_regime] + [x for x in epsilon_high_regime]
 
-epsilon_range = epsilon_range[:10]
+epsilon_range = epsilon_range[14:15]
 
+
+# use sens. attri
+forbidSensAttr = True if args.attr==1 else False
+suffix = "without_dem" if args.attr==1 else "with_dem"
 
 # loading dataset
 
@@ -102,7 +108,7 @@ def trainFold(X_train, y_train, X_test, y_test, epsilon, fairness_metric):
                             epsilon=epsilon,
                             maj_pos=maj_pos, 
                             min_pos=min_pos,
-                            verbosity=["rulelist"]
+                            verbosity=["progress", "rulelist"]
                             )
 
 
@@ -169,7 +175,7 @@ def per_epsilon(epsilon, fairness_metric, writer):
 
 # 1- experiment for statistical_parity
 def statistical_parity():
-    with open('./results/{}_statistical_parity.csv'.format(dataset), 'a+', newline='') as csvfile:
+    with open('./results/{}_statistical_parity_{}.csv'.format(dataset,suffix), 'a+', newline='') as csvfile:
         fieldnames = ['accuracy', 'unfairness', 'accuracy_train', 'unfairness_train', 'epsilon', 'models']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
@@ -180,7 +186,7 @@ def statistical_parity():
 
 # 2- experiment for predictive_parity
 def predictive_parity():
-    with open('./results/{}_predictive_parity.csv'.format(dataset), 'a+', newline='') as csvfile:
+    with open('./results/{}_predictive_parity_{}.csv'.format(dataset,suffix), 'a+', newline='') as csvfile:
         fieldnames = ['accuracy', 'unfairness', 'accuracy_train', 'unfairness_train', 'epsilon', 'models']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
@@ -191,7 +197,7 @@ def predictive_parity():
 
 # 3- experiment for predictive_equality
 def predictive_equality():
-    with open('./results/{}_predictive_equality.csv'.format(dataset), 'a+', newline='') as csvfile:
+    with open('./results/{}_predictive_equality_{}.csv'.format(dataset,suffix), 'a+', newline='') as csvfile:
         fieldnames = ['accuracy', 'unfairness', 'accuracy_train', 'unfairness_train', 'epsilon', 'models']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
@@ -202,7 +208,7 @@ def predictive_equality():
 
 # 4- experiment for equal_opportunity
 def equal_opportunity():
-    with open('./results/{}_equal_opportunity.csv'.format(dataset), 'a+', newline='') as csvfile:
+    with open('./results/{}_equal_opportunity_{}.csv'.format(dataset,suffix), 'a+', newline='') as csvfile:
         fieldnames = ['accuracy', 'unfairness', 'accuracy_train', 'unfairness_train', 'epsilon', 'models']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
@@ -213,7 +219,7 @@ def equal_opportunity():
 
 # 5- experiment for conditional_procedure_accuracy_equality (equalized_odds)
 def equalized_odds():
-    with open('./results/{}_conditional_procedure_accuracy_equality.csv'.format(dataset), 'a+', newline='') as csvfile:
+    with open('./results/{}_equalized_odds_{}.csv'.format(dataset,suffix), 'a+', newline='') as csvfile:
         fieldnames = ['accuracy', 'unfairness', 'accuracy_train', 'unfairness_train', 'epsilon', 'models']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
@@ -224,7 +230,7 @@ def equalized_odds():
 
 # 6- experiment for conditional_use_accuracy_equality
 def conditional_use_accuracy_equality():
-    with open('./results/{}_conditional_use_accuracy_equality.csv'.format(dataset), 'a+', newline='') as csvfile:
+    with open('./results/{}_conditional_use_accuracy_equality_{}.csv'.format(dataset,suffix), 'a+', newline='') as csvfile:
         fieldnames = ['accuracy', 'unfairness', 'accuracy_train', 'unfairness_train', 'epsilon', 'models']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
