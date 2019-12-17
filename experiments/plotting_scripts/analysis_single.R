@@ -28,16 +28,11 @@ parser$add_argument("--m", default=1, type="integer", help="fairness metric 1-6"
 
 args <- parser$parse_args()
 
-input_file <- sprintf("./data/%s_%s_with_dem.csv", datasets[[args$id]], metrics[[args$m]])
-input_file2 <- sprintf("./data/%s_%s_without_dem.csv", datasets[[args$id]], metrics[[args$m]])
-
+input_file <- sprintf("./data/%s_%s.csv", datasets[[args$id]], metrics[[args$m]])
 output_file <- sprintf("./graphs/%s_%s.png", datasets[[args$id]], metrics[[args$m]])
 
 
 df  <- read.csv(input_file, header=T)
-
-df2  <- read.csv(input_file2, header=T)
-
 
 ggplot(df, aes(x=error, y=unfairness)) + 
   geom_line(size=0.05) +

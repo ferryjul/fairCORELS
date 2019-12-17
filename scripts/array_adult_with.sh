@@ -2,7 +2,7 @@
 #SBATCH --time=24:00:00
 #SBATCH --array=1-6
 #SBATCH --cpus-per-task=11
-#SBATCH --mem=5G  
+#SBATCH --mem=15G  
 
 
 #SBATCH --account=def-gambsseb

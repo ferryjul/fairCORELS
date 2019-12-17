@@ -11,6 +11,8 @@ import csv
 parser = argparse.ArgumentParser(description='Analysis of FairCORELS results')
 parser.add_argument('--id', type=int, default=1, help='dataset id: 1 for Adult Income, 2 for Compas, 3 for German Credit and 4 for Default Credit')
 parser.add_argument('--m', type=int, default=1, help='fairness metric: 1 statistical_parity, 2 predictive_parity, 3 predictive_equality, 4 equal_opportunity')
+parser.add_argument('--attr', type=int, default=1, help='use sensitive attribute: 1 no, 2 yes')
+
 
 args = parser.parse_args()
 
@@ -29,9 +31,15 @@ metric_dict = {
     2 : 'predictive_parity',
     3 : 'predictive_equality',
     4 : 'equal_opportunity',
-    5 : 'conditional_procedure_accuracy_equality',
+    5 : 'equalized_odds',
     6 : 'conditional_use_accuracy_equality'
 }
+
+suffix = {
+    1 : 'without_dem',
+    2 : 'with_dem',
+}
+
 
 
 def is_pareto_efficient(costs, return_mask = True):
@@ -89,7 +97,7 @@ def compute_front(input_file, output_file):
 
 
 
-input_file='./results/{}_{}.csv'.format(dataset_dict[args.id], metric_dict[args.m])
-output_file='./plotting_scripts/data/{}_{}.csv'.format(dataset_dict[args.id], metric_dict[args.m])
+input_file='./results/{}_{}_{}.csv'.format(dataset_dict[args.id], metric_dict[args.m], suffix[args.attr])
+output_file='./plotting_scripts/data/{}_{}_{}.csv'.format(dataset_dict[args.id], metric_dict[args.m], suffix[args.attr])
 
 compute_front(input_file, output_file)
