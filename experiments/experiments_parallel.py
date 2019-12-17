@@ -20,6 +20,17 @@ parser.add_argument('--attr', type=int, default=1, help='use sensitive attribute
 
 args = parser.parse_args()
 
+# metrics
+
+metrics = {
+    1: "statistical_parity",
+    2 : "predictive_parity",
+    3 : "predictive_equality",
+    4 : "equal_opportunity",
+    5 : "equalized_odds",
+    6 : "conditional_use_accuracy_equality"
+}
+
 
 # dataset details
 dataset, decision, prediction_name, min_feature, min_pos, maj_feature, maj_pos = None, None, None, None, None, None, None
@@ -180,61 +191,11 @@ def per_epsilon(epsilon, fairness_metric):
 
 
 
-# 1- experiment for statistical_parity
-def statistical_parity():
-    filename = './results/{}_statistical_parity_{}.csv'.format(dataset,suffix)
-    row_list = Parallel(n_jobs=njobs)(delayed(per_epsilon)(epsilon=eps, fairness_metric=1) for eps in epsilon_range)
-    #df = pd.DataFrame(row_list)
-    #df.to_csv(filename, encoding='utf-8', index=False)
-
-# 2- experiment for predictive_parity
-def predictive_parity():
-    filename = './results/{}_predictive_parity_{}.csv'.format(dataset,suffix)
-    row_list = Parallel(n_jobs=njobs)(delayed(per_epsilon)(epsilon=eps, fairness_metric=2) for eps in epsilon_range)
+def run():
+    filename = './results/{}_{}_{}.csv'.format(dataset, metrics[args.metric], suffix)
+    row_list = Parallel(n_jobs=njobs)(delayed(per_epsilon)(epsilon=eps, fairness_metric=args.metric) for eps in epsilon_range)
     df = pd.DataFrame(row_list)
     df.to_csv(filename, encoding='utf-8', index=False)
 
 
-# 3- experiment for predictive_equality
-def predictive_equality():
-    filename = './results/{}_predictive_equality_{}.csv'.format(dataset,suffix)
-    row_list = Parallel(n_jobs=njobs)(delayed(per_epsilon)(epsilon=eps, fairness_metric=3) for eps in epsilon_range)
-    df = pd.DataFrame(row_list)
-    df.to_csv(filename, encoding='utf-8', index=False)
-
-# 4- experiment for equal_opportunity
-def equal_opportunity():
-    filename = './results/{}_equal_opportunity_{}.csv'.format(dataset,suffix)
-    row_list = Parallel(n_jobs=njobs)(delayed(per_epsilon)(epsilon=eps, fairness_metric=4) for eps in epsilon_range)
-    df = pd.DataFrame(row_list)
-    df.to_csv(filename, encoding='utf-8', index=False)
-
-# 5- experiment for conditional_procedure_accuracy_equality (equalized_odds)
-def equalized_odds():
-    filename = './results/{}_equalized_odds_{}.csv'.format(dataset,suffix)
-    row_list = Parallel(n_jobs=njobs)(delayed(per_epsilon)(epsilon=eps, fairness_metric=5) for eps in epsilon_range)
-    df = pd.DataFrame(row_list)
-    df.to_csv(filename, encoding='utf-8', index=False)
-
-    
-# 6- experiment for conditional_use_accuracy_equality
-def conditional_use_accuracy_equality():
-    filename = './results/{}_conditional_use_accuracy_equality_{}.csv'.format(dataset,suffix)
-    row_list = Parallel(n_jobs=njobs)(delayed(per_epsilon)(epsilon=eps, fairness_metric=6) for eps in epsilon_range)
-    df = pd.DataFrame(row_list)
-    df.to_csv(filename, encoding='utf-8', index=False)
-
-
-
-experiments = {
-    1: statistical_parity,
-    2 : predictive_parity,
-    3 : predictive_equality,
-    4 : equal_opportunity,
-    5 : equalized_odds,
-    6 : conditional_use_accuracy_equality
-}
-
-
-#run experiment for a particular dataset/fairness metric
-experiments[args.metric]()
+run()
