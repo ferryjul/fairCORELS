@@ -385,6 +385,7 @@ confusion_matrix_groups compute_confusion_matrix(VECTOR parent_prefix_prediction
     cmg.majority.min_fn = minFN_maj;
     cmg.minority.max_fn = maxFN_min;
     cmg.majority.max_fn = maxFN_maj;
+    
     rule_vfree(&not_captured);
     rule_vfree(&preds_prefix);
     rule_vfree(&TP);

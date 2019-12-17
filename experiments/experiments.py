@@ -63,7 +63,7 @@ if args.id==4:
 # parameters
 N_ITER = 1*10**6
 epsilon_low_regime = np.linspace(0.89, 0.949, num=10) 
-epsilon_high_regime = np.linspace(0.95, 0.999, num=60)
+epsilon_high_regime = np.linspace(0.95, 0.999, num=20)
 epsilon_range = [0.0] + [x for x in epsilon_low_regime] + [x for x in epsilon_high_regime]
 
 
@@ -78,7 +78,7 @@ X, y, features, prediction = load_from_csv("../data/{}/{}_rules_full.csv".format
 print('nbr features ----------------------->', len(features))
 
 # creating k-folds
-kf = KFold(n_splits=10, shuffle=True, random_state=42)
+kf = KFold(n_splits=5, shuffle=True, random_state=42)
 accuracy = []
 unfairness = []
 

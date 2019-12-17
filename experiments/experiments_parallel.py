@@ -14,6 +14,8 @@ import argparse
 parser = argparse.ArgumentParser(description='Evaluation of FairCORELS')
 parser.add_argument('--id', type=int, default=1, help='dataset id: 1 for Adult Income, 2 for Compas, 3 for German Credit and 4 for Default Credit')
 parser.add_argument('--metric', type=int, default=1, help='fairness metric: 1 - 6')
+parser.add_argument('--attr', type=int, default=1, help='use sensitive attribute: 1 no, 2 yes')
+
 
 
 args = parser.parse_args()
@@ -59,13 +61,18 @@ if args.id==4:
     maj_pos = 2
 
 # parameters
-N_ITER = 5*10**0
+N_ITER = 1*10**0
 epsilon_low_regime = np.linspace(0.89, 0.949, num=10) 
-epsilon_high_regime = np.linspace(0.95, 0.999, num=60)
+epsilon_high_regime = np.linspace(0.95, 0.999, num=20)
 epsilon_range = [0.0] + [x for x in epsilon_low_regime] + [x for x in epsilon_high_regime] + [1.0]
 
-epsilon_range = [0.0, 0.80, 0.90]
+njobs = len(epsilon_range)
+nfolds = 5
 
+
+# use sens. attri
+forbidSensAttr = True if args.attr==1 else False
+suffix = "without_dem" if args.attr==1 else "with_dem"
 
 # loading dataset
 
@@ -74,7 +81,7 @@ X, y, features, prediction = load_from_csv("../data/{}/{}_rules_full.csv".format
 print('nbr features ----------------------->', len(features))
 
 # creating k-folds
-kf = KFold(n_splits=10, shuffle=True, random_state=42)
+kf = KFold(n_splits=nfolds, shuffle=True, random_state=42)
 accuracy = []
 unfairness = []
 
@@ -97,7 +104,7 @@ def trainFold(X_train, y_train, X_test, y_test, epsilon, fairness_metric):
                             bfs_mode=2,
                             mode=3,
                             useUnfairnessLB=True,
-                            forbidSensAttr=True,
+                            forbidSensAttr=forbidSensAttr,
                             fairness=fairness_metric, 
                             epsilon=epsilon,
                             maj_pos=maj_pos, 
@@ -139,7 +146,7 @@ def trainFold(X_train, y_train, X_test, y_test, epsilon, fairness_metric):
 # method to run experimer per epsilon and per fairness metric
 def per_epsilon(epsilon, fairness_metric):
     
-    output = Parallel(n_jobs=-1)(delayed(trainFold)(X_train=fold[0], y_train=fold[1], X_test=fold[2], y_test=fold[3], epsilon=epsilon, fairness_metric=fairness_metric) for fold in folds)
+    output = Parallel(n_jobs=nfolds)(delayed(trainFold)(X_train=fold[0], y_train=fold[1], X_test=fold[2], y_test=fold[3], epsilon=epsilon, fairness_metric=fairness_metric) for fold in folds)
 
     accuracy = []
     unfairness = []
@@ -170,49 +177,47 @@ def per_epsilon(epsilon, fairness_metric):
 
 
 
-
-
 # 1- experiment for statistical_parity
 def statistical_parity():
-    filename = './results/{}_statistical_parity.csv'.format(dataset)
-    row_list = Parallel(n_jobs=-1, backend='multiprocessing')(delayed(per_epsilon)(epsilon=eps, fairness_metric=1) for eps in epsilon_range)
+    filename = './results/{}_statistical_parity_{}.csv'.format(dataset,suffix)
+    row_list = Parallel(n_jobs=njobs)(delayed(per_epsilon)(epsilon=eps, fairness_metric=1) for eps in epsilon_range)
     df = pd.DataFrame(row_list)
     df.to_csv(filename, encoding='utf-8', index=False)
 
 # 2- experiment for predictive_parity
 def predictive_parity():
-    filename = './results/{}_predictive_parity.csv'.format(dataset)
-    row_list = Parallel(n_jobs=-1)(delayed(per_epsilon)(epsilon=eps, fairness_metric=2) for eps in epsilon_range)
+    filename = './results/{}_predictive_parity_{}.csv'.format(dataset,suffix)
+    row_list = Parallel(n_jobs=njobs)(delayed(per_epsilon)(epsilon=eps, fairness_metric=2) for eps in epsilon_range)
     df = pd.DataFrame(row_list)
     df.to_csv(filename, encoding='utf-8', index=False)
 
 
 # 3- experiment for predictive_equality
 def predictive_equality():
-    filename = './results/{}_predictive_equality.csv'.format(dataset)
-    row_list = Parallel(n_jobs=-1)(delayed(per_epsilon)(epsilon=eps, fairness_metric=3) for eps in epsilon_range)
+    filename = './results/{}_predictive_equality_{}.csv'.format(dataset,suffix)
+    row_list = Parallel(n_jobs=njobs)(delayed(per_epsilon)(epsilon=eps, fairness_metric=3) for eps in epsilon_range)
     df = pd.DataFrame(row_list)
     df.to_csv(filename, encoding='utf-8', index=False)
 
 # 4- experiment for equal_opportunity
 def equal_opportunity():
-    filename = './results/{}_equal_opportunity.csv'.format(dataset)
-    row_list = Parallel(n_jobs=-1)(delayed(per_epsilon)(epsilon=eps, fairness_metric=4) for eps in epsilon_range)
+    filename = './results/{}_equal_opportunity_{}.csv'.format(dataset,suffix)
+    row_list = Parallel(n_jobs=njobs)(delayed(per_epsilon)(epsilon=eps, fairness_metric=4) for eps in epsilon_range)
     df = pd.DataFrame(row_list)
     df.to_csv(filename, encoding='utf-8', index=False)
 
 # 5- experiment for conditional_procedure_accuracy_equality (equalized_odds)
 def equalized_odds():
-    filename = './results/{}_equalized_odds.csv'.format(dataset)
-    row_list = Parallel(n_jobs=-1)(delayed(per_epsilon)(epsilon=eps, fairness_metric=5) for eps in epsilon_range)
+    filename = './results/{}_equalized_odds_{}.csv'.format(dataset,suffix)
+    row_list = Parallel(n_jobs=njobs)(delayed(per_epsilon)(epsilon=eps, fairness_metric=5) for eps in epsilon_range)
     df = pd.DataFrame(row_list)
     df.to_csv(filename, encoding='utf-8', index=False)
 
     
 # 6- experiment for conditional_use_accuracy_equality
 def conditional_use_accuracy_equality():
-    filename = './results/{}_conditional_use_accuracy_equality.csv'.format(dataset)
-    row_list = Parallel(n_jobs=-1)(delayed(per_epsilon)(epsilon=eps, fairness_metric=6) for eps in epsilon_range)
+    filename = './results/{}_conditional_use_accuracy_equality_{}.csv'.format(dataset,suffix)
+    row_list = Parallel(n_jobs=njobs)(delayed(per_epsilon)(epsilon=eps, fairness_metric=6) for eps in epsilon_range)
     df = pd.DataFrame(row_list)
     df.to_csv(filename, encoding='utf-8', index=False)
 
