@@ -103,7 +103,7 @@ def trainFold(X_train, y_train, X_test, y_test, epsilon, fairness_metric):
                             bfs_mode=2,
                             mode=3,
                             useUnfairnessLB=True,
-                            forbidSensAttr=True,
+                            forbidSensAttr=forbidSensAttr,
                             fairness=fairness_metric, 
                             epsilon=epsilon,
                             maj_pos=maj_pos, 

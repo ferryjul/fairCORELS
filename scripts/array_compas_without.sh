@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --time=00:30:00
+#SBATCH --time=24:00:00
 #SBATCH --array=1-6
 #SBATCH --cpus-per-task=11
 #SBATCH --mem=20G  
@@ -9,7 +9,7 @@
 #SBATCH --mail-user=a.u.matchi@gmail.com
 #SBATCH --mail-type=ALL
 
-cd experiments
+cd ../experiments
 
-python experiments.py --id=1 --metric=$SLURM_ARRAY_TASK_ID --attr=1
+python experiments.py --id=2 --metric=$SLURM_ARRAY_TASK_ID --attr=1
     
