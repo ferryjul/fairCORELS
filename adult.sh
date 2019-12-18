@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH --time=05:00:00
+#SBATCH --time=24:00:00
 
-#SBATCH --cpus-per-task=48
+#SBATCH --cpus-per-task=11
 
 #SBATCH --mem=80G  
 
@@ -16,4 +16,4 @@
 
 cd experiments
 
-python experiments_parallel.py --id=1 --metric=1 --attr=1   
+python experiments.py --id=1 --metric=1 --attr=1   
