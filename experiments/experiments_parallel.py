@@ -134,7 +134,7 @@ def trainFold(X_train, y_train, X_test, y_test, epsilon, fairness_metric):
         print('it fail')
 
 
-    #test
+    """#test
     df_test = pd.DataFrame(X_test, columns=features)
     df_test[decision] = y_test
     df_test["predictions"] = clf.predict(X_test)
@@ -155,10 +155,10 @@ def trainFold(X_train, y_train, X_test, y_test, epsilon, fairness_metric):
 
     acc_train = clf.score(X_train, y_train)
     unf_train = fm_train.fairness_metric(fairness_metric)
-    mdl = {'accuracy': acc, 'unfairness':unf, 'accuracy_train': acc_train, 'unfairness_train':unf_train, 'description': clf.rl().__str__()}
+    mdl = {'accuracy': acc, 'unfairness':unf, 'accuracy_train': acc_train, 'unfairness_train':unf_train, 'description': clf.rl().__str__()}"""
 
-    
-    return [acc, unf, acc_train, unf_train,  mdl]
+    return [0.0, 0.0, 0.0, 0.0]
+    #return [acc, unf, acc_train, unf_train,  mdl]
 
 
     
@@ -187,13 +187,22 @@ def per_epsilon(epsilon, fairness_metric):
         unfairness_train.append(res[3])
         model.append(res[4])
 
-    row = {
+    """row = {
             'accuracy': np.mean(accuracy),
             'unfairness': np.mean(unfairness),
             'accuracy_train': np.mean(accuracy_train),
             'unfairness_train': np.mean(unfairness_train),
             'epsilon' : epsilon,
             'models' : model
+         }"""
+        
+    row = {
+            'accuracy': 0.0,
+            'unfairness': 0.0,
+            'accuracy_train': 0.0,
+            'unfairness_train': 0.0,
+            'epsilon' : 0.0,
+            'models' : 0.0
          }
 
     
