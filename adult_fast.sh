@@ -1,9 +1,9 @@
 #!/bin/bash
-#SBATCH --time=24:00:00
+#SBATCH --time=03:00:00
 
-#SBATCH --cpus-per-task=11
+#SBATCH --cpus-per-task=48
 
-#SBATCH --mem=80G  
+#SBATCH --mem=100G  
 
 #SBATCH --nodes=1 
 
@@ -16,4 +16,5 @@
 
 cd experiments
 
-python experiments.py --id=1 --metric=1 --attr=1   
+python experiments_fast.py --id=2 --metric=1 --attr=1   
+
