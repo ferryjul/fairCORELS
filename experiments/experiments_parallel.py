@@ -157,8 +157,9 @@ def trainFold(X_train, y_train, X_test, y_test, epsilon, fairness_metric):
     unf_train = fm_train.fairness_metric(fairness_metric)
     mdl = {'accuracy': acc, 'unfairness':unf, 'accuracy_train': acc_train, 'unfairness_train':unf_train, 'description': clf.rl().__str__()}"""
 
-    return [0.0, 0.0, 0.0, 0.0]
+    
     #return [acc, unf, acc_train, unf_train,  mdl]
+    return [0.0, 0.0]
 
 
     
@@ -174,7 +175,7 @@ def per_epsilon(epsilon, fairness_metric):
                                                 epsilon=epsilon, 
                                                 fairness_metric=fairness_metric) for fold in folds)
 
-    accuracy = []
+    """accuracy = []
     unfairness = []
     accuracy_train = []
     unfairness_train = []
@@ -187,7 +188,7 @@ def per_epsilon(epsilon, fairness_metric):
         unfairness_train.append(res[3])
         model.append(res[4])
 
-    """row = {
+    row = {
             'accuracy': np.mean(accuracy),
             'unfairness': np.mean(unfairness),
             'accuracy_train': np.mean(accuracy_train),
@@ -195,17 +196,15 @@ def per_epsilon(epsilon, fairness_metric):
             'epsilon' : epsilon,
             'models' : model
          }"""
-        
-    row = {
-            'accuracy': 0.0,
-            'unfairness': 0.0,
-            'accuracy_train': 0.0,
-            'unfairness_train': 0.0,
-            'epsilon' : 0.0,
-            'models' : 0.0
-         }
 
-    
+    row = {
+            'accuracy': 0,
+            'unfairness': 0,
+            'accuracy_train': 0,
+            'unfairness_train': 0,
+            'epsilon' : 0,
+            'models' : 0
+         }
 
     return row
     
