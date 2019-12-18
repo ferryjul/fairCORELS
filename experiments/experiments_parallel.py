@@ -131,7 +131,7 @@ def trainFold(X_train, y_train, X_test, y_test, epsilon, fairness_metric):
 
     clf.fit(X_train, y_train, features=features, prediction_name=prediction_name)
 
-        
+
     """#test
     df_test = pd.DataFrame(X_test, columns=features)
     df_test[decision] = y_test
@@ -210,7 +210,7 @@ def per_epsilon(epsilon, fairness_metric):
 
 def run():
     filename = './results/{}_{}_{}.csv'.format(dataset, metrics[args.metric], suffix)
-    row_list = Parallel(n_jobs=2)(delayed(per_epsilon)(epsilon=eps, fairness_metric=1) for eps in epsilon_range)
+    row_list = Parallel(n_jobs=3)(delayed(per_epsilon)(epsilon=eps, fairness_metric=1) for eps in epsilon_range)
     df = pd.DataFrame(row_list)
     df.to_csv(filename, encoding='utf-8', index=False)
 

@@ -1,9 +1,11 @@
 #!/bin/bash
 #SBATCH --time=00:10:00
 
-#SBATCH --cpus-per-task=20
+#SBATCH --cpus-per-task=3
 
 #SBATCH --mem=10G  
+
+#SBATCH --node=3  
 
 
 
