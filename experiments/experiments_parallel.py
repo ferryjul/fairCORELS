@@ -73,14 +73,14 @@ if args.id==4:
 
 # parameters
 N_ITER = 1*10**6
-epsilon_low_regime = np.linspace(0.89, 0.949, num=11) 
-epsilon_high_regime = np.linspace(0.95, 0.999, num=24)
+epsilon_low_regime = np.linspace(0.89, 0.949, num=9) 
+epsilon_high_regime = np.linspace(0.95, 0.999, num=20)
 epsilon_range = [0.0] + [x for x in epsilon_low_regime] + [x for x in epsilon_high_regime]
 
 #epsilon_range = [0.0, 0.2, 0.3,0.0, 0.2, 0.3, 0.0, 0.2, 0.3]
 
 nfolds = 5
-njobs = 9
+njobs = 6
 
 
 # use sens. attri
@@ -164,7 +164,7 @@ def trainFold(X_train, y_train, X_test, y_test, epsilon, fairness_metric):
 # method to run experimer per epsilon and per fairness metric
 def per_epsilon(epsilon, fairness_metric):
     
-    output = Parallel(n_jobs=2)(delayed(trainFold)(
+    output = Parallel(n_jobs=nfolds)(delayed(trainFold)(
                                                 X_train=fold[0], 
                                                 y_train=fold[1], 
                                                 X_test=fold[2], 
@@ -210,7 +210,7 @@ def per_epsilon(epsilon, fairness_metric):
 
 def run():
     filename = './results/{}_{}_{}.csv'.format(dataset, metrics[args.metric], suffix)
-    row_list = Parallel(n_jobs=3)(delayed(per_epsilon)(epsilon=eps, fairness_metric=1) for eps in epsilon_range)
+    row_list = Parallel(n_jobs=njobs)(delayed(per_epsilon)(epsilon=eps, fairness_metric=1) for eps in epsilon_range)
     df = pd.DataFrame(row_list)
     df.to_csv(filename, encoding='utf-8', index=False)
 
