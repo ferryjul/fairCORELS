@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --time=10:00:00
-#SBATCH --array=1-6%1
+#SBATCH --array=1-6
 #SBATCH --cpus-per-task=6
 
 #SBATCH --mem=60G  
@@ -12,5 +12,5 @@
 
 cd ../experiments
 
-python experiments_parallel.py --id=1 --metric=$SLURM_ARRAY_TASK_ID --attr=2
+python experiments_parallel.py --id=1 --metric=$SLURM_ARRAY_TASK_ID --attr=1
     
