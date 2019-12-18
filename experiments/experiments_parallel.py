@@ -143,7 +143,7 @@ def trainFold(X_train, y_train, X_test, y_test, epsilon, fairness_metric):
     cm_minority, cm_majority = cm.get_matrix()
     fm = Metric(cm_minority, cm_majority)
 
-    """#train 
+    #train 
     df_train = pd.DataFrame(X_train, columns=features)
     df_train[decision] = y_train
     df_train["predictions"] = clf.predict(X_train)
@@ -156,10 +156,11 @@ def trainFold(X_train, y_train, X_test, y_test, epsilon, fairness_metric):
 
     acc_train = clf.score(X_train, y_train)
     unf_train = fm_train.fairness_metric(fairness_metric)
-    mdl = {'accuracy': acc, 'unfairness':unf, 'accuracy_train': acc_train, 'unfairness_train':unf_train, 'description': clf.rl().__str__()}"""
+    mdl = {'accuracy': acc, 'unfairness':unf, 'accuracy_train': acc_train, 'unfairness_train':unf_train, 'description': clf.rl().__str__()}
 
-    #return [acc, unf, acc_train, unf_train,  mdl]
-    return [0.0, 0.0]
+    #return [0.0, 0.0]
+    return [acc, unf, acc_train, unf_train,  mdl]
+    
 
 # method to run experimer per epsilon and per fairness metric
 def per_epsilon(epsilon, fairness_metric):
