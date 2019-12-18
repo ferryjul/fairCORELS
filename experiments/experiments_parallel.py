@@ -77,9 +77,8 @@ epsilon_low_regime = np.linspace(0.89, 0.949, num=10)
 epsilon_high_regime = np.linspace(0.95, 0.999, num=20)
 epsilon_range = [0.0] + [x for x in epsilon_low_regime] + [x for x in epsilon_high_regime] + [1.0]
 
-epsilon_range = [0.0, 0.2, 0.3,0.0, 0.2, 0.3, 0.0, 0.2, 0.3]
+#epsilon_range = [0.0, 0.2, 0.3,0.0, 0.2, 0.3, 0.0, 0.2, 0.3]
 
-njobs = len(epsilon_range)
 nfolds = 3
 njobs = 5
 
