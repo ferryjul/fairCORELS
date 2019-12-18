@@ -81,7 +81,7 @@ epsilon_range = [0.0] + [x for x in epsilon_low_regime] + [x for x in epsilon_hi
 
 njobs = len(epsilon_range)
 nfolds = 5
-njobs = 10
+njobs = 3
 
 
 # use sens. attri
