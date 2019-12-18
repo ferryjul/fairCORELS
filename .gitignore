@@ -1,3 +1,5 @@
+scripts/old/
+scripts/serial/
 push.sh
 get_result.sh
 experiments/results
