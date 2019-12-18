@@ -26,7 +26,7 @@ def rules():
     dropList = ["two_year_recid"] + race 
     dataset.drop(labels=dropList, axis=1, inplace=True)
 
-    ll = fpgrowth(dataset, min_support=0.05, max_len=2, use_colnames=True)
+    ll = fpgrowth(dataset, min_support=0.02, max_len=2, use_colnames=True)
 
 
     rules = [list(x) for x in ll['itemsets']]
