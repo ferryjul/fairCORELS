@@ -18,5 +18,5 @@
 
 cd ../experiments
 
-python experiments_fast.py --id=1 --metric=$SLURM_ARRAY_TASK_ID --attr=2
+python experiments_fast.py --id=4 --metric=$SLURM_ARRAY_TASK_ID --attr=2
 
