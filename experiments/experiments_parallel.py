@@ -110,6 +110,8 @@ for train_index, test_index in kf.split(X):
 # method to run each folds
 def trainFold(X_train, y_train, X_test, y_test, epsilon, fairness_metric):
 
+    print("---------->>>>>>>>")
+
     clf = CorelsClassifier(n_iter=N_ITER, 
                             min_support=0.01,
                             c=1e-3, 
@@ -128,7 +130,10 @@ def trainFold(X_train, y_train, X_test, y_test, epsilon, fairness_metric):
 
 
     clf.fit(X_train, y_train, features=features, prediction_name=prediction_name)
-    #test
+
+    del clf
+    
+    """#test
     df_test = pd.DataFrame(X_test, columns=features)
     df_test[decision] = y_test
     df_test["predictions"] = clf.predict(X_test)
@@ -149,10 +154,10 @@ def trainFold(X_train, y_train, X_test, y_test, epsilon, fairness_metric):
 
     acc_train = clf.score(X_train, y_train)
     unf_train = fm_train.fairness_metric(fairness_metric)
-    mdl = {'accuracy': acc, 'unfairness':unf, 'accuracy_train': acc_train, 'unfairness_train':unf_train, 'description': clf.rl().__str__()}
+    mdl = {'accuracy': acc, 'unfairness':unf, 'accuracy_train': acc_train, 'unfairness_train':unf_train, 'description': clf.rl().__str__()}"""
 
     
-    return [acc, unf, acc_train, unf_train,  mdl]
+    #return [acc, unf, acc_train, unf_train,  mdl]
 
 
     
@@ -160,14 +165,18 @@ def trainFold(X_train, y_train, X_test, y_test, epsilon, fairness_metric):
 # method to run experimer per epsilon and per fairness metric
 def per_epsilon(epsilon, fairness_metric):
     
-    output = Parallel(n_jobs=nfolds)(delayed(trainFold)(X_train=fold[0], y_train=fold[1], X_test=fold[2], y_test=fold[3], epsilon=epsilon, fairness_metric=fairness_metric) for fold in folds)
+    output = Parallel(n_jobs=2)(delayed(trainFold)(
+                                                X_train=fold[0], 
+                                                y_train=fold[1], 
+                                                X_test=fold[2], 
+                                                y_test=fold[3], 
+                                                epsilon=epsilon, 
+                                                fairness_metric=fairness_metric) for fold in folds)
 
-    accuracy = []
+    """accuracy = []
     unfairness = []
-
     accuracy_train = []
     unfairness_train = []
-
     model = []
 
     for res in output:
@@ -184,6 +193,15 @@ def per_epsilon(epsilon, fairness_metric):
             'unfairness_train': np.mean(unfairness_train),
             'epsilon' : epsilon,
             'models' : model
+         }"""
+
+    row = {
+            'accuracy': 0,
+            'unfairness': 0,
+            'accuracy_train': 0,
+            'unfairness_train': 0,
+            'epsilon' : 0,
+            'models' : 0
          }
 
     return row
@@ -193,7 +211,7 @@ def per_epsilon(epsilon, fairness_metric):
 
 def run():
     filename = './results/{}_{}_{}.csv'.format(dataset, metrics[args.metric], suffix)
-    row_list = Parallel(n_jobs=njobs)(delayed(per_epsilon)(epsilon=eps, fairness_metric=args.metric) for eps in epsilon_range)
+    row_list = Parallel(n_jobs=2)(delayed(per_epsilon)(epsilon=eps, fairness_metric=1) for eps in epsilon_range)
     df = pd.DataFrame(row_list)
     df.to_csv(filename, encoding='utf-8', index=False)
 
