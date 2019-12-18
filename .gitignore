@@ -1,5 +1,7 @@
 scripts/old/
 scripts/serial/
+scripts/adult.sh
+scripts/expe_fast.sh
 push.sh
 get_result.sh
 experiments/results
