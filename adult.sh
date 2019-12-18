@@ -3,7 +3,7 @@
 
 #SBATCH --cpus-per-task=15
 
-#SBATCH --mem=10G  
+#SBATCH --mem=5G  
 
 #SBATCH --nodes=1 
 
