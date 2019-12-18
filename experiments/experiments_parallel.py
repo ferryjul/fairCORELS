@@ -173,7 +173,7 @@ def per_epsilon(epsilon, fairness_metric):
                                                 epsilon=epsilon, 
                                                 fairness_metric=fairness_metric) for fold in folds)
 
-    """accuracy = []
+    accuracy = []
     unfairness = []
     accuracy_train = []
     unfairness_train = []
@@ -193,16 +193,16 @@ def per_epsilon(epsilon, fairness_metric):
             'unfairness_train': np.mean(unfairness_train),
             'epsilon' : epsilon,
             'models' : model
-         }"""
+         }
 
-    row = {
+    """row = {
             'accuracy': 0,
             'unfairness': 0,
             'accuracy_train': 0,
             'unfairness_train': 0,
             'epsilon' : 0,
             'models' : 0
-         }
+         }"""
 
     return row
     
