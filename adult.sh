@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --time=00:50:00
+#SBATCH --time=05:00:00
 
 #SBATCH --cpus-per-task=48
 
@@ -16,4 +16,4 @@
 
 cd experiments
 
-python experiments_parallel.py --id=1 --metric=1 --attr=2    
+python experiments_parallel.py --id=1 --metric=1 --attr=1   
