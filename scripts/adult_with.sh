@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --time=03:00:00
+#SBATCH --time=05:00:00
 
 #SBATCH --array=1-6
 
