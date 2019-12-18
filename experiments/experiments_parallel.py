@@ -130,7 +130,6 @@ def trainFold(X_train, y_train, X_test, y_test, epsilon, fairness_metric):
 
     try:
         clf.fit(X_train, y_train, features=features, prediction_name=prediction_name)
-
     except:
         print('it fail')
 
@@ -160,6 +159,7 @@ def trainFold(X_train, y_train, X_test, y_test, epsilon, fairness_metric):
 
     
     #return [acc, unf, acc_train, unf_train,  mdl]
+    return [0.0, 0.0]
 
 
     
