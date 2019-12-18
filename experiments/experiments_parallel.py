@@ -158,11 +158,8 @@ def trainFold(X_train, y_train, X_test, y_test, epsilon, fairness_metric):
     unf_train = fm_train.fairness_metric(fairness_metric)
     mdl = {'accuracy': acc, 'unfairness':unf, 'accuracy_train': acc_train, 'unfairness_train':unf_train, 'description': clf.rl().__str__()}"""
 
-    return [0.0, 0.0, 0.0, 0.0,  0.0]
     #return [acc, unf, acc_train, unf_train,  mdl]
-
-
-    
+    return [0.0, 0.0]
 
 # method to run experimer per epsilon and per fairness metric
 def per_epsilon(epsilon, fairness_metric):
