@@ -312,7 +312,7 @@ class CorelsClassifier:
                 
                 self.rl_ = rl
 
-                #raise
+                raise
              
             rl.rules = fit_wrap_end(False)
             

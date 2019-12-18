@@ -128,8 +128,11 @@ def trainFold(X_train, y_train, X_test, y_test, epsilon, fairness_metric):
                             verbosity=["rulelist"]
                             )
 
+    try:
+        clf.fit(X_train, y_train, features=features, prediction_name=prediction_name)
 
-    clf.fit(X_train, y_train, features=features, prediction_name=prediction_name)
+    except:
+        print('it fail')
 
 
     """#test
