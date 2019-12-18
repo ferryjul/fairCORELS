@@ -135,7 +135,7 @@ def trainFold(X_train, y_train, X_test, y_test, epsilon, fairness_metric):
         print('it fail')
 
 
-    """#test
+    #test
     df_test = pd.DataFrame(X_test, columns=features)
     df_test[decision] = y_test
     df_test["predictions"] = clf.predict(X_test)
@@ -143,7 +143,7 @@ def trainFold(X_train, y_train, X_test, y_test, epsilon, fairness_metric):
     cm_minority, cm_majority = cm.get_matrix()
     fm = Metric(cm_minority, cm_majority)
 
-    #train 
+    """#train 
     df_train = pd.DataFrame(X_train, columns=features)
     df_train[decision] = y_train
     df_train["predictions"] = clf.predict(X_train)
