@@ -5,7 +5,7 @@
 
 #SBATCH --mem=10G  
 
-#SBATCH --node=3  
+#SBATCH --nodes=3  
 
 
 
