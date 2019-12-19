@@ -1,9 +1,13 @@
+data_prep/
+data/adult/rules_old.py
+data/compas/rules_old.py
 scripts/old/
 scripts/serial/
 scripts/adult.sh
 scripts/expe_fast.sh
 push.sh
 get_result.sh
+experiments/kfold_bench.py
 experiments/results
 experiments/results_*
 experiments/slurm*

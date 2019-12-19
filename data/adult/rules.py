@@ -35,18 +35,24 @@ def rules():
 
     
 
-    dropList = ["income"] + race + gender + country + relationship + marital_status 
+    #dropList = ["income"] + race + gender + country + relationship + marital_status
+    dropList = ["income"] + race + gender + country  + marital_status 
     dataset.drop(labels=dropList, axis=1, inplace=True)
 
-    ll = fpgrowth(dataset, min_support=0.06, max_len=2, use_colnames=True)
+    print('ones rules -->>>>>>>>', len(list(dataset)))
 
-    print(len(ll))
+    ll = fpgrowth(dataset, min_support=0.1, max_len=2, use_colnames=True)
+
+    #print(len(ll))
 
     rules = [list(x) for x in ll['itemsets']]
+    
 
     df_rules = pd.DataFrame()
 
-    print(len(rules))
+
+    print('mined rules -->>>>>>>>', len(rules))
+    
 
     for rule in rules:
         if (len(rule)==1):
@@ -77,10 +83,9 @@ def rules():
     #all data
     df_all['income'] = y
 
-    print('-->>>>>>>>', len(list(df_all)))
+    print('all rules -->>>>>>>>', len(list(df_all)))
 
     #saving
     df_all.to_csv("./adult_rules_full.csv", encoding='utf-8', index=False)
-    #df_all_undersampled.to_csv("./data/adult_rules_undersampled.csv", encoding='utf-8', index=False)
 
 rules()

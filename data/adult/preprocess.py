@@ -216,7 +216,7 @@ def fetch_adult():
 
     #splitting, takeing 10% for discritization algorithm, 90% for the classification task. 
     # This is done to avoid overting for the dowstream classification task
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.90)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.67, random_state=42)
 
     # discritization algorithm
     discretizer = MDLP_Discretizer(features=num_cols_nd_array)

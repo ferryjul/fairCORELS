@@ -49,6 +49,8 @@ def rules():
     dropList = ["default_payment_next_month"] + gender + marital 
 
     dataset.drop(labels=dropList, axis=1, inplace=True)
+    
+    print('ones rules -->>>>>>>>', len(list(dataset)))
 
     ll = fpgrowth(dataset, min_support=0.35, max_len=2, use_colnames=True)
 
@@ -57,7 +59,7 @@ def rules():
 
     df_rules = pd.DataFrame()
 
-    print(len(rules))
+    print('mined rules -->>>>>>>>', len(rules))
 
     for rule in rules:
         if (len(rule)==1):
@@ -79,7 +81,7 @@ def rules():
     #all data
     df_all['default_payment_next_month'] = y
 
-    print('-->>>>>>>>', len(list(df_all)))
+    print('all rules -->>>>>>>>', len(list(df_all)))
 
     #saving
     df_all.to_csv("./default_credit_rules_full.csv", encoding='utf-8', index=False)

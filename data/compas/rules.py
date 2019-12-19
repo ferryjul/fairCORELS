@@ -13,18 +13,29 @@ def rules():
     
     gender = ["gender_Female", "gender_Male"]
 
-    race = ["race_African-American", "race_Caucasian", "race_Asian", "race_Hispanic", "race_Native-American", "race_Other"]
+    race = ["race_African-American", "race_Caucasian"]
+
+    race_other = ["race_Asian", "race_Hispanic", "race_Native-American", "race_Other"]
 
     
     dataset= pd.read_csv("./compas_discretized.csv")
+
+    print('len before filtering', len(dataset))
     
-    y = dataset.two_year_recid.values
+    dataset = dataset[(dataset['race_African-American']==1) | (dataset['race_Caucasian']==1)]
+
+    print('len after filtering', len(dataset))
+
+    dataset.drop(labels=race_other, axis=1, inplace=True)
 
     df_gender = dataset[gender]
     df_race = dataset[race]
+    y = dataset.two_year_recid.values
     
     dropList = ["two_year_recid"] + race 
     dataset.drop(labels=dropList, axis=1, inplace=True)
+
+    print('ones rules -->>>>>>>>', len(list(dataset)))
 
     ll = fpgrowth(dataset, min_support=0.02, max_len=2, use_colnames=True)
 
@@ -33,7 +44,9 @@ def rules():
 
     df_rules = pd.DataFrame()
 
-    print(len(rules))
+    print('mined rules -->>>>>>>>', len(rules))
+
+    
 
     for rule in rules:
         if (len(rule)==1):
@@ -55,7 +68,9 @@ def rules():
     #all data
     df_all['two_year_recid'] = y
 
-    print('-->>>>>>>>', len(list(df_all)))
+    print('all rules -->>>>>>>>', len(list(df_all)))
+
+    
 
     #saving
     df_all.to_csv("./compas_rules_full.csv", encoding='utf-8', index=False)
