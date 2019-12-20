@@ -3,11 +3,11 @@
 
 #SBATCH --array=1-6
 
-#SBATCH --cpus-per-task=25
+#SBATCH --cpus-per-task=20
 
 #SBATCH --mem=25G  
 
-#SBATCH --nodes=4 
+#SBATCH --nodes=5
 
 
 
