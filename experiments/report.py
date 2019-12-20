@@ -49,7 +49,7 @@ input_file='./{}/{}_{}_{}.csv'.format(args.exp, dataset_dict[args.id], metric_di
 
 df = pd.read_csv(input_file)
 
-print('===='*30)
+print('===='*28)
 
 def best_accuracy(df, at):
     accuracy = df.accuracy.tolist()

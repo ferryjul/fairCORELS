@@ -12,6 +12,8 @@ parser = argparse.ArgumentParser(description='Analysis of FairCORELS results')
 parser.add_argument('--id', type=int, default=1, help='dataset id: 1 for Adult Income, 2 for Compas, 3 for German Credit and 4 for Default Credit')
 parser.add_argument('--m', type=int, default=1, help='fairness metric: 1 statistical_parity, 2 predictive_parity, 3 predictive_equality, 4 equal_opportunity')
 parser.add_argument('--attr', type=int, default=1, help='use sensitive attribute: 1 no, 2 yes')
+parser.add_argument('--exp', type=str, default='results', help='experiments folder')
+
 
 
 args = parser.parse_args()
@@ -97,7 +99,7 @@ def compute_front(input_file, output_file):
 
 
 
-input_file='./results/{}_{}_{}.csv'.format(dataset_dict[args.id], metric_dict[args.m], suffix[args.attr])
-output_file='./plotting_scripts/data/{}_{}_{}.csv'.format(dataset_dict[args.id], metric_dict[args.m], suffix[args.attr])
+input_file='./{}/{}_{}_{}.csv'.format(args.exp, dataset_dict[args.id], metric_dict[args.m], suffix[args.attr])
+output_file='./plotting_scripts/data/{}_{}_{}_{}.csv'.format(args.exp, dataset_dict[args.id], metric_dict[args.m], suffix[args.attr])
 
 compute_front(input_file, output_file)

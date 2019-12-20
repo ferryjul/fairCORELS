@@ -18,31 +18,33 @@ metrics[[1]] <- "statistical_parity"
 metrics[[2]] <- "predictive_parity"
 metrics[[3]] <- "predictive_equality"
 metrics[[4]] <- "equal_opportunity"
-metrics[[5]] <- "conditional_procedure_accuracy_equality"
+metrics[[5]] <- "equalized_odds"
 metrics[[6]] <- "conditional_use_accuracy_equality"
 
 
 parser <- ArgumentParser()
 parser$add_argument("--id", default=1, type="integer", help="dataset id: 1-4")
 parser$add_argument("--m", default=1, type="integer", help="fairness metric 1-6")
+parser$add_argument("--exp", default='results', type="character", help="experiment folder")
+
 
 args <- parser$parse_args()
 
-input_file <- sprintf("./data/%s_%s_with_dem.csv", datasets[[args$id]], metrics[[args$m]])
-input_file2 <- sprintf("./data/%s_%s_without_dem.csv", datasets[[args$id]], metrics[[args$m]])
+input_file <- sprintf("./data/%s_%s_%s_with_dem.csv", args$exp, datasets[[args$id]], metrics[[args$m]])
+input_file2 <- sprintf("./data/%s_%s_%s_without_dem.csv", args$exp, datasets[[args$id]], metrics[[args$m]])
 
-output_file <- sprintf("./graphs/%s_%s.png", datasets[[args$id]], metrics[[args$m]])
+output_file <- sprintf("./graphs/%s_%s_%s.png", args$exp, datasets[[args$id]], metrics[[args$m]])
 
 
 df  <- read.csv(input_file, header=T)
-
 df2  <- read.csv(input_file2, header=T)
 
+ggplot() + 
+geom_line(data=df, aes(x=error, y=unfairness), color='red', size=0.1) + 
+geom_point(data=df, aes(x=error, y=unfairness), color='red', size=0.5) + 
+geom_line(data=df2, aes(x=error, y=unfairness), color='green', size=0.1) + 
+geom_point(data=df2, aes(x=error, y=unfairness), color='green', size=0.5) + 
+theme_bw(base_size=13)
 
-ggplot(df, aes(x=error, y=unfairness)) + 
-  geom_line(size=0.05) +
-  geom_point(size=0.25) +
-  labs(x = "error", y = "unfairness") +
-  theme_bw(base_size=13)
 
 ggsave(output_file, dpi=300, width=6, height=10)
