@@ -73,9 +73,12 @@ if args.id==4:
 
 # parameters
 N_ITER = 2*10**6
-epsilon_low_regime = np.linspace(0.89, 0.949, num=10) 
-epsilon_high_regime = np.linspace(0.95, 0.999, num=30)
-epsilon_range = [0.0] + [x for x in epsilon_low_regime] + [x for x in epsilon_high_regime]
+
+#epsilon_low_regime = np.linspace(0.89, 0.949, num=10) 
+#epsilon_high_regime = np.linspace(0.95, 0.999, num=30)
+#epsilon_range = [0.0] + [x for x in epsilon_low_regime] + [x for x in epsilon_high_regime]
+
+epsilon_range = np.arange(0.90, 1.001, 0.001) # 100 points
 
 
 
