@@ -1,13 +1,13 @@
 #!/bin/bash
 #SBATCH --time=03:00:00
 
-#SBATCH --array=1-6
+#SBATCH --array=1-2%1
 
-#SBATCH --cpus-per-task=48
+#SBATCH --cpus-per-task=24
 
-#SBATCH --mem=100G  
+#SBATCH --mem=30G  
 
-#SBATCH --nodes=1 
+#SBATCH --nodes=7 
 
 
 
@@ -18,5 +18,5 @@
 
 cd ../experiments
 
-python experiments_fast.py --id=1 --metric=$SLURM_ARRAY_TASK_ID --attr=2
+python experiments_fast.py --id=1 --metric=$SLURM_ARRAY_TASK_ID --attr=1
 

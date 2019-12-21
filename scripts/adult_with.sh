@@ -3,7 +3,7 @@
 
 #SBATCH --array=1-6
 
-#SBATCH --cpus-per-task=20
+#SBATCH --cpus-per-task=32
 
 #SBATCH --mem=25G  
 
@@ -18,5 +18,5 @@
 
 cd ../experiments
 
-python experiments_fast.py --id=1 --metric=$SLURM_ARRAY_TASK_ID --attr=1  
+python experiments_fast.py --id=1 --metric=$SLURM_ARRAY_TASK_ID --attr=2
 

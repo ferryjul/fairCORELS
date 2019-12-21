@@ -72,7 +72,7 @@ if args.id==4:
     maj_pos = 2
 
 # parameters
-N_ITER = 2*10**0
+N_ITER = 4*10**6
 
 #epsilon_low_regime = np.linspace(0.89, 0.949, num=10) 
 #epsilon_high_regime = np.linspace(0.95, 0.999, num=30)
@@ -80,7 +80,7 @@ N_ITER = 2*10**0
 
 epsilon_range = np.arange(0.90, 1.001, 0.001) # 100 points
 
-n_eps = 34
+n_eps = 101
 
 
 
