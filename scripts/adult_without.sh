@@ -1,13 +1,13 @@
 #!/bin/bash
-#SBATCH --time=03:00:00
+#SBATCH --time=04:00:00
 
-#SBATCH --array=1-2%1
+#SBATCH --array=1-6
 
-#SBATCH --cpus-per-task=24
+#SBATCH --cpus-per-task=48
 
-#SBATCH --mem=30G  
+#SBATCH --mem=250G  
 
-#SBATCH --nodes=7 
+#SBATCH --nodes=1
 
 
 
