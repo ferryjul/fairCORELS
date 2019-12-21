@@ -37,15 +37,15 @@ parser$add_argument("--exp", default='results', type="character", help="experime
 args <- parser$parse_args()
 
 input_file <- sprintf("./data/%s_%s_%s_%s.csv", args$exp, datasets[[args$id]], metrics[[args$m]], suffix[[args$attr]])
-output_file <- sprintf("./graphs/%s_%s_%s_%s.png", args$exp, datasets[[args$id]], metrics[[args$m]], suffix[[args$attr]])
+output_file <- sprintf("./graphs/%s_%s_%s_%s.pdf", args$exp, datasets[[args$id]], metrics[[args$m]], suffix[[args$attr]])
 
 
 df  <- read.csv(input_file, header=T)
 
 ggplot(df, aes(x=error, y=unfairness)) + 
   geom_line(size=0.1) +
-  geom_point(size=0.2) +
-  labs(x = "error", y = "unfairness") +
-  theme_bw(base_size=13)
+  geom_point(size=3.5) +
+  labs(x = "Error", y = "Unfairness") +
+  theme_bw(base_size=28)
 
-ggsave(output_file, dpi=300, width=6, height=4)
+ggsave(output_file, dpi=300, width=6, height=9)
