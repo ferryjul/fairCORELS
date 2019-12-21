@@ -1,4 +1,4 @@
-export var_time=00:02:00
+export var_time=`date +%00_%00-%02-%00`
 
 export var_array=1-6
 
