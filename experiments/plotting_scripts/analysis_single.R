@@ -44,8 +44,8 @@ df  <- read.csv(input_file, header=T)
 
 ggplot(df, aes(x=error, y=unfairness)) + 
   geom_line(size=0.1) +
-  geom_point(size=0.5) +
+  geom_point(size=0.2) +
   labs(x = "error", y = "unfairness") +
   theme_bw(base_size=13)
 
-ggsave(output_file, dpi=300, width=6, height=10)
+ggsave(output_file, dpi=300, width=6, height=4)

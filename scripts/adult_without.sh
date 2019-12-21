@@ -1,13 +1,13 @@
 #!/bin/bash
-#SBATCH --time=$var_time
-#SBATCH --array=$var_array
-#SBATCH --cpus-per-task=$var_cpus
-#SBATCH --mem=$var_mem 
-#SBATCH --nodes=$var_nodes
+#SBATCH --time=03:00:00
+#SBATCH --array=1-6
+#SBATCH --cpus-per-task=48
+#SBATCH --mem=250G  
+#SBATCH --nodes=1
 
 
-#SBATCH --account=$var_account
-#SBATCH --mail-user=$var_mail
+#SBATCH --account=def-gambsseb
+#SBATCH --mail-user=a.u.matchi@gmail.com
 #SBATCH --mail-type=ALL
 
 

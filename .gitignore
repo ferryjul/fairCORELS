@@ -12,6 +12,8 @@ experiments/results
 experiments/results_*
 experiments/slurm*
 experiments/core.*
+experiments/plotting_scripts/data/
+experiments/plotting_scripts/graphs/
 *.o
 *.pyc
 *.swp
