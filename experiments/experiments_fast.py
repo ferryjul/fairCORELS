@@ -72,13 +72,15 @@ if args.id==4:
     maj_pos = 2
 
 # parameters
-N_ITER = 2*10**6
+N_ITER = 2*10**0
 
 #epsilon_low_regime = np.linspace(0.89, 0.949, num=10) 
 #epsilon_high_regime = np.linspace(0.95, 0.999, num=30)
 #epsilon_range = [0.0] + [x for x in epsilon_low_regime] + [x for x in epsilon_high_regime]
 
 epsilon_range = np.arange(0.90, 1.001, 0.001) # 100 points
+
+n_eps = 34
 
 
 
@@ -156,7 +158,7 @@ def trainFold(X_train, y_train, X_test, y_test, epsilon, fairness_metric):
 # method to run experimer per epsilon and per fairness metric
 def per_fold(fold, epsilons, fairness_metric):
     
-    output = Parallel(n_jobs=-1)(delayed(trainFold)(
+    output = Parallel(n_jobs=n_eps)(delayed(trainFold)(
                                                 X_train=fold[0], 
                                                 y_train=fold[1], 
                                                 X_test=fold[2], 
