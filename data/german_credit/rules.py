@@ -24,7 +24,8 @@ def rules():
     df_age = dataset[age]
     df_marital = dataset[marital]
     
-    dropList = ["credit_rating"] + age + marital 
+    #dropList = ["credit_rating"] + age + marital 
+    dropList = ["credit_rating"] + age 
     dataset.drop(labels=dropList, axis=1, inplace=True)
 
     print('ones rules -->>>>>>>>', len(list(dataset)))
@@ -52,7 +53,8 @@ def rules():
             df_rules[key] = np.logical_and(dataset[key1], dataset[key2]).astype(int)
         
 
-    df_all = pd.concat([df_age, df_marital, dataset, df_rules], axis=1)
+    #df_all = pd.concat([df_age, df_marital, dataset, df_rules], axis=1)
+    df_all = pd.concat([df_age, dataset, df_rules], axis=1)
     columns = list(df_all)
 
     #all data
