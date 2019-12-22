@@ -10,7 +10,9 @@ dataset_dict = {
     1 : 'adult',
     2 : 'compas',
     3 : 'german_credit',
-    4 : 'default_credit'
+    4 : 'default_credit',
+    5 : 'adult_gender',
+    6 : 'adult_no_relationship'
 }
 
 metric_dict = {

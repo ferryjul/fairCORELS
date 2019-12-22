@@ -71,6 +71,23 @@ if args.id==4:
     maj_feature = "gender:Male"
     maj_pos = 2
 
+if args.id==5:
+    dataset = "adult_gender"
+    decision = "income"
+    prediction_name="[income:>50K]"
+    min_feature = "maritalStatus_single"
+    min_pos = 1
+    maj_feature = "maritalStatus_married"
+    maj_pos = 2
+
+if args.id==6:
+    dataset = "adult_no_relationship"
+    decision = "income"
+    prediction_name="[income:>50K]"
+    min_feature = "gender_Female"
+    min_pos = 1
+    maj_feature = "gender_Male"
+    maj_pos = 2
 # parameters
 N_ITER = 4*10**6
 
