@@ -88,6 +88,7 @@ if args.id==6:
     min_pos = 1
     maj_feature = "gender_Male"
     maj_pos = 2
+
 # parameters
 N_ITER = 4*10**6
 
