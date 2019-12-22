@@ -13,7 +13,7 @@ datasets[[1]] <- "adult"
 datasets[[2]] <- "compas"
 datasets[[3]] <- "german_credit"
 datasets[[4]] <- "default_credit"
-datasets[[5]] <- "adult_gender"
+datasets[[5]] <- "adult_marital"
 datasets[[6]] <- "adult_no_relationship"
 
 

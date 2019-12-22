@@ -72,7 +72,7 @@ if args.id==4:
     maj_pos = 2
 
 if args.id==5:
-    dataset = "adult_gender"
+    dataset = "adult_marital"
     decision = "income"
     prediction_name="[income:>50K]"
     min_feature = "maritalStatus_single"

@@ -11,7 +11,7 @@ dataset_dict = {
     2 : 'compas',
     3 : 'german_credit',
     4 : 'default_credit',
-    5 : 'adult_gender',
+    5 : 'adult_marital',
     6 : 'adult_no_relationship'
 }
 
