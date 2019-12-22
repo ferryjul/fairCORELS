@@ -97,7 +97,7 @@ N_ITER = 4*10**6
 
 epsilon_range = np.arange(0.90, 1.001, 0.001) # 100 points
 
-n_eps = 20
+n_eps = 34
 
 
 
