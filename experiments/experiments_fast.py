@@ -97,9 +97,9 @@ N_ITER = 2*10**0
 
 
 # epsilon range
-epsilon_range = np.arange(0.90, 1.001, 0.001) # 100 points
+epsilon_range = np.arange(0.91, 1.001, 0.001) # 100 points
 
-n_eps = 100
+n_eps = 91
 
 
 

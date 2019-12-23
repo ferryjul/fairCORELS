@@ -1,8 +1,8 @@
 import numpy as np 
 
 
-epsilons = np.arange(0.95, 1.002, 0.001)
+epsilons = np.arange(0.91, 1.001, 0.001)
 
 print(epsilons)
 
-print(len(epsilons))
+print(len(epsilons)) 
