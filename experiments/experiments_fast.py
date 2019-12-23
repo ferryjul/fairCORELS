@@ -10,6 +10,9 @@ from metrics import ConfusionMatrix, Metric
 import csv
 import argparse
 
+import os
+
+
 # parser initialization
 parser = argparse.ArgumentParser(description='Evaluation of FairCORELS')
 parser.add_argument('--id', type=int, default=1, help='dataset id: 1 for Adult Income, 2 for Compas, 3 for German Credit and 4 for Default Credit')
@@ -90,7 +93,7 @@ if args.id==6:
     maj_pos = 2
 
 # parameters
-N_ITER = 2*10**6
+N_ITER = 2*10**0
 
 
 # epsilon range
@@ -103,6 +106,10 @@ n_eps = 100
 # use sens. attri
 forbidSensAttr = True if args.attr==1 else False
 suffix = "without_dem" if args.attr==1 else "with_dem"
+
+#save direcory
+save_dir = "./results/{}_{}".format(dataset,suffix)
+os.makedirs(save_dir, exist_ok=True)
 
 # loading dataset
 
@@ -212,7 +219,7 @@ def per_fold(fold, epsilons, fairness_metric):
 
 
 def run():
-    filename = './results/{}_{}_{}.csv'.format(dataset, metrics[args.metric], suffix)
+    filename = '{}/{}.csv'.format(save_dir, metrics[args.metric])
     rowlist = []
         
     cols = [per_fold(fold=fold, epsilons=epsilon_range, fairness_metric=args.metric) for fold in folds]
