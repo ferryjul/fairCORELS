@@ -92,6 +92,16 @@ if args.id==6:
     maj_feature = "gender_Male"
     maj_pos = 2
 
+
+if args.id==7:
+    dataset = "german_credit_v2"
+    decision = "credit_rating"
+    prediction_name="[good_credit_rating]"
+    min_feature = "age:<25"
+    min_pos = 1
+    maj_feature = "age:>=25"
+    maj_pos = 2
+
 # parameters
 N_ITER = 4*10**6
 
