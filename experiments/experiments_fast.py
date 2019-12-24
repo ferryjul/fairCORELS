@@ -93,14 +93,15 @@ if args.id==6:
     maj_pos = 2
 
 # parameters
-N_ITER = 2*10**0
+N_ITER = 4*10**6
 
 
 # epsilon range
-epsilon_range = np.arange(0.91, 1.001, 0.001) # 100 points
+epsilons = np.arange(0.91, 1.001, 0.001) 
+epsilons = [0.0] + list(epsilons)
+epsilons = [round(x,3) for x in epsilons] # 92 values
 
 n_eps = 46
-
 
 
 # use sens. attri
