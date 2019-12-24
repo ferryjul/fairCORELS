@@ -1,12 +1,14 @@
 import numpy as np 
 
 
-epsilons = np.arange(0.91, 1.001, 0.001)
+epsilon_range = np.arange(0.95, 1.001, 0.001)
 
-epsilons = [0.0] + list(epsilons)
+base = [0.0, 0.1, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
 
-epsilons = [round(x,3) for x in epsilons]
+epsilon_range = base + list(epsilon_range)
 
-print(epsilons)
+epsilon_range = [round(x,3) for x in epsilon_range]
 
-print(len(epsilons))
+print(epsilon_range)
+
+print(len(epsilon_range))

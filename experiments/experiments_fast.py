@@ -97,12 +97,12 @@ N_ITER = 4*10**6
 
 
 # epsilon range
-epsilon_range = np.arange(0.91, 1.001, 0.001) 
-epsilon_range = [0.0] + list(epsilon_range)
-epsilon_range = [round(x,3) for x in epsilon_range] # 92 values
+epsilon_range = np.arange(0.95, 1.001, 0.001)
+base = [0.0, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
+epsilon_range = base + list(epsilon_range)
+epsilon_range = [round(x,3) for x in epsilon_range] #60 values
 
-#n_eps = 46 #for mp2 grid
-n_eps = 31 # for other grid
+n_eps = 30 
 
 
 # use sens. attri

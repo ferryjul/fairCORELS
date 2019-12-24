@@ -2,7 +2,7 @@
 #SBATCH --time=24:00:00
 #SBATCH --array=1-6
 #SBATCH --cpus-per-task=32
-#SBATCH --mem=200G  
+#SBATCH --mem=250G  
 #SBATCH --nodes=1
 
 
