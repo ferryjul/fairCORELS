@@ -97,9 +97,9 @@ N_ITER = 4*10**6
 
 
 # epsilon range
-epsilons = np.arange(0.91, 1.001, 0.001) 
-epsilons = [0.0] + list(epsilons)
-epsilons = [round(x,3) for x in epsilons] # 92 values
+epsilon_range = np.arange(0.91, 1.001, 0.001) 
+epsilon_range = [0.0] + list(epsilon_range)
+epsilon_range = [round(x,3) for x in epsilon_range] # 92 values
 
 n_eps = 46
 
