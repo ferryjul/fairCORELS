@@ -46,8 +46,9 @@ print("=====>>>>>>>> Report for experiments {} on {} | {} | {}".format(args.exp,
                                                                       metric_dict[args.m], 
                                                                       suffix[args.attr]))
 
+input_file = "./{}/{}_{}/{}.csv".format(args.exp, dataset_dict[args.id], suffix[args.attr], metric_dict[args.m])
 
-input_file='./{}/{}_{}_{}.csv'.format(args.exp, dataset_dict[args.id], metric_dict[args.m], suffix[args.attr])
+#input_file='./{}/{}_{}_{}.csv'.format(args.exp, dataset_dict[args.id], metric_dict[args.m], suffix[args.attr])
 
 df = pd.read_csv(input_file)
 
