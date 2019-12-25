@@ -103,7 +103,7 @@ if args.id==7:
     maj_pos = 2
 
 # parameters
-N_ITER = 4*10**6
+N_ITER = 10*10**6
 
 
 # epsilon range
@@ -147,7 +147,7 @@ def trainFold(X_train, y_train, X_test, y_test, epsilon, fairness_metric):
 
     clf = CorelsClassifier(n_iter=N_ITER, 
                             min_support=0.01,
-                            c=1e-3, 
+                            c=1e-8, 
                             max_card=1, 
                             policy="bfs",
                             bfs_mode=2,
