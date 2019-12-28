@@ -1,0 +1,378 @@
+<<<<<------------------------------------Adult Income--------------------------------->>>>>
+
+|||||||------------------------------------Adult without sensitive attribute 
+
+=====>>>>>>>> Report for experiments results_1M on adult | statistical_parity | without_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.829730161661157, unf= 0.17294262153189513
+===========>>> Best model at unfairness <= 0.05 : acc= 0.8125679334726673, unf= 0.009649468839942546
+===========>>> Best model at unfairness <= 0.04 : acc= 0.8125679334726673, unf= 0.009649468839942546
+===========>>> Best model at unfairness <= 0.03 : acc= 0.8125679334726673, unf= 0.009649468839942546
+===========>>> Best model at unfairness <= 0.02 : acc= 0.8125679334726673, unf= 0.009649468839942546
+===========>>> Best model at unfairness <= 0.01 : acc= 0.8125679334726673, unf= 0.009649468839942546
+
+
+=====>>>>>>>> Report for experiments results_1M on adult | predictive_parity | without_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.8314464531120549, unf= 0.02822566917907776
+===========>>> Best model at unfairness <= 0.05 : acc= 0.8314464531120549, unf= 0.02822566917907776
+===========>>> Best model at unfairness <= 0.04 : acc= 0.8314464531120549, unf= 0.02822566917907776
+===========>>> Best model at unfairness <= 0.03 : acc= 0.8314464531120549, unf= 0.02822566917907776
+===========>>> Best model at unfairness <= 0.02 : None
+===========>>> Best model at unfairness <= 0.01 : None
+
+
+=====>>>>>>>> Report for experiments results_1M on adult | predictive_equality | without_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.8312483134763387, unf= 0.056836750423593624
+===========>>> Best model at unfairness <= 0.05 : acc= 0.8227663236698319, unf= 0.043003837762298366
+===========>>> Best model at unfairness <= 0.04 : acc= 0.8207861256500301, unf= 0.025854626656361183
+===========>>> Best model at unfairness <= 0.03 : acc= 0.8207861256500301, unf= 0.025854626656361183
+===========>>> Best model at unfairness <= 0.02 : acc= 0.8201920771380653, unf= 0.003810454389747289
+===========>>> Best model at unfairness <= 0.01 : acc= 0.8201920771380653, unf= 0.003810454389747289
+
+
+=====>>>>>>>> Report for experiments results_1M on adult | equal_opportunity | without_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.829730161661157, unf= 0.25570703162677666
+===========>>> Best model at unfairness <= 0.05 : acc= 0.8204891068410356, unf= 0.020338149766262026
+===========>>> Best model at unfairness <= 0.04 : acc= 0.8204891068410356, unf= 0.020338149766262026
+===========>>> Best model at unfairness <= 0.03 : acc= 0.8204891068410356, unf= 0.020338149766262026
+===========>>> Best model at unfairness <= 0.02 : acc= 0.8201920771380653, unf= 0.01782557619750869
+===========>>> Best model at unfairness <= 0.01 : None
+
+
+=====>>>>>>>> Report for experiments results_1M on adult | equalized_odds | without_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.829730161661157, unf= 0.1604168936542115
+===========>>> Best model at unfairness <= 0.05 : acc= 0.8201920771380653, unf= 0.010818015293627982
+===========>>> Best model at unfairness <= 0.04 : acc= 0.8201920771380653, unf= 0.010818015293627982
+===========>>> Best model at unfairness <= 0.03 : acc= 0.8201920771380653, unf= 0.010818015293627982
+===========>>> Best model at unfairness <= 0.02 : acc= 0.8201920771380653, unf= 0.010818015293627982
+===========>>> Best model at unfairness <= 0.01 : None
+
+
+=====>>>>>>>> Report for experiments results_1M on adult | conditional_use_accuracy_equality | without_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.829730161661157, unf= 0.03733841541737435
+===========>>> Best model at unfairness <= 0.05 : acc= 0.829730161661157, unf= 0.03733841541737435
+===========>>> Best model at unfairness <= 0.04 : acc= 0.829730161661157, unf= 0.03733841541737435
+===========>>> Best model at unfairness <= 0.03 : acc= 0.8269247068294879, unf= 0.025552954124263883
+===========>>> Best model at unfairness <= 0.02 : acc= 0.7521038337535686, unf= 0.0
+===========>>> Best model at unfairness <= 0.01 : acc= 0.7521038337535686, unf= 0.0
+
+
+|||||||------------------------------------Adult with sensitive attribute 
+
+=====>>>>>>>> Report for experiments results_1M on adult | statistical_parity | with_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.829730161661157, unf= 0.17294262153189513
+===========>>> Best model at unfairness <= 0.05 : acc= 0.8125679334726673, unf= 0.009649468839942546
+===========>>> Best model at unfairness <= 0.04 : acc= 0.8125679334726673, unf= 0.009649468839942546
+===========>>> Best model at unfairness <= 0.03 : acc= 0.8125679334726673, unf= 0.009649468839942546
+===========>>> Best model at unfairness <= 0.02 : acc= 0.8125679334726673, unf= 0.009649468839942546
+===========>>> Best model at unfairness <= 0.01 : acc= 0.8125679334726673, unf= 0.009649468839942546
+
+
+=====>>>>>>>> Report for experiments results_1M on adult | predictive_parity | with_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.8314464531120549, unf= 0.02822566917907776
+===========>>> Best model at unfairness <= 0.05 : acc= 0.8314464531120549, unf= 0.02822566917907776
+===========>>> Best model at unfairness <= 0.04 : acc= 0.8314464531120549, unf= 0.02822566917907776
+===========>>> Best model at unfairness <= 0.03 : acc= 0.8314464531120549, unf= 0.02822566917907776
+===========>>> Best model at unfairness <= 0.02 : None
+===========>>> Best model at unfairness <= 0.01 : None
+
+
+=====>>>>>>>> Report for experiments results_1M on adult | predictive_equality | with_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.8312483134763387, unf= 0.056836750423593624
+===========>>> Best model at unfairness <= 0.05 : acc= 0.8227663236698319, unf= 0.043003837762298366
+===========>>> Best model at unfairness <= 0.04 : acc= 0.8207861256500301, unf= 0.025854626656361183
+===========>>> Best model at unfairness <= 0.03 : acc= 0.8207861256500301, unf= 0.025854626656361183
+===========>>> Best model at unfairness <= 0.02 : acc= 0.8201920771380653, unf= 0.003810454389747289
+===========>>> Best model at unfairness <= 0.01 : acc= 0.8201920771380653, unf= 0.003810454389747289
+
+
+=====>>>>>>>> Report for experiments results_1M on adult | equal_opportunity | with_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.829730161661157, unf= 0.25570703162677666
+===========>>> Best model at unfairness <= 0.05 : acc= 0.8204891068410356, unf= 0.020338149766262026
+===========>>> Best model at unfairness <= 0.04 : acc= 0.8204891068410356, unf= 0.020338149766262026
+===========>>> Best model at unfairness <= 0.03 : acc= 0.8204891068410356, unf= 0.020338149766262026
+===========>>> Best model at unfairness <= 0.02 : acc= 0.8201920771380653, unf= 0.01782557619750869
+===========>>> Best model at unfairness <= 0.01 : None
+
+
+=====>>>>>>>> Report for experiments results_1M on adult | equalized_odds | with_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.829730161661157, unf= 0.1604168936542115
+===========>>> Best model at unfairness <= 0.05 : acc= 0.8201920771380653, unf= 0.010818015293627982
+===========>>> Best model at unfairness <= 0.04 : acc= 0.8201920771380653, unf= 0.010818015293627982
+===========>>> Best model at unfairness <= 0.03 : acc= 0.8201920771380653, unf= 0.010818015293627982
+===========>>> Best model at unfairness <= 0.02 : acc= 0.8201920771380653, unf= 0.010818015293627982
+===========>>> Best model at unfairness <= 0.01 : None
+
+
+=====>>>>>>>> Report for experiments results_1M on adult | conditional_use_accuracy_equality | with_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.829730161661157, unf= 0.03733841541737435
+===========>>> Best model at unfairness <= 0.05 : acc= 0.829730161661157, unf= 0.03733841541737435
+===========>>> Best model at unfairness <= 0.04 : acc= 0.829730161661157, unf= 0.03733841541737435
+===========>>> Best model at unfairness <= 0.03 : acc= 0.8269247068294879, unf= 0.025552954124263883
+===========>>> Best model at unfairness <= 0.02 : acc= 0.7521038337535686, unf= 0.0
+===========>>> Best model at unfairness <= 0.01 : acc= 0.7521038337535686, unf= 0.0
+
+
+<<<<<------------------------------------Compas--------------------------------->>>>>
+
+|||||||------------------------------------Compas without sensitive attribute 
+
+=====>>>>>>>> Report for experiments results_1M on compas | statistical_parity | without_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.6711506605394031, unf= 0.2259057640410575
+===========>>> Best model at unfairness <= 0.05 : acc= 0.5787972697105138, unf= 0.04788730203996015
+===========>>> Best model at unfairness <= 0.04 : acc= 0.5736780668543215, unf= 0.033098873902120136
+===========>>> Best model at unfairness <= 0.03 : acc= 0.570453519429481, unf= 0.02810754748388711
+===========>>> Best model at unfairness <= 0.02 : None
+===========>>> Best model at unfairness <= 0.01 : None
+
+
+=====>>>>>>>> Report for experiments results_1M on compas | predictive_parity | without_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.6726686871048678, unf= 0.07829604993161643
+===========>>> Best model at unfairness <= 0.05 : None
+===========>>> Best model at unfairness <= 0.04 : None
+===========>>> Best model at unfairness <= 0.03 : None
+===========>>> Best model at unfairness <= 0.02 : None
+===========>>> Best model at unfairness <= 0.01 : None
+
+
+=====>>>>>>>> Report for experiments results_1M on compas | predictive_equality | without_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.6711506605394031, unf= 0.1598912740174287
+===========>>> Best model at unfairness <= 0.05 : acc= 0.6004142198080883, unf= 0.046866704350174745
+===========>>> Best model at unfairness <= 0.04 : acc= 0.6002287831506246, unf= 0.0346463935403872
+===========>>> Best model at unfairness <= 0.03 : acc= 0.5867624126550176, unf= 0.025456911047126496
+===========>>> Best model at unfairness <= 0.02 : None
+===========>>> Best model at unfairness <= 0.01 : None
+
+
+=====>>>>>>>> Report for experiments results_1M on compas | equal_opportunity | without_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.6711506605394031, unf= 0.2161429199481061
+===========>>> Best model at unfairness <= 0.05 : acc= 0.5691207496605124, unf= 0.04430038753528219
+===========>>> Best model at unfairness <= 0.04 : None
+===========>>> Best model at unfairness <= 0.03 : None
+===========>>> Best model at unfairness <= 0.02 : None
+===========>>> Best model at unfairness <= 0.01 : None
+
+
+=====>>>>>>>> Report for experiments results_1M on compas | equalized_odds | without_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.6711506605394031, unf= 0.1880170969827674
+===========>>> Best model at unfairness <= 0.05 : acc= 0.5787969099885789, unf= 0.04144981327612154
+===========>>> Best model at unfairness <= 0.04 : acc= 0.5657136433536876, unf= 0.02903783682193536
+===========>>> Best model at unfairness <= 0.03 : acc= 0.5657136433536876, unf= 0.02903783682193536
+===========>>> Best model at unfairness <= 0.02 : None
+===========>>> Best model at unfairness <= 0.01 : None
+
+
+=====>>>>>>>> Report for experiments results_1M on compas | conditional_use_accuracy_equality | without_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.6711506605394031, unf= 0.0774511148994264
+===========>>> Best model at unfairness <= 0.05 : acc= 0.5751710927453078, unf= 0.04813822500464733
+===========>>> Best model at unfairness <= 0.04 : acc= 0.5291047420344074, unf= 0.0
+===========>>> Best model at unfairness <= 0.03 : acc= 0.5291047420344074, unf= 0.0
+===========>>> Best model at unfairness <= 0.02 : acc= 0.5291047420344074, unf= 0.0
+===========>>> Best model at unfairness <= 0.01 : acc= 0.5291047420344074, unf= 0.0
+
+
+|||||||------------------------------------Compas with sensitive attribute 
+
+=====>>>>>>>> Report for experiments results_1M on compas | statistical_parity | with_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.6711506605394031, unf= 0.2259057640410575
+===========>>> Best model at unfairness <= 0.05 : acc= 0.6089430470246499, unf= 0.044064415190560036
+===========>>> Best model at unfairness <= 0.04 : acc= 0.5808818583235159, unf= 0.036571880911655766
+===========>>> Best model at unfairness <= 0.03 : acc= 0.5757595978308767, unf= 0.02828676131702092
+===========>>> Best model at unfairness <= 0.02 : None
+===========>>> Best model at unfairness <= 0.01 : None
+
+
+=====>>>>>>>> Report for experiments results_1M on compas | predictive_parity | with_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.6726686871048678, unf= 0.07829604993161643
+===========>>> Best model at unfairness <= 0.05 : None
+===========>>> Best model at unfairness <= 0.04 : None
+===========>>> Best model at unfairness <= 0.03 : None
+===========>>> Best model at unfairness <= 0.02 : None
+===========>>> Best model at unfairness <= 0.01 : None
+
+
+=====>>>>>>>> Report for experiments results_1M on compas | predictive_equality | with_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.6711506605394031, unf= 0.1598912740174287
+===========>>> Best model at unfairness <= 0.05 : acc= 0.6455539268145722, unf= 0.043223168589775776
+===========>>> Best model at unfairness <= 0.04 : acc= 0.617117008552389, unf= 0.0312211629974636
+===========>>> Best model at unfairness <= 0.03 : None
+===========>>> Best model at unfairness <= 0.02 : None
+===========>>> Best model at unfairness <= 0.01 : None
+
+
+=====>>>>>>>> Report for experiments results_1M on compas | equal_opportunity | with_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.6711506605394031, unf= 0.2161429199481061
+===========>>> Best model at unfairness <= 0.05 : acc= 0.6459330737340035, unf= 0.04996534275318417
+===========>>> Best model at unfairness <= 0.04 : acc= 0.5958604998336287, unf= 0.028072203837145936
+===========>>> Best model at unfairness <= 0.03 : acc= 0.5958604998336287, unf= 0.028072203837145936
+===========>>> Best model at unfairness <= 0.02 : None
+===========>>> Best model at unfairness <= 0.01 : None
+
+
+=====>>>>>>>> Report for experiments results_1M on compas | equalized_odds | with_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.6711506605394031, unf= 0.1880170969827674
+===========>>> Best model at unfairness <= 0.05 : acc= 0.6455539268145722, unf= 0.046896082208848035
+===========>>> Best model at unfairness <= 0.04 : acc= 0.5746221570725829, unf= 0.03681693017140253
+===========>>> Best model at unfairness <= 0.03 : acc= 0.5729174348228819, unf= 0.027919422656747427
+===========>>> Best model at unfairness <= 0.02 : None
+===========>>> Best model at unfairness <= 0.01 : None
+
+
+=====>>>>>>>> Report for experiments results_1M on compas | conditional_use_accuracy_equality | with_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.6711506605394031, unf= 0.0774511148994264
+===========>>> Best model at unfairness <= 0.05 : acc= 0.6186048184753185, unf= 0.047015933783016425
+===========>>> Best model at unfairness <= 0.04 : acc= 0.5291047420344074, unf= 0.0
+===========>>> Best model at unfairness <= 0.03 : acc= 0.5291047420344074, unf= 0.0
+===========>>> Best model at unfairness <= 0.02 : acc= 0.5291047420344074, unf= 0.0
+===========>>> Best model at unfairness <= 0.01 : acc= 0.5291047420344074, unf= 0.0
+
+
+<<<<<------------------------------------Default Credit--------------------------------->>>>>
+
+|||||||------------------------------------Default Credit without sensitive attribute 
+
+=====>>>>>>>> Report for experiments results_1M on default_credit | statistical_parity | without_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.8196, unf= 0.01714926228669943
+===========>>> Best model at unfairness <= 0.05 : acc= 0.8196, unf= 0.01714926228669943
+===========>>> Best model at unfairness <= 0.04 : acc= 0.8196, unf= 0.01714926228669943
+===========>>> Best model at unfairness <= 0.03 : acc= 0.8196, unf= 0.01714926228669943
+===========>>> Best model at unfairness <= 0.02 : acc= 0.8196, unf= 0.01714926228669943
+===========>>> Best model at unfairness <= 0.01 : acc= 0.8071333333333334, unf= 0.007183232325683448
+
+
+=====>>>>>>>> Report for experiments results_1M on default_credit | predictive_parity | without_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.8200333333333333, unf= 0.016929034603841073
+===========>>> Best model at unfairness <= 0.05 : acc= 0.8200333333333333, unf= 0.016929034603841073
+===========>>> Best model at unfairness <= 0.04 : acc= 0.8200333333333333, unf= 0.016929034603841073
+===========>>> Best model at unfairness <= 0.03 : acc= 0.8200333333333333, unf= 0.016929034603841073
+===========>>> Best model at unfairness <= 0.02 : acc= 0.8200333333333333, unf= 0.016929034603841073
+===========>>> Best model at unfairness <= 0.01 : None
+
+
+=====>>>>>>>> Report for experiments results_1M on default_credit | predictive_equality | without_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.8195333333333334, unf= 0.010176868072288618
+===========>>> Best model at unfairness <= 0.05 : acc= 0.8195333333333334, unf= 0.010176868072288618
+===========>>> Best model at unfairness <= 0.04 : acc= 0.8195333333333334, unf= 0.010176868072288618
+===========>>> Best model at unfairness <= 0.03 : acc= 0.8195333333333334, unf= 0.010176868072288618
+===========>>> Best model at unfairness <= 0.02 : acc= 0.8195333333333334, unf= 0.010176868072288618
+===========>>> Best model at unfairness <= 0.01 : acc= 0.8189333333333334, unf= 0.00993821742091878
+
+
+=====>>>>>>>> Report for experiments results_1M on default_credit | equal_opportunity | without_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.8198666666666666, unf= 0.015718649787613125
+===========>>> Best model at unfairness <= 0.05 : acc= 0.8198666666666666, unf= 0.015718649787613125
+===========>>> Best model at unfairness <= 0.04 : acc= 0.8198666666666666, unf= 0.015718649787613125
+===========>>> Best model at unfairness <= 0.03 : acc= 0.8198666666666666, unf= 0.015718649787613125
+===========>>> Best model at unfairness <= 0.02 : acc= 0.8198666666666666, unf= 0.015718649787613125
+===========>>> Best model at unfairness <= 0.01 : None
+
+
+=====>>>>>>>> Report for experiments results_1M on default_credit | equalized_odds | without_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.8196999999999999, unf= 0.0132704965528705
+===========>>> Best model at unfairness <= 0.05 : acc= 0.8196999999999999, unf= 0.0132704965528705
+===========>>> Best model at unfairness <= 0.04 : acc= 0.8196999999999999, unf= 0.0132704965528705
+===========>>> Best model at unfairness <= 0.03 : acc= 0.8196999999999999, unf= 0.0132704965528705
+===========>>> Best model at unfairness <= 0.02 : acc= 0.8196999999999999, unf= 0.0132704965528705
+===========>>> Best model at unfairness <= 0.01 : acc= 0.8061666666666667, unf= 0.008551316899149109
+
+
+=====>>>>>>>> Report for experiments results_1M on default_credit | conditional_use_accuracy_equality | without_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.8198333333333332, unf= 0.016858205942235305
+===========>>> Best model at unfairness <= 0.05 : acc= 0.8198333333333332, unf= 0.016858205942235305
+===========>>> Best model at unfairness <= 0.04 : acc= 0.8198333333333332, unf= 0.016858205942235305
+===========>>> Best model at unfairness <= 0.03 : acc= 0.8198333333333332, unf= 0.016858205942235305
+===========>>> Best model at unfairness <= 0.02 : acc= 0.8198333333333332, unf= 0.016858205942235305
+===========>>> Best model at unfairness <= 0.01 : acc= 0.7868666666666666, unf= 0.0017620973255972894
+
+
+|||||||------------------------------------Default Credit with sensitive attribute 
+
+=====>>>>>>>> Report for experiments results_1M on default_credit | statistical_parity | with_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.8196, unf= 0.01714926228669943
+===========>>> Best model at unfairness <= 0.05 : acc= 0.8196, unf= 0.01714926228669943
+===========>>> Best model at unfairness <= 0.04 : acc= 0.8196, unf= 0.01714926228669943
+===========>>> Best model at unfairness <= 0.03 : acc= 0.8196, unf= 0.01714926228669943
+===========>>> Best model at unfairness <= 0.02 : acc= 0.8196, unf= 0.01714926228669943
+===========>>> Best model at unfairness <= 0.01 : acc= 0.8070333333333334, unf= 0.009172832615443188
+
+
+=====>>>>>>>> Report for experiments results_1M on default_credit | predictive_parity | with_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.8200333333333333, unf= 0.016929034603841073
+===========>>> Best model at unfairness <= 0.05 : acc= 0.8200333333333333, unf= 0.016929034603841073
+===========>>> Best model at unfairness <= 0.04 : acc= 0.8200333333333333, unf= 0.016929034603841073
+===========>>> Best model at unfairness <= 0.03 : acc= 0.8200333333333333, unf= 0.016929034603841073
+===========>>> Best model at unfairness <= 0.02 : acc= 0.8200333333333333, unf= 0.016929034603841073
+===========>>> Best model at unfairness <= 0.01 : None
+
+
+=====>>>>>>>> Report for experiments results_1M on default_credit | predictive_equality | with_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.8195333333333334, unf= 0.010176868072288618
+===========>>> Best model at unfairness <= 0.05 : acc= 0.8195333333333334, unf= 0.010176868072288618
+===========>>> Best model at unfairness <= 0.04 : acc= 0.8195333333333334, unf= 0.010176868072288618
+===========>>> Best model at unfairness <= 0.03 : acc= 0.8195333333333334, unf= 0.010176868072288618
+===========>>> Best model at unfairness <= 0.02 : acc= 0.8195333333333334, unf= 0.010176868072288618
+===========>>> Best model at unfairness <= 0.01 : acc= 0.8189333333333334, unf= 0.00993821742091878
+
+
+=====>>>>>>>> Report for experiments results_1M on default_credit | equal_opportunity | with_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.8198666666666666, unf= 0.015718649787613125
+===========>>> Best model at unfairness <= 0.05 : acc= 0.8198666666666666, unf= 0.015718649787613125
+===========>>> Best model at unfairness <= 0.04 : acc= 0.8198666666666666, unf= 0.015718649787613125
+===========>>> Best model at unfairness <= 0.03 : acc= 0.8198666666666666, unf= 0.015718649787613125
+===========>>> Best model at unfairness <= 0.02 : acc= 0.8198666666666666, unf= 0.015718649787613125
+===========>>> Best model at unfairness <= 0.01 : None
+
+
+=====>>>>>>>> Report for experiments results_1M on default_credit | equalized_odds | with_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.8196999999999999, unf= 0.0132704965528705
+===========>>> Best model at unfairness <= 0.05 : acc= 0.8196999999999999, unf= 0.0132704965528705
+===========>>> Best model at unfairness <= 0.04 : acc= 0.8196999999999999, unf= 0.0132704965528705
+===========>>> Best model at unfairness <= 0.03 : acc= 0.8196999999999999, unf= 0.0132704965528705
+===========>>> Best model at unfairness <= 0.02 : acc= 0.8196999999999999, unf= 0.0132704965528705
+===========>>> Best model at unfairness <= 0.01 : acc= 0.8061666666666667, unf= 0.008551316899149109
+
+
+=====>>>>>>>> Report for experiments results_1M on default_credit | conditional_use_accuracy_equality | with_dem
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.8198333333333332, unf= 0.016858205942235305
+===========>>> Best model at unfairness <= 0.05 : acc= 0.8198333333333332, unf= 0.016858205942235305
+===========>>> Best model at unfairness <= 0.04 : acc= 0.8198333333333332, unf= 0.016858205942235305
+===========>>> Best model at unfairness <= 0.03 : acc= 0.8198333333333332, unf= 0.016858205942235305
+===========>>> Best model at unfairness <= 0.02 : acc= 0.8198333333333332, unf= 0.016858205942235305
+===========>>> Best model at unfairness <= 0.01 : acc= 0.8118333333333332, unf= 0.009749629132041629
+
+

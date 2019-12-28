@@ -41,14 +41,11 @@ parser.add_argument('--exp', type=str, default="results_1M", help='use sensitive
 args = parser.parse_args()
 
 
-print("=====>>>>>>>> Report for experiments {} on {} | {} | {}".format(args.exp, 
-                                                                      dataset_dict[args.id], 
-                                                                      metric_dict[args.m], 
-                                                                      suffix[args.attr]))
+print("=====>>>>>>>> {}".format(metric_dict[args.m])
+                                                                      )
 
 input_file = "./{}/{}_{}/{}.csv".format(args.exp, dataset_dict[args.id], suffix[args.attr], metric_dict[args.m])
 
-#input_file='./{}/{}_{}_{}.csv'.format(args.exp, dataset_dict[args.id], metric_dict[args.m], suffix[args.attr])
 
 df = pd.read_csv(input_file)
 
@@ -57,11 +54,10 @@ print('===='*28)
 def best_accuracy(df, at):
     accuracy = df.accuracy.tolist()
     unfairness = df.unfairness.tolist()
-    description = df.models.tolist()
+    #description = df.models.tolist()
 
-
-
-    models  = list(zip(accuracy, unfairness, description))
+    #models  = list(zip(accuracy, unfairness, description))
+    models  = list(zip(accuracy, unfairness))
 
     
     models = filter(lambda x: x[1] <= at, models)
@@ -74,12 +70,16 @@ def best_accuracy(df, at):
 
 
 
+
 best_accuracy(df,1.0)
-best_accuracy(df,0.05)
-best_accuracy(df,0.04)
-best_accuracy(df,0.03)
-best_accuracy(df,0.02)
-best_accuracy(df,0.01)
+best_accuracy(df,0.054)
+best_accuracy(df,0.044)
+best_accuracy(df,0.034)
+best_accuracy(df,0.024)
+best_accuracy(df,0.014)
+
+print('\n')
+
 
 
 

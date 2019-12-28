@@ -1,0 +1,62 @@
+<<<<<------------------------------------ German Credit [With sensitive attribute (age)] --------------------------------->>>>>
+
+=====>>>>>>>> statistical_parity
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.7170000000000001, unf= 0.06899856703066735
+===========>>> Best model at unfairness <= 0.054 : acc= 0.7, unf= 0.0
+===========>>> Best model at unfairness <= 0.044 : acc= 0.7, unf= 0.0
+===========>>> Best model at unfairness <= 0.034 : acc= 0.7, unf= 0.0
+===========>>> Best model at unfairness <= 0.024 : acc= 0.7, unf= 0.0
+===========>>> Best model at unfairness <= 0.014 : acc= 0.7, unf= 0.0
+
+
+=====>>>>>>>> predictive_parity
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.708, unf= 0.11324406930645775
+===========>>> Best model at unfairness <= 0.054 : None
+===========>>> Best model at unfairness <= 0.044 : None
+===========>>> Best model at unfairness <= 0.034 : None
+===========>>> Best model at unfairness <= 0.024 : None
+===========>>> Best model at unfairness <= 0.014 : None
+
+
+=====>>>>>>>> predictive_equality
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.711, unf= 0.09390074211502784
+===========>>> Best model at unfairness <= 0.054 : acc= 0.7050000000000001, unf= 0.05308441558441559
+===========>>> Best model at unfairness <= 0.044 : acc= 0.7, unf= 0.0
+===========>>> Best model at unfairness <= 0.034 : acc= 0.7, unf= 0.0
+===========>>> Best model at unfairness <= 0.024 : acc= 0.7, unf= 0.0
+===========>>> Best model at unfairness <= 0.014 : acc= 0.7, unf= 0.0
+
+
+=====>>>>>>>> equal_opportunity
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.7290000000000001, unf= 0.08099811773283057
+===========>>> Best model at unfairness <= 0.054 : acc= 0.7210000000000001, unf= 0.051025150185837184
+===========>>> Best model at unfairness <= 0.044 : acc= 0.7, unf= 0.0
+===========>>> Best model at unfairness <= 0.034 : acc= 0.7, unf= 0.0
+===========>>> Best model at unfairness <= 0.024 : acc= 0.7, unf= 0.0
+===========>>> Best model at unfairness <= 0.014 : acc= 0.7, unf= 0.0
+
+
+=====>>>>>>>> equalized_odds
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.7310000000000001, unf= 0.1013500148018093
+===========>>> Best model at unfairness <= 0.054 : acc= 0.7, unf= 0.0
+===========>>> Best model at unfairness <= 0.044 : acc= 0.7, unf= 0.0
+===========>>> Best model at unfairness <= 0.034 : acc= 0.7, unf= 0.0
+===========>>> Best model at unfairness <= 0.024 : acc= 0.7, unf= 0.0
+===========>>> Best model at unfairness <= 0.014 : acc= 0.7, unf= 0.0
+
+
+=====>>>>>>>> conditional_use_accuracy_equality
+================================================================================================================
+===========>>> Best model at unfairness <= 1.0 : acc= 0.718, unf= 0.1235795514258303
+===========>>> Best model at unfairness <= 0.054 : None
+===========>>> Best model at unfairness <= 0.044 : None
+===========>>> Best model at unfairness <= 0.034 : None
+===========>>> Best model at unfairness <= 0.024 : None
+===========>>> Best model at unfairness <= 0.014 : None
+
+

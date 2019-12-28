@@ -1,6 +1,7 @@
 data_prep/
 data/adult/rules_old.py
 data/compas/rules_old.py
+data/compas_laftr/
 scripts/old/
 scripts/serial/
 scripts/adult.sh
