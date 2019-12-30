@@ -1,3 +1,8 @@
+experiments/reports/
+experiments/perfs_results/
+experiments/pareto/
+experiments/pareto_*
+experiments/plotting_scripts/
 data_prep/
 data/adult/rules_old.py
 data/compas/rules_old.py
