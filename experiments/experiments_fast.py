@@ -112,7 +112,7 @@ base = [0.0, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
 epsilon_range = base + list(epsilon_range)
 epsilon_range = [round(x,3) for x in epsilon_range] #60 values
 
-n_eps = 25 
+n_eps = 30 
 
 
 # use sens. attri

@@ -1,8 +1,8 @@
 #!/bin/bash
 #SBATCH --time=24:00:00
-#SBATCH --array=1-6
-#SBATCH --cpus-per-task=32
-#SBATCH --mem=251G  
+#SBATCH --array=1,4,5
+#SBATCH --cpus-per-task=48
+#SBATCH --mem=503G  
 #SBATCH --nodes=1
 
 #SBATCH --account=def-gambsseb
