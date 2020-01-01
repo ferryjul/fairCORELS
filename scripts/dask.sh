@@ -9,6 +9,7 @@
 #SBATCH --mail-user=a.u.matchi@gmail.com
 #SBATCH --mail-type=ALL
 
+source ~/.bashrc 
 
 cd ../experiments
 
