@@ -103,7 +103,7 @@ if args.id==7:
     maj_pos = 2
 
 # parameters
-N_ITER = 10*10**6
+N_ITER = 15*10**6
 
 
 # epsilon range
