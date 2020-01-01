@@ -1,9 +1,9 @@
 #!/bin/bash
 #SBATCH --time=01:00:00
-#SBATCH --array=1,4,5%1
+#SBATCH --array=1,4%1
 #SBATCH --cpus-per-task=24
 #SBATCH --mem=31G  
-#SBATCH --nodes=3
+#SBATCH --nodes=2
 
 #SBATCH --account=def-gambsseb
 #SBATCH --mail-user=a.u.matchi@gmail.com
