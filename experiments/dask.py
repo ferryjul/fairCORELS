@@ -1,5 +1,5 @@
-from dask_jobqueue import SLURMCluster
-from distributed import Client
+#from dask_jobqueue import SLURMCluster
+from dask.distributed import Client
 
 
 #from distributed import Client
