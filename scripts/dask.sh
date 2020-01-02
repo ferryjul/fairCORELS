@@ -9,9 +9,8 @@
 #SBATCH --mail-user=a.u.matchi@gmail.com
 #SBATCH --mail-type=ALL
 
-#source ~/.bashrc 
 
 cd ../experiments
 
-python dask.py --id=6 --metric=$SLURM_ARRAY_TASK_ID --attr=1
+python -s dask.py --id=6 --metric=$SLURM_ARRAY_TASK_ID --attr=1
 

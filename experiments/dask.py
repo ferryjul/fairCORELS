@@ -1,15 +1,6 @@
-#from dask_jobqueue.slurm import SLURMCluster
-#from distributed.client import Client
+from dask_jobqueue import SLURMCluster
+from distributed import Client
 
-from dask_jobqueue import (
-    JobQueueCluster,
-    PBSCluster,
-    MoabCluster,
-    SLURMCluster,
-    SGECluster,
-    LSFCluster,
-    OARCluster,
-)
 
 #from distributed import Client
 #from dask import delayed
