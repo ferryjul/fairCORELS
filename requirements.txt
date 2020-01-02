@@ -3,7 +3,3 @@ pandas
 requests
 sklearn
 scipy
-
-dask 
-distributed 
-dask-jobqueue
