@@ -103,7 +103,7 @@ if args.id==7:
     maj_pos = 2
 
 # parameters
-N_ITER = 15*10**6
+N_ITER = 5*10**6
 
 
 # epsilon range
@@ -112,7 +112,7 @@ base = [0.0, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
 epsilon_range = base + list(epsilon_range)
 epsilon_range = [round(x,3) for x in epsilon_range] #60 values
 
-n_eps = 10 
+n_eps = 30 
 
 
 # use sens. attri
@@ -130,7 +130,7 @@ X, y, features, prediction = load_from_csv("../data/{}/{}_rules_full.csv".format
 
 
 # creating k-folds
-kf = KFold(n_splits=5, shuffle=True, random_state=42)
+kf = KFold(n_splits=10, shuffle=True, random_state=42)
 accuracy = []
 unfairness = []
 
@@ -147,7 +147,7 @@ def trainFold(X_train, y_train, X_test, y_test, epsilon, fairness_metric):
 
     clf = CorelsClassifier(n_iter=N_ITER, 
                             min_support=0.01,
-                            c=1e-8, 
+                            c=1e-3, 
                             max_card=1, 
                             policy="bfs",
                             bfs_mode=2,

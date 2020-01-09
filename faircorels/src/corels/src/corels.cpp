@@ -836,8 +836,8 @@ int bbound_end(CacheTree* tree, Queue* q, PermutationMap* p, bool early, rule_t*
     int verbosity = logger->getVerbosity();
     bool print_queue = 0;
     logger->dumpState(); // second last log record (before queue elements deleted)
-   // if(pruningCnt > 0)
-        //printf("Pruned %d subtrees with unfairness lower bound.\n", pruningCnt);
+    //if(pruningCnt > 0)
+    printf("===========>>>>>>Pruned %d subtrees with unfairness lower bound.\n", pruningCnt);
     if (verbosity >= 5)
         printf("iter: %zu, tree: %zu, queue: %zu, pmap: %zu, time elapsed: %f\n",
                num_iter, tree->num_nodes(), q->size(), p->size(), time_diff(start));

@@ -1,13 +1,10 @@
 #!/bin/bash
-#SBATCH --time=120:00:00
-#SBATCH --array=4
-#SBATCH --cpus-per-task=48
+#SBATCH --time=72:00:00
+#SBATCH --array=1-6
+#SBATCH --cpus-per-task=32
 #SBATCH --mem=251G  
 #SBATCH --nodes=1
 
-#SBATCH --account=def-gambsseb
-#SBATCH --mail-user=a.u.matchi@gmail.com
-#SBATCH --mail-type=ALL
 
 
 cd ../experiments
