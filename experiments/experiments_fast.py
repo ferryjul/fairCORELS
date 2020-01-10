@@ -117,7 +117,7 @@ n_eps = 30
 
 # use sens. attri
 forbidSensAttr = True if args.attr==1 else False
-suffix = "without_dem" if args.attr==1 else "with_dem"
+suffix = "without" if args.attr==1 else "with"
 
 #save direcory
 save_dir = "./results/{}_{}".format(dataset,suffix)
@@ -130,7 +130,7 @@ X, y, features, prediction = load_from_csv("../data/{}/{}_rules_full.csv".format
 
 
 # creating k-folds
-kf = KFold(n_splits=10, shuffle=True, random_state=42)
+kf = KFold(n_splits=5, shuffle=True, random_state=42)
 accuracy = []
 unfairness = []
 
