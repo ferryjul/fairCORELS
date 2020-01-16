@@ -1,0 +1,33 @@
+%unconstrained
+%'accuracy': 0.6777251184834123, 
+%'unfairness odds': 0.1625224474386589
+%'unfairness cuae': 0.09911764705882353
+
+if [priors:>3]  then (recidivism)
+else if [age:23-25 && priors:2-3]  then (recidivism)
+else if [age:18-20]  then (recidivism)
+else if [gender:Male && age:21-22]  then (recidivism)
+else (no recidivism) 
+
+
+%odds
+%'accuracy': 0.5967741935483871, 'unfairness': 0.04515469484174861, 
+
+if [age:26-45 && juvenile-crimes:0]  then (no recidivism)
+else if [priors:1 && juvenile-crimes:0]  then (no recidivism)
+else if [juvenile-misdemeanors:0 && priors:0]  then (no recidivism)
+else (recidivism)
+
+
+
+
+%cuae
+%'accuracy': 0.6729857819905213, 'unfairness': 0.06671911578462597,  
+
+if [priors:>3]  then (recidivism)
+else if [juvenile-felonies:0 && age:26-45]  then (no recidivism)
+else if [age:>45]  then (no recidivism)
+else if [priors:0 && age:23-25]  then (no recidivism)
+else (recidivism)
+
+

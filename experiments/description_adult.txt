@@ -1,0 +1,47 @@
+#unconstrained
+%'accuracy': 0.8227722772277227, 
+%'unfairness sp': 0.06196056753270683
+%'unfairness  eopp': 0.034770822186552475
+%'unfairness eods': 0.018536727539969065,
+
+if [capitalGain:>7073] then (income:>50K)
+else if [maritalStatus:single] then (income:<=50K)
+else if [capitalLoss:1882-1978] then (income:>50K)
+else if [education:masters_doctorate] then (income:>50K)
+else if [education:prof_school] then (income:>50K)
+else (income:<=50K) 
+
+
+
+#sp
+%'accuracy': 0.7896039603960396, 'unfairness': 0.017387138382163256, 
+
+if [workclass:private && capitalGain:<5119] then (income:<=50K)
+else if [occupation:professional] then (income:>50K)
+else if [occupation:blueCollar] then (income:<=50K)
+else if [capitalLoss:<1537 && capitalGain:<5119] then (income:<=50K)
+else (income:>50K)
+
+
+#eop
+
+%'accuracy': 0.8182868460141938, 'unfairness': 0.008659132946512327, 
+
+if [capitalGain:>7073] then (income:>50K)
+else if [capitalLoss:1882-1978] then (income:>50K)
+else if [education:prof_school] then (income:>50K)
+else if [maritalStatus:single] then (income:<=50K)
+else if [education:masters_doctorate] then (income:>50K)
+else (income:<=50K)
+
+
+#odds
+
+'accuracy': 0.8178217821782178, 'unfairness': 0.0007646379814028291, 
+
+if [capitalGain:>7073] then (income:>50K)
+else if [maritalStatus:single] then (income:<=50K)
+else if [capitalLoss:<1537 && hoursPerWeek:<35] then (income:<=50K)
+else if [capitalLoss:1882-1978] then (income:>50K)
+else if [education:masters_doctorate] then (income:>50K)
+else (income:<=50K)
