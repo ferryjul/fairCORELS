@@ -1,1 +1,1 @@
-docker run -it --rm -v `PWD`:/home/faircorels umaivodj/faircorels
+docker run -it --rm -v `PWD`:/home/fairpate umaivodj/fairpate
