@@ -24,9 +24,9 @@ python compute_pareto.py --dataset=1 --strat=3 --metric=5
 python compute_pareto.py --dataset=1 --strat=3 --metric=6
 
 # faircorels | all metric | adult_no_relationship_without | bfs_objective_aware
-#python compute_pareto.py --dataset=1 --strat=4 --metric=1
-#python compute_pareto.py --dataset=1 --strat=4 --metric=2
-#python compute_pareto.py --dataset=1 --strat=4 --metric=3
-#python compute_pareto.py --dataset=1 --strat=4 --metric=4
-#python compute_pareto.py --dataset=1 --strat=4 --metric=5
-#python compute_pareto.py --dataset=1 --strat=4 --metric=6
+python compute_pareto.py --dataset=1 --strat=4 --metric=1
+python compute_pareto.py --dataset=1 --strat=4 --metric=2
+python compute_pareto.py --dataset=1 --strat=4 --metric=3
+python compute_pareto.py --dataset=1 --strat=4 --metric=4
+python compute_pareto.py --dataset=1 --strat=4 --metric=5
+python compute_pareto.py --dataset=1 --strat=4 --metric=6
