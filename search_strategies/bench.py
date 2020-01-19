@@ -26,7 +26,7 @@ dataset, decision, prediction_name, min_feature, min_pos, maj_feature, maj_pos =
 #------------------------setup config
 
 #iterations
-N_ITER = 1*10**0
+N_ITER = 4*10**6
 
 #fairness constraint
 fairness_metric_name = get_metric(args.metric)
@@ -38,7 +38,7 @@ base = [0.0, 0.1, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
 epsilon_range = base + list(epsilon_range)
 epsilons = [round(x,3) for x in epsilon_range] #60 values
 
-epsilons = epsilons[:12]
+#epsilons = epsilons[:12]
 
 #print("------------------------------------------------------->>>>>>>> {}".format(len(epsilons)))
 

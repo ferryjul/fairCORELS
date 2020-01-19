@@ -95,7 +95,7 @@ if args.id==6:
 
 
 # parameters
-N_ITER = 5*10**6
+N_ITER = 4*10**6
 
 # fairness metric / epsilon range
 fairness_metric = 1
@@ -121,7 +121,7 @@ clf = CorelsClassifier(n_iter=N_ITER,
                         policy="bfs",
                         bfs_mode=0,
                         mode=3,
-                        useUnfairnessLB=False,
+                        useUnfairnessLB=True,
                         forbidSensAttr=forbidSensAttr,
                         fairness=fairness_metric, 
                         epsilon=epsilon,
