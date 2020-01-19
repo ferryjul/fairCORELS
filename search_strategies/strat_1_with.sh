@@ -2,7 +2,7 @@
 #SBATCH --time=00:10:00
 #SBATCH --array=1
 #SBATCH --ntasks=60
-#SBATCH --mem-per-cpu=100M
+#SBATCH --mem-per-cpu=2G
 
 #SBATCH --account=def-gambsseb
 #SBATCH --mail-user=a.u.matchi@gmail.com
