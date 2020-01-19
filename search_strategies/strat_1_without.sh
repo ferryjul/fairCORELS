@@ -9,5 +9,5 @@
 #SBATCH --mail-type=ALL
 
 
-srun python bench.py --dataset=6 --metric=$SLURM_ARRAY_TASK_ID --attr=2 --strat=1
+srun python bench.py --dataset=6 --metric=$SLURM_ARRAY_TASK_ID --attr=1 --strat=1
 
