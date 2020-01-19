@@ -99,7 +99,7 @@ def trainFold(X_train, y_train, X_test, y_test, epsilon, fairness_metric):
                             max_card=1, 
                             policy=strategy,
                             bfs_mode = bfsmode,
-			    mode=3,
+			                mode=3,
                             useUnfairnessLB=True,
                             forbidSensAttr=forbidSensAttr,
                             fairness=fairness_metric, 
