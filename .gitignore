@@ -15,6 +15,7 @@ scripts/adult.sh
 scripts/expe_fast.sh
 push.sh
 get_result.sh
+get_strategy_results.sh
 experiments/kfold_bench.py
 experiments/results
 experiments/results_*
