@@ -57,6 +57,24 @@ def get_data(id):
         maj_feature = "gender_Male"
         maj_pos = 2
 
+    if id==7:
+        dataset = "adult_no_relationship_neg"
+        decision = "income"
+        prediction_name="[income:>50K]"
+        min_feature = "gender_Female"
+        min_pos = 1
+        maj_feature = "gender_Male"
+        maj_pos = 2
+
+    if id==8:
+        dataset = "compas_neg"
+        decision = "two_year_recid"
+        prediction_name="[two_year_recid]"
+        min_feature = "race_African-American"
+        min_pos = 1
+        maj_feature = "race_Caucasian"
+        maj_pos = 2
+
 
     return dataset, decision, prediction_name, min_feature, min_pos, maj_feature, maj_pos
 
