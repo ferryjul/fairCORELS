@@ -1,0 +1,1277 @@
+acc_test_fold_0,acc_train_fold_0,unf_test_fold_0,unf_train_fold_0,mdl_fold_0,acc_test_fold_1,acc_train_fold_1,unf_test_fold_1,unf_train_fold_1,mdl_fold_1,acc_test_fold_2,acc_train_fold_2,unf_test_fold_2,unf_train_fold_2,mdl_fold_2,acc_test_fold_3,acc_train_fold_3,unf_test_fold_3,unf_train_fold_3,mdl_fold_3,acc_test_fold_4,acc_train_fold_4,unf_test_fold_4,unf_train_fold_4,mdl_fold_4
+0.8231023102310231,0.8204958950451752,0.2617984153307536,0.267313740331769," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [education_dropout__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [maritalStatus_single]: [income:>50K] = False
+else if [education_hs_grad__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = False
+else [income:>50K] = True",0.8183168316831683,0.8205371508725607,0.2523250122369065,0.24447708218591274," if [gender_Female]: [income:>50K] = False
+else if [maritalStatus_single]: [income:>50K] = False
+else if [education_dropout__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalGain_-inf_to_5119.0__AND__occupation_blueCollar]: [income:>50K] = False
+else if [education_hs_grad__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8145214521452145,0.8204546392177895,0.2583448166619129,0.252948240712649," if [capitalGain_-inf_to_5119.0__AND__occupation_blueCollar]: [income:>50K] = False
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__education_hs_grad]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = False
+else if [maritalStatus_married]: [income:>50K] = True
+else [income:>50K] = False",0.821947194719472,0.817484219646025,0.06304583869952504,0.05986137052751721," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [maritalStatus_single]: [income:>50K] = False
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [education_masters_doctorate]: [income:>50K] = True
+else [income:>50K] = False",0.8105297903944545,0.8217409240924093,0.09542135577385169,0.1148147010189813," if [education_associates]: [income:>50K] = False
+else if [education_dropout__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [maritalStatus_single]: [income:>50K] = False
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [education_hs_grad__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True"
+0.8231023102310231,0.8204958950451752,0.2617984153307536,0.267313740331769," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [education_dropout__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [maritalStatus_single]: [income:>50K] = False
+else if [education_hs_grad__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = False
+else [income:>50K] = True",0.8183168316831683,0.8205371508725607,0.2523250122369065,0.24447708218591274," if [gender_Female]: [income:>50K] = False
+else if [maritalStatus_single]: [income:>50K] = False
+else if [education_dropout__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalGain_-inf_to_5119.0__AND__occupation_blueCollar]: [income:>50K] = False
+else if [education_hs_grad__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8145214521452145,0.8204546392177895,0.2583448166619129,0.252948240712649," if [capitalGain_-inf_to_5119.0__AND__occupation_blueCollar]: [income:>50K] = False
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__education_hs_grad]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = False
+else if [maritalStatus_married]: [income:>50K] = True
+else [income:>50K] = False",0.821947194719472,0.817484219646025,0.06304583869952504,0.05986137052751721," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [maritalStatus_single]: [income:>50K] = False
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [education_masters_doctorate]: [income:>50K] = True
+else [income:>50K] = False",0.8105297903944545,0.8217409240924093,0.09542135577385169,0.1148147010189813," if [education_associates]: [income:>50K] = False
+else if [education_dropout__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [maritalStatus_single]: [income:>50K] = False
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [education_hs_grad__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True"
+0.8231023102310231,0.8204958950451752,0.2617984153307536,0.267313740331769," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [education_dropout__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [maritalStatus_single]: [income:>50K] = False
+else if [education_hs_grad__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = False
+else [income:>50K] = True",0.8183168316831683,0.8205371508725607,0.2523250122369065,0.24447708218591274," if [gender_Female]: [income:>50K] = False
+else if [maritalStatus_single]: [income:>50K] = False
+else if [education_dropout__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalGain_-inf_to_5119.0__AND__occupation_blueCollar]: [income:>50K] = False
+else if [education_hs_grad__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8145214521452145,0.8204546392177895,0.2583448166619129,0.252948240712649," if [capitalGain_-inf_to_5119.0__AND__occupation_blueCollar]: [income:>50K] = False
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__education_hs_grad]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = False
+else if [maritalStatus_married]: [income:>50K] = True
+else [income:>50K] = False",0.821947194719472,0.817484219646025,0.06304583869952504,0.05986137052751721," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [maritalStatus_single]: [income:>50K] = False
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [education_masters_doctorate]: [income:>50K] = True
+else [income:>50K] = False",0.8105297903944545,0.8217409240924093,0.09542135577385169,0.1148147010189813," if [education_associates]: [income:>50K] = False
+else if [education_dropout__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [maritalStatus_single]: [income:>50K] = False
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [education_hs_grad__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True"
+0.8231023102310231,0.8204958950451752,0.2617984153307536,0.267313740331769," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [education_dropout__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [maritalStatus_single]: [income:>50K] = False
+else if [education_hs_grad__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = False
+else [income:>50K] = True",0.8183168316831683,0.8205371508725607,0.2523250122369065,0.24447708218591274," if [gender_Female]: [income:>50K] = False
+else if [maritalStatus_single]: [income:>50K] = False
+else if [education_dropout__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalGain_-inf_to_5119.0__AND__occupation_blueCollar]: [income:>50K] = False
+else if [education_hs_grad__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8145214521452145,0.8204546392177895,0.2583448166619129,0.252948240712649," if [capitalGain_-inf_to_5119.0__AND__occupation_blueCollar]: [income:>50K] = False
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__education_hs_grad]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = False
+else if [maritalStatus_married]: [income:>50K] = True
+else [income:>50K] = False",0.821947194719472,0.817484219646025,0.06304583869952504,0.05986137052751721," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [maritalStatus_single]: [income:>50K] = False
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [education_masters_doctorate]: [income:>50K] = True
+else [income:>50K] = False",0.8105297903944545,0.8217409240924093,0.09542135577385169,0.1148147010189813," if [education_associates]: [income:>50K] = False
+else if [education_dropout__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [maritalStatus_single]: [income:>50K] = False
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [education_hs_grad__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True"
+0.8231023102310231,0.8204958950451752,0.2617984153307536,0.267313740331769," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [education_dropout__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [maritalStatus_single]: [income:>50K] = False
+else if [education_hs_grad__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = False
+else [income:>50K] = True",0.8183168316831683,0.8205371508725607,0.2523250122369065,0.24447708218591274," if [gender_Female]: [income:>50K] = False
+else if [maritalStatus_single]: [income:>50K] = False
+else if [education_dropout__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalGain_-inf_to_5119.0__AND__occupation_blueCollar]: [income:>50K] = False
+else if [education_hs_grad__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8145214521452145,0.8204546392177895,0.2583448166619129,0.252948240712649," if [capitalGain_-inf_to_5119.0__AND__occupation_blueCollar]: [income:>50K] = False
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__education_hs_grad]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = False
+else if [maritalStatus_married]: [income:>50K] = True
+else [income:>50K] = False",0.821947194719472,0.817484219646025,0.06304583869952504,0.05986137052751721," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [maritalStatus_single]: [income:>50K] = False
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [education_masters_doctorate]: [income:>50K] = True
+else [income:>50K] = False",0.8105297903944545,0.8217409240924093,0.09542135577385169,0.1148147010189813," if [education_associates]: [income:>50K] = False
+else if [education_dropout__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [maritalStatus_single]: [income:>50K] = False
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [education_hs_grad__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True"
+0.8231023102310231,0.8204958950451752,0.2617984153307536,0.267313740331769," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [education_dropout__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [maritalStatus_single]: [income:>50K] = False
+else if [education_hs_grad__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = False
+else [income:>50K] = True",0.8183168316831683,0.8205371508725607,0.2523250122369065,0.24447708218591274," if [gender_Female]: [income:>50K] = False
+else if [maritalStatus_single]: [income:>50K] = False
+else if [education_dropout__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalGain_-inf_to_5119.0__AND__occupation_blueCollar]: [income:>50K] = False
+else if [education_hs_grad__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8145214521452145,0.8204546392177895,0.2583448166619129,0.252948240712649," if [capitalGain_-inf_to_5119.0__AND__occupation_blueCollar]: [income:>50K] = False
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__education_hs_grad]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = False
+else if [maritalStatus_married]: [income:>50K] = True
+else [income:>50K] = False",0.821947194719472,0.817484219646025,0.06304583869952504,0.05986137052751721," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [maritalStatus_single]: [income:>50K] = False
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [education_masters_doctorate]: [income:>50K] = True
+else [income:>50K] = False",0.8105297903944545,0.8217409240924093,0.09542135577385169,0.1148147010189813," if [education_associates]: [income:>50K] = False
+else if [education_dropout__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [maritalStatus_single]: [income:>50K] = False
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [education_hs_grad__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True"
+0.8231023102310231,0.8204958950451752,0.2617984153307536,0.267313740331769," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [education_dropout__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [maritalStatus_single]: [income:>50K] = False
+else if [education_hs_grad__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = False
+else [income:>50K] = True",0.8183168316831683,0.8205371508725607,0.2523250122369065,0.24447708218591274," if [gender_Female]: [income:>50K] = False
+else if [maritalStatus_single]: [income:>50K] = False
+else if [education_dropout__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalGain_-inf_to_5119.0__AND__occupation_blueCollar]: [income:>50K] = False
+else if [education_hs_grad__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8145214521452145,0.8204546392177895,0.2583448166619129,0.252948240712649," if [capitalGain_-inf_to_5119.0__AND__occupation_blueCollar]: [income:>50K] = False
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__education_hs_grad]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = False
+else if [maritalStatus_married]: [income:>50K] = True
+else [income:>50K] = False",0.821947194719472,0.817484219646025,0.06304583869952504,0.05986137052751721," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [maritalStatus_single]: [income:>50K] = False
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [education_masters_doctorate]: [income:>50K] = True
+else [income:>50K] = False",0.8105297903944545,0.8217409240924093,0.09542135577385169,0.1148147010189813," if [education_associates]: [income:>50K] = False
+else if [education_dropout__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [maritalStatus_single]: [income:>50K] = False
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [education_hs_grad__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True"
+0.8245874587458746,0.8200008251165477,0.10125667956513729,0.10673720661691394," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [education_dropout__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [maritalStatus_single]: [income:>50K] = False
+else if [education_hs_grad__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [education_associates]: [income:>50K] = False
+else [income:>50K] = True",0.8156765676567657,0.8190519410866784,0.06303011097274852,0.059882055351437945," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [maritalStatus_single]: [income:>50K] = False
+else if [education_masters_doctorate]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.816996699669967,0.8197945459796196,0.1187881625387672,0.11161508593012939," if [education_hs_grad__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [education_associates]: [income:>50K] = False
+else if [maritalStatus_single]: [income:>50K] = False
+else if [education_dropout__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [hoursPerWeek_-inf_to_34.5__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.821947194719472,0.817484219646025,0.06304583869952504,0.05986137052751721," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [maritalStatus_single]: [income:>50K] = False
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [education_masters_doctorate]: [income:>50K] = True
+else [income:>50K] = False",0.8105297903944545,0.8217409240924093,0.09542135577385169,0.1148147010189813," if [education_associates]: [income:>50K] = False
+else if [education_dropout__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [maritalStatus_single]: [income:>50K] = False
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [education_hs_grad__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True"
+0.81996699669967,0.8179792895746524,0.05531601252994288,0.061832486312440926," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [maritalStatus_single]: [income:>50K] = False
+else if [education_masters_doctorate]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.8156765676567657,0.8190519410866784,0.06303011097274852,0.059882055351437945," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [maritalStatus_single]: [income:>50K] = False
+else if [education_masters_doctorate]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.8151815181518152,0.8223936631049136,0.09014066221168658,0.0871194119928495," if [maritalStatus_single]: [income:>50K] = False
+else if [workclass_private__AND__education_bachelors]: [income:>50K] = True
+else if [education_masters_doctorate]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.821947194719472,0.817484219646025,0.06304583869952504,0.05986137052751721," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [maritalStatus_single]: [income:>50K] = False
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [education_masters_doctorate]: [income:>50K] = True
+else [income:>50K] = False",0.8161412774385212,0.8189356435643564,0.05465433941358691,0.06196034503175404," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [maritalStatus_single]: [income:>50K] = False
+else if [education_masters_doctorate]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False"
+0.815016501650165,0.8117084038120385,0.04296296296296296,0.049621472320965865," if [capitalLoss_2384.5_to_2581.0]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.8113861386138614,0.8146375675564174,0.053048663462010544,0.049789465027364," if [capitalLoss_2384.5_to_2581.0]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8133663366336633,0.8141424976277899,0.05298004281873818,0.049832083871771765," if [capitalLoss_2384.5_to_2581.0]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.816996699669967,0.812409752877594,0.057568591126232194,0.04955737932314272," if [education_masters_doctorate]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalLoss_2384.5_to_2581.0]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8052483908235682,0.8142326732673267,0.04673627189442543,0.04943955203643101," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalGain_5119.0_to_5316.5]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False"
+0.8165016501650165,0.8117084038120385,0.04516307352128248,0.048838425159208526," if [capitalLoss_2384.5_to_2581.0]: [income:>50K] = True
+else if [education_dropout]: [income:>50K] = False
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8102310231023102,0.8141837534551756,0.052086820293775024,0.04882300119002442," if [capitalLoss_2384.5_to_2581.0]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [workclass_private__AND__education_dropout]: [income:>50K] = False
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8133663366336633,0.8138537068360906,0.054547523435765126,0.048700414532484436," if [capitalLoss_2384.5_to_2581.0]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalLoss_1820.5_to_1862.0]: [income:>50K] = True
+else [income:>50K] = False",0.816006600660066,0.8122447295680515,0.058084288370496645,0.0488863885957255," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__hoursPerWeek_-inf_to_34.5]: [income:>50K] = False
+else if [education_masters_doctorate]: [income:>50K] = True
+else [income:>50K] = False",0.8060736095065192,0.8139438943894389,0.04720241388381392,0.04856255773832221," if [capitalLoss_2384.5_to_2581.0]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False"
+0.8127062706270627,0.8109245430917117,0.04700939745715864,0.04610767807946527," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0__AND__occupation_sales]: [income:>50K] = False
+else if [education_masters_doctorate]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8085808580858086,0.8117084038120385,0.05140393396087463,0.04770673247481672," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8122112211221122,0.812409752877594,0.052850965025682727,0.04717990411827482," if [capitalLoss_2384.5_to_2581.0]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else [income:>50K] = False",0.816006600660066,0.8114608688477247,0.0569408716097687,0.04768971308398948," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalGain_5316.5_to_7073.5]: [income:>50K] = False
+else if [education_masters_doctorate]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8054134345601585,0.8137788778877888,0.046226327988255114,0.04795015036493743," if [capitalLoss_2384.5_to_2581.0]: [income:>50K] = True
+else if [education_dropout__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False"
+0.8127062706270627,0.8109245430917117,0.04700939745715864,0.04610767807946527," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0__AND__occupation_sales]: [income:>50K] = False
+else if [education_masters_doctorate]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8103960396039604,0.8136474276991625,0.04701575696982951,0.04654615920330149," if [capitalLoss_2384.5_to_2581.0]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0__AND__occupation_blueCollar]: [income:>50K] = False
+else if [capitalGain_5119.0_to_5316.5]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.8125412541254126,0.8142250092825611,0.048827246793231416,0.04574066276386613," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1978.5_to_2168.5]: [income:>50K] = False
+else if [capitalLoss_2168.5_to_2384.5]: [income:>50K] = False
+else [income:>50K] = True",0.8145214521452145,0.8110895664012542,0.053664466893038845,0.045456943358765864," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0__AND__occupation_blueCollar]: [income:>50K] = False
+else if [education_masters_doctorate]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8055784782967487,0.8132013201320132,0.044877925800050726,0.0457259295163006," if [capitalLoss_1978.5_to_2168.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalGain_-inf_to_5119.0__AND__occupation_blueCollar]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True"
+0.8146864686468647,0.8095631007879863,0.04371475953565506,0.045978084092626256," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalGain_5119.0_to_5316.5]: [income:>50K] = True
+else if [workclass_private__AND__occupation_blueCollar]: [income:>50K] = False
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.8097359735973597,0.8121622179132802,0.047686741144422284,0.04501820213722142," if [capitalGain_-inf_to_5119.0__AND__occupation_blueCollar]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalLoss_1978.5_to_2168.5]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True",0.8103960396039604,0.8119971946037378,0.05002303349355689,0.044463310365782015," if [capitalLoss_1978.5_to_2168.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalGain_-inf_to_5119.0__AND__occupation_blueCollar]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True",0.8145214521452145,0.8110895664012542,0.053664466893038845,0.045456943358765864," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0__AND__occupation_blueCollar]: [income:>50K] = False
+else if [education_masters_doctorate]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8055784782967487,0.8132013201320132,0.044877925800050726,0.0457259295163006," if [capitalLoss_1978.5_to_2168.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalGain_-inf_to_5119.0__AND__occupation_blueCollar]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True"
+0.8113861386138614,0.8094393333058294,0.04333149069467476,0.04443813224542109," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0__AND__occupation_sales]: [income:>50K] = False
+else if [education_masters_doctorate]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else [income:>50K] = False",0.8077557755775577,0.811213333883411,0.044602594372957105,0.04499307452684974," if [capitalLoss_2384.5_to_2581.0]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [workclass_private__AND__occupation_blueCollar]: [income:>50K] = False
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.8103960396039604,0.8119971946037378,0.05002303349355689,0.044463310365782015," if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalGain_-inf_to_5119.0__AND__occupation_blueCollar]: [income:>50K] = False
+else if [capitalLoss_1978.5_to_2168.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.813036303630363,0.8105944964726267,0.05078384130539999,0.044035831064657346," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0__AND__workclass_selfEmployed]: [income:>50K] = False
+else if [education_masters_doctorate]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8029377785113055,0.8117986798679868,0.04234388536441079,0.04446335313171824," if [capitalLoss_2384.5_to_2581.0]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [occupation_blueCollar]: [income:>50K] = False
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False"
+0.8141914191419142,0.8091092866867445,0.035890915791413305,0.04173238594738913," if [capitalLoss_1978.5_to_2168.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True",0.807920792079208,0.810677008127398,0.045369539698905156,0.03937316785589301," if [capitalLoss_1978.5_to_2168.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True",0.8082508250825082,0.8108420314369404,0.049488425857465046,0.04395348534913447," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0__AND__occupation_blueCollar]: [income:>50K] = False
+else if [education_masters_doctorate]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else [income:>50K] = False",0.8145214521452145,0.8114196130203392,0.052329082449996164,0.04364023893169022," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalLoss_2384.5_to_2581.0]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0__AND__workclass_selfEmployed]: [income:>50K] = False
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [education_masters_doctorate]: [income:>50K] = True
+else [income:>50K] = False",0.8039280409308467,0.8116749174917491,0.03765421821169218,0.0413033357297807," if [capitalLoss_1978.5_to_2168.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True"
+0.8163366336633663,0.8102644498535418,0.03739819421411461,0.041920237425255316," if [capitalLoss_1978.5_to_2168.5]: [income:>50K] = False
+else if [capitalGain_5316.5_to_7073.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True",0.807920792079208,0.810677008127398,0.045369539698905156,0.03937316785589301," if [capitalLoss_1978.5_to_2168.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True",0.8087458745874587,0.8104707289904699,0.04226683663162602,0.040160517057932055," if [capitalLoss_1978.5_to_2168.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True",0.8117161716171617,0.8091092866867445,0.04990024712754784,0.041665156457185104," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0__AND__workclass_selfEmployed]: [income:>50K] = False
+else if [education_masters_doctorate]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else [income:>50K] = False",0.8039280409308467,0.8116749174917491,0.03765421821169218,0.0413033357297807," if [capitalLoss_1978.5_to_2168.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True"
+0.8141914191419142,0.8091092866867445,0.035890915791413305,0.04173238594738913," if [capitalLoss_1978.5_to_2168.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True",0.807920792079208,0.810677008127398,0.045369539698905156,0.03937316785589301," if [capitalLoss_1978.5_to_2168.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True",0.8087458745874587,0.8104707289904699,0.04226683663162602,0.040160517057932055," if [capitalLoss_1978.5_to_2168.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True",0.8117161716171617,0.8091092866867445,0.04990024712754784,0.041665156457185104," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0__AND__workclass_selfEmployed]: [income:>50K] = False
+else if [education_masters_doctorate]: [income:>50K] = True
+else [income:>50K] = False",0.8047532596137976,0.8131188118811881,0.038295567868208,0.04024180639227426," if [capitalLoss_2168.5_to_2384.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalLoss_1978.5_to_2168.5]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True"
+0.8136963696369637,0.8083666817938033,0.03439837847798047,0.03944289217989994," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_1978.5_to_2168.5]: [income:>50K] = False
+else [income:>50K] = True",0.807920792079208,0.810677008127398,0.045369539698905156,0.03937316785589301," if [capitalLoss_1978.5_to_2168.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True",0.8087458745874587,0.8104707289904699,0.04226683663162602,0.040160517057932055," if [capitalLoss_1978.5_to_2168.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True",0.8158415841584158,0.8086967284128883,0.041694122198780076,0.04029474220568992," if [capitalLoss_1978.5_to_2168.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True",0.8031028222478956,0.8110148514851485,0.03510449868084057,0.03928083541376502," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_1978.5_to_2168.5]: [income:>50K] = False
+else [income:>50K] = True"
+0.8136963696369637,0.8083666817938033,0.03439837847798047,0.03944289217989994," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_1978.5_to_2168.5]: [income:>50K] = False
+else [income:>50K] = True",0.807920792079208,0.810677008127398,0.045369539698905156,0.03937316785589301," if [capitalLoss_1978.5_to_2168.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True",0.807920792079208,0.8098106357523001,0.039681521223146186,0.038144895994691945," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_1978.5_to_2168.5]: [income:>50K] = False
+else [income:>50K] = True",0.8151815181518152,0.8079953793473328,0.03968709761272889,0.03813710798814962," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1978.5_to_2168.5]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True",0.8031028222478956,0.8110148514851485,0.03510449868084057,0.03928083541376502," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_1978.5_to_2168.5]: [income:>50K] = False
+else [income:>50K] = True"
+0.8112211221122112,0.8074590535913198,0.03468951538603279,0.03878479456028969," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [occupation_blueCollar]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__occupation_sales]: [income:>50K] = False
+else if [education_masters_doctorate]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.8072607260726072,0.8099756590618424,0.043343197247030785,0.037220724199271076," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1978.5_to_2168.5]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True",0.807920792079208,0.8098106357523001,0.039681521223146186,0.038144895994691945," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_1978.5_to_2168.5]: [income:>50K] = False
+else [income:>50K] = True",0.8151815181518152,0.8079953793473328,0.03968709761272889,0.03813710798814962," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1978.5_to_2168.5]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True",0.7994718600429114,0.8081270627062707,0.03505758583246912,0.03592985002429076," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalGain_-inf_to_5119.0__AND__occupation_blueCollar]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True"
+0.8097359735973597,0.8055612855315814,0.03219458264234383,0.036633671071448694," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalGain_-inf_to_5119.0__AND__occupation_blueCollar]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True",0.8072607260726072,0.8099756590618424,0.043343197247030785,0.037220724199271076," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_1978.5_to_2168.5]: [income:>50K] = False
+else [income:>50K] = True",0.8044554455445545,0.807005239490078,0.02538195748102306,0.026243785633364415," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.813036303630363,0.8048599364660258,0.026655378901147865,0.025912169112843997," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.7994718600429114,0.8081270627062707,0.03505758583246912,0.03592985002429076," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalGain_-inf_to_5119.0__AND__occupation_blueCollar]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True"
+0.8097359735973597,0.8055612855315814,0.03219458264234383,0.036633671071448694," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalGain_-inf_to_5119.0__AND__occupation_blueCollar]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True",0.8042904290429043,0.8070464953174636,0.030127338216193775,0.025042766913915222," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8044554455445545,0.807005239490078,0.02538195748102306,0.026243785633364415," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.813036303630363,0.8048599364660258,0.026655378901147865,0.025912169112843997," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.7994718600429114,0.8081270627062707,0.03505758583246912,0.03592985002429076," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalGain_-inf_to_5119.0__AND__occupation_blueCollar]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True"
+0.8105610561056106,0.8054787738768101,0.02476874884835084,0.026375785872273398," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.8064356435643565,0.808944263377202,0.03755502888505045,0.03488905551782411," if [capitalGain_-inf_to_5119.0__AND__occupation_blueCollar]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalLoss_1978.5_to_2168.5]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True",0.8044554455445545,0.807005239490078,0.02538195748102306,0.026243785633364415," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.813036303630363,0.8048599364660258,0.026655378901147865,0.025912169112843997," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.7994718600429114,0.8081270627062707,0.03505758583246912,0.03592985002429076," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalGain_-inf_to_5119.0__AND__occupation_blueCollar]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True"
+0.8105610561056106,0.8054787738768101,0.02476874884835084,0.026375785872273398," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.8064356435643565,0.808944263377202,0.03755502888505045,0.03488905551782411," if [capitalGain_-inf_to_5119.0__AND__occupation_blueCollar]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalLoss_1978.5_to_2168.5]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True",0.8044554455445545,0.807005239490078,0.02538195748102306,0.026243785633364415," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.8146864686468647,0.80613886711498,0.028210613222008532,0.02608538031367464," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalGain_5316.5_to_7073.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8001320349892722,0.8080858085808581,0.02339146793413486,0.026726484259377126," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False"
+0.8105610561056106,0.8054787738768101,0.02476874884835084,0.026375785872273398," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.8042904290429043,0.8070464953174636,0.030127338216193775,0.025042766913915222," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8044554455445545,0.807005239490078,0.02538195748102306,0.026243785633364415," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.813036303630363,0.8048599364660258,0.026655378901147865,0.025912169112843997," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8001320349892722,0.8080858085808581,0.02339146793413486,0.026726484259377126," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True"
+0.8105610561056106,0.8054787738768101,0.02476874884835084,0.026375785872273398," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.8042904290429043,0.8070464953174636,0.030127338216193775,0.025042766913915222," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8044554455445545,0.807005239490078,0.02538195748102306,0.026243785633364415," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.813036303630363,0.8048599364660258,0.026655378901147865,0.025912169112843997," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8001320349892722,0.8080858085808581,0.02339146793413486,0.026726484259377126," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False"
+0.8105610561056106,0.8054787738768101,0.02476874884835084,0.026375785872273398," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.8042904290429043,0.8070464953174636,0.030127338216193775,0.025042766913915222," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8044554455445545,0.807005239490078,0.02538195748102306,0.026243785633364415," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.813036303630363,0.8048599364660258,0.026655378901147865,0.025912169112843997," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8009572536722231,0.8091171617161717,0.02594118746498647,0.029829325060887153," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [age_-inf_to_21.5]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False"
+0.8105610561056106,0.8054787738768101,0.02476874884835084,0.026375785872273398," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.8042904290429043,0.8070464953174636,0.030127338216193775,0.025042766913915222," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8044554455445545,0.807005239490078,0.02538195748102306,0.026243785633364415," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.813036303630363,0.8048599364660258,0.026655378901147865,0.025912169112843997," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8009572536722231,0.8091171617161717,0.02594118746498647,0.029829325060887153," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [age_-inf_to_21.5]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True"
+0.8105610561056106,0.8054787738768101,0.02476874884835084,0.026375785872273398," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.8042904290429043,0.8070464953174636,0.030127338216193775,0.025042766913915222," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8044554455445545,0.807005239490078,0.02538195748102306,0.026243785633364415," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.813036303630363,0.8048599364660258,0.026655378901147865,0.025912169112843997," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8001320349892722,0.8080858085808581,0.02339146793413486,0.026726484259377126," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False"
+0.8105610561056106,0.8054787738768101,0.02476874884835084,0.026375785872273398," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8042904290429043,0.8070464953174636,0.030127338216193775,0.025042766913915222," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8044554455445545,0.807005239490078,0.02538195748102306,0.026243785633364415," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.813036303630363,0.8048599364660258,0.026655378901147865,0.025912169112843997," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.8001320349892722,0.8080858085808581,0.02339146793413486,0.026726484259377126," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True"
+0.8105610561056106,0.8054787738768101,0.02476874884835084,0.026375785872273398," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.8042904290429043,0.8070464953174636,0.030127338216193775,0.025042766913915222," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8044554455445545,0.807005239490078,0.02538195748102306,0.026243785633364415," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.813036303630363,0.8048599364660258,0.026655378901147865,0.025912169112843997," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8006271661990427,0.8096534653465347,0.022258964398250015,0.02757126736951153," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalGain_5316.5_to_7073.5]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False"
+0.8105610561056106,0.8054787738768101,0.02476874884835084,0.026375785872273398," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.8042904290429043,0.8070464953174636,0.030127338216193775,0.025042766913915222," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8044554455445545,0.807005239490078,0.02538195748102306,0.026243785633364415," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.813036303630363,0.8048599364660258,0.026655378901147865,0.025912169112843997," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8001320349892722,0.8080858085808581,0.02339146793413486,0.026726484259377126," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False"
+0.8077557755775577,0.803333470852758,0.017114427860696516,0.020025416451744597," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else [income:>50K] = False",0.8042904290429043,0.8070464953174636,0.030127338216193775,0.025042766913915222," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8024752475247525,0.8046536573290978,0.019565185789311955,0.019434387436934757," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.813036303630363,0.8048599364660258,0.026655378901147865,0.025912169112843997," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.799966991252682,0.8084983498349835,0.02021918877356873,0.024031891816484102," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_5119.0_to_5316.5]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False"
+0.8077557755775577,0.803333470852758,0.017114427860696516,0.020025416451744597," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.801980198019802,0.8047774248112546,0.022785194310173215,0.018617211562345547," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else [income:>50K] = False",0.8024752475247525,0.8046536573290978,0.019565185789311955,0.019434387436934757," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.8107260726072607,0.8025908659598169,0.02026246028791944,0.019249577425802425," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.7981515101501898,0.8057343234323432,0.017534952560782004,0.01992876241480611," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False"
+0.8077557755775577,0.803333470852758,0.017114427860696516,0.020025416451744597," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.801980198019802,0.8047774248112546,0.022785194310173215,0.018617211562345547," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else [income:>50K] = False",0.8024752475247525,0.8046536573290978,0.019565185789311955,0.019434387436934757," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.8107260726072607,0.8025908659598169,0.02026246028791944,0.019249577425802425," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.7981515101501898,0.8057343234323432,0.017534952560782004,0.01992876241480611," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False"
+0.8077557755775577,0.803333470852758,0.017114427860696516,0.020025416451744597," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else [income:>50K] = False",0.801980198019802,0.8047774248112546,0.022785194310173215,0.018617211562345547," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else [income:>50K] = False",0.8024752475247525,0.8046536573290978,0.019565185789311955,0.019434387436934757," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.8107260726072607,0.8025908659598169,0.02026246028791944,0.019249577425802425," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.7981515101501898,0.8057343234323432,0.017534952560782004,0.01992876241480611," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False"
+0.8077557755775577,0.803333470852758,0.017114427860696516,0.020025416451744597," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.801980198019802,0.8047774248112546,0.022785194310173215,0.018617211562345547," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else [income:>50K] = False",0.8024752475247525,0.8046536573290978,0.019565185789311955,0.019434387436934757," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.8107260726072607,0.8025908659598169,0.02026246028791944,0.019249577425802425," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.7981515101501898,0.8057343234323432,0.017534952560782004,0.01992876241480611," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False"
+0.8077557755775577,0.803333470852758,0.017114427860696516,0.020025416451744597," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else [income:>50K] = False",0.801980198019802,0.8047774248112546,0.022785194310173215,0.018617211562345547," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else [income:>50K] = False",0.8024752475247525,0.8046536573290978,0.019565185789311955,0.019434387436934757," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.8107260726072607,0.8025908659598169,0.02026246028791944,0.019249577425802425," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else [income:>50K] = False",0.7981515101501898,0.8057343234323432,0.017534952560782004,0.01992876241480611," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False"
+0.8003300330033003,0.7933495606254384,0.010558319513543392,0.013245397064061665," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = False
+else [income:>50K] = True",0.801980198019802,0.8047774248112546,0.022785194310173215,0.018617211562345547," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else [income:>50K] = False",0.8024752475247525,0.8046536573290978,0.019565185789311955,0.019434387436934757," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False",0.8107260726072607,0.8025908659598169,0.02026246028791944,0.019249577425802425," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else [income:>50K] = False",0.7981515101501898,0.8057343234323432,0.017534952560782004,0.01992876241480611," if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else [income:>50K] = False"
+0.8003300330033003,0.7933495606254384,0.010558319513543392,0.013245397064061665," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = False
+else [income:>50K] = True",0.801980198019802,0.8047774248112546,0.022785194310173215,0.018617211562345547," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [gender_Female]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else [income:>50K] = False",0.7938943894389439,0.7949585378934775,0.01864484859300193,0.011249945497333186," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = False
+else [income:>50K] = True",0.8011551155115512,0.7931432814885102,0.013441685683516606,0.012526419615014509," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = False
+else [income:>50K] = True",0.7870935797986467,0.7966584158415841,0.010226876507713,0.013327210653017861," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = False
+else [income:>50K] = True"
+0.8003300330033003,0.7933495606254384,0.010558319513543392,0.013245397064061665," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True",0.7912541254125413,0.7956186311316473,0.010782611541820468,0.013185882067221773," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True",0.7938943894389439,0.7949585378934775,0.01864484859300193,0.011249945497333186," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True",0.8011551155115512,0.7931432814885102,0.013441685683516606,0.012526419615014509," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True",0.7870935797986467,0.7966584158415841,0.010226876507713,0.013327210653017861," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True"
+0.8003300330033003,0.7933495606254384,0.010558319513543392,0.013245397064061665," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = False
+else [income:>50K] = True",0.7912541254125413,0.7956186311316473,0.010782611541820468,0.013185882067221773," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True",0.7938943894389439,0.7949585378934775,0.01864484859300193,0.011249945497333186," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True",0.7950495049504951,0.7883576055117786,0.02709742273516688,0.01580265358287372," if [age_28.5_to_35.5__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [education_hs_grad__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [occupation_professional]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.7870935797986467,0.7966584158415841,0.010226876507713,0.013327210653017861," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True"
+0.8003300330033003,0.7933495606254384,0.010558319513543392,0.013245397064061665," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = False
+else [income:>50K] = True",0.7912541254125413,0.7956186311316473,0.010782611541820468,0.013185882067221773," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = False
+else [income:>50K] = True",0.7938943894389439,0.7949585378934775,0.01864484859300193,0.011249945497333186," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True",0.7950495049504951,0.7883576055117786,0.02709742273516688,0.01580265358287372," if [age_28.5_to_35.5__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [education_hs_grad__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [occupation_professional]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.7870935797986467,0.7966584158415841,0.010226876507713,0.013327210653017861," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = False
+else [income:>50K] = True"
+0.8003300330033003,0.7933495606254384,0.010558319513543392,0.013245397064061665," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = False
+else [income:>50K] = True",0.7912541254125413,0.7956186311316473,0.010782611541820468,0.013185882067221773," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = False
+else [income:>50K] = True",0.7938943894389439,0.7949585378934775,0.01864484859300193,0.011249945497333186," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = False
+else [income:>50K] = True",0.8011551155115512,0.7931432814885102,0.013441685683516606,0.012526419615014509," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True",0.7870935797986467,0.7966584158415841,0.010226876507713,0.013327210653017861," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True"
+0.8003300330033003,0.7933495606254384,0.010558319513543392,0.013245397064061665," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True",0.7912541254125413,0.7956186311316473,0.010782611541820468,0.013185882067221773," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = False
+else [income:>50K] = True",0.7938943894389439,0.7949585378934775,0.01864484859300193,0.011249945497333186," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = False
+else [income:>50K] = True",0.8011551155115512,0.7931432814885102,0.013441685683516606,0.012526419615014509," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = False
+else [income:>50K] = True",0.7870935797986467,0.7966584158415841,0.010226876507713,0.013327210653017861," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True"
+0.7993399339933993,0.7927719790420397,0.0065782200110558325,0.008666409529083284," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.7907590759075908,0.7949172820660918,0.007236512251040321,0.008501151755750516," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.7938943894389439,0.7949585378934775,0.01864484859300193,0.011249945497333186," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = False
+else [income:>50K] = True",0.8011551155115512,0.7931432814885102,0.013441685683516606,0.012526419615014509," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = False
+else [income:>50K] = True",0.7869285360620565,0.7958745874587458,0.006657269164520745,0.008650178672231612," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True"
+0.7993399339933993,0.7927719790420397,0.0065782200110558325,0.008666409529083284," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True",0.7907590759075908,0.7949172820660918,0.007236512251040321,0.008501151755750516," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True",0.7938943894389439,0.7949585378934775,0.01864484859300193,0.011249945497333186," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True",0.8003300330033003,0.7925244440777259,0.007922368071875859,0.00833807083978922," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.7869285360620565,0.7958745874587458,0.006657269164520745,0.008650178672231612," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True"
+0.7993399339933993,0.7927719790420397,0.0065782200110558325,0.008666409529083284," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.7907590759075908,0.7949172820660918,0.007236512251040321,0.008501151755750516," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.7930693069306931,0.7943397004826932,0.012957154694346294,0.007092727054400456," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True",0.7922442244224422,0.7846033252196872,0.02344497849678201,0.010735649932614666," if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [education_hs_grad__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__occupation_professional]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else [income:>50K] = False",0.7869285360620565,0.7958745874587458,0.006657269164520745,0.008650178672231612," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True"
+0.7993399339933993,0.7927719790420397,0.0065782200110558325,0.008666409529083284," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else [income:>50K] = True",0.7907590759075908,0.7949172820660918,0.007236512251040321,0.008501151755750516," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.7930693069306931,0.7943397004826932,0.012957154694346294,0.007092727054400456," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.7899339933993399,0.7832006270885763,0.02123809038544175,0.009403125388866007," if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [occupation_professional]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else [income:>50K] = False",0.7869285360620565,0.7958745874587458,0.006657269164520745,0.008650178672231612," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True"
+0.7993399339933993,0.7927719790420397,0.0065782200110558325,0.008666409529083284," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.7907590759075908,0.7949172820660918,0.007236512251040321,0.008501151755750516," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.7930693069306931,0.7943397004826932,0.012957154694346294,0.007092727054400456," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.8003300330033003,0.7925244440777259,0.007922368071875859,0.00833807083978922," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.7869285360620565,0.7958745874587458,0.006657269164520745,0.008650178672231612," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True"
+0.7938943894389439,0.7818391847848508,0.01574350469872858,0.006401823343746366," if [education_hs_grad__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [age_28.5_to_35.5__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [occupation_professional]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else [income:>50K] = False",0.7813531353135313,0.7851809068030859,0.01825865472880188,0.00682061593437," if [capitalGain_-inf_to_5119.0__AND__workclass_selfEmployed]: [income:>50K] = False
+else if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__occupation_professional]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.7930693069306931,0.7943397004826932,0.012957154694346294,0.007092727054400456," if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_1568.5_to_1820.5]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.7884488448844884,0.7836956970172037,0.013891625360510002,0.005451726929714129," if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalGain_-inf_to_5119.0__AND__workclass_selfEmployed]: [income:>50K] = False
+else if [occupation_professional]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.7752104307641525,0.7841996699669967,0.001464377717865381,0.0078032357636245026," if [capitalGain_-inf_to_5119.0__AND__workclass_selfEmployed]: [income:>50K] = False
+else if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__occupation_professional]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else [income:>50K] = False"
+0.7938943894389439,0.7818391847848508,0.01574350469872858,0.006401823343746366," if [education_hs_grad__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [age_28.5_to_35.5__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [occupation_professional]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else [income:>50K] = False",0.781023102310231,0.782581789677792,0.019567892142641416,0.006966267744350593," if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [workclass_fedGov]: [income:>50K] = False
+else if [occupation_professional]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else [income:>50K] = False",0.778052805280528,0.7816329056479228,0.002568021490575313,0.0012143217351194627," if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [workclass_private]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.7884488448844884,0.7836956970172037,0.013891625360510002,0.005451726929714129," if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalGain_-inf_to_5119.0__AND__workclass_selfEmployed]: [income:>50K] = False
+else if [occupation_professional]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.7752104307641525,0.7833745874587459,0.002098883324884046,0.00557441663436839," if [capitalGain_-inf_to_5119.0__AND__occupation_other]: [income:>50K] = False
+else if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalGain_-inf_to_5119.0__AND__occupation_blueCollar]: [income:>50K] = False
+else if [capitalGain_-inf_to_5119.0__AND__workclass_selfEmployed]: [income:>50K] = False
+else [income:>50K] = True"
+0.7863036303630363,0.7795701142786419,0.0009729132117191827,0.0015922367998241344," if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [workclass_private]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.7808580858085808,0.7847683485292297,0.018287666239676745,0.005847922495199137," if [capitalGain_-inf_to_5119.0__AND__workclass_selfEmployed]: [income:>50K] = False
+else if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__occupation_professional]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.778052805280528,0.7816329056479228,0.002568021490575313,0.0012143217351194627," if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [workclass_private]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.7884488448844884,0.7836956970172037,0.013891625360510002,0.005451726929714129," if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalGain_-inf_to_5119.0__AND__workclass_selfEmployed]: [income:>50K] = False
+else if [occupation_professional]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.7752104307641525,0.7833745874587459,0.002098883324884046,0.00557441663436839," if [capitalGain_-inf_to_5119.0__AND__occupation_other]: [income:>50K] = False
+else if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalGain_-inf_to_5119.0__AND__occupation_blueCollar]: [income:>50K] = False
+else if [capitalGain_-inf_to_5119.0__AND__workclass_selfEmployed]: [income:>50K] = False
+else [income:>50K] = True"
+0.7863036303630363,0.7795701142786419,0.0009729132117191827,0.0015922367998241344," if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [workclass_private]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.779042904290429,0.7832418829159619,0.016187679183273906,0.003391716014953458," if [capitalGain_-inf_to_5119.0__AND__workclass_selfEmployed]: [income:>50K] = False
+else if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__occupation_professional]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else [income:>50K] = False",0.778052805280528,0.7816329056479228,0.002568021490575313,0.0012143217351194627," if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [workclass_private]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.7869636963696369,0.7820867197491645,0.012762149697533684,0.002747407223745696," if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalGain_-inf_to_5119.0__AND__workclass_selfEmployed]: [income:>50K] = False
+else if [occupation_professional]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else [income:>50K] = False",0.773890080871431,0.7826732673267327,0.003788492489837831,0.0008984529409987382," if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [workclass_private]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True"
+0.783993399339934,0.7804777424811254,0.004547632209323749,0.003934442684577891," if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [education_masters_doctorate]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else [income:>50K] = False",0.779042904290429,0.7832418829159619,0.016187679183273906,0.003391716014953458," if [capitalGain_-inf_to_5119.0__AND__workclass_selfEmployed]: [income:>50K] = False
+else if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__occupation_professional]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else [income:>50K] = False",0.778052805280528,0.7816329056479228,0.002568021490575313,0.0012143217351194627," if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [workclass_private]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.7843234323432343,0.7810965798919097,0.00884013644510151,0.0038814297297976724," if [capitalGain_-inf_to_5119.0__AND__occupation_other]: [income:>50K] = False
+else if [capitalGain_-inf_to_5119.0__AND__occupation_blueCollar]: [income:>50K] = False
+else if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalGain_-inf_to_5119.0__AND__workclass_selfEmployed]: [income:>50K] = False
+else [income:>50K] = True",0.773890080871431,0.7826732673267327,0.003788492489837831,0.0008984529409987382," if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [workclass_private]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True"
+0.7863036303630363,0.7795701142786419,0.0009729132117191827,0.0015922367998241344," if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [workclass_private]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.7783828382838284,0.7815503939931515,0.0010897913700425657,0.002107441756825819," if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [workclass_private]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.778052805280528,0.7816329056479228,0.002568021490575313,0.0012143217351194627," if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [workclass_private]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.7851485148514852,0.7801889516894261,0.012456309154822792,0.0019306683514811879," if [education_masters_doctorate]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else [income:>50K] = False",0.773890080871431,0.7826732673267327,0.003788492489837831,0.0008984529409987382," if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [workclass_private]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True"
+0.7863036303630363,0.7795701142786419,0.0009729132117191827,0.0015922367998241344," if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [workclass_private]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.7772277227722773,0.7786624860761583,0.01147963168771117,0.0012833677115925007," if [occupation_blueCollar]: [income:>50K] = False
+else if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [occupation_professional]: [income:>50K] = True
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.778052805280528,0.7816329056479228,0.002568021490575313,0.0012143217351194627," if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [workclass_private]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.7851485148514852,0.7801889516894261,0.012456309154822792,0.0019306683514811879," if [education_masters_doctorate]: [income:>50K] = True
+else if [capitalLoss_1881.5_to_1978.5]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else [income:>50K] = False",0.773890080871431,0.7826732673267327,0.003788492489837831,0.0008984529409987382," if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [workclass_private]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True"
+0.7874587458745874,0.7761046247782499,0.012725262576008839,0.0009231649321374408," if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [occupation_professional]: [income:>50K] = True
+else if [capitalLoss_-inf_to_1537.0__AND__occupation_blueCollar]: [income:>50K] = False
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.7765676567656765,0.7780849044927596,0.012071764063515872,0.0006334745732835129," if [occupation_blueCollar]: [income:>50K] = False
+else if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [occupation_professional]: [income:>50K] = True
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else [income:>50K] = False",0.7721122112211221,0.7751144849209951,0.002796100697721862,0.0007642197399764135," if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [age_35.5_to_61.5__AND__workclass_private]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True",0.7826732673267327,0.7765584388794917,0.012918092596277783,0.0003987030610601433," if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [occupation_professional]: [income:>50K] = True
+else if [occupation_blueCollar]: [income:>50K] = False
+else if [capitalGain_7073.5_to_inf]: [income:>50K] = True
+else [income:>50K] = False",0.773890080871431,0.7826732673267327,0.003788492489837831,0.0008984529409987382," if [workclass_private__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__workclass_private]: [income:>50K] = True
+else if [gender_Male]: [income:>50K] = False
+else if [capitalLoss_-inf_to_1537.0__AND__capitalGain_-inf_to_5119.0]: [income:>50K] = False
+else [income:>50K] = True"
+0.7572607260726073,0.750814802590866,0.0,0.0,[income:>50K] = False,0.7468646864686469,0.7534139197161599,0.0,0.0,[income:>50K] = False,0.7523102310231023,0.7520524774124345,0.0,0.0,[income:>50K] = False,0.7579207920792079,0.7506497792813235,0.0,0.0,[income:>50K] = False,0.7461627331242779,0.753589108910891,0.0,0.0,[income:>50K] = False
