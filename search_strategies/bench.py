@@ -91,7 +91,7 @@ def fit(fold, epsilon, fairness):
                             policy=strategy,
                             bfs_mode=bfsMode,
                             mode=3,
-                            useUnfairnessLB=True,
+                            useUnfairnessLB=False,
                             forbidSensAttr=forbidSensAttr,
                             fairness=fairness, 
                             epsilon=epsilon,
