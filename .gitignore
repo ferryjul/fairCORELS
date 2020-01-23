@@ -1,8 +1,9 @@
 upload_datasets.sh
 data/
-search_strategies/pareto_merged*
-search_strategies/pareto
-search_strategies/results
+experiments_part_2/pareto_*
+experiments_part_2/pareto
+experiments_part_2/results
+experiments_part_2/plotting_scripts
 backup_exp/
 experiments/reports/
 experiments/perfs_results/
