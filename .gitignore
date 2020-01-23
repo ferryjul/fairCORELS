@@ -1,6 +1,8 @@
+data/
 search_strategies/pareto_merged*
 search_strategies/pareto
 search_strategies/results
+search_strategies/results_old
 backup_exp/
 experiments/reports/
 experiments/perfs_results/
@@ -16,6 +18,7 @@ scripts/serial/
 scripts/adult.sh
 scripts/expe_fast.sh
 push.sh
+push_data.sh
 get_result.sh
 get_strategy_results.sh
 experiments/kfold_bench.py

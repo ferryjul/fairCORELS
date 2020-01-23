@@ -2,16 +2,17 @@ import pandas as pd
 
 
 
-datasets = ['compas_neg_with_ulb', 'compas_neg_without_ulb']
+datasets = ['adult_no_relationship_neg_with_ulb', 'compas_neg_with_ulb']
 strategies = ['bfs', 'curious', 'lower_bound', 'bfs_objective_aware']
+
 
 
 
 metrics = ['statistical_parity', 'predictive_parity', 'predictive_equality', 'equal_opportunity', 'equalized_odds', 'conditional_use_accuracy_equality']
 
 datasets_map = {
-    'compas_neg_with_ulb': 'COMPAS with ULB',
-    'compas_neg_without_ulb': 'COMPAS without ULB'
+    'adult_no_relationship_neg_with_ulb': 'Adult',
+    'compas_neg_with_ulb': 'COMPAS'
 }
 
 strategies_map = {
@@ -31,7 +32,7 @@ metrics_map = {
 }
 
 df = pd.DataFrame()
-filename = './pareto_merged/compas.csv'
+filename = './pareto_merged/both.csv'
 for metric in metrics:
     for dataset in datasets:
         for strategy in strategies:
