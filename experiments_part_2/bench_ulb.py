@@ -15,7 +15,7 @@ from mpi4py import MPI
 parser = argparse.ArgumentParser(description='Evaluation of FairCORELS')
 parser.add_argument('--dataset', type=int, default=1, help='Dataset. 1 Adult, 2: COMPAS, 3: German Credit, 4: Default Credit, 5: Adult_marital, 6: Adult_no_relationship')
 parser.add_argument('--metric', type=int, default=1, help='Fairness metric. 1: SP, 2:  PP, 3: PE, 4: EOpp, 5: EOdds, 6: CUAE')
-parser.add_argument('--attr', type=int, default=1, help='Use sensitive attribute. 1: NO, 2: YES')
+parser.add_argument('--ulb', type=int, default=1, help='Use ULB. 1: Yes, 0: No')
 parser.add_argument('--strat', type=int, default=1, help='Search strategy. 1: bfs, 2:curious, 3: lower_bound, 4: bfs_objective_aware')
 args = parser.parse_args()
 
@@ -38,15 +38,10 @@ base = [0.0, 0.1, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
 epsilon_range = base + list(epsilon_range)
 epsilons = [round(x,3) for x in epsilon_range] #60 values
 
-#epsilons = epsilons[:12]
 
-#print("------------------------------------------------------->>>>>>>> {}".format(len(epsilons)))
-
-
-# use sens. attri
-forbidSensAttr = True if args.attr==1 else False
-suffix = "without" if args.attr==1 else "with"
-
+# use ulb
+ulb = True if args.ulb==1 else False
+suffix = "with_ulb" if args.ulb==1 else "without_ulb"
 
 
 # get search strategy
@@ -91,8 +86,8 @@ def fit(fold, epsilon, fairness):
                             policy=strategy,
                             bfs_mode=bfsMode,
                             mode=3,
-                            useUnfairnessLB=False,
-                            forbidSensAttr=forbidSensAttr,
+                            useUnfairnessLB=ulb,
+                            forbidSensAttr=True,
                             fairness=fairness, 
                             epsilon=epsilon,
                             maj_pos=maj_pos, 
