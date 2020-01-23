@@ -60,8 +60,8 @@ def compute_front(input_file, output_file):
     with open(input_file, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            error = 1.0 - float(row['accuracy'])
-            unf = float(row['unfairness'])
+            error = 1.0 - float(row['accuracy_test'])
+            unf = float(row['unfairness_test'])
             errors.append(error)
             unfairness.append(unf)
             pareto_input.append([error, unf])
