@@ -1,0 +1,1241 @@
+acc_test_fold_0,acc_train_fold_0,unf_test_fold_0,unf_train_fold_0,mdl_fold_0,acc_test_fold_1,acc_train_fold_1,unf_test_fold_1,unf_train_fold_1,mdl_fold_1,acc_test_fold_2,acc_train_fold_2,unf_test_fold_2,unf_train_fold_2,mdl_fold_2,acc_test_fold_3,acc_train_fold_3,unf_test_fold_3,unf_train_fold_3,mdl_fold_3,acc_test_fold_4,acc_train_fold_4,unf_test_fold_4,unf_train_fold_4,mdl_fold_4
+0.67,0.765,0.11132519803040031,0.10431002389787558," if [not_account_balance:little]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [occupation:skilled-employee__AND__savings:little]: [good_credit_rating] = False
+else if [installment_rate_rate_4__AND__guarantor:none]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.00766283524904221,0.030940006572621304," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.725,0.74875,0.04645686148576322,0.031883849119141106," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [not_savings:little]: [good_credit_rating] = True
+else if [residence_duration:1_]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.675,0.765,0.15365527772475662,0.05908266390256545," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [guarantor:none__AND__savings:little]: [good_credit_rating] = False
+else if [dependents:1_dep__AND__previous_credit_payment_status:existing_credits_paid_till_now]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.665,0.745,0.060975609756097615,0.1379213339471126," if [account_balance:na]: [good_credit_rating] = True
+else if [other_credits:none__AND__apartment_type:own]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [not_account_balance:rich]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.67,0.765,0.11132519803040031,0.10431002389787558," if [not_account_balance:little]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [occupation:skilled-employee__AND__savings:little]: [good_credit_rating] = False
+else if [installment_rate_rate_4__AND__guarantor:none]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.00766283524904221,0.030940006572621304," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.725,0.74875,0.04645686148576322,0.031883849119141106," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [not_savings:little]: [good_credit_rating] = True
+else if [residence_duration:1_]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.675,0.765,0.15365527772475662,0.05908266390256545," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [guarantor:none__AND__savings:little]: [good_credit_rating] = False
+else if [dependents:1_dep__AND__previous_credit_payment_status:existing_credits_paid_till_now]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.665,0.745,0.060975609756097615,0.1379213339471126," if [account_balance:na]: [good_credit_rating] = True
+else if [other_credits:none__AND__apartment_type:own]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [not_account_balance:rich]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.67,0.765,0.11132519803040031,0.10431002389787558," if [not_account_balance:little]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [occupation:skilled-employee__AND__savings:little]: [good_credit_rating] = False
+else if [installment_rate_rate_4__AND__guarantor:none]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.00766283524904221,0.030940006572621304," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.725,0.74875,0.04645686148576322,0.031883849119141106," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [not_savings:little]: [good_credit_rating] = True
+else if [residence_duration:1_]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.675,0.765,0.15365527772475662,0.05908266390256545," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [guarantor:none__AND__savings:little]: [good_credit_rating] = False
+else if [dependents:1_dep__AND__previous_credit_payment_status:existing_credits_paid_till_now]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.665,0.745,0.060975609756097615,0.1379213339471126," if [account_balance:na]: [good_credit_rating] = True
+else if [other_credits:none__AND__apartment_type:own]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [not_account_balance:rich]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.67,0.765,0.11132519803040031,0.10431002389787558," if [not_account_balance:little]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [occupation:skilled-employee__AND__savings:little]: [good_credit_rating] = False
+else if [installment_rate_rate_4__AND__guarantor:none]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.00766283524904221,0.030940006572621304," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.725,0.74875,0.04645686148576322,0.031883849119141106," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [not_savings:little]: [good_credit_rating] = True
+else if [residence_duration:1_]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.675,0.765,0.15365527772475662,0.05908266390256545," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [guarantor:none__AND__savings:little]: [good_credit_rating] = False
+else if [dependents:1_dep__AND__previous_credit_payment_status:existing_credits_paid_till_now]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.665,0.745,0.060975609756097615,0.1379213339471126," if [account_balance:na]: [good_credit_rating] = True
+else if [other_credits:none__AND__apartment_type:own]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [not_account_balance:rich]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.67,0.765,0.11132519803040031,0.10431002389787558," if [not_account_balance:little]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [occupation:skilled-employee__AND__savings:little]: [good_credit_rating] = False
+else if [installment_rate_rate_4__AND__guarantor:none]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.00766283524904221,0.030940006572621304," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.725,0.74875,0.04645686148576322,0.031883849119141106," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [not_savings:little]: [good_credit_rating] = True
+else if [residence_duration:1_]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.675,0.765,0.15365527772475662,0.05908266390256545," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [guarantor:none__AND__savings:little]: [good_credit_rating] = False
+else if [dependents:1_dep__AND__previous_credit_payment_status:existing_credits_paid_till_now]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.665,0.745,0.060975609756097615,0.1379213339471126," if [account_balance:na]: [good_credit_rating] = True
+else if [other_credits:none__AND__apartment_type:own]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [not_account_balance:rich]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.67,0.765,0.11132519803040031,0.10431002389787558," if [not_account_balance:little]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [occupation:skilled-employee__AND__savings:little]: [good_credit_rating] = False
+else if [installment_rate_rate_4__AND__guarantor:none]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.00766283524904221,0.030940006572621304," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.725,0.74875,0.04645686148576322,0.031883849119141106," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [not_savings:little]: [good_credit_rating] = True
+else if [residence_duration:1_]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.675,0.765,0.15365527772475662,0.05908266390256545," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [guarantor:none__AND__savings:little]: [good_credit_rating] = False
+else if [dependents:1_dep__AND__previous_credit_payment_status:existing_credits_paid_till_now]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.665,0.745,0.060975609756097615,0.1379213339471126," if [account_balance:na]: [good_credit_rating] = True
+else if [other_credits:none__AND__apartment_type:own]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [not_account_balance:rich]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.67,0.765,0.11132519803040031,0.10431002389787558," if [not_account_balance:little]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [occupation:skilled-employee__AND__savings:little]: [good_credit_rating] = False
+else if [installment_rate_rate_4__AND__guarantor:none]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.00766283524904221,0.030940006572621304," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.725,0.74875,0.04645686148576322,0.031883849119141106," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [not_savings:little]: [good_credit_rating] = True
+else if [residence_duration:1_]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.675,0.765,0.15365527772475662,0.05908266390256545," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [guarantor:none__AND__savings:little]: [good_credit_rating] = False
+else if [dependents:1_dep__AND__previous_credit_payment_status:existing_credits_paid_till_now]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.665,0.745,0.060975609756097615,0.1379213339471126," if [account_balance:na]: [good_credit_rating] = True
+else if [other_credits:none__AND__apartment_type:own]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [not_account_balance:rich]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.67,0.765,0.11132519803040031,0.10431002389787558," if [not_account_balance:little]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [occupation:skilled-employee__AND__savings:little]: [good_credit_rating] = False
+else if [installment_rate_rate_4__AND__guarantor:none]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.00766283524904221,0.030940006572621304," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.725,0.74875,0.04645686148576322,0.031883849119141106," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [not_savings:little]: [good_credit_rating] = True
+else if [residence_duration:1_]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.675,0.765,0.15365527772475662,0.05908266390256545," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [guarantor:none__AND__savings:little]: [good_credit_rating] = False
+else if [dependents:1_dep__AND__previous_credit_payment_status:existing_credits_paid_till_now]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.665,0.745,0.060975609756097615,0.1379213339471126," if [account_balance:na]: [good_credit_rating] = True
+else if [other_credits:none__AND__apartment_type:own]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [not_account_balance:rich]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.67,0.765,0.1657032755298652,0.08067634590673822," if [not_account_balance:little]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [guarantor:none__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.00766283524904221,0.030940006572621304," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.725,0.74875,0.04645686148576322,0.031883849119141106," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [not_savings:little]: [good_credit_rating] = True
+else if [residence_duration:1_]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.675,0.765,0.15365527772475662,0.05908266390256545," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [guarantor:none__AND__savings:little]: [good_credit_rating] = False
+else if [dependents:1_dep__AND__previous_credit_payment_status:existing_credits_paid_till_now]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.76,0.745,0.05758807588075876,0.021047516751061313," if [account_balance:na]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.67,0.75875,0.0950545921644187,0.042211574257544626," if [not_account_balance:little]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [occupation:skilled-employee__AND__savings:little]: [good_credit_rating] = False
+else if [current_assets:unknown]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.00766283524904221,0.030940006572621304," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.725,0.74875,0.04645686148576322,0.031883849119141106," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [not_savings:little]: [good_credit_rating] = True
+else if [residence_duration:1_]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.69,0.7625,0.01870585989692697,0.030528510963856892," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.76,0.745,0.05758807588075876,0.021047516751061313," if [account_balance:na]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.67,0.75875,0.0950545921644187,0.042211574257544626," if [not_account_balance:little]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [occupation:skilled-employee__AND__savings:little]: [good_credit_rating] = False
+else if [current_assets:unknown]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.00766283524904221,0.030940006572621304," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.725,0.74875,0.04645686148576322,0.031883849119141106," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [not_savings:little]: [good_credit_rating] = True
+else if [residence_duration:1_]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.69,0.7625,0.01870585989692697,0.030528510963856892," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.76,0.745,0.05758807588075876,0.021047516751061313," if [account_balance:na]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.67,0.75875,0.0950545921644187,0.042211574257544626," if [not_account_balance:little]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [occupation:skilled-employee__AND__savings:little]: [good_credit_rating] = False
+else if [current_assets:unknown]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.00766283524904221,0.030940006572621304," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.725,0.74875,0.04645686148576322,0.031883849119141106," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [not_savings:little]: [good_credit_rating] = True
+else if [residence_duration:1_]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.69,0.7625,0.01870585989692697,0.030528510963856892," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.76,0.745,0.05758807588075876,0.021047516751061313," if [account_balance:na]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.67,0.75875,0.0950545921644187,0.042211574257544626," if [not_account_balance:little]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [occupation:skilled-employee__AND__savings:little]: [good_credit_rating] = False
+else if [current_assets:unknown]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.00766283524904221,0.030940006572621304," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.725,0.74875,0.04645686148576322,0.031883849119141106," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [not_savings:little]: [good_credit_rating] = True
+else if [residence_duration:1_]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.69,0.7625,0.01870585989692697,0.030528510963856892," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.76,0.745,0.05758807588075876,0.021047516751061313," if [account_balance:na]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.67,0.75875,0.0950545921644187,0.042211574257544626," if [not_account_balance:little]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [occupation:skilled-employee__AND__savings:little]: [good_credit_rating] = False
+else if [current_assets:unknown]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.00766283524904221,0.030940006572621304," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.725,0.74875,0.04645686148576322,0.031883849119141106," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [not_savings:little]: [good_credit_rating] = True
+else if [residence_duration:1_]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.69,0.7625,0.01870585989692697,0.030528510963856892," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.76,0.745,0.05758807588075876,0.021047516751061313," if [account_balance:na]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.67,0.75875,0.0950545921644187,0.042211574257544626," if [not_account_balance:little]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [occupation:skilled-employee__AND__savings:little]: [good_credit_rating] = False
+else if [current_assets:unknown]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.00766283524904221,0.030940006572621304," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.725,0.74875,0.04645686148576322,0.031883849119141106," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [not_savings:little]: [good_credit_rating] = True
+else if [residence_duration:1_]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.69,0.7625,0.01870585989692697,0.030528510963856892," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.76,0.745,0.05758807588075876,0.021047516751061313," if [account_balance:na]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.67,0.75875,0.0950545921644187,0.042211574257544626," if [not_account_balance:little]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [occupation:skilled-employee__AND__savings:little]: [good_credit_rating] = False
+else if [current_assets:unknown]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.00766283524904221,0.030940006572621304," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.725,0.74875,0.04645686148576322,0.031883849119141106," if [account_balance:na]: [good_credit_rating] = True
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [not_savings:little]: [good_credit_rating] = True
+else if [residence_duration:1_]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.69,0.7625,0.01870585989692697,0.030528510963856892," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.76,0.745,0.05758807588075876,0.021047516751061313," if [account_balance:na]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.67,0.75875,0.0950545921644187,0.042211574257544626," if [not_account_balance:little]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [occupation:skilled-employee__AND__savings:little]: [good_credit_rating] = False
+else if [current_assets:unknown]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.00766283524904221,0.030940006572621304," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.725,0.74875,0.04645686148576322,0.031883849119141106," if [account_balance:na]: [good_credit_rating] = True
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [not_savings:little]: [good_credit_rating] = True
+else if [residence_duration:1_]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.69,0.7625,0.01870585989692697,0.030528510963856892," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.76,0.745,0.05758807588075876,0.021047516751061313," if [account_balance:na]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.68,0.7575,0.18411475058873905,0.029638169350674315," if [not_account_balance:little]: [good_credit_rating] = True
+else if [occupation:highly-qualified]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [apartment_type:for_free]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.00766283524904221,0.030940006572621304," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.725,0.74875,0.04645686148576322,0.031883849119141106," if [account_balance:na]: [good_credit_rating] = True
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [not_savings:little]: [good_credit_rating] = True
+else if [residence_duration:1_]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.69,0.7625,0.01870585989692697,0.030528510963856892," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.76,0.745,0.05758807588075876,0.021047516751061313," if [account_balance:na]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.68,0.7575,0.18411475058873905,0.029638169350674315," if [not_account_balance:little]: [good_credit_rating] = True
+else if [occupation:highly-qualified]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [apartment_type:for_free]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.00766283524904221,0.030940006572621304," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.725,0.74875,0.04645686148576322,0.031883849119141106," if [account_balance:na]: [good_credit_rating] = True
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [not_savings:little]: [good_credit_rating] = True
+else if [residence_duration:1_]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.69,0.7625,0.01870585989692697,0.030528510963856892," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.76,0.745,0.05758807588075876,0.021047516751061313," if [account_balance:na]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.68,0.7575,0.18411475058873905,0.029638169350674315," if [not_account_balance:little]: [good_credit_rating] = True
+else if [occupation:highly-qualified]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [apartment_type:for_free]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.00766283524904221,0.030940006572621304," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.725,0.74875,0.04645686148576322,0.031883849119141106," if [account_balance:na]: [good_credit_rating] = True
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [not_savings:little]: [good_credit_rating] = True
+else if [residence_duration:1_]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.69,0.7625,0.01870585989692697,0.030528510963856892," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.76,0.745,0.05758807588075876,0.021047516751061313," if [account_balance:na]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.68,0.7575,0.18411475058873905,0.029638169350674315," if [not_account_balance:little]: [good_credit_rating] = True
+else if [occupation:highly-qualified]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [apartment_type:for_free]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.00766283524904221,0.030940006572621304," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.725,0.74875,0.04645686148576322,0.031883849119141106," if [account_balance:na]: [good_credit_rating] = True
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [not_savings:little]: [good_credit_rating] = True
+else if [residence_duration:1_]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.69,0.7625,0.01870585989692697,0.030528510963856892," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.76,0.745,0.05758807588075876,0.021047516751061313," if [account_balance:na]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.68,0.7575,0.18411475058873905,0.029638169350674315," if [not_account_balance:little]: [good_credit_rating] = True
+else if [occupation:highly-qualified]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [apartment_type:for_free]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.00766283524904221,0.030940006572621304," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.725,0.74875,0.04645686148576322,0.031883849119141106," if [account_balance:na]: [good_credit_rating] = True
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [not_savings:little]: [good_credit_rating] = True
+else if [residence_duration:1_]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.685,0.7625,0.03912960488642869,0.030528510963856892," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<_]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.76,0.745,0.05758807588075876,0.021047516751061313," if [account_balance:na]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.68,0.7575,0.18411475058873905,0.029638169350674315," if [not_account_balance:little]: [good_credit_rating] = True
+else if [occupation:highly-qualified]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [apartment_type:for_free]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.00766283524904221,0.030940006572621304," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.725,0.74875,0.04645686148576322,0.031883849119141106," if [account_balance:na]: [good_credit_rating] = True
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [not_savings:little]: [good_credit_rating] = True
+else if [residence_duration:1_]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.685,0.7625,0.03912960488642869,0.030528510963856892," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<_]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.76,0.745,0.05758807588075876,0.021047516751061313," if [account_balance:na]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.68,0.7575,0.18411475058873905,0.029638169350674315," if [not_account_balance:little]: [good_credit_rating] = True
+else if [occupation:highly-qualified]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [apartment_type:for_free]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.00766283524904221,0.030940006572621304," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.725,0.74875,0.04645686148576322,0.031883849119141106," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [not_savings:little]: [good_credit_rating] = True
+else if [residence_duration:1_]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.685,0.7625,0.03912960488642869,0.030528510963856892," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<_]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.76,0.745,0.05758807588075876,0.021047516751061313," if [account_balance:na]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.68,0.7575,0.18411475058873905,0.029638169350674315," if [not_account_balance:little]: [good_credit_rating] = True
+else if [occupation:highly-qualified]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [apartment_type:for_free]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.00766283524904221,0.030940006572621304," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.725,0.74875,0.04645686148576322,0.031883849119141106," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [not_savings:little]: [good_credit_rating] = True
+else if [residence_duration:1_]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.685,0.7625,0.03912960488642869,0.030528510963856892," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<_]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.76,0.745,0.05758807588075876,0.021047516751061313," if [account_balance:na]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.68,0.7575,0.18411475058873905,0.029638169350674315," if [not_account_balance:little]: [good_credit_rating] = True
+else if [occupation:highly-qualified]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [apartment_type:for_free]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.00766283524904221,0.030940006572621304," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.725,0.74875,0.04645686148576322,0.031883849119141106," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [not_savings:little]: [good_credit_rating] = True
+else if [residence_duration:1_]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.685,0.7625,0.03912960488642869,0.030528510963856892," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<_]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.76,0.745,0.05758807588075876,0.021047516751061313," if [account_balance:na]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.68,0.7575,0.18411475058873905,0.029638169350674315," if [not_account_balance:little]: [good_credit_rating] = True
+else if [occupation:highly-qualified]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [apartment_type:for_free]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.00766283524904221,0.030940006572621304," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.725,0.74875,0.04645686148576322,0.031883849119141106," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [not_savings:little]: [good_credit_rating] = True
+else if [residence_duration:1_]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.685,0.7625,0.03912960488642869,0.030528510963856892," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<_]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.76,0.745,0.05758807588075876,0.021047516751061313," if [account_balance:na]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.68,0.7575,0.18411475058873905,0.029638169350674315," if [not_account_balance:little]: [good_credit_rating] = True
+else if [occupation:highly-qualified]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [apartment_type:for_free]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.00766283524904221,0.030940006572621304," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.725,0.74875,0.04645686148576322,0.031883849119141106," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [not_savings:little]: [good_credit_rating] = True
+else if [residence_duration:1_]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.685,0.7625,0.03912960488642869,0.030528510963856892," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<_]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.76,0.745,0.05758807588075876,0.021047516751061313," if [account_balance:na]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.68,0.7575,0.18411475058873905,0.029638169350674315," if [not_account_balance:little]: [good_credit_rating] = True
+else if [occupation:highly-qualified]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [apartment_type:for_free]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.00766283524904221,0.030940006572621304," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.745,0.74625,0.01177478056090775,0.029698214264269662," if [account_balance:na]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.685,0.7625,0.03912960488642869,0.030528510963856892," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<_]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.76,0.745,0.05758807588075876,0.021047516751061313," if [account_balance:na]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.68,0.7575,0.18411475058873905,0.029638169350674315," if [not_account_balance:little]: [good_credit_rating] = True
+else if [occupation:highly-qualified]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [apartment_type:for_free]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.024601734220608962,0.023247605253228554," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [guarantor:none__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.745,0.74625,0.01177478056090775,0.029698214264269662," if [account_balance:na]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75875,0.04504676464974233,0.005318426930243425," if [account_balance:na]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.76,0.745,0.05758807588075876,0.021047516751061313," if [account_balance:na]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.695,0.75625,0.058017555127381715,0.014686985865427382," if [credit_purpose:car(used)]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.024601734220608962,0.023247605253228554," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [guarantor:none__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.745,0.745,0.01177478056090775,0.028221109389823584," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75875,0.04504676464974233,0.005318426930243425," if [account_balance:na]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.76,0.745,0.05758807588075876,0.021047516751061313," if [account_balance:na]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.695,0.75625,0.058017555127381715,0.014686985865427382," if [credit_purpose:car(used)]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.024601734220608962,0.023247605253228554," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [guarantor:none__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.745,0.74375,0.026760864911153925,0.026695968584501184," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [residence_duration:1_]: [good_credit_rating] = True
+else if [guarantor:none__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75875,0.04504676464974233,0.005318426930243425," if [account_balance:na]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.76,0.745,0.05758807588075876,0.021047516751061313," if [account_balance:na]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.695,0.75625,0.058017555127381715,0.014686985865427382," if [credit_purpose:car(used)]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.024601734220608962,0.023247605253228554," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [guarantor:none__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.745,0.74375,0.026760864911153925,0.026695968584501184," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [residence_duration:1_]: [good_credit_rating] = True
+else if [guarantor:none__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75875,0.04504676464974233,0.005318426930243425," if [account_balance:na]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.76,0.745,0.05758807588075876,0.021047516751061313," if [account_balance:na]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.695,0.75625,0.058017555127381715,0.014686985865427382," if [credit_purpose:car(used)]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.024601734220608962,0.023247605253228554," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [guarantor:none__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.75,0.7425,0.053093555983729446,0.009703258037011664," if [credit_purpose:car(used)]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75875,0.04504676464974233,0.005318426930243425," if [account_balance:na]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.76,0.745,0.05758807588075876,0.021047516751061313," if [account_balance:na]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.695,0.75625,0.058017555127381715,0.014686985865427382," if [credit_purpose:car(used)]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.024601734220608962,0.023247605253228554," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [guarantor:none__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.75,0.7425,0.053093555983729446,0.009703258037011664," if [credit_purpose:car(used)]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75875,0.04504676464974233,0.005318426930243425," if [account_balance:na]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.76,0.745,0.05758807588075876,0.021047516751061313," if [account_balance:na]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.695,0.75625,0.058017555127381715,0.014686985865427382," if [credit_purpose:car(used)]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.675,0.75875,0.024601734220608962,0.023247605253228554," if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [account_balance:na]: [good_credit_rating] = True
+else if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [guarantor:none__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.75,0.7425,0.053093555983729446,0.009703258037011664," if [credit_purpose:car(used)]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75875,0.04504676464974233,0.005318426930243425," if [account_balance:na]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.76,0.745,0.05758807588075876,0.021047516751061313," if [account_balance:na]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.695,0.75625,0.058017555127381715,0.014686985865427382," if [credit_purpose:car(used)]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75375,0.08247630570679576,0.010564880293090217," if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.75,0.7425,0.053093555983729446,0.009703258037011664," if [credit_purpose:car(used)]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75875,0.04504676464974233,0.005318426930243425," if [account_balance:na]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.76,0.745,0.05758807588075876,0.021047516751061313," if [account_balance:na]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.695,0.75625,0.058017555127381715,0.014686985865427382," if [credit_purpose:car(used)]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75375,0.08247630570679576,0.010564880293090217," if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.75,0.7425,0.053093555983729446,0.009703258037011664," if [credit_purpose:car(used)]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75875,0.04504676464974233,0.005318426930243425," if [account_balance:na]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.76,0.745,0.05758807588075876,0.021047516751061313," if [account_balance:na]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.695,0.75625,0.058017555127381715,0.014686985865427382," if [credit_purpose:car(used)]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75375,0.08247630570679576,0.010564880293090217," if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.75,0.7425,0.053093555983729446,0.009703258037011664," if [credit_purpose:car(used)]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75875,0.04504676464974233,0.005318426930243425," if [account_balance:na]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.695,0.7425,0.054200542005420016,0.001201984553219737," if [previous_credit_payment_status:existing_credits_paid_till_now__AND__bank_existing_credits_1_]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [account_balance:little]: [good_credit_rating] = False
+else if [occupation:highly-qualified]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.695,0.75625,0.058017555127381715,0.014686985865427382," if [credit_purpose:car(used)]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75375,0.08247630570679576,0.010564880293090217," if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.75,0.7425,0.053093555983729446,0.009703258037011664," if [credit_purpose:car(used)]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75875,0.04504676464974233,0.005318426930243425," if [account_balance:na]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.695,0.7425,0.054200542005420016,0.001201984553219737," if [previous_credit_payment_status:existing_credits_paid_till_now__AND__bank_existing_credits_1_]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [account_balance:little]: [good_credit_rating] = False
+else if [occupation:highly-qualified]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.695,0.75625,0.058017555127381715,0.014686985865427382," if [credit_purpose:car(used)]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75375,0.08247630570679576,0.010564880293090217," if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.75,0.7425,0.053093555983729446,0.009703258037011664," if [credit_purpose:car(used)]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75875,0.04504676464974233,0.005318426930243425," if [account_balance:na]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.695,0.7425,0.054200542005420016,0.001201984553219737," if [previous_credit_payment_status:existing_credits_paid_till_now__AND__bank_existing_credits_1_]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [account_balance:little]: [good_credit_rating] = False
+else if [occupation:highly-qualified]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.695,0.75625,0.058017555127381715,0.014686985865427382," if [credit_purpose:car(used)]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75375,0.08247630570679576,0.010564880293090217," if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.75,0.7425,0.053093555983729446,0.009703258037011664," if [credit_purpose:car(used)]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75875,0.04504676464974233,0.005318426930243425," if [account_balance:na]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.695,0.7425,0.054200542005420016,0.001201984553219737," if [previous_credit_payment_status:existing_credits_paid_till_now__AND__bank_existing_credits_1_]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [account_balance:little]: [good_credit_rating] = False
+else if [occupation:highly-qualified]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.695,0.75625,0.058017555127381715,0.014686985865427382," if [credit_purpose:car(used)]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75375,0.08247630570679576,0.010564880293090217," if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.75,0.7425,0.053093555983729446,0.009703258037011664," if [credit_purpose:car(used)]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75875,0.04504676464974233,0.005318426930243425," if [account_balance:na]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.695,0.7425,0.054200542005420016,0.001201984553219737," if [previous_credit_payment_status:existing_credits_paid_till_now__AND__bank_existing_credits_1_]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [account_balance:little]: [good_credit_rating] = False
+else if [occupation:highly-qualified]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.695,0.75625,0.058017555127381715,0.014686985865427382," if [credit_purpose:car(used)]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75375,0.08247630570679576,0.010564880293090217," if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.75,0.7425,0.053093555983729446,0.009703258037011664," if [credit_purpose:car(used)]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75875,0.04504676464974233,0.005318426930243425," if [account_balance:na]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.695,0.7425,0.054200542005420016,0.001201984553219737," if [previous_credit_payment_status:existing_credits_paid_till_now__AND__bank_existing_credits_1_]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [account_balance:little]: [good_credit_rating] = False
+else if [occupation:highly-qualified]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.695,0.75625,0.058017555127381715,0.014686985865427382," if [credit_purpose:car(used)]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75375,0.08247630570679576,0.010564880293090217," if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.75,0.7425,0.053093555983729446,0.009703258037011664," if [credit_purpose:car(used)]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75875,0.04504676464974233,0.005318426930243425," if [account_balance:na]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.695,0.7425,0.054200542005420016,0.001201984553219737," if [previous_credit_payment_status:existing_credits_paid_till_now__AND__bank_existing_credits_1_]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [account_balance:little]: [good_credit_rating] = False
+else if [occupation:highly-qualified]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.69,0.755,0.15285806037251126,0.01263344982046577," if [credit_purpose:car(used)]: [good_credit_rating] = True
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__guarantor:none]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75375,0.08247630570679576,0.010564880293090217," if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.75,0.7425,0.053093555983729446,0.009703258037011664," if [credit_purpose:car(used)]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75875,0.04504676464974233,0.005318426930243425," if [account_balance:na]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.695,0.7425,0.054200542005420016,0.001201984553219737," if [previous_credit_payment_status:existing_credits_paid_till_now__AND__bank_existing_credits_1_]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [account_balance:little]: [good_credit_rating] = False
+else if [occupation:highly-qualified]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.69,0.755,0.15285806037251126,0.01263344982046577," if [credit_purpose:car(used)]: [good_credit_rating] = True
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__guarantor:none]: [good_credit_rating] = False
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75375,0.08247630570679576,0.010564880293090217," if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.75,0.7425,0.053093555983729446,0.009703258037011664," if [credit_purpose:car(used)]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75875,0.04504676464974233,0.005318426930243425," if [account_balance:na]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.695,0.7425,0.054200542005420016,0.001201984553219737," if [previous_credit_payment_status:existing_credits_paid_till_now__AND__bank_existing_credits_1_]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [account_balance:little]: [good_credit_rating] = False
+else if [occupation:highly-qualified]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.675,0.755,0.12395632626846498,0.002137598923995121," if [not_account_balance:little]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [current_assets:unknown]: [good_credit_rating] = False
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75375,0.08247630570679576,0.010564880293090217," if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.75,0.7425,0.053093555983729446,0.009703258037011664," if [credit_purpose:car(used)]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75875,0.04504676464974233,0.005318426930243425," if [account_balance:na]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.695,0.7425,0.054200542005420016,0.001201984553219737," if [previous_credit_payment_status:existing_credits_paid_till_now__AND__bank_existing_credits_1_]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [account_balance:little]: [good_credit_rating] = False
+else if [occupation:highly-qualified]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.675,0.755,0.12395632626846498,0.002137598923995121," if [not_account_balance:little]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [current_assets:unknown]: [good_credit_rating] = False
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75375,0.08247630570679576,0.010564880293090217," if [installment_rate_rate_2]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.75,0.7425,0.053093555983729446,0.009703258037011664," if [credit_purpose:car(used)]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75875,0.04504676464974233,0.005318426930243425," if [account_balance:na]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.695,0.7425,0.054200542005420016,0.001201984553219737," if [previous_credit_payment_status:existing_credits_paid_till_now__AND__bank_existing_credits_1_]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [account_balance:little]: [good_credit_rating] = False
+else if [occupation:highly-qualified]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.675,0.755,0.12395632626846498,0.002137598923995121," if [not_account_balance:little]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [current_assets:unknown]: [good_credit_rating] = False
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.665,0.74875,0.04275055454728782,0.003286310690246985," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__installment_rate_rate_4]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.75,0.7425,0.053093555983729446,0.009703258037011664," if [credit_purpose:car(used)]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75875,0.04504676464974233,0.005318426930243425," if [account_balance:na]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.695,0.7425,0.054200542005420016,0.001201984553219737," if [previous_credit_payment_status:existing_credits_paid_till_now__AND__bank_existing_credits_1_]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [account_balance:little]: [good_credit_rating] = False
+else if [occupation:highly-qualified]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.675,0.755,0.12395632626846498,0.002137598923995121," if [not_account_balance:little]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [current_assets:unknown]: [good_credit_rating] = False
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.665,0.74875,0.04275055454728782,0.003286310690246985," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__installment_rate_rate_4]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.715,0.74125,0.0036394776279169427,0.00877856636764307," if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_account_balance:little]: [good_credit_rating] = True
+else if [credit_purpose:furniture/equipment]: [good_credit_rating] = True
+else if [occupation:skilled-employee__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75875,0.04504676464974233,0.005318426930243425," if [account_balance:na]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.695,0.7425,0.054200542005420016,0.001201984553219737," if [previous_credit_payment_status:existing_credits_paid_till_now__AND__bank_existing_credits_1_]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [account_balance:little]: [good_credit_rating] = False
+else if [occupation:highly-qualified]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.675,0.755,0.12395632626846498,0.002137598923995121," if [not_account_balance:little]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [current_assets:unknown]: [good_credit_rating] = False
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.665,0.74875,0.04275055454728782,0.003286310690246985," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__installment_rate_rate_4]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.75,0.74125,0.0025690430314707635,0.001645230632513095," if [account_balance:na]: [good_credit_rating] = True
+else if [current_assets:unknown]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75875,0.04504676464974233,0.005318426930243425," if [account_balance:na]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.695,0.7425,0.054200542005420016,0.001201984553219737," if [previous_credit_payment_status:existing_credits_paid_till_now__AND__bank_existing_credits_1_]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [account_balance:little]: [good_credit_rating] = False
+else if [occupation:highly-qualified]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.675,0.755,0.12395632626846498,0.002137598923995121," if [not_account_balance:little]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [current_assets:unknown]: [good_credit_rating] = False
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.665,0.74875,0.04275055454728782,0.003286310690246985," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__installment_rate_rate_4]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.75,0.74125,0.0025690430314707635,0.001645230632513095," if [account_balance:na]: [good_credit_rating] = True
+else if [current_assets:unknown]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75875,0.04504676464974233,0.005318426930243425," if [account_balance:na]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.695,0.7425,0.054200542005420016,0.001201984553219737," if [previous_credit_payment_status:existing_credits_paid_till_now__AND__bank_existing_credits_1_]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [account_balance:little]: [good_credit_rating] = False
+else if [occupation:highly-qualified]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.675,0.755,0.12395632626846498,0.002137598923995121," if [not_account_balance:little]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [current_assets:unknown]: [good_credit_rating] = False
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.665,0.74875,0.04275055454728782,0.003286310690246985," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__installment_rate_rate_4]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.75,0.74125,0.0025690430314707635,0.001645230632513095," if [account_balance:na]: [good_credit_rating] = True
+else if [current_assets:unknown]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.75875,0.04504676464974233,0.005318426930243425," if [account_balance:na]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.695,0.7425,0.054200542005420016,0.001201984553219737," if [previous_credit_payment_status:existing_credits_paid_till_now__AND__bank_existing_credits_1_]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [account_balance:little]: [good_credit_rating] = False
+else if [occupation:highly-qualified]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.675,0.755,0.12395632626846498,0.002137598923995121," if [not_account_balance:little]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [current_assets:unknown]: [good_credit_rating] = False
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.665,0.74875,0.04275055454728782,0.003286310690246985," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__installment_rate_rate_4]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.75,0.74125,0.0025690430314707635,0.001645230632513095," if [account_balance:na]: [good_credit_rating] = True
+else if [current_assets:unknown]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.7575,0.04504676464974233,0.003849998149039302," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.695,0.7425,0.054200542005420016,0.001201984553219737," if [previous_credit_payment_status:existing_credits_paid_till_now__AND__bank_existing_credits_1_]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [account_balance:little]: [good_credit_rating] = False
+else if [occupation:highly-qualified]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.675,0.755,0.12395632626846498,0.002137598923995121," if [not_account_balance:little]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [current_assets:unknown]: [good_credit_rating] = False
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.665,0.74875,0.04275055454728782,0.003286310690246985," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__installment_rate_rate_4]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.75,0.74125,0.0025690430314707635,0.001645230632513095," if [account_balance:na]: [good_credit_rating] = True
+else if [current_assets:unknown]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.69,0.7575,0.04504676464974233,0.003849998149039302," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.695,0.7425,0.054200542005420016,0.001201984553219737," if [previous_credit_payment_status:existing_credits_paid_till_now__AND__bank_existing_credits_1_]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [account_balance:little]: [good_credit_rating] = False
+else if [occupation:highly-qualified]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.675,0.755,0.12395632626846498,0.002137598923995121," if [not_account_balance:little]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [current_assets:unknown]: [good_credit_rating] = False
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.655,0.745,0.047993547086106036,0.0008885210384742548," if [account_balance:na]: [good_credit_rating] = True
+else if [not_installment_rate_rate_4]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__guarantor:none]: [good_credit_rating] = False
+else if [not_current_assets:unknown]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.75,0.74125,0.0025690430314707635,0.001645230632513095," if [account_balance:na]: [good_credit_rating] = True
+else if [current_assets:unknown]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.685,0.75375,0.03912960488642869,0.000555288194572956," if [account_balance:na__AND__guarantor:none]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.695,0.7425,0.054200542005420016,0.001201984553219737," if [previous_credit_payment_status:existing_credits_paid_till_now__AND__bank_existing_credits_1_]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [account_balance:little]: [good_credit_rating] = False
+else if [occupation:highly-qualified]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.68,0.75375,0.12973667308927428,0.0015491587707604504," if [not_account_balance:little]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [current_assets:unknown]: [good_credit_rating] = False
+else if [credit_duration_months_24<___AND__guarantor:none]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.655,0.745,0.047993547086106036,0.0008885210384742548," if [account_balance:na]: [good_credit_rating] = True
+else if [not_installment_rate_rate_4]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__guarantor:none]: [good_credit_rating] = False
+else if [not_current_assets:unknown]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.75,0.74125,0.0025690430314707635,0.001645230632513095," if [account_balance:na]: [good_credit_rating] = True
+else if [current_assets:unknown]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [foreign_worker_yes__AND__savings:little]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.685,0.75375,0.03912960488642869,0.000555288194572956," if [account_balance:na__AND__guarantor:none]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.695,0.7425,0.054200542005420016,0.001201984553219737," if [previous_credit_payment_status:existing_credits_paid_till_now__AND__bank_existing_credits_1_]: [good_credit_rating] = True
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [account_balance:little]: [good_credit_rating] = False
+else if [occupation:highly-qualified]: [good_credit_rating] = False
+else [good_credit_rating] = True"
+0.68,0.75125,0.17255405694712056,0.000660494049549043," if [not_account_balance:little]: [good_credit_rating] = True
+else if [previous_credit_payment_status:all_credits_paid_duly]: [good_credit_rating] = False
+else if [previous_credit_payment_status:other_credits_existing]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.655,0.745,0.047993547086106036,0.0008885210384742548," if [account_balance:na]: [good_credit_rating] = True
+else if [not_installment_rate_rate_4]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__guarantor:none]: [good_credit_rating] = False
+else if [not_current_assets:unknown]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.745,0.74,0.0032113037893385377,0.00016812575806701702," if [account_balance:na__AND__foreign_worker_yes]: [good_credit_rating] = True
+else if [current_assets:unknown]: [good_credit_rating] = False
+else if [not_savings:little]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else [good_credit_rating] = True",0.685,0.75375,0.03912960488642869,0.000555288194572956," if [account_balance:na__AND__guarantor:none]: [good_credit_rating] = True
+else if [previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = False
+else if [not_credit_duration_months_24<_]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else [good_credit_rating] = False",0.76,0.74125,0.06978319783197828,0.0005626310674645696," if [account_balance:na]: [good_credit_rating] = True
+else if [credit_amount_2319.5<_<3972.75]: [good_credit_rating] = True
+else if [credit_duration_months_24<___AND__foreign_worker_yes]: [good_credit_rating] = False
+else if [not_previous_credit_payment_status:no_credits_taken]: [good_credit_rating] = True
+else [good_credit_rating] = False"
+0.67,0.7075,0.0,0.0,[good_credit_rating] = True,0.685,0.70375,0.0,0.0,[good_credit_rating] = True,0.72,0.695,0.0,0.0,[good_credit_rating] = True,0.72,0.695,0.0,0.0,[good_credit_rating] = True,0.705,0.69875,0.0,0.0,[good_credit_rating] = True

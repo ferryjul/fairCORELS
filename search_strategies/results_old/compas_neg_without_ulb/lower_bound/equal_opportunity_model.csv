@@ -1,0 +1,1450 @@
+acc_test_fold_0,acc_train_fold_0,unf_test_fold_0,unf_train_fold_0,mdl_fold_0,acc_test_fold_1,acc_train_fold_1,unf_test_fold_1,unf_train_fold_1,mdl_fold_1,acc_test_fold_2,acc_train_fold_2,unf_test_fold_2,unf_train_fold_2,mdl_fold_2,acc_test_fold_3,acc_train_fold_3,unf_test_fold_3,unf_train_fold_3,mdl_fold_3,acc_test_fold_4,acc_train_fold_4,unf_test_fold_4,unf_train_fold_4,mdl_fold_4
+0.6625592417061611,0.6711711711711712,0.21513416676403002,0.23618777056277057," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_26-45__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [age_>45__AND__priors_1]: [two_year_recid] = False
+else if [priors_0__AND__juvenile-crimes_=0]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True",0.671090047393365,0.6690374585111427,0.20287511585257634,0.23554738865099972," if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_>45__AND__priors_1]: [two_year_recid] = False
+else if [priors_0__AND__juvenile-crimes_=0]: [two_year_recid] = False
+else if [age_26-45__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True",0.6502369668246446,0.6737790422000949,0.2302313071543841,0.24179220220378006," if [priors_0__AND__age_23-25]: [two_year_recid] = False
+else if [age_>45__AND__gender_Female]: [two_year_recid] = False
+else if [age_26-45__AND__priors_>3]: [two_year_recid] = True
+else if [charge_degree_Felony__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__juvenile-felonies_=0]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True",0.6726755218216319,0.6672197203128704,0.31011407439294025,0.2172321970115466," if [priors_0__AND__age_23-25]: [two_year_recid] = False
+else if [charge_degree_Felony__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__juvenile-misdemeanors_=0]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True",0.6537001897533207,0.6719601801374734,0.20521901211556387,0.24283071949267138," if [charge_degree_Felony__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__juvenile-felonies_=0]: [two_year_recid] = False
+else if [age_26-45__AND__priors_>3]: [two_year_recid] = True
+else if [priors_0__AND__age_23-25]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True"
+0.6625592417061611,0.6711711711711712,0.21513416676403002,0.23618777056277057," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_26-45__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [age_>45__AND__priors_1]: [two_year_recid] = False
+else if [priors_0__AND__juvenile-crimes_=0]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True",0.671090047393365,0.6690374585111427,0.20287511585257634,0.23554738865099972," if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_>45__AND__priors_1]: [two_year_recid] = False
+else if [priors_0__AND__juvenile-crimes_=0]: [two_year_recid] = False
+else if [age_26-45__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True",0.6502369668246446,0.6737790422000949,0.2302313071543841,0.24179220220378006," if [priors_0__AND__age_23-25]: [two_year_recid] = False
+else if [age_>45__AND__gender_Female]: [two_year_recid] = False
+else if [age_26-45__AND__priors_>3]: [two_year_recid] = True
+else if [charge_degree_Felony__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__juvenile-felonies_=0]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True",0.6726755218216319,0.6672197203128704,0.31011407439294025,0.2172321970115466," if [priors_0__AND__age_23-25]: [two_year_recid] = False
+else if [charge_degree_Felony__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__juvenile-misdemeanors_=0]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True",0.6537001897533207,0.6719601801374734,0.20521901211556387,0.24283071949267138," if [charge_degree_Felony__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__juvenile-felonies_=0]: [two_year_recid] = False
+else if [age_26-45__AND__priors_>3]: [two_year_recid] = True
+else if [priors_0__AND__age_23-25]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True"
+0.6625592417061611,0.6711711711711712,0.21513416676403002,0.23618777056277057," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_26-45__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [age_>45__AND__priors_1]: [two_year_recid] = False
+else if [priors_0__AND__juvenile-crimes_=0]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True",0.671090047393365,0.6690374585111427,0.20287511585257634,0.23554738865099972," if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_>45__AND__priors_1]: [two_year_recid] = False
+else if [priors_0__AND__juvenile-crimes_=0]: [two_year_recid] = False
+else if [age_26-45__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True",0.6502369668246446,0.6737790422000949,0.2302313071543841,0.24179220220378006," if [priors_0__AND__age_23-25]: [two_year_recid] = False
+else if [age_>45__AND__gender_Female]: [two_year_recid] = False
+else if [age_26-45__AND__priors_>3]: [two_year_recid] = True
+else if [charge_degree_Felony__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__juvenile-felonies_=0]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True",0.6726755218216319,0.6672197203128704,0.31011407439294025,0.2172321970115466," if [priors_0__AND__age_23-25]: [two_year_recid] = False
+else if [charge_degree_Felony__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__juvenile-misdemeanors_=0]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True",0.6537001897533207,0.6719601801374734,0.20521901211556387,0.24283071949267138," if [charge_degree_Felony__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__juvenile-felonies_=0]: [two_year_recid] = False
+else if [age_26-45__AND__priors_>3]: [two_year_recid] = True
+else if [priors_0__AND__age_23-25]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True"
+0.6625592417061611,0.6711711711711712,0.21513416676403002,0.23618777056277057," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_26-45__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [age_>45__AND__priors_1]: [two_year_recid] = False
+else if [priors_0__AND__juvenile-crimes_=0]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True",0.671090047393365,0.6690374585111427,0.20287511585257634,0.23554738865099972," if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_>45__AND__priors_1]: [two_year_recid] = False
+else if [priors_0__AND__juvenile-crimes_=0]: [two_year_recid] = False
+else if [age_26-45__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True",0.6502369668246446,0.6737790422000949,0.2302313071543841,0.24179220220378006," if [priors_0__AND__age_23-25]: [two_year_recid] = False
+else if [age_>45__AND__gender_Female]: [two_year_recid] = False
+else if [age_26-45__AND__priors_>3]: [two_year_recid] = True
+else if [charge_degree_Felony__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__juvenile-felonies_=0]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True",0.6726755218216319,0.6672197203128704,0.31011407439294025,0.2172321970115466," if [priors_0__AND__age_23-25]: [two_year_recid] = False
+else if [charge_degree_Felony__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__juvenile-misdemeanors_=0]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True",0.6537001897533207,0.6719601801374734,0.20521901211556387,0.24283071949267138," if [charge_degree_Felony__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__juvenile-felonies_=0]: [two_year_recid] = False
+else if [age_26-45__AND__priors_>3]: [two_year_recid] = True
+else if [priors_0__AND__age_23-25]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True"
+0.6625592417061611,0.6711711711711712,0.21513416676403002,0.23618777056277057," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_26-45__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [age_>45__AND__priors_1]: [two_year_recid] = False
+else if [priors_0__AND__juvenile-crimes_=0]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True",0.671090047393365,0.6690374585111427,0.20287511585257634,0.23554738865099972," if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_>45__AND__priors_1]: [two_year_recid] = False
+else if [priors_0__AND__juvenile-crimes_=0]: [two_year_recid] = False
+else if [age_26-45__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True",0.6502369668246446,0.6737790422000949,0.2302313071543841,0.24179220220378006," if [priors_0__AND__age_23-25]: [two_year_recid] = False
+else if [age_>45__AND__gender_Female]: [two_year_recid] = False
+else if [age_26-45__AND__priors_>3]: [two_year_recid] = True
+else if [charge_degree_Felony__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__juvenile-felonies_=0]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True",0.6726755218216319,0.6672197203128704,0.31011407439294025,0.2172321970115466," if [priors_0__AND__age_23-25]: [two_year_recid] = False
+else if [charge_degree_Felony__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__juvenile-misdemeanors_=0]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True",0.6537001897533207,0.6719601801374734,0.20521901211556387,0.24283071949267138," if [charge_degree_Felony__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__juvenile-felonies_=0]: [two_year_recid] = False
+else if [age_26-45__AND__priors_>3]: [two_year_recid] = True
+else if [priors_0__AND__age_23-25]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True"
+0.6625592417061611,0.6711711711711712,0.21513416676403002,0.23618777056277057," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_26-45__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [age_>45__AND__priors_1]: [two_year_recid] = False
+else if [priors_0__AND__juvenile-crimes_=0]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True",0.671090047393365,0.6690374585111427,0.20287511585257634,0.23554738865099972," if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_>45__AND__priors_1]: [two_year_recid] = False
+else if [priors_0__AND__juvenile-crimes_=0]: [two_year_recid] = False
+else if [age_26-45__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True",0.6502369668246446,0.6737790422000949,0.2302313071543841,0.24179220220378006," if [priors_0__AND__age_23-25]: [two_year_recid] = False
+else if [age_>45__AND__gender_Female]: [two_year_recid] = False
+else if [age_26-45__AND__priors_>3]: [two_year_recid] = True
+else if [charge_degree_Felony__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__juvenile-felonies_=0]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True",0.6726755218216319,0.6672197203128704,0.31011407439294025,0.2172321970115466," if [priors_0__AND__age_23-25]: [two_year_recid] = False
+else if [charge_degree_Felony__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__juvenile-misdemeanors_=0]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True",0.6537001897533207,0.6719601801374734,0.20521901211556387,0.24283071949267138," if [charge_degree_Felony__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__juvenile-felonies_=0]: [two_year_recid] = False
+else if [age_26-45__AND__priors_>3]: [two_year_recid] = True
+else if [priors_0__AND__age_23-25]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True"
+0.6625592417061611,0.6711711711711712,0.21513416676403002,0.23618777056277057," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_26-45__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [age_>45__AND__priors_1]: [two_year_recid] = False
+else if [priors_0__AND__juvenile-crimes_=0]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True",0.671090047393365,0.6690374585111427,0.20287511585257634,0.23554738865099972," if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_>45__AND__priors_1]: [two_year_recid] = False
+else if [priors_0__AND__juvenile-crimes_=0]: [two_year_recid] = False
+else if [age_26-45__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True",0.6502369668246446,0.6737790422000949,0.2302313071543841,0.24179220220378006," if [priors_0__AND__age_23-25]: [two_year_recid] = False
+else if [age_>45__AND__gender_Female]: [two_year_recid] = False
+else if [age_26-45__AND__priors_>3]: [two_year_recid] = True
+else if [charge_degree_Felony__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__juvenile-felonies_=0]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True",0.6726755218216319,0.6672197203128704,0.31011407439294025,0.2172321970115466," if [priors_0__AND__age_23-25]: [two_year_recid] = False
+else if [charge_degree_Felony__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__juvenile-misdemeanors_=0]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True",0.6537001897533207,0.6719601801374734,0.20521901211556387,0.24283071949267138," if [charge_degree_Felony__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__juvenile-felonies_=0]: [two_year_recid] = False
+else if [age_26-45__AND__priors_>3]: [two_year_recid] = True
+else if [priors_0__AND__age_23-25]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True"
+0.6369668246445498,0.6683262209577999,0.16107800755539975,0.19158549783549783," if [juvenile-crimes_=0__AND__age_18-20]: [two_year_recid] = True
+else if [priors_0__AND__juvenile-crimes_=0]: [two_year_recid] = False
+else if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_>45__AND__priors_1]: [two_year_recid] = False
+else if [gender_Female__AND__priors_1]: [two_year_recid] = False
+else if [priors_1__AND__age_26-45]: [two_year_recid] = False
+else [two_year_recid] = True",0.6521327014218009,0.6685633001422475,0.24568634024176214,0.19247895523562267," if [age_>45__AND__priors_1]: [two_year_recid] = False
+else if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_26-45__AND__priors_>3]: [two_year_recid] = True
+else if [priors_1__AND__age_26-45]: [two_year_recid] = False
+else if [charge_degree_Misdemeanor__AND__age_26-45]: [two_year_recid] = False
+else if [priors_0__AND__juvenile-crimes_=0]: [two_year_recid] = False
+else [two_year_recid] = True",0.6616113744075829,0.6623992413466098,0.19445938676707902,0.18257524941235215," if [age_>45__AND__charge_degree_Misdemeanor]: [two_year_recid] = False
+else if [age_18-20]: [two_year_recid] = True
+else if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [priors_>3]: [two_year_recid] = True
+else [two_year_recid] = False",0.6518026565464896,0.6648494904005688,0.26094272800203494,0.16817096460709757," if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [age_>45__AND__charge_degree_Misdemeanor]: [two_year_recid] = False
+else if [age_18-20]: [two_year_recid] = True
+else if [priors_>3]: [two_year_recid] = True
+else [two_year_recid] = False",0.6480075901328273,0.6639013984356482,0.14768561665113394,0.19972954909305685," if [age_>45__AND__charge_degree_Misdemeanor]: [two_year_recid] = False
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [priors_>3]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.6075829383886255,0.6427216690374585,0.11459672080071659,0.08860930735930733," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [juvenile-misdemeanors_=0__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [priors_2-3]: [two_year_recid] = True
+else [two_year_recid] = False",0.6483412322274882,0.6446183025130393,0.1681094831496125,0.09914584667947896," if [juvenile-felonies_=0__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__juvenile-felonies_=0]: [two_year_recid] = False
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [priors_2-3]: [two_year_recid] = True
+else [two_year_recid] = False",0.6436018957345971,0.6282598387861545,0.05244755244755245,0.09551937943468447," if [age_>45__AND__charge_degree_Misdemeanor]: [two_year_recid] = False
+else if [age_>45__AND__gender_Female]: [two_year_recid] = False
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3]: [two_year_recid] = True
+else [two_year_recid] = False",0.635673624288425,0.6499170419530694,0.18210812608840277,0.09561404893271136," if [age_>45__AND__charge_degree_Misdemeanor]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__juvenile-felonies_=0]: [two_year_recid] = False
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [priors_2-3]: [two_year_recid] = True
+else [two_year_recid] = False",0.6328273244781784,0.6290590187248163,0.03957750854302583,0.09935185041267075," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__charge_degree_Misdemeanor]: [two_year_recid] = False
+else if [juvenile-misdemeanors_=0__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45]: [two_year_recid] = False
+else if [priors_2-3]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5886255924170616,0.6024182076813656,0.06714180005452353,0.04820075757575759," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.623696682464455,0.6180654338549075,0.13166768551201907,0.04980051024422044," if [charge_degree_Misdemeanor__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__gender_Female]: [two_year_recid] = False
+else if [juvenile-misdemeanors_=0__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False",0.609478672985782,0.5990990990990991,0.11710597095212483,0.044343681074345664," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5958254269449715,0.6022754207158094,0.05844600543956796,0.04914240361482458," if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5635673624288425,0.6027494666982698,0.10254737496116806,0.040878499152898096," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__gender_Male]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5886255924170616,0.6024182076813656,0.06714180005452353,0.04820075757575759," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.628436018957346,0.6171171171171171,0.13529608960580541,0.04772918844195695," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__charge_degree_Misdemeanor]: [two_year_recid] = False
+else if [juvenile-misdemeanors_=0__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False",0.609478672985782,0.5990990990990991,0.11710597095212483,0.044343681074345664," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5967741935483871,0.6003792367859683,0.07274932983740001,0.04711988762296876," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5635673624288425,0.6027494666982698,0.10254737496116806,0.040878499152898096," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__gender_Male]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5914691943127962,0.6000474158368895,0.06412353468084275,0.04676677489177489," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.628436018957346,0.6171171171171171,0.13529608960580541,0.04772918844195695," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__charge_degree_Misdemeanor]: [two_year_recid] = False
+else if [juvenile-misdemeanors_=0__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False",0.609478672985782,0.5990990990990991,0.11710597095212483,0.044343681074345664," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5967741935483871,0.6003792367859683,0.07274932983740001,0.04711988762296876," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5635673624288425,0.6027494666982698,0.10254737496116806,0.040878499152898096," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__gender_Male]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5914691943127962,0.6000474158368895,0.06412353468084275,0.04676677489177489," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6199052132701421,0.6154575628259839,0.12857171027982095,0.042326668689661395," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__gender_Female]: [two_year_recid] = False
+else if [priors_2-3__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False",0.609478672985782,0.5990990990990991,0.11710597095212483,0.044343681074345664," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5920303605313093,0.5999051908035079,0.06779893165319822,0.046361162281542356," if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5635673624288425,0.6027494666982698,0.10254737496116806,0.040878499152898096," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__gender_Male]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5781990521327014,0.5986249407302039,0.09498773221170698,0.04439935064935069," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6199052132701421,0.6154575628259839,0.12857171027982095,0.042326668689661395," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__gender_Female]: [two_year_recid] = False
+else if [priors_2-3__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False",0.609478672985782,0.5990990990990991,0.11710597095212483,0.044343681074345664," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5853889943074004,0.5970609149087461,0.05322167217797957,0.04408498625726315," if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_18-20]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5635673624288425,0.6027494666982698,0.10254737496116806,0.040878499152898096," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__gender_Male]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5781990521327014,0.5986249407302039,0.09498773221170698,0.04439935064935069," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6199052132701421,0.6154575628259839,0.12857171027982095,0.042326668689661395," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__gender_Female]: [two_year_recid] = False
+else if [priors_2-3__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False",0.609478672985782,0.5990990990990991,0.11710597095212483,0.044343681074345664," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5853889943074004,0.5970609149087461,0.05322167217797957,0.04408498625726315," if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_18-20]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5635673624288425,0.6027494666982698,0.10254737496116806,0.040878499152898096," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__gender_Male]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5914691943127962,0.5960170697012802,0.047805428983136666,0.04295183982683981," if [juvenile-misdemeanors_=0__AND__age_18-20]: [two_year_recid] = True
+else if [gender_Female__AND__priors_1]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6199052132701421,0.6154575628259839,0.12857171027982095,0.042326668689661395," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__gender_Female]: [two_year_recid] = False
+else if [priors_2-3__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False",0.6132701421800948,0.5981507823613087,0.10238479469248701,0.035299139497182885," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5920303605313093,0.596823891917516,0.08413720234018823,0.04319999458858598," if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5635673624288425,0.6027494666982698,0.10254737496116806,0.040878499152898096," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__gender_Male]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5914691943127962,0.5960170697012802,0.047805428983136666,0.04295183982683981," if [juvenile-misdemeanors_=0__AND__age_18-20]: [two_year_recid] = True
+else if [gender_Female__AND__priors_1]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6199052132701421,0.6154575628259839,0.12857171027982095,0.042326668689661395," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__gender_Female]: [two_year_recid] = False
+else if [priors_2-3__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False",0.6132701421800948,0.5981507823613087,0.10238479469248701,0.035299139497182885," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5844402277039848,0.5954017539701351,0.050306220282935854,0.04098695172793215," if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5635673624288425,0.6027494666982698,0.10254737496116806,0.040878499152898096," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__gender_Male]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5744075829383887,0.594357515410147,0.05425088600693223,0.04023268398268398," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6009478672985782,0.594357515410147,0.08248703437124094,0.040336266675657706," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_18-20]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6132701421800948,0.5981507823613087,0.10238479469248701,0.035299139497182885," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5844402277039848,0.5954017539701351,0.050306220282935854,0.04098695172793215," if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5635673624288425,0.6027494666982698,0.10254737496116806,0.040878499152898096," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__gender_Male]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5744075829383887,0.594357515410147,0.05425088600693223,0.04023268398268398," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6009478672985782,0.594357515410147,0.08248703437124094,0.040336266675657706," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_18-20]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6132701421800948,0.5981507823613087,0.10238479469248701,0.035299139497182885," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5844402277039848,0.5954017539701351,0.050306220282935854,0.04098695172793215," if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5635673624288425,0.6027494666982698,0.10254737496116806,0.040878499152898096," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__gender_Male]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.581042654028436,0.5938833570412517,0.07290571328426221,0.03507846320346325," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6009478672985782,0.5931721194879089,0.07939105913904282,0.03885048945233038," if [juvenile-crimes_=0__AND__age_18-20]: [two_year_recid] = True
+else if [charge_degree_Felony__AND__age_18-20]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6132701421800948,0.5981507823613087,0.10238479469248701,0.035299139497182885," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5777988614800759,0.5937425930315241,0.04040542391453228,0.03260940639042903," if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5654648956356736,0.6020383977245792,0.0974836905871389,0.038453766883752794," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [juvenile-crimes_=0]: [two_year_recid] = False
+else [two_year_recid] = True"
+0.581042654028436,0.5938833570412517,0.07290571328426221,0.03507846320346325," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6009478672985782,0.5931721194879089,0.07939105913904282,0.03885048945233038," if [juvenile-crimes_=0__AND__age_18-20]: [two_year_recid] = True
+else if [charge_degree_Felony__AND__age_18-20]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6132701421800948,0.5981507823613087,0.10238479469248701,0.035299139497182885," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5777988614800759,0.5937425930315241,0.04040542391453228,0.03260940639042903," if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5654648956356736,0.6020383977245792,0.0974836905871389,0.038453766883752794," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [juvenile-crimes_=0]: [two_year_recid] = False
+else [two_year_recid] = True"
+0.581042654028436,0.5938833570412517,0.07290571328426221,0.03507846320346325," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6009478672985782,0.5931721194879089,0.08248703437124094,0.03659934589837821," if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_18-20]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6132701421800948,0.5981507823613087,0.10238479469248701,0.035299139497182885," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5777988614800759,0.5937425930315241,0.04040542391453228,0.03260940639042903," if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5654648956356736,0.5994311448210476,0.08886300093196653,0.036681847148608115," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__gender_Male]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.581042654028436,0.5938833570412517,0.07290571328426221,0.03507846320346325," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6009478672985782,0.5931721194879089,0.08248703437124094,0.03659934589837821," if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_18-20]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6132701421800948,0.5981507823613087,0.10238479469248701,0.035299139497182885," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5777988614800759,0.5937425930315241,0.04040542391453228,0.03260940639042903," if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5654648956356736,0.5994311448210476,0.08886300093196653,0.036681847148608115," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__gender_Male]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.581042654028436,0.5938833570412517,0.07290571328426221,0.03507846320346325," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5981042654028436,0.591986723565671,0.07319910867464652,0.035122559762635286," if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6132701421800948,0.5981507823613087,0.10238479469248701,0.035299139497182885," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5777988614800759,0.5937425930315241,0.04040542391453228,0.03260940639042903," if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5664136622390892,0.5982460298648969,0.08092575333954644,0.033495500256462085," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-crimes_=0]: [two_year_recid] = False
+else [two_year_recid] = True"
+0.5838862559241706,0.5922238027501185,0.051368929392062945,0.02901785714285715," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5981042654028436,0.5903271692745377,0.082664510658437,0.03363678253930796," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-misdemeanors_=0__AND__age_18-20]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6123222748815166,0.5974395448079659,0.1113322574861037,0.03449029676359355," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5777988614800759,0.5937425930315241,0.04040542391453228,0.03260940639042903," if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5664136622390892,0.5982460298648969,0.08092575333954644,0.033495500256462085," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-crimes_=0]: [two_year_recid] = False
+else [two_year_recid] = True"
+0.5838862559241706,0.5922238027501185,0.051368929392062945,0.02901785714285715," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5981042654028436,0.5903271692745377,0.082664510658437,0.03363678253930796," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-misdemeanors_=0__AND__age_18-20]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.609478672985782,0.596728307254623,0.09921104536489156,0.03082001465811729," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5777988614800759,0.5937425930315241,0.04040542391453228,0.03260940639042903," if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5664136622390892,0.5982460298648969,0.08092575333954644,0.033495500256462085," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-crimes_=0]: [two_year_recid] = False
+else [two_year_recid] = True"
+0.5838862559241706,0.5922238027501185,0.051368929392062945,0.02901785714285715," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.595260663507109,0.5903271692745377,0.0990317682554081,0.03295233599694303," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.609478672985782,0.596728307254623,0.09921104536489156,0.03082001465811729," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5777988614800759,0.5937425930315241,0.04040542391453228,0.03260940639042903," if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5578747628083491,0.5975349608912065,0.07162162162162167,0.029500909274601028," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5838862559241706,0.5922238027501185,0.051368929392062945,0.02901785714285715," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.590521327014218,0.5872451398767188,0.08355189209441738,0.02774762017150506," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.609478672985782,0.596728307254623,0.09921104536489156,0.03082001465811729," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5759013282732448,0.5930315240578337,0.034574520124444785,0.03033323036614982," if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_18-20]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5578747628083491,0.5975349608912065,0.07162162162162167,0.029500909274601028," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5838862559241706,0.5922238027501185,0.051368929392062945,0.02901785714285715," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.590521327014218,0.5872451398767188,0.08355189209441738,0.02774762017150506," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.609478672985782,0.596728307254623,0.09921104536489156,0.03082001465811729," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5759013282732448,0.5930315240578337,0.034574520124444785,0.03033323036614982," if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_18-20]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5578747628083491,0.5975349608912065,0.07162162162162167,0.029500909274601028," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5838862559241706,0.5922238027501185,0.051368929392062945,0.02901785714285715," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.590521327014218,0.5872451398767188,0.08355189209441738,0.02774762017150506," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6104265402843602,0.5948316737790422,0.09921104536489156,0.029403676955345626," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5749525616698292,0.5913723631192226,0.031659068229401066,0.02723519583681877," if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5578747628083491,0.5975349608912065,0.07162162162162167,0.029500909274601028," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5819905213270142,0.5912754860123282,0.05438719476574372,0.027556818181818155," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [charge_degree_Felony__AND__age_18-20]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.590521327014218,0.5872451398767188,0.08355189209441738,0.02774762017150506," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.609478672985782,0.5941204362256994,0.10815850815850814,0.028594834221756404," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5749525616698292,0.5913723631192226,0.031659068229401066,0.02723519583681877," if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5635673624288425,0.5963498459350557,0.035694315004659805,0.02294169762345155," if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [priors_2-3__AND__charge_degree_Felony]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5819905213270142,0.5912754860123282,0.05438719476574372,0.027556818181818155," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [charge_degree_Felony__AND__age_18-20]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.590521327014218,0.5872451398767188,0.08355189209441738,0.02774762017150506," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6018957345971564,0.5910384068278806,0.10772816926663076,0.02570463088352548," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5749525616698292,0.5913723631192226,0.031659068229401066,0.02723519583681877," if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5635673624288425,0.5963498459350557,0.035694315004659805,0.02294169762345155," if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [priors_2-3__AND__charge_degree_Felony]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5838862559241706,0.5910384068278806,0.051368929392062945,0.026812770562770538," if [charge_degree_Felony__AND__age_18-20]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_=0__AND__age_18-20]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.595260663507109,0.5874822190611664,0.12239947940289087,0.026584398215269145," if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_>0__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__charge_degree_Felony]: [two_year_recid] = True
+else [two_year_recid] = False",0.6018957345971564,0.5910384068278806,0.10772816926663076,0.02570463088352548," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5721062618595826,0.590424271154302,0.03925098323125986,0.026476470495392368," if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-misdemeanors_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5635673624288425,0.5963498459350557,0.035694315004659805,0.02294169762345155," if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [priors_2-3__AND__charge_degree_Felony]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5838862559241706,0.5910384068278806,0.051368929392062945,0.02529761904761907," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-misdemeanors_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6,0.5872451398767188,0.10506596202007457,0.017147127909459825," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__charge_degree_Felony]: [two_year_recid] = True
+else [two_year_recid] = False",0.6018957345971564,0.5910384068278806,0.10772816926663076,0.02570463088352548," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5749525616698292,0.5880540412420004,0.047997338916391075,0.02331530280243599," if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5635673624288425,0.5963498459350557,0.035694315004659805,0.02294169762345155," if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [priors_2-3__AND__charge_degree_Felony]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5838862559241706,0.5905642484589853,0.051368929392062945,0.023809523809523836," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6,0.5872451398767188,0.10506596202007457,0.017147127909459825," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__charge_degree_Felony]: [two_year_recid] = True
+else [two_year_recid] = False",0.6028436018957346,0.5874822190611664,0.0868029406490945,0.019837932308032158," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_18-20]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5749525616698292,0.5880540412420004,0.047997338916391075,0.02331530280243599," if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5635673624288425,0.5963498459350557,0.035694315004659805,0.02294169762345155," if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [priors_2-3__AND__charge_degree_Felony]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5838862559241706,0.5905642484589853,0.051368929392062945,0.023809523809523836," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6,0.5872451398767188,0.10506596202007457,0.017147127909459825," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__charge_degree_Felony]: [two_year_recid] = True
+else [two_year_recid] = False",0.6028436018957346,0.5874822190611664,0.0868029406490945,0.019837932308032158," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_18-20]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5749525616698292,0.5880540412420004,0.047997338916391075,0.02331530280243599," if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5635673624288425,0.5963498459350557,0.035694315004659805,0.02294169762345155," if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [priors_2-3__AND__charge_degree_Felony]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5838862559241706,0.5891417733522997,0.04821435525957085,0.022375541125541132," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6,0.5872451398767188,0.10506596202007457,0.017147127909459825," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__charge_degree_Felony]: [two_year_recid] = True
+else [two_year_recid] = False",0.6028436018957346,0.5874822190611664,0.0868029406490945,0.019837932308032158," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_18-20]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6005692599620494,0.5871059492770799,0.1085761246013266,0.016999731684054664," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__charge_degree_Felony]: [two_year_recid] = True
+else [two_year_recid] = False",0.5635673624288425,0.5963498459350557,0.035694315004659805,0.02294169762345155," if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [priors_2-3__AND__charge_degree_Felony]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5706161137440758,0.5877192982456141,0.06659656501927796,0.02075216450216455," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6,0.5872451398767188,0.10506596202007457,0.017147127909459825," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__charge_degree_Felony]: [two_year_recid] = True
+else [two_year_recid] = False",0.6028436018957346,0.5874822190611664,0.0868029406490945,0.019837932308032158," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_18-20]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6005692599620494,0.5871059492770799,0.1085761246013266,0.016999731684054664," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__charge_degree_Felony]: [two_year_recid] = True
+else [two_year_recid] = False",0.547438330170778,0.5916093861104527,0.06046908977943455,0.020314904331877548," if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [gender_Female__AND__priors_0]: [two_year_recid] = False
+else if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [gender_Female__AND__priors_1]: [two_year_recid] = False
+else if [gender_Male__AND__juvenile-crimes_=0]: [two_year_recid] = False
+else [two_year_recid] = True"
+0.5706161137440758,0.5877192982456141,0.06659656501927796,0.02075216450216455," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6,0.5872451398767188,0.10506596202007457,0.017147127909459825," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__charge_degree_Felony]: [two_year_recid] = True
+else [two_year_recid] = False",0.6028436018957346,0.5874822190611664,0.0868029406490945,0.019837932308032158," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_18-20]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6005692599620494,0.5871059492770799,0.1085761246013266,0.016999731684054664," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__charge_degree_Felony]: [two_year_recid] = True
+else [two_year_recid] = False",0.547438330170778,0.5916093861104527,0.06046908977943455,0.020314904331877548," if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [gender_Female__AND__priors_0]: [two_year_recid] = False
+else if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [gender_Female__AND__priors_1]: [two_year_recid] = False
+else if [gender_Male__AND__juvenile-crimes_=0]: [two_year_recid] = False
+else [two_year_recid] = True"
+0.5687203791469194,0.5867709815078236,0.06961483039295874,0.019291125541125498," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [charge_degree_Felony__AND__age_18-20]: [two_year_recid] = True
+else if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6,0.5872451398767188,0.10506596202007457,0.017147127909459825," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__charge_degree_Felony]: [two_year_recid] = True
+else [two_year_recid] = False",0.6028436018957346,0.5874822190611664,0.0868029406490945,0.019837932308032158," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_18-20]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6005692599620494,0.5871059492770799,0.1085761246013266,0.016999731684054664," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__charge_degree_Felony]: [two_year_recid] = True
+else [two_year_recid] = False",0.5692599620493358,0.5916093861104527,0.05512581547064299,0.011097813078011165," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5706161137440758,0.586533902323376,0.06659656501927796,0.01854707792207788," if [charge_degree_Felony__AND__age_18-20]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [juvenile-crimes_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6,0.5872451398767188,0.10506596202007457,0.017147127909459825," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__charge_degree_Felony]: [two_year_recid] = True
+else [two_year_recid] = False",0.5981042654028436,0.5855855855855856,0.08059888829119599,0.013856177867163366," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6005692599620494,0.5871059492770799,0.1085761246013266,0.016999731684054664," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__charge_degree_Felony]: [two_year_recid] = True
+else [two_year_recid] = False",0.5692599620493358,0.5916093861104527,0.05512581547064299,0.011097813078011165," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5706161137440758,0.586533902323376,0.06659656501927796,0.017031926406926412," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-misdemeanors_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6,0.5872451398767188,0.10506596202007457,0.017147127909459825," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__charge_degree_Felony]: [two_year_recid] = True
+else [two_year_recid] = False",0.5981042654028436,0.5855855855855856,0.08059888829119599,0.013856177867163366," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6005692599620494,0.5871059492770799,0.1085761246013266,0.016999731684054664," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__charge_degree_Felony]: [two_year_recid] = True
+else [two_year_recid] = False",0.5692599620493358,0.5916093861104527,0.05512581547064299,0.011097813078011165," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5706161137440758,0.5860597439544808,0.06659656501927796,0.01554383116883118," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6028436018957346,0.586533902323376,0.08781132298712302,0.010889330950695109," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [priors_2-3__AND__charge_degree_Felony]: [two_year_recid] = True
+else [two_year_recid] = False",0.5981042654028436,0.5855855855855856,0.08059888829119599,0.013856177867163366," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6005692599620494,0.5871059492770799,0.1085761246013266,0.016999731684054664," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__charge_degree_Felony]: [two_year_recid] = True
+else [two_year_recid] = False",0.5692599620493358,0.5916093861104527,0.05512581547064299,0.011097813078011165," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5706161137440758,0.5860597439544808,0.06659656501927796,0.01554383116883118," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-crimes_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6028436018957346,0.586533902323376,0.08781132298712302,0.010889330950695109," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [priors_2-3__AND__charge_degree_Felony]: [two_year_recid] = True
+else [two_year_recid] = False",0.5981042654028436,0.5855855855855856,0.08059888829119599,0.013856177867163366," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5664136622390892,0.5856838113296989,0.04447531649284836,0.01474723059613492," if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_>45__AND__charge_degree_Misdemeanor]: [two_year_recid] = False
+else if [age_>45__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5692599620493358,0.5916093861104527,0.05512581547064299,0.011097813078011165," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5706161137440758,0.5846372688477952,0.06344199088678587,0.014109848484848475," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6028436018957346,0.586533902323376,0.08781132298712302,0.010889330950695109," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [priors_2-3__AND__charge_degree_Felony]: [two_year_recid] = True
+else [two_year_recid] = False",0.5981042654028436,0.5855855855855856,0.08059888829119599,0.013856177867163366," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5664136622390892,0.5856838113296989,0.04447531649284836,0.01474723059613492," if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_>45__AND__charge_degree_Misdemeanor]: [two_year_recid] = False
+else if [age_>45__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5692599620493358,0.5916093861104527,0.05512581547064299,0.011097813078011165," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5601895734597157,0.5817923186344239,0.06577871246640954,0.003165584415584455," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_18-20]: [two_year_recid] = True
+else if [charge_degree_Misdemeanor__AND__juvenile-crimes_>0]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6028436018957346,0.586533902323376,0.08781132298712302,0.010889330950695109," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [priors_2-3__AND__charge_degree_Felony]: [two_year_recid] = True
+else [two_year_recid] = False",0.5981042654028436,0.5855855855855856,0.08059888829119599,0.013856177867163366," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5996204933586338,0.584024650391088,0.06709452716848963,0.00972701670999554," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3]: [two_year_recid] = True
+else [two_year_recid] = False",0.5692599620493358,0.5916093861104527,0.05512581547064299,0.011097813078011165," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5601895734597157,0.5817923186344239,0.06577871246640954,0.003165584415584455," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_18-20]: [two_year_recid] = True
+else if [charge_degree_Misdemeanor__AND__juvenile-crimes_>0]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6028436018957346,0.586533902323376,0.08781132298712302,0.010889330950695109," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [priors_2-3__AND__charge_degree_Felony]: [two_year_recid] = True
+else [two_year_recid] = False",0.5857819905213271,0.5808440018966334,0.07439483593329743,0.010850918663557085," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5996204933586338,0.584024650391088,0.06709452716848963,0.00972701670999554," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3]: [two_year_recid] = True
+else [two_year_recid] = False",0.5692599620493358,0.5916093861104527,0.05512581547064299,0.011097813078011165," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5601895734597157,0.5817923186344239,0.06577871246640954,0.003165584415584455," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_18-20]: [two_year_recid] = True
+else if [charge_degree_Misdemeanor__AND__juvenile-crimes_>0]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6028436018957346,0.586533902323376,0.08781132298712302,0.010889330950695109," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [priors_2-3__AND__charge_degree_Felony]: [two_year_recid] = True
+else [two_year_recid] = False",0.5857819905213271,0.5808440018966334,0.07439483593329743,0.010850918663557085," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5996204933586338,0.584024650391088,0.06709452716848963,0.00972701670999554," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3]: [two_year_recid] = True
+else [two_year_recid] = False",0.5692599620493358,0.5916093861104527,0.05512581547064299,0.011097813078011165," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5601895734597157,0.5817923186344239,0.06577871246640954,0.003165584415584455," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_18-20]: [two_year_recid] = True
+else if [charge_degree_Misdemeanor__AND__juvenile-crimes_>0]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6028436018957346,0.586533902323376,0.08781132298712302,0.010889330950695109," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [priors_2-3__AND__charge_degree_Felony]: [two_year_recid] = True
+else [two_year_recid] = False",0.5857819905213271,0.5808440018966334,0.07439483593329743,0.010850918663557085," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5996204933586338,0.584024650391088,0.06709452716848963,0.00972701670999554," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3]: [two_year_recid] = True
+else [two_year_recid] = False",0.5645161290322581,0.5906612941455321,0.03788443616029824,0.004289910937718577," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5601895734597157,0.5817923186344239,0.06577871246640954,0.003165584415584455," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_18-20]: [two_year_recid] = True
+else if [charge_degree_Misdemeanor__AND__juvenile-crimes_>0]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6018957345971564,0.5834518729255571,0.08126441994833467,0.0063600705800375135," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3]: [two_year_recid] = True
+else [two_year_recid] = False",0.5876777251184834,0.5770507349454718,0.09503317195624883,0.007353220356143941," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [charge_degree_Misdemeanor__AND__juvenile-crimes_>0]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5996204933586338,0.584024650391088,0.06709452716848963,0.00972701670999554," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3]: [two_year_recid] = True
+else [two_year_recid] = False",0.5645161290322581,0.5906612941455321,0.03788443616029824,0.004289910937718577," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5601895734597157,0.5817923186344239,0.06577871246640954,0.003165584415584455," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_18-20]: [two_year_recid] = True
+else if [charge_degree_Misdemeanor__AND__juvenile-crimes_>0]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6018957345971564,0.5834518729255571,0.08126441994833467,0.0063600705800375135," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3]: [two_year_recid] = True
+else [two_year_recid] = False",0.5876777251184834,0.5770507349454718,0.09503317195624883,0.007353220356143941," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [charge_degree_Misdemeanor__AND__juvenile-crimes_>0]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5986717267552182,0.5821284664612467,0.05834817148335847,0.000590746031066014," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False",0.5645161290322581,0.5906612941455321,0.03788443616029824,0.004289910937718577," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5601895734597157,0.5817923186344239,0.06577871246640954,0.003165584415584455," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_18-20]: [two_year_recid] = True
+else if [charge_degree_Misdemeanor__AND__juvenile-crimes_>0]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6018957345971564,0.5834518729255571,0.08126441994833467,0.0063600705800375135," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3]: [two_year_recid] = True
+else [two_year_recid] = False",0.5876777251184834,0.5770507349454718,0.09503317195624883,0.007353220356143941," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [charge_degree_Misdemeanor__AND__juvenile-crimes_>0]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5986717267552182,0.5821284664612467,0.05834817148335847,0.000590746031066014," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False",0.5645161290322581,0.5906612941455321,0.03788443616029824,0.004289910937718577," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5601895734597157,0.5817923186344239,0.06577871246640954,0.003165584415584455," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_18-20]: [two_year_recid] = True
+else if [charge_degree_Misdemeanor__AND__juvenile-crimes_>0]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6018957345971564,0.5834518729255571,0.08126441994833467,0.0063600705800375135," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3]: [two_year_recid] = True
+else [two_year_recid] = False",0.5857819905213271,0.5770507349454718,0.08622915545992471,0.006630669521586197," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__age_23-25]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5986717267552182,0.5821284664612467,0.05834817148335847,0.000590746031066014," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False",0.5645161290322581,0.5906612941455321,0.03788443616029824,0.004289910937718577," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5601895734597157,0.5817923186344239,0.06577871246640954,0.003165584415584455," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_18-20]: [two_year_recid] = True
+else if [charge_degree_Misdemeanor__AND__juvenile-crimes_>0]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6,0.5817923186344239,0.07524994577113442,0.003355923440889197," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False",0.5658767772511848,0.5749170222854434,0.04844898691052535,0.005862096340878309," if [juvenile-crimes_=0__AND__age_18-20]: [two_year_recid] = True
+else if [gender_Female__AND__priors_0]: [two_year_recid] = False
+else if [priors_2-3__AND__age_23-25]: [two_year_recid] = True
+else if [gender_Male__AND__juvenile-crimes_=0]: [two_year_recid] = False
+else [two_year_recid] = True",0.5986717267552182,0.5821284664612467,0.05834817148335847,0.000590746031066014," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False",0.5645161290322581,0.5906612941455321,0.03788443616029824,0.004289910937718577," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5601895734597157,0.5817923186344239,0.06577871246640954,0.003165584415584455," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_18-20]: [two_year_recid] = True
+else if [charge_degree_Misdemeanor__AND__juvenile-crimes_>0]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6,0.5817923186344239,0.07524994577113442,0.003355923440889197," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False",0.5914691943127962,0.5739687055476529,0.08319885242962166,0.0015762653556433692," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_18-20]: [two_year_recid] = True
+else if [charge_degree_Misdemeanor__AND__juvenile-crimes_>0]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5986717267552182,0.5821284664612467,0.05834817148335847,0.000590746031066014," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False",0.5645161290322581,0.5906612941455321,0.03788443616029824,0.004289910937718577," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5601895734597157,0.5817923186344239,0.06577871246640954,0.003165584415584455," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_18-20]: [two_year_recid] = True
+else if [charge_degree_Misdemeanor__AND__juvenile-crimes_>0]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.6,0.5817923186344239,0.07524994577113442,0.003355923440889197," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False",0.5914691943127962,0.5739687055476529,0.08319885242962166,0.0015762653556433692," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_18-20]: [two_year_recid] = True
+else if [charge_degree_Misdemeanor__AND__juvenile-crimes_>0]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5986717267552182,0.5821284664612467,0.05834817148335847,0.000590746031066014," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False",0.5654648956356736,0.5833135814173975,0.01694625660142901,3.108631114290272e-05," if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__charge_degree_Misdemeanor]: [two_year_recid] = False
+else if [age_>45__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45]: [two_year_recid] = False
+else if [priors_2-3__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5563981042654028,0.5784732100521575,0.05316041593644116,0.0012175324675325339," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-misdemeanors_=0__AND__age_18-20]: [two_year_recid] = True
+else if [charge_degree_Misdemeanor__AND__juvenile-crimes_>0]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5971563981042654,0.5803698435277382,0.040484313068170574,0.002641131977926814," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [gender_Male__AND__age_18-20]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False",0.5914691943127962,0.5739687055476529,0.08319885242962166,0.0015762653556433692," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_18-20]: [two_year_recid] = True
+else if [charge_degree_Misdemeanor__AND__juvenile-crimes_>0]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5986717267552182,0.5821284664612467,0.05834817148335847,0.000590746031066014," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False",0.5654648956356736,0.5833135814173975,0.01694625660142901,3.108631114290272e-05," if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__charge_degree_Misdemeanor]: [two_year_recid] = False
+else if [age_>45__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45]: [two_year_recid] = False
+else if [priors_2-3__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5563981042654028,0.5784732100521575,0.05316041593644116,0.0012175324675325339," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [juvenile-misdemeanors_=0__AND__age_18-20]: [two_year_recid] = True
+else if [charge_degree_Misdemeanor__AND__juvenile-crimes_>0]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5943127962085308,0.5796586059743954,0.10762950839068453,0.0017262888162108414," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__juvenile-misdemeanors_>0]: [two_year_recid] = True
+else if [priors_2-3__AND__charge_degree_Felony]: [two_year_recid] = True
+else [two_year_recid] = False",0.5914691943127962,0.5739687055476529,0.08319885242962166,0.0015762653556433692," if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [age_18-20]: [two_year_recid] = True
+else if [charge_degree_Misdemeanor__AND__juvenile-crimes_>0]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5986717267552182,0.5821284664612467,0.05834817148335847,0.000590746031066014," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False",0.5654648956356736,0.5833135814173975,0.01694625660142901,3.108631114290272e-05," if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__charge_degree_Misdemeanor]: [two_year_recid] = False
+else if [age_>45__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45]: [two_year_recid] = False
+else if [priors_2-3__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5620853080568721,0.5749170222854434,0.07208786073139384,0.00037878787878786735," if [gender_Female__AND__priors_0]: [two_year_recid] = False
+else if [priors_0__AND__age_26-45]: [two_year_recid] = False
+else if [charge_degree_Misdemeanor__AND__age_21-22]: [two_year_recid] = True
+else if [charge_degree_Felony__AND__age_18-20]: [two_year_recid] = True
+else if [juvenile-misdemeanors_=0__AND__age_26-45]: [two_year_recid] = True
+else [two_year_recid] = False",0.5867298578199052,0.576339497392129,0.06357594999112615,0.0005428369129101274," if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [priors_2-3__AND__charge_degree_Felony]: [two_year_recid] = True
+else [two_year_recid] = False",0.5734597156398105,0.5734945471787577,0.03568226645149719,0.00019674552979198623," if [age_>45__AND__gender_Female]: [two_year_recid] = False
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-felonies_=0__AND__age_18-20]: [two_year_recid] = True
+else if [priors_2-3__AND__charge_degree_Felony]: [two_year_recid] = True
+else [two_year_recid] = False",0.5986717267552182,0.5821284664612467,0.05834817148335847,0.000590746031066014," if [age_>45__AND__priors_2-3]: [two_year_recid] = False
+else if [age_23-25__AND__priors_>3]: [two_year_recid] = True
+else if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [priors_2-3__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False",0.5654648956356736,0.5833135814173975,0.01694625660142901,3.108631114290272e-05," if [juvenile-crimes_>0__AND__priors_>3]: [two_year_recid] = True
+else if [gender_Female__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45__AND__charge_degree_Misdemeanor]: [two_year_recid] = False
+else if [age_>45__AND__priors_>3]: [two_year_recid] = True
+else if [age_>45]: [two_year_recid] = False
+else if [priors_2-3__AND__juvenile-felonies_=0]: [two_year_recid] = True
+else [two_year_recid] = False"
+0.5459715639810426,0.5248933143669986,0.0,0.0,[two_year_recid] = False,0.5450236966824644,0.5251303935514462,0.0,0.0,[two_year_recid] = False,0.5270142180094787,0.5296348980559507,0.0,0.0,[two_year_recid] = False,0.5332068311195446,0.5280872244607727,0.0,0.0,[two_year_recid] = False,0.49430740037950666,0.5378051671012088,0.0,0.0,[two_year_recid] = False
