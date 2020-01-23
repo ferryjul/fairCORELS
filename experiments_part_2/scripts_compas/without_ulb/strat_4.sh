@@ -1,8 +1,8 @@
 #!/bin/bash
-#SBATCH --time=01:00:00
+#SBATCH --time=00:30:00
 #SBATCH --array=1-6
 #SBATCH --ntasks=75
-#SBATCH --mem-per-cpu=6G
+#SBATCH --mem-per-cpu=4G
 
 #SBATCH --account=def-gambsseb
 #SBATCH --mail-user=a.u.matchi@gmail.com
