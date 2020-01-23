@@ -49,6 +49,14 @@ def rules():
     dropList = ["default_payment_next_month"] + gender + marital 
 
     dataset.drop(labels=dropList, axis=1, inplace=True)
+
+    #add neg cols
+    cols = list(dataset)
+    df_neg = pd.DataFrame()
+    
+
+    for col in cols:
+        df_neg['not_{}'.format(col)] = 1 - dataset[col]
     
     print('ones rules -->>>>>>>>', len(list(dataset)))
 
@@ -75,7 +83,7 @@ def rules():
             df_rules[key] = np.logical_and(dataset[key1], dataset[key2]).astype(int)
         
 
-    df_all = pd.concat([df_gender, df_marital, dataset, df_rules], axis=1)
+    df_all = pd.concat([df_gender, df_marital, dataset, df_neg, df_rules], axis=1)
     columns = list(df_all)
 
     #all data

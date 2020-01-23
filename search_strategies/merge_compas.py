@@ -7,7 +7,6 @@ strategies = ['bfs', 'curious', 'lower_bound', 'bfs_objective_aware']
 
 
 
-
 metrics = ['statistical_parity', 'predictive_parity', 'predictive_equality', 'equal_opportunity', 'equalized_odds', 'conditional_use_accuracy_equality']
 
 datasets_map = {

@@ -28,6 +28,14 @@ def rules():
     dropList = ["credit_rating"] + age 
     dataset.drop(labels=dropList, axis=1, inplace=True)
 
+    #add neg cols
+    cols = list(dataset)
+    df_neg = pd.DataFrame()
+    
+
+    for col in cols:
+        df_neg['not_{}'.format(col)] = 1 - dataset[col]
+
     print('ones rules -->>>>>>>>', len(list(dataset)))
 
     ll = fpgrowth(dataset, min_support=0.35, max_len=2, use_colnames=True)
@@ -54,7 +62,7 @@ def rules():
         
 
     #df_all = pd.concat([df_age, df_marital, dataset, df_rules], axis=1)
-    df_all = pd.concat([df_age, dataset, df_rules], axis=1)
+    df_all = pd.concat([df_age, dataset, df_neg, df_rules], axis=1)
     columns = list(df_all)
 
     #all data
