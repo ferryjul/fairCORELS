@@ -1,3 +1,4 @@
+upload_datasets.sh
 data/
 search_strategies/pareto_merged*
 search_strategies/pareto
