@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH --time=02:00:00
+#SBATCH --time=05:00:00
 #SBATCH --array=1-6
-#SBATCH --ntasks=60
+#SBATCH --ntasks=75
 #SBATCH --mem-per-cpu=6G
 
 #SBATCH --account=def-gambsseb
