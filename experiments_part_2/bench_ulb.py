@@ -26,17 +26,16 @@ dataset, decision, prediction_name, min_feature, min_pos, maj_feature, maj_pos =
 #------------------------setup config
 
 #iterations
-N_ITER = 5*10**6
+N_ITER = 4*10**6
 
 #fairness constraint
 fairness_metric_name = get_metric(args.metric)
 fairness_metric = args.metric
 
 #epsilons
-epsilon_range = np.arange(0.95, 1.001, 0.001)
-base = [0.0, 0.1, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
-epsilon_range = base + list(epsilon_range)
-epsilons = [round(x,3) for x in epsilon_range] #60 values
+base = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
+epsilon_range = base + list(np.linspace(0.91, 0.99, num=10))
+epsilons = [round(x,3) for x in epsilon_range] #20 values
 
 
 # use ulb
@@ -58,7 +57,7 @@ X, y, features, prediction = load_from_csv("../data/{}/{}_rules_full.csv".format
 
 
 # creating k-folds
-kf = KFold(n_splits=5, shuffle=True, random_state=42)
+kf = KFold(n_splits=10, shuffle=True, random_state=42)
 
 
 folds = []
