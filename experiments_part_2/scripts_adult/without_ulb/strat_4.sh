@@ -1,6 +1,6 @@
 #!/bin/bash
-#SBATCH --time=06:00:00
-#SBATCH --array=1-6
+#SBATCH --time=07:00:00
+#SBATCH --array=1,6
 #SBATCH --ntasks=50
 #SBATCH --mem-per-cpu=6G
 
