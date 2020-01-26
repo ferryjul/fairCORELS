@@ -114,11 +114,11 @@ if args.id==8:
 
 
 # parameters
-N_ITER = 10*10**6
+N_ITER = 1*10**6
 
 # fairness metric / epsilon range
 fairness_metric = 1
-epsilon = 0.998
+epsilon = 0.98
 
 
 # use sens. attri
@@ -146,7 +146,7 @@ clf = CorelsClassifier(n_iter=N_ITER,
                         epsilon=epsilon,
                         maj_pos=maj_pos, 
                         min_pos=min_pos,
-                        verbosity=["progress", "rulelist"]
+                        verbosity=["loud", "rulelist"]
                         )
 
 clf.fit(X_train, y_train, features=features, prediction_name=prediction_name)

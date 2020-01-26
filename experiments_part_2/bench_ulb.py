@@ -33,9 +33,9 @@ fairness_metric_name = get_metric(args.metric)
 fairness_metric = args.metric
 
 #epsilons
-base = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
-epsilon_range = base + list(np.linspace(0.91, 0.99, num=10))
-epsilons = [round(x,3) for x in epsilon_range] #20 values
+base = [0.0, 0.1, 0.3, 0.5, 0.7, 0.9, 0.91, 0.92, 0.93, 0.94]
+epsilon_range = base + list(np.linspace(0.95, 0.99, num=20))
+epsilons = [round(x,3) for x in epsilon_range] #30 values
 
 
 # use ulb
@@ -57,7 +57,7 @@ X, y, features, prediction = load_from_csv("../data/{}/{}_rules_full.csv".format
 
 
 # creating k-folds
-kf = KFold(n_splits=10, shuffle=True, random_state=42)
+kf = KFold(n_splits=5, shuffle=True, random_state=42)
 
 
 folds = []
@@ -161,10 +161,11 @@ def process_results(epsilons, results, save_path, metric_name):
 
             row_model['mdl_fold_{}'.format(fold_id)] = mdl
 
-        row['accuracy_train'] = np.mean(accuracy_train)
-        row['unfairness_train'] = np.mean(unfairness_train)
+        
         row['accuracy'] = np.mean(accuracy_test)
         row['unfairness'] = np.mean(unfairness_test)
+        row['accuracy_train'] = np.mean(accuracy_train)
+        row['unfairness_train'] = np.mean(unfairness_train)
         row['epsilon'] = np.mean(epsilon)
 
         row_list.append(row)
