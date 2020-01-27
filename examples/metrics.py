@@ -89,6 +89,7 @@ class ConfusionMatrix(namedtuple('ConfusionMatrix', 'minority majority label tru
         return matrix_min, matrix_maj
 
 class Metric(namedtuple('Metric', 'cm_minority cm_majority')):
+
     def statistical_parity(self):
         statistical_parity_maj = float(self.cm_majority['TP'] + self.cm_majority['FP']) / max((self.cm_majority['TP'] + self.cm_majority['FP'] + self.cm_majority['FN'] + self.cm_majority['TN']), 1)
         statistical_parity_min = float(self.cm_minority['TP'] + self.cm_minority['FP']) / max((self.cm_minority['TP'] + self.cm_minority['FP'] + self.cm_minority['FN'] + self.cm_minority['TN']), 1)
@@ -108,3 +109,26 @@ class Metric(namedtuple('Metric', 'cm_minority cm_majority')):
 
     def conditional_use_accuracy_equality(self):
         return (np.fabs(self.cm_majority['PPV'] - self.cm_minority['PPV']) + np.fabs(self.cm_majority['NPV'] - self.cm_minority['NPV']))/2
+
+    def fairness_metric(self, id):
+
+        if id == 1:
+            return self.statistical_parity()
+
+        if id == 2:
+            return self.predictive_parity()
+
+        if id == 3:
+            return self.predictive_equality()
+
+        if id == 4:
+            return self.equal_opportunity()
+
+        if id == 5:
+            return self.conditional_procedure_accuracy_equality()
+
+        if id == 6:
+            return self.conditional_use_accuracy_equality()
+
+        
+
