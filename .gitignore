@@ -5,7 +5,7 @@ experiments_part_2/pareto_*
 experiments_part_2/pareto
 experiments_part_2/results
 experiments_part_2/results_*
-experiments_part_2/plotting_scripts
+experiments_part_2/plotting_scripts/
 backup_exp/
 experiments/reports/
 experiments/perfs_results/
