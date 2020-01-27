@@ -22,10 +22,8 @@ args = parser.parse_args()
 
 
 dataset = {
-    1 : 'adult_no_relationship_neg_with_ulb',
-    2 : 'adult_no_relationship_neg_without_ulb',
-    3 : 'compas_neg_with_ulb',
-    4 : 'compas_neg_without_ulb'
+    1 : 'adult_without_ulb',
+    2 : 'compas_without_ulb'
 }
 
 metric = {
@@ -60,8 +58,8 @@ def compute_front(input_file, output_file):
     with open(input_file, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            error = 1.0 - float(row['accuracy_test'])
-            unf = float(row['unfairness_test'])
+            error = 1.0 - float(row['accuracy'])
+            unf = float(row['unfairness'])
             errors.append(error)
             unfairness.append(unf)
             pareto_input.append([error, unf])
