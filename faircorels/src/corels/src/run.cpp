@@ -53,9 +53,18 @@ int run_corels_begin(double c, char* vstring, int curiosity_policy,
     //printf("seed = %d\n", seed);
     srand(seed);
     // Check arguments
-    if(BFSmode < 0 || BFSmode > 4) {
-        printf("Error : BFSmode should be in {1, 2, 3, 4}\n");
+    if(BFSmode < 0 || BFSmode > 7) {
+        printf("Error : BFSmode should be in {1, 2, 3, 4, 5, 6, 7}\n");
         exit(-1);
+    }
+    if(BFSmode == 5) {
+        printf("Using test mode {BFS - objective + unfairness aware}\n");
+    }
+    if(BFSmode == 6) {
+        printf("Using test mode {best-first-search - objective + unfairness}\n");
+    }
+    if(BFSmode == 7) {
+        printf("Using test mode {best-first-search - BFS + objective + unfairness}\n");
     }
     modeBFS = BFSmode;
     map_type_arg = map_type;
@@ -167,6 +176,15 @@ int run_corels_begin(double c, char* vstring, int curiosity_policy,
                 break;
             case 4:
                 g_queue = new Queue(base_cmp_random, run_type);
+                break;
+            case 5:
+                g_queue = new Queue(base_cmp_BFS_ObjAndUnf, run_type);
+                break;
+            case 6:
+                g_queue = new Queue(base_cmp_best_ObjAndUnf, run_type);
+                break;
+            case 7:
+                g_queue = new Queue(base_cmp_best_BFSObjAndUnf, run_type);
                 break;
         }
     }

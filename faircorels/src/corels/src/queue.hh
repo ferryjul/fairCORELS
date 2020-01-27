@@ -24,6 +24,26 @@ static std::function<bool(Node*, Node*)> base_cmp_fifo = [](Node* left, Node* ri
     }
 };
 
+// 5 : base_cmp_BFS_ObjAndUnf
+static std::function<bool(Node*, Node*)> base_cmp_BFS_ObjAndUnf = [](Node* left, Node* right) {
+    if(left->depth() == right->depth()) {
+        return ((left->objective() - left->unfairness()) >= (right->objective() - right->unfairness()));
+    } else {
+        return left->depth() >= right->depth();
+    }
+};
+
+// 6 : base_cmp_best_ObjAndUnf
+static std::function<bool(Node*, Node*)> base_cmp_best_ObjAndUnf = [](Node* left, Node* right) {
+    return ((left->objective() - left->unfairness()) >= (right->objective() - right->unfairness()));
+};
+
+// 7 : base_cmp_best_BFSObjAndUnf
+static std::function<bool(Node*, Node*)> base_cmp_best_BFSObjAndUnf = [](Node* left, Node* right) {
+    return ((left->objective() - left->unfairness() - left->depth()) >= (right->objective() - right->unfairness() - right->depth()));
+};
+
+
 static std::function<bool(Node*, Node*)> base_cmp_obj = [](Node* left, Node* right) {
     if(left->depth() == right->depth()) {
         return (left->objective() >= right->objective());

@@ -701,6 +701,7 @@ void evaluate_children(CacheTree* tree,
             logger->addToPermMapInsertionTime(time_diff(t3));
             // n is NULL if this rule fails the permutaiton bound
             if (n) {
+                n->set_unf(unfairness);
                 pushingTicket++;
                 n->set_num(pushingTicket);
                 double t4 = timestamp();
