@@ -1,3 +1,4 @@
+iter_*
 upload_datasets.sh
 data/
 experiments_part_2/pareto_*

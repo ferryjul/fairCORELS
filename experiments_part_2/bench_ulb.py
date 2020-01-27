@@ -26,7 +26,9 @@ dataset, decision, prediction_name, min_feature, min_pos, maj_feature, maj_pos =
 #------------------------setup config
 
 #iterations
-N_ITER = 4*10**6
+#N_ITER = 4*10**6
+
+N_ITER = 10*10**6
 
 #fairness constraint
 fairness_metric_name = get_metric(args.metric)
