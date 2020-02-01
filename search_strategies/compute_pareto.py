@@ -23,7 +23,9 @@ args = parser.parse_args()
 
 dataset = {
     1 : 'adult_no_relationship_neg_without_ulb',
-    2 : 'compas_neg_without_ulb'
+    2 : 'compas_neg_without_ulb',
+    3 : 'adult_no_relationship_neg_with_ulb',
+    4 : 'compas_neg_with_ulb'
 }
 
 metric = {

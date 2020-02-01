@@ -48,7 +48,7 @@ strategies_map = {
 }
 
 #save direcory
-save_dir = "./result_merged/{}".format(dataset[args.dataset])
+save_dir = "./results_merged/{}".format(dataset[args.dataset])
 os.makedirs(save_dir, exist_ok=True)
 
 
