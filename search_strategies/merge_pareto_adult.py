@@ -11,8 +11,8 @@ strategies = ['bfs', 'curious', 'lower_bound', 'bfs_objective_aware']
 metrics = ['statistical_parity', 'predictive_parity', 'predictive_equality', 'equal_opportunity', 'equalized_odds', 'conditional_use_accuracy_equality']
 
 datasets_map = {
-    'adult_no_relationship_neg_without_ulb': 'Adult without ULB',
-    'adult_no_relationship_neg_with_ulb': 'Adult with ULB'
+    'adult_no_relationship_neg_without_ulb': 'without ULB',
+    'adult_no_relationship_neg_with_ulb': 'with ULB'
 }
 
 strategies_map = {

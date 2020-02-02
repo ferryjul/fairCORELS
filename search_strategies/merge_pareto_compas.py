@@ -11,8 +11,8 @@ strategies = ['bfs', 'curious', 'lower_bound', 'bfs_objective_aware']
 metrics = ['statistical_parity', 'predictive_parity', 'predictive_equality', 'equal_opportunity', 'equalized_odds', 'conditional_use_accuracy_equality']
 
 datasets_map = {
-    'compas_neg_without_ulb': 'COMPAS without ULB',
-    'compas_neg_with_ulb': 'COMPAS with ULB'
+    'compas_neg_without_ulb': 'without ULB',
+    'compas_neg_with_ulb': 'with ULB'
 }
 
 strategies_map = {

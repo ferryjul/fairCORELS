@@ -1,0 +1,36 @@
+-------------- unconstrained
+acc = 0.829537953795379
+sp = 0.09155229928798
+eop = 0.0134784314909288 
+
+ if [capitalGain:>=5119] then [high]
+else if [maritalStatus:single] then [low]
+else if [workclass:private &&  education:bachelors] then [high]
+else if [education:masters_doctorate] then [high]
+else if [capitalLoss:1882-1978] then [high]
+else [low]
+
+
+-------------- sp
+acc = 0.800990099009901
+sp = 0.0199647623332758
+
+ if [capitalGain:>=5119] then [high]
+else if [occupation:not_professional] then [low]
+else if [hoursPerWeek:>50 && workclass:private] then [low]
+else if [age:36-61] then [high]
+else [low]
+
+--------------- eop
+acc = 0.823762376237623
+eop = 0.00865575677291152
+
+ if [capitalGain:>=5119] then [high]
+else if [maritalStatus:single] then [low]
+else if [capitalLoss:1882-1978] then [high]
+else if [workclass:private && education:bachelors] then [high]
+else if [education:masters_doctorate] then [high]
+else [low]
+
+
+
