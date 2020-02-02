@@ -74,6 +74,6 @@ def rules():
     print('all rules -->>>>>>>>', len(list(df_all)))
 
     #saving
-    df_all.to_csv("./adult_new_full.csv", encoding='utf-8', index=False)
+    df_all.to_csv("./adult_new_rules_full.csv", encoding='utf-8', index=False)
 
 rules()
