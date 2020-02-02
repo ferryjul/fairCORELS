@@ -75,6 +75,15 @@ def get_data(id):
         maj_feature = "race_Caucasian"
         maj_pos = 2
 
+    if id==9:
+        dataset = "adult_new"
+        decision = "income"
+        prediction_name="[income:>50K]"
+        min_feature = "gender_Female"
+        min_pos = 1
+        maj_feature = "gender_Male"
+        maj_pos = 2
+
 
     return dataset, decision, prediction_name, min_feature, min_pos, maj_feature, maj_pos
 
