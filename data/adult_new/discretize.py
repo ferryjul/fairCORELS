@@ -21,6 +21,20 @@ dataset = dataset[to_use]
 
 df_train, df_disc = train_test_split(dataset, stratify=dataset['income'], test_size=0.75, random_state=42)
 
+def process_bin(x):
+    res = ""
+    x = str(x).replace('(', '').replace(')', '').replace('[', '').replace(']', '').replace(' ', '')
+    part_1, part_2 = x.split(',')[0], x.split(',')[1]
+
+    if part_1=='-inf':
+        res = '<' + part_2
+    elif part_2=='inf':
+        res = '>' + part_1
+    else:
+        res = part_1 + '-' + part_2
+    
+    return res
+
 
 for col in num_cols:
     X = df_train[col]
@@ -32,6 +46,7 @@ for col in num_cols:
     splits = [-np.inf] + sorted(splits) + [np.inf]
 
     df_disc[col] = pd.cut(x=df_disc[col], bins=splits)
+    df_disc[col] = df_disc[col].apply(process_bin)
 
 y = df_disc['income']
 df_disc.drop(labels=['income'], axis = 1, inplace = True) 
