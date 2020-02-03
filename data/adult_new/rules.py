@@ -37,7 +37,7 @@ def rules():
     print('ones rules -->>>>>>>>', len(list(dataset)) + len(list(df_neg)))
 
 
-    ll = fpgrowth(dataset, min_support=0.01, max_len=2, use_colnames=True)
+    ll = fpgrowth(dataset, min_support=0.05, max_len=2, use_colnames=True)
 
 
     rules = [list(x) for x in ll['itemsets']]
