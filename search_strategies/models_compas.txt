@@ -1,5 +1,9 @@
--------unconstrained
+-------------------------------------------------------------------------------------------- unconstrained
 acc = 0.681516587677725
+sp = 0.272566790016766
+pp = 0.0466793168880455
+pe = 0.22282319345627
+eopp = 0.212340517836366
 eodds = 0.217581855646318
 cuae = 0.0466793168880455
 
@@ -9,7 +13,48 @@ else if [age:18-20] then [recidivism]
 else if [age:23-25 && priors:2-3] then [recidivism]
 else [no recidivism]
 
----- eodds
+
+-------------------------------------------------------------------------------------------- sp
+acc = 0.581042654028436
+sp = 0.0406575225095466
+
+ if [juvenile-crimes:0 && age:26-45] then [no recidivism]
+else if [age:23-25 && priors:1] then [no recidivism]
+else if [juvenile-crimes:0 && priors:0] then [no recidivism]
+else [recidivism]
+
+-------------------------------------------------------------------------------------------- pp
+acc = 0.642654028436018
+pp = 0.0059970014992503
+
+ if [age:26-45 && priors:>3] then [recidivism]
+else if [juvenile-crimes:0 && age:18-20] then [recidivism]
+else if [juvenile-misdemeanors:0 && juvenile-felonies:0] then [no recidivism]
+else if [age:26-45] then [no recidivism]
+else [recidivism]
+
+
+-------------------------------------------------------------------------------------------- pe
+acc = 0.597156398104265
+pe = 0.0561444266976429
+
+ if [charge_degree:Misdemeanor && age:26-45] then [no recidivism]
+else if [priors:0 && charge_degree:Felony] then [no recidivism]
+else if [juvenile-misdemeanors:0 && priors:1] then [no recidivism]
+else [recidivism]
+
+
+
+-------------------------------------------------------------------------------------------- eopp
+acc = 0.585781990521327
+eopp = 0.0728638756877205
+
+ if [juvenile-crimes:>0 && gender:Male] then [recidivism]
+else if [priors:>3 && gender:Female] then [recidivism]
+else if [priors:2-3 && charge_degree:Felony] then [recidivism]
+else [no recidivism]
+
+-------------------------------------------------------------------------------------------- eodds
 acc = 0.591469194312796
 eodds = 0.0481024765399544
 
@@ -18,7 +63,7 @@ else if [juvenile-crimes:0 && age:26-45] then [no recidivism]
 else if [juvenile-crimes:0 && priors:0] then [no recidivism]
 else [recidivism]
 
------ cuae
+-------------------------------------------------------------------------------------------- cuae
 acc = 0.64516129032258
 cuae = 0.00920810313075504
 

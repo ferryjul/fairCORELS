@@ -1,7 +1,11 @@
--------------- unconstrained
+-------------------------------------------------------------------------------------------- unconstrained
 acc = 0.829537953795379
 sp = 0.09155229928798
-eop = 0.0134784314909288 
+pp = 0.265930153411173
+pe = 0.00704064240172386
+eopp = 0.0134784314909288
+eodds = 0.0102595369463263
+cuae = 0.265930153411173
 
  if [capitalGain:>=5119] then [high]
 else if [maritalStatus:single] then [low]
@@ -10,8 +14,7 @@ else if [education:masters_doctorate] then [high]
 else if [capitalLoss:1882-1978] then [high]
 else [low]
 
-
--------------- sp
+-------------------------------------------------------------------------------------------- sp
 acc = 0.800990099009901
 sp = 0.0199647623332758
 
@@ -21,7 +24,31 @@ else if [hoursPerWeek:>50 && workclass:private] then [low]
 else if [age:36-61] then [high]
 else [low]
 
---------------- eop
+-------------------------------------------------------------------------------------------- pp
+acc = 0.819636963696369
+pp = 0.0369479119667118
+
+ if [age:<21] then [low]
+else if [capitalGain:>7073] then [high]
+else if [capitalLoss:2385-2581] then [high]
+else if [not_capitalLoss:1882-1978] then [low]
+else if [maritalStatus:married] then [high]
+else [low]
+
+-------------------------------------------------------------------------------------------- pe
+acc = 0.828052805280528
+pe = 0.00199373073794987
+
+ if [capitalGain:>5119] then [high]
+else if [maritalStatus:single] then [low]
+else if [capitalLoss:1882-1978] then [high]
+else if [education:masters_doctorate] then [high]
+else if [education:prof_school] then [high]
+else [low]
+
+
+
+-------------------------------------------------------------------------------------------- eopp
 acc = 0.823762376237623
 eop = 0.00865575677291152
 
@@ -32,5 +59,29 @@ else if [workclass:private && education:bachelors] then [high]
 else if [education:masters_doctorate] then [high]
 else [low]
 
+
+-------------------------------------------------------------------------------------------- eodds
+acc = 0.823927392739274
+eodds = 0.00644211277526563
+
+ if [capitalGain:>5119] then [high]
+else if [maritalStatus:single] then [low]
+else if [capitalLoss:1882-1978] then [high]
+else if [hoursPerWeek:<34] then [low]
+else if [education:masters_doctorate] then [high]
+else [low]
+
+
+
+-------------------------------------------------------------------------------------------- cuae
+acc = 0.823762376237623
+cuae = 0.0565322446258956
+
+ if [capitalGain:5317-7073] then [low]
+else if [capitalGain:>5119] then [high]
+else if [capitalLoss:1882-1978] then [high]
+else if [capitalLoss:1821-1862] then [high]
+else if [capitalLoss:2385-2581] then [high]
+else [low]
 
 
