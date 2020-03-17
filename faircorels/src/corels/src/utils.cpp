@@ -209,7 +209,7 @@ compData computeFinalFairness(int nsamples,
     int nb;
     int nb2;
     int pm;
-    double comp_scores[1+rulelist.size()];
+    vector<double> comp_scores(1+rulelist.size()); //double comp_scores[1+rulelist.size()];
     rule_vinit(nsamples, &captured_it);
     rule_vinit(nsamples, &not_captured_yet);
     rule_vinit(nsamples, &preds_prefix);
@@ -242,7 +242,7 @@ compData computeFinalFairness(int nsamples,
         comp_scores[rulelist.size()] = (double) ((double) (nb2)) /(double) (nsamples - totCaptured);
     }
     // true positives, false negatives, true negatives, and false positives tables (for this rule)
-    VECTOR A, B, D, C;
+    VECTOR A, D; // B, C;
     int tp, tn; //fp, fn;
     rule_vinit(nsamples, &A);
     //rule_vinit(nsamples, &B);
@@ -280,7 +280,7 @@ void print_final_rulelist(const tracking_vector<unsigned short, DataStruct::Tree
                           const rule_t rules[],
                           const rule_t labels[],
                           char fname[],
-                          double* confScores) {
+                          vector<double> confScores) {
     assert(rulelist.size() == preds.size() - 1);
 
     printf("\nOPTIMAL RULE LIST\n");

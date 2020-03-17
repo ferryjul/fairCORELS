@@ -442,7 +442,7 @@ char* m_strsep(char** stringp, char delim);
 char* m_strdup(char* str);
 
 struct compData{
-    double* conf_scores;
+    vector<double> conf_scores;
     double accuracy;
 };
 #include "alloc.hh"
@@ -464,5 +464,5 @@ void print_final_rulelist(const tracking_vector<unsigned short, DataStruct::Tree
                           const rule_t rules[],
                           const rule_t labels[],
                           char fname[],
-                          double* confScores);
+                          vector<double> confScores);
 

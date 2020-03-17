@@ -117,8 +117,8 @@ class CacheTree {
 
     void update_min_objective(double objective);
 
-    inline double* getConfScores() const;
-    inline void setConfScores(double* _conf_scores);
+    inline vector<double> getConfScores() const;
+    inline void setConfScores(vector<double> _conf_scores);
     inline double getFinalAcc() const;
     inline void setFinalAcc(double _final_acc);
 
@@ -142,7 +142,7 @@ class CacheTree {
     Node* root_;
     size_t nsamples_;
     size_t nrules_;
-    double* conf_scores;
+    vector<double> conf_scores;
     double final_acc;
     double c_;
 
@@ -201,6 +201,7 @@ inline int Node::get_num(){
 
 inline int Node::set_num(int val){
     num_insert = val;
+    return 0;
 }
 
 inline void Node::set_deleted() {
@@ -271,11 +272,11 @@ inline double CacheTree::min_objective() const {
     return min_objective_;
 }
 
-inline double* CacheTree::getConfScores() const {
+inline vector<double> CacheTree::getConfScores() const {
     return conf_scores;
 }
 
-inline void CacheTree::setConfScores(double* _conf_scores) {
+inline void CacheTree::setConfScores(vector<double> _conf_scores) {
     conf_scores = _conf_scores;
 }
 

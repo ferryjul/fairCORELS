@@ -103,7 +103,7 @@ class Queue {
             Node *selected_node, *node;
             bool valid = true;
             double lb;
-            int nb = 0;
+            uint nb = 0;
             if(kBest > 1) {
                 nb = (rand() % kBest);
             }

@@ -152,7 +152,7 @@ class CorelsClassifier:
 
     def __init__(self, c=0.01, n_iter=10000, map_type="prefix", policy="lower_bound",
                  verbosity=["rulelist"], ablation=0, max_card=2, min_support=0.01,
-                 beta=0.0, fairness=1, maj_pos=-1, min_pos=2, maj_vect = [-1], min_vect = [-1],
+                 beta=0.0, fairness=1, maj_pos=-1, min_pos=2, maj_vect = np.empty(shape=(0)), min_vect = np.empty(shape=(0)),
                  mode=4, useUnfairnessLB=False, epsilon=0.0, kbest=1, forbidSensAttr=False,
                  bfs_mode=0, random_state=42):
         self.c = c
@@ -166,7 +166,7 @@ class CorelsClassifier:
         self.forbidSensAttr=forbidSensAttr
         self.beta = beta
         self.fairness = fairness
-        if(maj_vect == [-1]):
+        if(maj_vect.size == 0):
             # Majority group is not explicitely defined
             # We will have to use maj_pos to compute the associated vector
             self.maj_pos = maj_pos
@@ -177,15 +177,21 @@ class CorelsClassifier:
                 self.maj_vect = []
         else:
             self.maj_pos = -2
+            print("maj vect specified")
+            maj_vect = check_array(maj_vect, ndim=1)
+            maj_vect = np.stack([ np.invert(maj_vect), maj_vect ])
             self.maj_vect = maj_vect
 
-        if(min_vect == [-1]):
+
+        if(min_vect.size == 0):
             # Majority group is not explicitely defined
             # We will have to use maj_pos to compute the associated vector
             self.min_pos = min_pos
             print("min vect not specified, position ", min_pos, " will be used.")
         else:
             self.min_pos = -2
+            min_vect = check_array(min_vect, ndim=1)
+            min_vect = np.stack([ np.invert(min_vect), min_vect ])
             self.min_vect = min_vect
             print("min vect specified")
         self.mode = mode
@@ -258,9 +264,29 @@ class CorelsClassifier:
         if not isinstance(self.min_pos, int):
             raise TypeError("The position min_pos of the rule that defined the minority group  must be an integer, got: " + str(type(self.min_pos)))
 
-        # Todo checking mode, ....
+        # Todo check mode, .... (?)
        
-       
+        if(self.min_pos != -2):
+            min_vect = X[:,self.min_pos]
+            min_vect = check_array(min_vect, ndim=1)
+            min_vect = np.stack([ np.invert(min_vect), min_vect ])
+            self.min_vect = min_vect
+        #print(len(self.min_vect), " elements in min_vect, %d captured" %(self.min_vect.count(1)))
+        if(self.maj_pos != -2):
+            if self.maj_pos == -1: # Nor vector for majority group given neither column number => all instances not in min group are in maj group
+                maj_vect = np.empty(shape=(self.min_vect.shape))
+                for e in range(self.min_vect.size):
+                    if self.min_vect[e] == 1:
+                        self.maj_vect[e] = 0
+                    else:
+                        self.maj_vect[e] = 1
+            else:
+                maj_vect =  X[:,self.maj_pos]
+                maj_vect = check_array(maj_vect, ndim=1)
+                maj_vect = np.stack([ np.invert(maj_vect), maj_vect ])
+                self.maj_vect = maj_vect
+
+        #print(len(self.maj_vect), " elements in maj_vect, %d captured" %(self.maj_vect.count(1)))
         label = check_array(y, ndim=1)
         labels = np.stack([ np.invert(label), label ])
         samples = check_array(X, ndim=2)
@@ -324,26 +350,12 @@ class CorelsClassifier:
 
         map_id = map_types.index(self.map_type)
         policy_id = policies.index(self.policy)
-
-        if(self.min_pos != -2):
-            self.min_vect = [row[self.min_pos] for row in X]
-        #print(len(self.min_vect), " elements in min_vect, %d captured" %(self.min_vect.count(1)))
-        if(self.maj_pos != -2):
-            if self.maj_pos == -1: # Nor vector for majority group given neither column number => all instances not in min group are in maj group
-                for e in range(len(self.min_vect)):
-                    if self.min_vect[e] == 1:
-                        self.maj_vect.append(0)
-                    else:
-                        self.maj_vect.append(1)
-            else:
-                self.maj_vect =  [row[self.maj_pos] for row in X]
-        #print(len(self.maj_vect), " elements in maj_vect, %d captured" %(self.maj_vect.count(1)))
         
         fr = fit_wrap_begin(samples.astype(np.uint8, copy=False),
                              labels.astype(np.uint8, copy=False), rl.features,
                              self.max_card, self.min_support, verbose, mine_verbose, minor_verbose,
                              self.c, policy_id, map_id, self.ablation, False, self.forbidSensAttr, self.bfs_mode, self.random_state,
-                             np.array(self.maj_vect, dtype=np.uint8), np.array(self.min_vect, dtype=np.uint8))
+                             self.maj_vect.astype(np.uint8, copy=False), self.min_vect.astype(np.uint8, copy=False))
         
         if fr:
             early = False
@@ -407,8 +419,9 @@ class CorelsClassifier:
 
         Returns
         -------
-        p : array of shape = [n_samples].
-            The classifications of the input samples.
+        p : array of shape = [[n_samples],[n_samples]].
+            The first array contains the classifications of the input samples.
+            The second array contains the associated confidence scores.
         """
 
         check_is_fitted(self, "rl_")

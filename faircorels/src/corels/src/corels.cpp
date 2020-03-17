@@ -481,7 +481,7 @@ void evaluate_children(CacheTree* tree,
     len_prefix = parent->depth() + 1;
     parent_lower_bound = parent->lower_bound();
     parent_equivalent_minority = parent->equivalent_minority();
-    int verbosity = logger->getVerbosity();
+    //int verbosity = logger->getVerbosity();
     double t0 = timestamp();
 
     // Compute prefix's predictions
@@ -562,7 +562,7 @@ void evaluate_children(CacheTree* tree,
             default_correct = d1;
         }
 
-        double misc = (double)(num_not_captured - default_correct) / nsamples;
+        //double misc = (double)(num_not_captured - default_correct) / nsamples;
         double unfairness = 0.0;
 
         confusion_matrix_groups cmg = compute_confusion_matrix(preds_prefix, tree, parent_not_captured, captured,
@@ -600,7 +600,6 @@ void evaluate_children(CacheTree* tree,
         }
         if(useUnfairnessLB) {
             if(unfairness < cmg.unfairnessLB) {
-                printf("error : unfairness = %lf, unfairness lb = %lf...\n");
                 printf("PPV_min = %lf (in [%lf,%lf]), PPV_maj = %lf (in [%lf,%lf])\n",
                 cmg.minority.nPPV, cmg.minority.min_ppv, cmg.minority.max_ppv, cmg.majority.nPPV, cmg.majority.min_ppv, cmg.majority.max_ppv);
                 printf("TP_min = %d (in [%d,%d]), TP_maj = %d (in [%d,%d])\n",

@@ -34,28 +34,28 @@ int *lubySeq;
 int indLuby = -1;
 bool forbidSensAttr = false;
 int lubySeqSize = -1;
-VECTOR Gmaj_vect;
-VECTOR Gmin_vect;
+VECTOR  Gmaj_vect;
+VECTOR  Gmin_vect;
 
 
 int run_corels_begin(double c, char* vstring, int curiosity_policy,
                   int map_type, int ablation, int calculate_size, int nrules, int nlabels,
                   int nsamples, rule_t* rules, rule_t* labels, rule_t* meta, int freq, 
                   char* log_fname, int BFSmode, int seed, bool forbidSensAttr_val, VECTOR maj_v, int nmaj_v,
-                  VECTOR  min_v, int nmin_v)
+                  VECTOR min_v, int nmin_v)
 {
     // Check correctness
     if(nmaj_v != nmin_v){
         printf("nmaj and nmin should be equal\n");
         exit(-1);
     }
-    int nbMaj = count_ones_vector(maj_v, nmaj_v);
-    int nbMin = count_ones_vector(min_v, nmin_v);
+    //int nbMaj = count_ones_vector(maj_v, nmaj_v);
+    //int nbMin = count_ones_vector(min_v, nmin_v);
     //printf("Maj vector : captures %d/%d instances.\n", nbMaj, nmaj_v);
     //printf("Min vector : captures %d/%d instances.\n", nbMin, nmin_v);
 
-    Gmaj_vect = maj_v;
-    Gmin_vect = min_v;
+    Gmaj_vect =  maj_v;
+    Gmin_vect =  min_v;
     /*
     for(int e = 0; e < nmaj_v; e++){
         unsigned long val = *(maj_v+e);
@@ -261,7 +261,7 @@ int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int mode, b
         if(currLimit == -1) {
             currLimit = initNBNodes;
             usedRestart = true;
-            printf("Will perform geometric restarts from %d to %d.\n", currLimit, max_num_nodes);
+            printf("Will perform geometric restarts from %d to %lu.\n", currLimit, max_num_nodes);
         }
         if((g_tree->num_nodes() < currLimit) && !g_queue->empty()) {
             bbound_loop(g_tree, g_queue, g_pmap, beta, fairness, Gmaj_vect, Gmin_vect, mode, useUnfairnessLB,
@@ -350,11 +350,10 @@ int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int mode, b
     } else if(restart == 2) { // Perform luby restart
         /* INITIAL ITERATION */
         if(currLimit == -1) {
-            printf("Will perform Luby restarts from %d to %d!\n",initNBNodes,max_num_nodes);
+            printf("Will perform Luby restarts from %d to %lu!\n",initNBNodes,max_num_nodes);
             //Compute luby sequence
             // 1) Compute size
             int v = 1;
-            int nbEls = 1;
             while((v*2)*initNBNodes <= max_num_nodes) {
                 v = 2*v;
             }
@@ -508,7 +507,7 @@ double run_corels_end(int** rulelist, int* rulelist_size, int** classes, double*
     bbound_end(g_tree, g_queue, g_pmap, early, Grules, Glabels);
     const tracking_vector<unsigned short, DataStruct::Tree>& r_list = g_tree->opt_rulelist();
     const tracking_vector<bool, DataStruct::Tree>& preds = g_tree->opt_predictions();
-    const double* scores = g_tree->getConfScores();
+    const vector<double> scores = g_tree->getConfScores();
     //double accuracy = 1.0 - g_tree->min_objective() + g_tree->c() * r_list.size();
     double accuracy = g_tree->getFinalAcc();
     *rulelist = (int*)malloc(sizeof(int) * r_list.size()); // Antecedents
