@@ -10,7 +10,7 @@ from metrics import ConfusionMatrix, Metric
 import csv
 import time
 
-N_ITER = 1*10**5
+N_ITER = 1*10**6
 
 X, y, features, prediction = load_from_csv("./data/adult_full.csv")
 

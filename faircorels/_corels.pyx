@@ -361,6 +361,9 @@ def fit_wrap_begin(np.ndarray[np.uint8_t, ndim=2] samples,
             _free_vector(rules, n_rules)
             rules = NULL
         n_rules = 0
+        if maj_vecs != NULL:
+            _free_vector(maj_vecs, 2)
+            maj_vecs = NULL
         raise
 
     if n_min_vecs != nsamples:
@@ -371,6 +374,9 @@ def fit_wrap_begin(np.ndarray[np.uint8_t, ndim=2] samples,
             _free_vector(rules, n_rules)
             rules = NULL
         n_rules = 0
+        if maj_vecs != NULL:
+            _free_vector(maj_vecs, 2)
+            maj_vecs = NULL
         raise ValueError("Sample count mismatch between protected instances vector (" + str(n_min_vecs) +
                          ") and rule data (" + str(nsamples) + ")")
 
@@ -384,6 +390,9 @@ def fit_wrap_begin(np.ndarray[np.uint8_t, ndim=2] samples,
             _free_vector(rules, n_rules)
             rules = NULL
         n_rules = 0
+        if maj_vecs != NULL:
+            _free_vector(maj_vecs, 2)
+            maj_vecs = NULL
         raise MemoryError();
     strcpy(min_vecs[0].features, "label=0")
     strcpy(min_vecs[1].features, "label=1")
@@ -405,6 +414,12 @@ def fit_wrap_begin(np.ndarray[np.uint8_t, ndim=2] samples,
             _free_vector(rules, n_rules)
             rules = NULL
         n_rules = 0
+        if maj_vecs != NULL:
+            _free_vector(maj_vecs, 2)
+            maj_vecs = NULL
+        if min_vecs != NULL:
+            _free_vector(min_vecs, 2)
+            min_vecs = NULL
         raise
 
     if nsamples_chk != nsamples:
@@ -415,6 +430,12 @@ def fit_wrap_begin(np.ndarray[np.uint8_t, ndim=2] samples,
             _free_vector(rules, n_rules)
             rules = NULL
         n_rules = 0
+        if maj_vecs != NULL:
+            _free_vector(maj_vecs, 2)
+            maj_vecs = NULL
+        if min_vecs != NULL:
+            _free_vector(min_vecs, 2)
+            min_vecs = NULL
         raise ValueError("Sample count mismatch between label (" + str(nsamples_chk) +
                          ") and rule data (" + str(nsamples) + ")")
 
@@ -428,6 +449,12 @@ def fit_wrap_begin(np.ndarray[np.uint8_t, ndim=2] samples,
             _free_vector(rules, n_rules)
             rules = NULL
         n_rules = 0
+        if maj_vecs != NULL:
+            _free_vector(maj_vecs, 2)
+            maj_vecs = NULL
+        if min_vecs != NULL:
+            _free_vector(min_vecs, 2)
+            min_vecs = NULL
         raise MemoryError();
     strcpy(labels_vecs[0].features, "label=0")
     strcpy(labels_vecs[1].features, "label=1")
@@ -445,6 +472,12 @@ def fit_wrap_begin(np.ndarray[np.uint8_t, ndim=2] samples,
             _free_vector(rules, n_rules)
             rules = NULL
         n_rules = 0
+        if maj_vecs != NULL:
+            _free_vector(maj_vecs, 2)
+            maj_vecs = NULL
+        if min_vecs != NULL:
+            _free_vector(min_vecs, 2)
+            min_vecs = NULL
         raise MemoryError();
 
     cdef int mr = minority(rules, n_rules, labels_vecs, nsamples, minor, minor_verbose)
@@ -456,6 +489,12 @@ def fit_wrap_begin(np.ndarray[np.uint8_t, ndim=2] samples,
             _free_vector(rules, n_rules)
             rules = NULL
         n_rules = 0
+        if maj_vecs != NULL:
+            _free_vector(maj_vecs, 2)
+            maj_vecs = NULL
+        if min_vecs != NULL:
+            _free_vector(min_vecs, 2)
+            min_vecs = NULL
         raise MemoryError();
     """    
     if count_ones_vector(minor[0].truthtable, nsamples) <= 0:
