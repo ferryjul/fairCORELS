@@ -39,8 +39,8 @@ confusion_matrix_groups compute_confusion_matrix(VECTOR parent_prefix_prediction
                                                 CacheTree* tree,
                                                 VECTOR parent_not_captured, 
                                                 VECTOR captured,  
-                                                VECTOR maj_v,
-                                                VECTOR min_v,
+                                                rule_t* maj_v,
+                                                rule_t* min_v,
                                                 bool prediction, 
                                                 bool default_prediction){
 
@@ -97,10 +97,10 @@ confusion_matrix_groups compute_confusion_matrix(VECTOR parent_prefix_prediction
     rule_vinit(tree->nsamples(), &TN_maj);
 
     int nTP_maj, nFP_maj, nFN_maj, nTN_maj;
-    rule_vand(TP_maj, TP, maj_v, nsamples, &nTP_maj);
-    rule_vand(FP_maj, FP, maj_v, nsamples, &nFP_maj);
-    rule_vand(FN_maj, FN, maj_v, nsamples, &nFN_maj);
-    rule_vand(TN_maj, TN, maj_v, nsamples, &nTN_maj);
+    rule_vand(TP_maj, TP, maj_v[1].truthtable, nsamples, &nTP_maj);
+    rule_vand(FP_maj, FP, maj_v[1].truthtable, nsamples, &nFP_maj);
+    rule_vand(FN_maj, FN, maj_v[1].truthtable, nsamples, &nFN_maj);
+    rule_vand(TN_maj, TN, maj_v[1].truthtable, nsamples, &nTN_maj);
     
     
     // true positives, false negatives, true negatives, and false positives for minority group
@@ -111,10 +111,10 @@ confusion_matrix_groups compute_confusion_matrix(VECTOR parent_prefix_prediction
     rule_vinit(nsamples, &TN_min);
 
     int nTP_min, nFP_min, nFN_min, nTN_min;
-    rule_vand(TP_min, TP, min_v, nsamples, &nTP_min);
-    rule_vand(FP_min, FP, min_v, nsamples, &nFP_min);
-    rule_vand(FN_min, FN, min_v, nsamples, &nFN_min);
-    rule_vand(TN_min, TN, min_v, nsamples, &nTN_min);
+    rule_vand(TP_min, TP, min_v[1].truthtable, nsamples, &nTP_min);
+    rule_vand(FP_min, FP, min_v[1].truthtable, nsamples, &nFP_min);
+    rule_vand(FN_min, FN, min_v[1].truthtable, nsamples, &nFN_min);
+    rule_vand(TN_min, TN, min_v[1].truthtable, nsamples, &nTN_min);
 
     // stats for majority
     double nPPV_maj = (double) nTP_maj / max((nTP_maj + nFP_maj), 1);
@@ -454,8 +454,8 @@ void evaluate_children(CacheTree* tree,
                         PermutationMap* p,
                         double beta,
                         int fairness,
-                        VECTOR maj_v,
-                        VECTOR min_v,
+                        rule_t* maj_v,
+                        rule_t* min_v,
                         int mode,
                         bool useUnfairnessLB,
                         double min_fairness_acceptable,
@@ -770,8 +770,8 @@ void bbound_loop(CacheTree* tree,
                 PermutationMap* p,
                 double beta,
                 int fairness,
-                VECTOR maj_v,
-                VECTOR min_v,
+                rule_t* maj_v,
+                rule_t* min_v,
                 int mode,
                 bool useUnfairnessLB,
                 double min_fairness_acceptable,

@@ -31,7 +31,7 @@ cdef extern from "src/corels/src/run.hh":
                       int map_type, int ablation, int calculate_size, int nrules, int nlabels,
                       int nsamples, rule_t* rules, rule_t* labels, rule_t* meta, 
                       int freq, char* log_fname, int BFSmode, int seed, int forbidSensAttr_val,
-                      VECTOR maj_v, int nmaj_v, VECTOR min_v, int nmin_v)
+                      rule_t* maj_v, int nmaj_v, rule_t* min_v, int nmin_v)
 
     int run_corels_loop(size_t max_num_nodes, double beta, int fairness,
                     int mode, int useUnfairnessLB, double min_fairness_acceptable, int kBest, int restart, int initNBNodes, double geomReason)
@@ -220,6 +220,10 @@ cdef _free_vector(rule_t* vs, int count):
 
 cdef rule_t* rules = NULL
 cdef rule_t* labels_vecs = NULL
+
+cdef rule_t* maj_vecs = NULL
+cdef rule_t* min_vecs = NULL
+
 cdef rule_t* minor = NULL
 cdef int n_rules = 0
 
@@ -227,41 +231,20 @@ def fit_wrap_begin(np.ndarray[np.uint8_t, ndim=2] samples,
              np.ndarray[np.uint8_t, ndim=2] labels,
              features, int max_card, double min_support, verbosity_str, int mine_verbose,
              int minor_verbose, double c, int policy, int map_type, int ablation,
-             int calculate_size, int forbidSensAttr, int BFSmode, int seed, np.ndarray[np.uint8_t, ndim=1] maj_vect,  np.ndarray[np.uint8_t, ndim=1] min_vect):
+             int calculate_size, int forbidSensAttr, int BFSmode, int seed, np.ndarray[np.uint8_t, ndim=2] maj_vect,  np.ndarray[np.uint8_t, ndim=2] min_vect):
     global rules
     global labels_vecs
     global minor
     global n_rules
 
+    global maj_vecs
+    global min_vecs
+
 
     cdef int nfeatures = 0
     cdef rule_t* samples_vecs = _to_vector(samples, &nfeatures)
 
-    cdef int nones1, nones2
-    cdef VECTOR maj_vect_
-    cdef int n_maj_vect
-    arrstr = ""
-    for j in range(len(maj_vect)):
-        if maj_vect[j]:
-            arrstr += "1"
-        else:
-            arrstr += "0"
-    bytestr = arrstr.encode("ascii")
-    n_maj_vect = len(bytestr)
-    ascii_to_vector(bytestr, n_maj_vect, &n_maj_vect, &nones1, &maj_vect_)
-
-    cdef VECTOR min_vect_
-    cdef int n_min_vect
-    arrstr = ""
-    for j in range(len(min_vect)):
-        if min_vect[j]:
-            arrstr += "1"
-        else:
-            arrstr += "0"
-    bytestr = arrstr.encode("ascii")
-    n_min_vect = len(bytestr)
-    ascii_to_vector(bytestr, n_min_vect, &n_min_vect, &nones2, &min_vect_)
-   
+    
     cdef int BFSmode_val = BFSmode
     cdef int seed_val = seed
     cdef int forbidSensAttr_val = forbidSensAttr
@@ -320,6 +303,95 @@ def fit_wrap_begin(np.ndarray[np.uint8_t, ndim=2] samples,
 
     verbosity_ascii = verbosity_str.encode("ascii")
     cdef char* verbosity = verbosity_ascii
+
+
+
+
+
+
+
+    if maj_vecs != NULL:
+        _free_vector(maj_vecs, 2)
+        maj_vecs = NULL
+
+    cdef int n_maj_vecs = 0
+    try:
+        maj_vecs = _to_vector(maj_vect, &n_maj_vecs)
+    except:
+        if rules != NULL:
+            _free_vector(rules, n_rules)
+            rules = NULL
+        n_rules = 0
+        raise
+
+    if n_maj_vecs != nsamples:
+        if maj_vecs != NULL:
+            _free_vector(maj_vecs, 2)
+            maj_vecs = NULL
+        if rules != NULL:
+            _free_vector(rules, n_rules)
+            rules = NULL
+        n_rules = 0
+        raise ValueError("Sample count mismatch between unprotected instances vector (" + str(n_maj_vecs) +
+                         ") and rule data (" + str(nsamples) + ")")
+
+    maj_vecs[0].features = <char*>malloc(8)
+    maj_vecs[1].features = <char*>malloc(8)
+    if maj_vecs[0].features == NULL or maj_vecs[1].features == NULL:
+        if maj_vecs != NULL:
+            _free_vector(maj_vecs, 2)
+            maj_vecs = NULL
+        if rules != NULL:
+            _free_vector(rules, n_rules)
+            rules = NULL
+        n_rules = 0
+        raise MemoryError();
+    strcpy(maj_vecs[0].features, "label=0")
+    strcpy(maj_vecs[1].features, "label=1")
+
+    if min_vecs != NULL:
+        _free_vector(min_vecs, 2)
+        min_vecs = NULL
+
+    cdef int n_min_vecs = 0
+    try:
+        min_vecs = _to_vector(min_vect, &n_min_vecs)
+    except:
+        if rules != NULL:
+            _free_vector(rules, n_rules)
+            rules = NULL
+        n_rules = 0
+        raise
+
+    if n_min_vecs != nsamples:
+        if min_vecs != NULL:
+            _free_vector(min_vecs, 2)
+            min_vecs = NULL
+        if rules != NULL:
+            _free_vector(rules, n_rules)
+            rules = NULL
+        n_rules = 0
+        raise ValueError("Sample count mismatch between protected instances vector (" + str(n_min_vecs) +
+                         ") and rule data (" + str(nsamples) + ")")
+
+    min_vecs[0].features = <char*>malloc(8)
+    min_vecs[1].features = <char*>malloc(8)
+    if min_vecs[0].features == NULL or min_vecs[1].features == NULL:
+        if min_vecs != NULL:
+            _free_vector(min_vecs, 2)
+            min_vecs = NULL
+        if rules != NULL:
+            _free_vector(rules, n_rules)
+            rules = NULL
+        n_rules = 0
+        raise MemoryError();
+    strcpy(min_vecs[0].features, "label=0")
+    strcpy(min_vecs[1].features, "label=1")
+
+
+
+
+
 
     if labels_vecs != NULL:
         _free_vector(labels_vecs, 2)
@@ -392,7 +464,7 @@ def fit_wrap_begin(np.ndarray[np.uint8_t, ndim=2] samples,
             minor = NULL
     """
     cdef int rb = run_corels_begin(c, verbosity, policy, map_type, ablation, calculate_size,
-                   n_rules, 2, nsamples, rules, labels_vecs, minor, 0, NULL, BFSmode_val, seed_val, forbidSensAttr_val, maj_vect_, n_maj_vect, min_vect_, n_min_vect)
+                   n_rules, 2, nsamples, rules, labels_vecs, minor, 0, NULL, BFSmode_val, seed_val, forbidSensAttr_val, maj_vecs, n_maj_vecs, min_vecs, n_min_vecs)
 
     if rb == -1:
         if labels_vecs != NULL:
@@ -405,7 +477,12 @@ def fit_wrap_begin(np.ndarray[np.uint8_t, ndim=2] samples,
             _free_vector(rules, n_rules)
             rules = NULL
         n_rules = 0
-
+        if maj_vecs != NULL:
+            _free_vector(maj_vecs, 2)
+            maj_vecs = NULL
+        if min_vecs != NULL:
+            _free_vector(min_vecs, 2)
+            min_vecs = NULL
         return False
 
     return True
@@ -433,10 +510,8 @@ def fit_wrap_end(int early):
     global labels_vecs
     global minor
     global n_rules
-    global maj_vect_
-    global nmaj_vect
-    global n_min_vect
-    global min_vect_
+    global maj_vecs
+    global min_vecs
 
     cdef int rulelist_size = 0
     cdef int* rulelist = NULL
@@ -470,5 +545,10 @@ def fit_wrap_end(int early):
         _free_vector(rules, n_rules)
         rules = NULL
     n_rules = 0
-
+    if maj_vecs != NULL:
+            _free_vector(maj_vecs, 2)
+            maj_vecs = NULL
+    if min_vecs != NULL:
+        _free_vector(min_vecs, 2)
+        min_vecs = NULL
     return r_out

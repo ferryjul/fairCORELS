@@ -41,6 +41,9 @@ print("Sensitive vector captures %d instances" %sensDict[1])
 unique2, counts2 = np.unique(unSensVect, return_counts=True)
 unSensDict = dict(zip(unique2, counts2))
 print("Unsensitive vector captures %d instances" %unSensDict[1])
+print("Sensitive vector shape : ", sensVect.shape)
+print("Unsensitive vector shape : ", unSensVect.shape)
+
 clf = CorelsClassifier(n_iter=N_ITER, 
                         c=1e-3, 
                         max_card=2, 
@@ -50,7 +53,7 @@ clf = CorelsClassifier(n_iter=N_ITER,
                         useUnfairnessLB=True,
                         forbidSensAttr=False,
                         fairness=fairnessMetric, 
-                        epsilon=0.9,
+                        epsilon=0.99,
                         verbosity=[],
                         maj_vect=unSensVect,
                         min_vect=sensVect,
