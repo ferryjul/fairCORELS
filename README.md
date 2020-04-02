@@ -115,7 +115,7 @@ A complete example file, using 5-fold cross-validation with the Adult Income dat
     If not specified, all individuals not in minority group are in majority group
     Not used if maj_vect is used
 
-*`min_pos` : int optional (default=2)
+* `min_pos` : int optional (default=2)
     The position of the rule that defined the minority group
     Not used if min_vect is used
 
@@ -123,7 +123,7 @@ A complete example file, using 5-fold cross-validation with the Adult Income dat
     List of integers in {0,1} indicating if instances belong to the majority group
     If not specified, this vector is computed using maj_pos
 
-*` min_vect` : int list optional (default=[-1])
+* ` min_vect` : int list optional (default=[-1])
     List of integers in {0,1} indicating if instances belong to the minority group
     If not specified, this vector is computed using min_pos
 
