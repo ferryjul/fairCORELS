@@ -377,7 +377,6 @@ end:
 
   if(verbose)
     printf("Generated %d rules\n", ntotal_rules - 1);
-  printf("Generated %d rules.", ntotal_rules - 1);
   if (ret == -1) {
     if(rules_vec) {
       for(int i = 0; i < ntotal_rules; i++) {

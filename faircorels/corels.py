@@ -170,14 +170,16 @@ class CorelsClassifier:
             # Majority group is not explicitely defined
             # We will have to use maj_pos to compute the associated vector
             self.maj_pos = maj_pos
-            if(maj_pos != -1):
-                print("maj vect not specified, position ", maj_pos, " will be used.")
-            else:
-                print("no majority group defined, maj group will be all instances except minority group ones.")
+            if(maj_pos == -1):
                 self.maj_vect = []
+            #if(maj_pos != -1):
+                #print("maj vect not specified, position ", maj_pos, " will be used.")
+            #else:
+                #print("no majority group defined, maj group will be all instances except minority group ones.")
+                #self.maj_vect = []
         else:
             self.maj_pos = -2
-            print("maj vect specified")
+            #print("maj vect specified")
             maj_vect = check_array(maj_vect, ndim=1)
             maj_vect = np.stack([ np.invert(maj_vect), maj_vect ])
             self.maj_vect = maj_vect
@@ -187,13 +189,13 @@ class CorelsClassifier:
             # Majority group is not explicitely defined
             # We will have to use maj_pos to compute the associated vector
             self.min_pos = min_pos
-            print("min vect not specified, position ", min_pos, " will be used.")
+            #print("min vect not specified, position ", min_pos, " will be used.")
         else:
             self.min_pos = -2
             min_vect = check_array(min_vect, ndim=1)
             min_vect = np.stack([ np.invert(min_vect), min_vect ])
             self.min_vect = min_vect
-            print("min vect specified")
+            #print("min vect specified")
         self.mode = mode
         self.useUnfairnessLB = useUnfairnessLB
         self.epsilon = epsilon
@@ -274,12 +276,14 @@ class CorelsClassifier:
         #print(len(self.min_vect), " elements in min_vect, %d captured" %(self.min_vect.count(1)))
         if(self.maj_pos != -2):
             if self.maj_pos == -1: # Nor vector for majority group given neither column number => all instances not in min group are in maj group
-                maj_vect = np.empty(shape=(self.min_vect.shape))
-                for e in range(self.min_vect.size):
-                    if self.min_vect[e] == 1:
-                        self.maj_vect[e] = 0
+                self.maj_vect = np.empty(shape=(self.min_vect.shape))
+                for e in range(self.min_vect.shape[1]):
+                    if self.min_vect[0][e] == 1:
+                        self.maj_vect[0][e] = 0
+                        self.maj_vect[1][e] = 1
                     else:
-                        self.maj_vect[e] = 1
+                        self.maj_vect[0][e] = 1
+                        self.maj_vect[1][e] = 0
             else:
                 maj_vect =  X[:,self.maj_pos]
                 maj_vect = check_array(maj_vect, ndim=1)

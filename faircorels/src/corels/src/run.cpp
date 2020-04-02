@@ -46,51 +46,27 @@ int run_corels_begin(double c, char* vstring, int curiosity_policy,
 {
     // Check correctness
     if(nmaj_v != nmin_v){
-        printf("nmaj and nmin should be equal\n");
+        printf("Incorrect argument : nmaj and nmin should be equal\n");
         exit(-1);
     }
     int nbMaj = count_ones_vector(maj_v[1].truthtable, nmaj_v);
     int nbMin = count_ones_vector(min_v[1].truthtable, nmin_v);
-    printf("Maj vector : captures %d/%d instances.\n", nbMaj, nmaj_v);
-    printf("Min vector : captures %d/%d instances.\n", nbMin, nmin_v);
-
+    //printf("Maj vector : captures %d/%d instances.\n", nbMaj, nmaj_v);
+    //printf("Min vector : captures %d/%d instances.\n", nbMin, nmin_v);
+    if((nbMaj + nbMin) > nsamples){
+        printf("Incorrect argument : majority and minority groups intersection should be empty.\n");
+    }
     Gmaj_vect =  maj_v;
     Gmin_vect =  min_v;
 
     int nbMajG = count_ones_vector(Gmaj_vect[1].truthtable, nmaj_v);
     int nbMinG = count_ones_vector(Gmin_vect[1].truthtable, nmin_v);
-    printf("Maj vector G : captures %d/%d instances.\n", nbMajG, nmaj_v);
-    printf("Min vector G : captures %d/%d instances.\n", nbMinG, nmin_v);
+    if((nbMajG + nbMinG) > nsamples){
+        printf("Error : Internal error in vector copy \n");
+    }
+    //printf("Maj vector G : captures %d/%d instances.\n", nbMajG, nmaj_v);
+    //printf("Min vector G : captures %d/%d instances.\n", nbMinG, nmin_v);
 
-    /*
-    for(int e = 0; e < nmaj_v; e++){
-        unsigned long val = *(Gmaj_vect+e);
-        if(val != 0 && val != 1){
-            printf("incorrect value found (%d) in maj vector at position %d\n", val, e);
-            exit(-1);
-        }
-    } 
-    for(int e = 0; e < nmin_v; e++){
-        unsigned long val = *(Gmin_vect+e);
-        if(val != 0 && val != 1){
-            printf("incorrect value found (%d) in min vector at position %d\n", val, e);
-            exit(-1);
-        }
-    } 
-    */
-    // Build vector objects
-
-    //Gmaj_vect = maj_v;
-    //Gmin_vect = min_v;
-    /*Gmaj_vect = (VECTOR) malloc(nmaj_v*sizeof(unsigned int));
-    Gmin_vect = (VECTOR) malloc(nmin_v*sizeof(unsigned int));
-    memcpy(&Gmaj_vect, &maj_v, nmaj_v);
-    memcpy(&Gmin_vect, &min_v, nmin_v);*/
-    //Gmaj_vect = &maj_v;
-   //Gmin_vect = &min_v;
-   
-    /*Gmaj_vect = *(maj_v);
-    Gmin_vect = *(min_v);*/
     forbidSensAttr = forbidSensAttr_val;
     Grules = rules;
     Glabels = labels;
