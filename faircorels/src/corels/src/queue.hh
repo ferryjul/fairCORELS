@@ -103,7 +103,7 @@ class Queue {
             Node *selected_node, *node;
             bool valid = true;
             double lb;
-            uint nb = 0;
+            int nb = 0;
             if(kBest > 1) {
                 nb = (rand() % kBest);
             }
@@ -116,7 +116,7 @@ class Queue {
                 if(nb > 0) {
                     int ind = nb;
                     // k nodes + the first popped
-                    Node * kBest[nb+1];
+                    Node ** kBest = (Node**) malloc((nb+1)*sizeof(Node*));
                     kBest[nb] = selected_node;
                     // extract the best element k times
                     while(nb > 0) {
@@ -131,6 +131,7 @@ class Queue {
                         q_->push(kBest[ind]);
                         ind--;
                     }
+                    free(kBest);
                 }
                 if (tree->ablation() != 2)
                     lb = selected_node->lower_bound() + tree->c();
