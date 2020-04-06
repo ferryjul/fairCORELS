@@ -1,7 +1,7 @@
 # Faircorels
 
 Welcome to the python binding of the FairCORELS algorithm!
-This repository contains the implementation of the method introduced in the paper "[Learning fair rule lists] (https://arxiv.org/abs/1909.03977)".
+This repository contains the implementation of the method introduced in the paper "[Learning fair rule lists!] (https://arxiv.org/abs/1909.03977)".
 
 ## Overview
 
