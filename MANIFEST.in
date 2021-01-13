@@ -5,3 +5,6 @@ include faircorels/*.py
 include faircorels/src/utils*
 include faircorels/src/corels/src/*.hh
 include faircorels/src/corels/src/*.cpp
+include faircorels/src/corels/src/*.hpp
+include faircorels/_corels.pyx
+

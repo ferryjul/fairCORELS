@@ -2,6 +2,7 @@ from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
 import os
 import sys
+import numpy
 from Cython.Build import cythonize
 
 class build_numpy(build_ext):
@@ -17,7 +18,7 @@ def install(gmp):
     with open('faircorels/README.md') as f:
         long_description = f.read()
 
-    version = '0.9'
+    version = '0.92'
 
     pyx_file = 'faircorels/_corels.pyx'
 
@@ -55,7 +56,7 @@ def install(gmp):
     extension = Extension("faircorels._corels", 
                 sources = sources,
                 libraries = libraries,
-                include_dirs = ['faircorels/src/', 'faircorels/src/corels/src'],
+                include_dirs = ['faircorels/src/', 'faircorels/src/corels/src', numpy.get_include()],
                 language = "c++",
                 extra_compile_args = cpp_args)
 

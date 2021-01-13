@@ -23,7 +23,7 @@ print("Unsensitive attribute is ", features[unsensitive_attr_column])
 parser = argparse.ArgumentParser(description='Analysis of FairCORELS results')
 parser.add_argument('--epsilon', type=int, default=0, help='epsilon value (min fairness acceptable) for epsilon-constrained method')
 parser.add_argument('--uselb', type=int, default=0, help='use filtering : 0  no, 1  yes')
-parser.add_argument('--metric', type=int, default=1, help='fairness metric: 1 statistical_parity, 2 predictive_parity, 3 predictive_equality, 4 equal_opportunity')
+parser.add_argument('--metric', type=int, default=1, help='fairness metric: 1 statistical_parity, 2 predictive_parity, 3 predictive_equality, 4 equal_opportunity, 5 Equalized Odds, 6 Conditional use accuracy equality')
 
 args = parser.parse_args()
 

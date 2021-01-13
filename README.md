@@ -9,6 +9,7 @@ The use of Python 3 is strongly recommended !
 FairCORELS is a modified version of CORELS to learn fair rule list. 
 Our module includes two classifier methods : `CorelsClassifier` and `CorelsBagging`. 
 The `CorelsClassifier` class implements the fairCORELS method. The `CorelsBagging` class provides a wrapper to perform the Bagging ensemble method using `CorelsClassifier` as a base learner.
+The currently supported fairness notions are : statistical parity, predictive parity, predictive equality, equal opportunity, equalized odds, and conditional use accuracy equality.
 
 
 ## Installation
@@ -18,6 +19,7 @@ The `CorelsClassifier` class implements the fairCORELS method. The `CorelsBaggin
 sudo apt install libgmp-dev
 pip install faircorels
 ```
+Note that running the provided example scripts after installing `faircorels` might raise errors about Numpy versions. In this case, simply uninstall the lastly installed Numpy (`pip uninstall numpy`) and the issue should be solved.
 
 #### Mac
 
@@ -123,7 +125,7 @@ Both files show how to load data, how to train our classifiers, how to evaluate 
 
 * `fairness` : int optional (default=1)
     The type of fairness metric used. 
-    1 : statistical parity, 2 : predictive parity, 3 : predictive equality, 4 : equal opportunity
+    1 : statistical parity, 2 : predictive parity, 3 : predictive equality, 4 : equal opportunity, 5 : equalized odds, 6 : conditional use accuracy equality
 
 * `maj_pos` : int optional (default=-1)
     The position of the rule that defined the majority group
