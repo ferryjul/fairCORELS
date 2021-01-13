@@ -1,5 +1,5 @@
 include LICENSE
-include faircorels/README.txt
+include faircorels/README.md
 include faircorels/_corels.cpp
 include faircorels/*.py
 include faircorels/src/utils*
