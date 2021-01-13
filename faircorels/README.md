@@ -113,7 +113,7 @@ The `CorelsClassifier` class implements the fairCORELS method. The `CorelsBaggin
 
 ### Methods :
 
-#### fit(X, y, features=[], prediction_name="prediction", performRestarts=0, initNBNodes=1000, geomRReason=1.5, max_evals=1000000000, time_limit = None):
+#### .fit(X, y, features=[], prediction_name="prediction", performRestarts=0, initNBNodes=1000, geomRReason=1.5, max_evals=1000000000, time_limit = None):
 
 Method for training the classifier.
 
@@ -190,8 +190,7 @@ Dictionary of all parameters, with the names of the parameters as the keys
 #### .set_params(params):
 Method to set some of the model's parameters.
 
-* `params` :  Set of model parameters. Takes an arbitrary number of      
-keyword parameters, all of which must be valid parameter names (i.e. must be included in those returned by get_params).
+* `params` :  Set of model parameters. Takes an arbitrary number of keyword parameters, all of which must be valid parameter names (i.e. must be included in those returned by get_params).
 
 #### .save(fname):
 Method to save the model to a file, using python's pickle module.
@@ -223,7 +222,7 @@ Method to get a string representation of the rule list
 #### .__repr__():
 Same behavior as the previous one.
 
-#### explain(anEx):
+#### .explain(anEx):
 Method to explain a prediction (by providing the matching rule).
 
 * `anEx` : array-like, shape = [n_features] 
@@ -234,7 +233,7 @@ Method to explain a prediction (by providing the matching rule).
     `l[1]` is the implicant(s) that led to that decision
     (both are strings - user friendly)
 
-#### explain_api(anEx):
+#### .explain_api(anEx):
 Method to explain a prediction (by providing the matching rule) (shorter output).
 
 * `anEx` : array-like, shape = [n_features] 
@@ -245,7 +244,7 @@ Method to explain a prediction (by providing the matching rule) (shorter output)
     `l[1]` is the implicant(s) that led to that decision
     (both are API-oriented - easy to use by a program)
    
-#### explain_long(anEx):
+#### .explain_long(anEx):
 Method to explain a prediction (by providing the matching rule and all the previous unmatched implicants).
 
 * `anEx` : array-like, shape = [n_features] 

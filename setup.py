@@ -76,6 +76,7 @@ def install(gmp):
         author_email = 'a.u.matchi@gmail.com, julienferry12@gmail.com',
         description = description,
         long_description = long_description,
+        long_description_content_type='text/markdown',
         setup_requires = [numpy_version],
         install_requires = [numpy_version],
         python_requires = '>=2.7',

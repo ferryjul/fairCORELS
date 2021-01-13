@@ -170,7 +170,7 @@ Both files show how to load data, how to train our classifiers, how to evaluate 
 
 #### Methods :
 
-##### fit(X, y, features=[], prediction_name="prediction", performRestarts=0, initNBNodes=1000, geomRReason=1.5, max_evals=1000000000, time_limit = None):
+##### .fit(X, y, features=[], prediction_name="prediction", performRestarts=0, initNBNodes=1000, geomRReason=1.5, max_evals=1000000000, time_limit = None):
 
 Method for training the classifier.
 
@@ -280,7 +280,7 @@ Method to get a string representation of the rule list
 ##### .__repr__():
 Same behavior as the previous one.
 
-##### explain(anEx):
+##### .explain(anEx):
 Method to explain a prediction (by providing the matching rule).
 
 * `anEx` : array-like, shape = [n_features] 
@@ -291,7 +291,7 @@ Method to explain a prediction (by providing the matching rule).
     `l[1]` is the implicant(s) that led to that decision
     (both are strings - user friendly)
 
-##### explain_api(anEx):
+##### .explain_api(anEx):
 Method to explain a prediction (by providing the matching rule) (shorter output).
 
 * `anEx` : array-like, shape = [n_features] 
@@ -302,7 +302,7 @@ Method to explain a prediction (by providing the matching rule) (shorter output)
     `l[1]` is the implicant(s) that led to that decision
     (both are API-oriented - easy to use by a program)
    
-##### explain_long(anEx):
+##### .explain_long(anEx):
 Method to explain a prediction (by providing the matching rule and all the previous unmatched implicants).
 
 * `anEx` : array-like, shape = [n_features] 
