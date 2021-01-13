@@ -176,7 +176,7 @@ class Queue {
 
 extern void bbound_begin(CacheTree* tree, Queue* q);
 
-extern int bbound_end(CacheTree* tree, Queue* q, PermutationMap* p, bool early, rule_t* rules, rule_t* labels);
+extern std::vector<unsigned long> bbound_end(CacheTree* tree, Queue* q, PermutationMap* p, bool early, rule_t* rules, rule_t* labels);
 
 // datastructures
 struct confusion_matrix {
@@ -206,6 +206,24 @@ struct confusion_matrix {
     int max_tn;
     int min_fn;
     int max_fn;
+};
+
+struct solver_args {
+    int nb_sp_plus;
+    int nb_sp_minus;
+    int nb_su_plus;
+    int nb_su_minus;
+    int L;
+    int U;
+    float fairness_tolerence; 
+    int TPp;
+    int FPp;
+    int TNp; 
+    int FNp;
+    int TPu;
+    int FPu;
+    int TNu;
+    int FNu;
 };
 
 struct confusion_matrix_groups {
@@ -240,7 +258,8 @@ extern void bbound_loop(CacheTree* tree,
                             bool useUnfairnessLB,
                             double min_fairness_acceptable,
                             int kBest,
-                            bool forbidSensAttr);
+                            bool forbidSensAttr,
+                            double accuracyUpperBound);
 
 extern void evaluate_children(CacheTree* tree, 
                                 Node* parent, 
@@ -254,7 +273,8 @@ extern void evaluate_children(CacheTree* tree,
                                 rule_t* min_v,
                                 int mode,
                                 bool useUnfairnessLB,
-                                double min_fairness_acceptable);
+                                double min_fairness_acceptable,
+                                double accuracyUpperBound);
 
 
 

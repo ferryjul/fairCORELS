@@ -1,3 +1,7 @@
 setuptools
 numpy
 pytest
+tqdm
+joblib
+pandas
+cython

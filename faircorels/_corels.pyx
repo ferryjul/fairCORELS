@@ -31,14 +31,15 @@ cdef extern from "src/corels/src/run.hh":
                       int map_type, int ablation, int calculate_size, int nrules, int nlabels,
                       int nsamples, rule_t* rules, rule_t* labels, rule_t* meta, 
                       int freq, char* log_fname, int BFSmode, int seed, int forbidSensAttr_val,
-                      rule_t* maj_v, int nmaj_v, rule_t* min_v, int nmin_v)
+                      rule_t* maj_v, int nmaj_v, rule_t* min_v, int nmin_v, double accuracy_upper_bound,
+                      int max_calls)
 
     int run_corels_loop(size_t max_num_nodes, double beta, int fairness,
                     int mode, int useUnfairnessLB, double min_fairness_acceptable, int kBest, int restart, int initNBNodes, double geomReason)
 
     double run_corels_end(int** rulelist, int* rulelist_size, 
     int** classes, double** confScores, int early, int latex_out, 
-    rule_t rules[], rule_t labels[], char* opt_fname)
+    rule_t rules[], rule_t labels[], char* opt_fname, unsigned long** runStats)
 
 cdef extern from "src/utils.hh":
     int mine_rules(char **features, rule_t *samples, int nfeatures, int nsamples, 
@@ -231,7 +232,8 @@ def fit_wrap_begin(np.ndarray[np.uint8_t, ndim=2] samples,
              np.ndarray[np.uint8_t, ndim=2] labels,
              features, int max_card, double min_support, verbosity_str, int mine_verbose,
              int minor_verbose, double c, int policy, int map_type, int ablation,
-             int calculate_size, int forbidSensAttr, int BFSmode, int seed, np.ndarray[np.uint8_t, ndim=2] maj_vect,  np.ndarray[np.uint8_t, ndim=2] min_vect):
+             int calculate_size, int forbidSensAttr, int BFSmode, int seed, np.ndarray[np.uint8_t, ndim=2] maj_vect,  
+             np.ndarray[np.uint8_t, ndim=2] min_vect, double accuracy_upper_bound, int max_calls):
     global rules
     global labels_vecs
     global minor
@@ -503,7 +505,8 @@ def fit_wrap_begin(np.ndarray[np.uint8_t, ndim=2] samples,
             minor = NULL
     """
     cdef int rb = run_corels_begin(c, verbosity, policy, map_type, ablation, calculate_size,
-                   n_rules, 2, nsamples, rules, labels_vecs, minor, 0, NULL, BFSmode_val, seed_val, forbidSensAttr_val, maj_vecs, n_maj_vecs, min_vecs, n_min_vecs)
+                   n_rules, 2, nsamples, rules, labels_vecs, minor, 0, NULL, BFSmode_val, seed_val, 
+                   forbidSensAttr_val, maj_vecs, n_maj_vecs, min_vecs, n_min_vecs, accuracy_upper_bound, max_calls)
 
     if rb == -1:
         if labels_vecs != NULL:
@@ -556,7 +559,9 @@ def fit_wrap_end(int early):
     cdef int* rulelist = NULL
     cdef int* classes = NULL
     cdef double* scores = NULL
-    run_corels_end(&rulelist, &rulelist_size, &classes, &scores, early, 0, NULL, NULL, NULL)
+    cdef unsigned long* runStats = NULL
+    
+    run_corels_end(&rulelist, &rulelist_size, &classes, &scores, early, 0, NULL, NULL, NULL, &runStats)
 
     r_out = []
     if classes != NULL and rules != NULL:
@@ -590,4 +595,4 @@ def fit_wrap_end(int early):
     if min_vecs != NULL:
         _free_vector(min_vecs, 2)
         min_vecs = NULL
-    return r_out
+    return [r_out, runStats[0], runStats[1]]

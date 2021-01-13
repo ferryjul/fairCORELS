@@ -34,16 +34,27 @@ int *lubySeq;
 int indLuby = -1;
 bool forbidSensAttr = false;
 int lubySeqSize = -1;
+int callsNB = 1000;
+int initCallsNB = 1000;
+double accUpperBound;
 rule_t* Gmaj_vect;
 rule_t* Gmin_vect;
-
+bool debugRun = false; // for printing more info while running/exploring
 
 int run_corels_begin(double c, char* vstring, int curiosity_policy,
                   int map_type, int ablation, int calculate_size, int nrules, int nlabels,
                   int nsamples, rule_t* rules, rule_t* labels, rule_t* meta, int freq, 
                   char* log_fname, int BFSmode, int seed, bool forbidSensAttr_val, rule_t* maj_v, int nmaj_v,
-                  rule_t* min_v, int nmin_v)
+                  rule_t* min_v, int nmin_v, double accuracy_upper_bound, int max_calls)
 {
+    callsNB = max_calls;
+    initCallsNB = max_calls;
+    if(debugRun) {
+        printf("Will explore at most %d nodes.\n", callsNB);
+        printf("Provided accuracy upper bound = %lf\n", accuracy_upper_bound);
+    }
+    
+    accUpperBound = accuracy_upper_bound;
     // Check correctness
     if(nmaj_v != nmin_v){
         printf("Incorrect argument : nmaj and nmin should be equal\n");
@@ -248,7 +259,7 @@ int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int mode, b
         }
         if((g_tree->num_nodes() < currLimit) && !g_queue->empty()) {
             bbound_loop(g_tree, g_queue, g_pmap, beta, fairness, Gmaj_vect, Gmin_vect, mode, useUnfairnessLB,
-                            min_fairness_acceptable, kBest, forbidSensAttr); 
+                            min_fairness_acceptable, kBest, forbidSensAttr, accUpperBound); 
             return 0;
         } else {
             if(first) { // Update best known solution
@@ -379,7 +390,7 @@ int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int mode, b
         }
         if((g_tree->num_nodes() < currLimit) && !g_queue->empty()) {
             bbound_loop(g_tree, g_queue, g_pmap, beta, fairness, Gmaj_vect, Gmin_vect, mode, useUnfairnessLB,
-                            min_fairness_acceptable, kBest, forbidSensAttr); 
+                            min_fairness_acceptable, kBest, forbidSensAttr, accUpperBound); 
             return 0;
         } else {
             if(first) { // Update best known solution
@@ -471,26 +482,46 @@ int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int mode, b
         }
     } 
     else { // Normal run (no restart)
-                if((g_tree->num_nodes() < max_num_nodes) && !g_queue->empty()) {
-            bbound_loop(g_tree, g_queue, g_pmap, beta, fairness, Gmaj_vect, Gmin_vect, mode, useUnfairnessLB,
-                            min_fairness_acceptable, kBest, forbidSensAttr);
-            return 0;
-        }
+            if((g_tree->num_nodes() < max_num_nodes) && !g_queue->empty() && (callsNB > 0)) {
+                bbound_loop(g_tree, g_queue, g_pmap, beta, fairness, Gmaj_vect, Gmin_vect, mode, useUnfairnessLB,
+                                min_fairness_acceptable, kBest, forbidSensAttr, accUpperBound);
+                callsNB--;
+                if(callsNB == 0){
+                    if(debugRun){
+                        printf("Performed max allowed #calls to bbound_loop (%d)\n", initCallsNB);
+                    }
+                }
+                if(max_num_nodes <= g_tree->num_nodes()){
+                     if(debugRun){
+                        printf("Exiting because max #nodes in the trie was reached : %d/%d\n", max_num_nodes, g_tree->num_nodes());
+                    }
+                }
+                return 0;
+            }
     }
     return -1;
 }
 
-double run_corels_end(int** rulelist, int* rulelist_size, int** classes, double** confScores, int early, int latex_out, rule_t* rules, rule_t* labels, char* opt_fname)
+double run_corels_end(int** rulelist, int* rulelist_size, int** classes, double** confScores, int early, int latex_out, rule_t* rules, rule_t* labels, char* opt_fname, unsigned long** runStats)
 {
+    if(debugRun){
+        printf("Performed %d calls to bbound_loop.\n", initCallsNB - callsNB);
+    }
     if(usedRestart) {
         g_tree = best_tree;
         g_queue = best_queue;
         g_pmap = best_map;
     }
-    bbound_end(g_tree, g_queue, g_pmap, early, Grules, Glabels);
+    std::vector<unsigned long> vals = bbound_end(g_tree, g_queue, g_pmap, early, Grules, Glabels);
     const tracking_vector<unsigned short, DataStruct::Tree>& r_list = g_tree->opt_rulelist();
     const tracking_vector<bool, DataStruct::Tree>& preds = g_tree->opt_predictions();
     const vector<double> scores = g_tree->getConfScores();
+    *runStats = (unsigned long*)malloc(sizeof(unsigned long) * 2); // Confidence scores
+    if(debugRun){
+        printf("nb explored = %lu, nb cache = %lu\n", vals[0], vals[1]);
+    }
+    (*runStats)[0] = vals[0];
+    (*runStats)[1] = vals[1];
     //double accuracy = 1.0 - g_tree->min_objective() + g_tree->c() * r_list.size();
     double accuracy = g_tree->getFinalAcc();
     *rulelist = (int*)malloc(sizeof(int) * r_list.size()); // Antecedents

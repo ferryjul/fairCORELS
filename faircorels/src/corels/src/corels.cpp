@@ -3,6 +3,8 @@
 #include <iostream>
 #include <stdio.h>
 #include <math.h>
+#include "statistical_parity_improved_pruning.cpp"
+#include <time.h> // for cp filtering running time measures
 
 Queue::Queue(std::function<bool(Node*, Node*)> cmp, char const *type)
     : q_(new q (cmp)), type_(type) {}
@@ -13,12 +15,32 @@ Queue::~Queue() {
 }
 
 /* Computes confusion matrices for both groups */
-
+bool debug = false; // for printing more info while running/exploring
 int pushingTicket = 0;
 int pruningCnt = 0;
-int exploredNodes = 0;
+int permBound = 0;
+int arriveHere = 0;
+unsigned long exploredNodes = 0;
 bool firstPass = true;
 bool firstPass2 = true;
+unsigned long nodesBeforeBest = 0;
+unsigned long cacheBeforeBest = 0;
+
+// Global variables for improved pruning
+int nb_sp_plus;
+int nb_sp_minus;
+int nb_su_plus;
+int nb_su_minus;
+bool firstCall = true;
+int improvedPruningCnt = 0;
+int improvedPruningCntTot = 0;
+double longestfilteringrun = -1.0;
+int best_rl_length = 0;
+double total_solver_calls = 0;
+long double total_solving_time = 0.0;
+solver_args args_longest_run;
+int max_depth = 0;
+int timeoutCnt = 0;
 double max2El(double e1, double e2) {
     if(e1 < e2) {
         return e2;
@@ -188,7 +210,7 @@ confusion_matrix_groups compute_confusion_matrix(VECTOR parent_prefix_prediction
     int nFN_maj_ub;
     int nTN_maj_ub;
     int nFP_maj_ub;
-
+    // for lower bounds we do not consider instances captured by the default decision
     rule_vandnot(TP_maj_ub, TP_maj, not_captured, tree->nsamples(), &nTP_maj_ub);
     rule_vandnot(FN_maj_ub, FN_maj, not_captured, tree->nsamples(), &nFN_maj_ub);
     rule_vandnot(FP_maj_ub, FP_maj, not_captured, tree->nsamples(), &nFP_maj_ub);
@@ -459,8 +481,42 @@ void evaluate_children(CacheTree* tree,
                         int mode,
                         bool useUnfairnessLB,
                         double min_fairness_acceptable,
-                        bool forbidSensAttr){
-
+                        bool forbidSensAttr,
+                        double accuracyUpperBound){
+    
+    if(firstCall){
+        firstCall = false;
+        VECTOR captured_it;
+        rule_vinit(tree->nsamples(), &captured_it);
+        rule_vand(captured_it, min_v[1].truthtable, tree->label(1).truthtable, tree->nsamples(), &nb_sp_plus);
+        rule_vand(captured_it, min_v[1].truthtable, tree->label(0).truthtable, tree->nsamples(), &nb_sp_minus);
+        rule_vand(captured_it, maj_v[1].truthtable, tree->label(1).truthtable, tree->nsamples(), &nb_su_plus);
+        rule_vand(captured_it, maj_v[1].truthtable, tree->label(0).truthtable, tree->nsamples(), &nb_su_minus);
+        if(debug) {
+            printf("Initializing cardinalities for SP improved pruning : \n");
+            printf("Got %d protected positives, %d protected negatives, %d unprotected positives, %d unprotected negatives.\n", nb_sp_plus, nb_sp_minus, nb_su_plus, nb_su_minus);
+        }
+        rule_vfree(&captured_it);
+        int U = accuracyUpperBound * (tree->nsamples());
+        if(debug) {
+            printf("U is %d/%d.\n", U, tree->nsamples());
+        }
+        if(debug) {
+            if(fairness == 1 && useUnfairnessLB)
+                printf("will perform improved SP pruning\n");
+            else if(fairness == 2 && useUnfairnessLB)
+                printf("will perform improved PP pruning\n");
+            else if(fairness == 3 && useUnfairnessLB)
+                printf("will perform improved PE pruning\n");
+            else if(fairness == 4 && useUnfairnessLB)
+                printf("will perform improved EO pruning\n");
+            else if(fairness == 5 && useUnfairnessLB)
+                printf("will perform improved EOdds pruning\n");
+        }
+        longestfilteringrun = -1;
+        nodesBeforeBest = 0;
+        cacheBeforeBest = 0;      
+    }
     VECTOR captured, captured_zeros, not_captured, not_captured_zeros, not_captured_equivalent;
     int num_captured, c0, c1, captured_correct;
     int num_not_captured, d0, d1, default_correct, num_not_captured_equivalent;
@@ -486,9 +542,9 @@ void evaluate_children(CacheTree* tree,
 
     // Compute prefix's predictions
     VECTOR captured_it, not_captured_yet, captured_zeros_j, preds_prefix;
-    
+
     int nb, nb2, pm;
-    
+
     rule_vinit(tree->nsamples(), &captured_it);
     rule_vinit(tree->nsamples(), &not_captured_yet);
     rule_vinit(tree->nsamples(), &preds_prefix);
@@ -499,8 +555,37 @@ void evaluate_children(CacheTree* tree,
 
     // Initially preds_prefix is full of zeros
     rule_vclear(tree->nsamples(), preds_prefix);
-
+    int depth = len_prefix;
     tracking_vector<unsigned short, DataStruct::Tree>::iterator it;
+    /*--- tobedeleted ---*/
+    /*bool isPrefixCorresp = true;
+    if (len_prefix == 4)  {
+        int ind = 0;
+        for (it = parent_prefix.begin(); it != parent_prefix.end() && isPrefixCorresp; it++) {
+            switch(ind){
+                case 0: 
+                    if(strcmp(tree->rule(*it).features,"age_26-45__AND__juvenile-crimes_=0"))
+                        isPrefixCorresp = false;
+                    break;
+                case 1: 
+                    if(strcmp(tree->rule(*it).features,"gender_Male__AND__juvenile-crimes_>0"))
+                        isPrefixCorresp = false;
+                    break;
+                case 2: 
+                    if(strcmp(tree->rule(*it).features,"priors_2-3"))
+                        isPrefixCorresp = false;
+                    break;
+                
+            }
+            ind++;
+        }   
+    } else {
+        isPrefixCorresp = false;
+    }
+    if(isPrefixCorresp){
+        printf("Prefix found !\n");
+    }*/
+    /* --- --- */
     for (it = parent_prefix.begin(); it != parent_prefix.end(); it++) {
         rule_vand(captured_it, not_captured_yet, tree->rule(*it).truthtable, tree->nsamples(), &nb);
         rule_vandnot(not_captured_yet, not_captured_yet, captured_it, tree->nsamples(), &pm);
@@ -511,7 +596,12 @@ void evaluate_children(CacheTree* tree,
     }
     
     // begin evaluating children
+    bool pass;
     for (i = 1; i < nrules; i++) {
+        pass = false;
+        /*if (isPrefixCorresp && !strcmp(tree-> rule(i).features,"priors_>3__AND__age_23-25")){
+            printf("rule list evaluated ! \n");
+        }*/
         /* IF RULE CORRESPONDS TO PROTECTED OR UNPROTECTED ATTRIBUTES, IT IS PRUNED */
         /*if(forbidSensAttr) { // TODO : RE IMPLEMENT THIS PART WITH GROUP VECTORS (?) - OR DELETE IF REPLACED BY RULE MINING
             if(i == maj_pos || i == min_pos) {
@@ -527,6 +617,7 @@ void evaluate_children(CacheTree* tree,
         // check if this rule is already in the prefix
         if (std::find(parent_prefix.begin(), parent_prefix.end(), i) != parent_prefix.end())
             continue;
+        exploredNodes++; // we consider node explored here as we below compute the preds & captured instances
         // captured represents data captured by the new rule
         rule_vand(captured, parent_not_captured, tree->rule(i).truthtable, nsamples, &num_captured);
         // lower bound on antecedent support
@@ -568,12 +659,270 @@ void evaluate_children(CacheTree* tree,
         confusion_matrix_groups cmg = compute_confusion_matrix(preds_prefix, tree, parent_not_captured, captured,
                                                                                  maj_v, min_v, prediction, default_prediction);
 
+        improvedPruningCntTot++;
+        // for statistical parity, we use constraint programming to improve pruning     
+        if(depth > max_depth && debug){
+            max_depth = depth;
+            printf("Now working at depth %d.\n", max_depth);
+        }    
+
+        // ----------------------------------- HERE OCCURS THE PPC FILTERING -----------------------------------                                      
+        if(fairness == 1 && useUnfairnessLB && best_rl_length > 0){  // Statistical Parity
+			int L = (1 - (tree->min_objective() + ((best_rl_length-len_prefix)*c)))*tree->nsamples(); // (1 - misc)*nb_samples = nb inst well classif by current best model
+            //if(improvedPruningCntTot % 10000 == 0)
+            //    printf("new lower bound : %f\n", (tree->min_objective() + ((best_rl_length-len_prefix)*c)));
+			int U = accuracyUpperBound * (tree->nsamples());
+			float fairness_tolerence = 1-min_fairness_acceptable; // equiv max unfairness acceptable
+			int TPp = cmg.minority.min_tp;
+			int FPp = cmg.minority.min_fp;
+			int TNp = cmg.minority.min_tn;
+			int FNp = cmg.minority.min_fn;
+			int TPu = cmg.majority.min_tp;
+			int FPu = cmg.majority.min_fp;
+			int TNu = cmg.majority.min_tn;
+			int FNu = cmg.majority.min_fn;
+                       
+            // Start measuring time
+            struct timespec begin, end; 
+            clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &begin); //CLOCK_REALTIME for wall clock time, CLOCK_PROCESS_CPUTIME_ID for CPU time
+
+            FilteringStatisticalParity check_bounds(nb_sp_plus,nb_sp_minus, nb_su_plus, nb_su_minus, L,U , fairness_tolerence, TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu);
+            check_bounds.run(0);
+
+            // Stop measuring time and calculate the elapsed time
+            clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);
+            total_solver_calls+=1;
+            long seconds = end.tv_sec - begin.tv_sec;
+            long nanoseconds = end.tv_nsec - begin.tv_nsec;
+            double timediff = (seconds*1000000) + (nanoseconds*1e-3);
+            total_solving_time += timediff;
+            if(timediff > longestfilteringrun){
+                longestfilteringrun = timediff;
+                args_longest_run.nb_sp_plus = nb_sp_plus;
+                args_longest_run.nb_sp_minus = nb_sp_minus;
+                args_longest_run.nb_su_plus = nb_su_plus;
+                args_longest_run.nb_su_minus = nb_su_minus;
+                args_longest_run.L = L;
+                args_longest_run.U = U;
+                args_longest_run.fairness_tolerence = fairness_tolerence;
+                args_longest_run.TPp = TPp;
+                args_longest_run.FPp = FPp;
+                args_longest_run.TNp = TNp;
+                args_longest_run.FNp = FNp;
+                args_longest_run.TPu = TPu;
+                args_longest_run.FPu = FPu;
+                args_longest_run.TNu = TNu;
+                args_longest_run.FNu = FNu;
+            }
+            if(!check_bounds.isFeasible()){ // no solution => the fairness constraint can never be satisfied using the current prefix -> we skip its evaluation without adding it to the queue
+                improvedPruningCnt++;
+                continue;
+            }   
+        } else if(fairness == 2 && useUnfairnessLB && best_rl_length > 0){  // Predictive Parity
+			int L = (1 - (tree->min_objective() + ((best_rl_length-len_prefix)*c)))*tree->nsamples(); // (1 - misc)*nb_samples = nb inst well classif by current best model
+			int U = accuracyUpperBound * (tree->nsamples());
+			float fairness_tolerence = 1-min_fairness_acceptable; // equiv max unfairness acceptable
+			int TPp = cmg.minority.min_tp;
+			int FPp = cmg.minority.min_fp;
+			int TNp = cmg.minority.min_tn;
+			int FNp = cmg.minority.min_fn;
+			int TPu = cmg.majority.min_tp;
+			int FPu = cmg.majority.min_fp;
+			int TNu = cmg.majority.min_tn;
+			int FNu = cmg.majority.min_fn;
+                       
+            // Start measuring time
+            struct timespec begin, end; 
+            //printf("Calling solver with parameters : (%d,%d,%d,%d,%d,%d,%f,%d,%d,%d,%d,%d,%d,%d,%d)\n", nb_sp_plus,nb_sp_minus, nb_su_plus, nb_su_minus, L,U , fairness_tolerence, TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu);
+            clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &begin); //CLOCK_REALTIME for wall clock time, CLOCK_PROCESS_CPUTIME_ID for CPU time
+            FilteringPredictiveParity check_bounds(nb_sp_plus,nb_sp_minus, nb_su_plus, nb_su_minus, L,U , fairness_tolerence, TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu);
+            check_bounds.run(0);
+
+            // Stop measuring time and calculate the elapsed time
+            clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);
+            total_solver_calls+=1;
+            long seconds = end.tv_sec - begin.tv_sec;
+            long nanoseconds = end.tv_nsec - begin.tv_nsec;
+            double timediff = (seconds*1000000) + (nanoseconds*1e-3);
+            total_solving_time += timediff;
+            if(timediff > longestfilteringrun){
+                longestfilteringrun = timediff;
+                args_longest_run.nb_sp_plus = nb_sp_plus;
+                args_longest_run.nb_sp_minus = nb_sp_minus;
+                args_longest_run.nb_su_plus = nb_su_plus;
+                args_longest_run.nb_su_minus = nb_su_minus;
+                args_longest_run.L = L;
+                args_longest_run.U = U;
+                args_longest_run.fairness_tolerence = fairness_tolerence;
+                args_longest_run.TPp = TPp;
+                args_longest_run.FPp = FPp;
+                args_longest_run.TNp = TNp;
+                args_longest_run.FNp = FNp;
+                args_longest_run.TPu = TPu;
+                args_longest_run.FPu = FPu;
+                args_longest_run.TNu = TNu;
+                args_longest_run.FNu = FNu;
+            }
+            if(!check_bounds.isFeasible()){ // no solution => the fairness constraint can never be satisfied using the current prefix -> we skip its evaluation without adding it to the queue
+                improvedPruningCnt++;
+                continue;
+            }   
+        } else if(fairness == 3 && useUnfairnessLB && best_rl_length > 0){  // Predictive Parity
+			int L = (1 - (tree->min_objective() + ((best_rl_length-len_prefix)*c)))*tree->nsamples(); // (1 - misc)*nb_samples = nb inst well classif by current best model
+			int U = accuracyUpperBound * (tree->nsamples());
+			float fairness_tolerence = 1-min_fairness_acceptable; // equiv max unfairness acceptable
+			int TPp = cmg.minority.min_tp;
+			int FPp = cmg.minority.min_fp;
+			int TNp = cmg.minority.min_tn;
+			int FNp = cmg.minority.min_fn;
+			int TPu = cmg.majority.min_tp;
+			int FPu = cmg.majority.min_fp;
+			int TNu = cmg.majority.min_tn;
+			int FNu = cmg.majority.min_fn;
+                       
+            // Start measuring time
+            struct timespec begin, end; 
+            //printf("Calling solver with parameters : (%d,%d,%d,%d,%d,%d,%f,%d,%d,%d,%d,%d,%d,%d,%d)\n", nb_sp_plus,nb_sp_minus, nb_su_plus, nb_su_minus, L,U , fairness_tolerence, TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu);
+            clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &begin); //CLOCK_REALTIME for wall clock time, CLOCK_PROCESS_CPUTIME_ID for CPU time
+            FilteringPredictiveEquality check_bounds(nb_sp_plus,nb_sp_minus, nb_su_plus, nb_su_minus, L,U , fairness_tolerence, TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu);
+            check_bounds.run(0);
+
+            // Stop measuring time and calculate the elapsed time
+            clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);
+            total_solver_calls+=1;
+            long seconds = end.tv_sec - begin.tv_sec;
+            long nanoseconds = end.tv_nsec - begin.tv_nsec;
+            double timediff = (seconds*1000000) + (nanoseconds*1e-3);
+            total_solving_time += timediff;
+            if(timediff > longestfilteringrun){
+                longestfilteringrun = timediff;
+                args_longest_run.nb_sp_plus = nb_sp_plus;
+                args_longest_run.nb_sp_minus = nb_sp_minus;
+                args_longest_run.nb_su_plus = nb_su_plus;
+                args_longest_run.nb_su_minus = nb_su_minus;
+                args_longest_run.L = L;
+                args_longest_run.U = U;
+                args_longest_run.fairness_tolerence = fairness_tolerence;
+                args_longest_run.TPp = TPp;
+                args_longest_run.FPp = FPp;
+                args_longest_run.TNp = TNp;
+                args_longest_run.FNp = FNp;
+                args_longest_run.TPu = TPu;
+                args_longest_run.FPu = FPu;
+                args_longest_run.TNu = TNu;
+                args_longest_run.FNu = FNu;
+            }
+            if(!check_bounds.isFeasible()){ // no solution => the fairness constraint can never be satisfied using the current prefix -> we skip its evaluation without adding it to the queue
+                improvedPruningCnt++;
+                pass = true;
+            }   
+        } else if(fairness == 4 && useUnfairnessLB && best_rl_length > 0){  // Predictive Parity
+			int L = (1 - (tree->min_objective() + ((best_rl_length-len_prefix)*c)))*tree->nsamples(); // (1 - misc)*nb_samples = nb inst well classif by current best model
+			int U = accuracyUpperBound * (tree->nsamples());
+			float fairness_tolerence = 1-min_fairness_acceptable; // equiv max unfairness acceptable
+			int TPp = cmg.minority.min_tp;
+			int FPp = cmg.minority.min_fp;
+			int TNp = cmg.minority.min_tn;
+			int FNp = cmg.minority.min_fn;
+			int TPu = cmg.majority.min_tp;
+			int FPu = cmg.majority.min_fp;
+			int TNu = cmg.majority.min_tn;
+			int FNu = cmg.majority.min_fn;
+                       
+            // Start measuring time
+            struct timespec begin, end; 
+            //printf("Calling solver with parameters : (%d,%d,%d,%d,%d,%d,%f,%d,%d,%d,%d,%d,%d,%d,%d)\n", nb_sp_plus,nb_sp_minus, nb_su_plus, nb_su_minus, L,U , fairness_tolerence, TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu);
+            clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &begin); //CLOCK_REALTIME for wall clock time, CLOCK_PROCESS_CPUTIME_ID for CPU time
+            FilteringEqualOpportunity check_bounds(nb_sp_plus,nb_sp_minus, nb_su_plus, nb_su_minus, L,U , fairness_tolerence, TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu);
+            check_bounds.run(0);
+
+            // Stop measuring time and calculate the elapsed time
+            clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);
+            total_solver_calls+=1;
+            long seconds = end.tv_sec - begin.tv_sec;
+            long nanoseconds = end.tv_nsec - begin.tv_nsec;
+            double timediff = (seconds*1000000) + (nanoseconds*1e-3);
+            total_solving_time += timediff;
+            if(timediff > longestfilteringrun){
+                longestfilteringrun = timediff;
+                args_longest_run.nb_sp_plus = nb_sp_plus;
+                args_longest_run.nb_sp_minus = nb_sp_minus;
+                args_longest_run.nb_su_plus = nb_su_plus;
+                args_longest_run.nb_su_minus = nb_su_minus;
+                args_longest_run.L = L;
+                args_longest_run.U = U;
+                args_longest_run.fairness_tolerence = fairness_tolerence;
+                args_longest_run.TPp = TPp;
+                args_longest_run.FPp = FPp;
+                args_longest_run.TNp = TNp;
+                args_longest_run.FNp = FNp;
+                args_longest_run.TPu = TPu;
+                args_longest_run.FPu = FPu;
+                args_longest_run.TNu = TNu;
+                args_longest_run.FNu = FNu;
+            }
+            if(!check_bounds.isFeasible()){ // no solution => the fairness constraint can never be satisfied using the current prefix -> we skip its evaluation without adding it to the queue
+                improvedPruningCnt++;
+                continue;
+            }   
+        } else if(fairness == 5 && useUnfairnessLB && best_rl_length > 0){  // Predictive Parity
+			int L = (1 - (tree->min_objective() + ((best_rl_length-len_prefix)*c)))*tree->nsamples(); // (1 - misc)*nb_samples = nb inst well classif by current best model
+			int U = accuracyUpperBound * (tree->nsamples());
+			float fairness_tolerence = 1-min_fairness_acceptable; // equiv max unfairness acceptable
+			int TPp = cmg.minority.min_tp;
+			int FPp = cmg.minority.min_fp;
+			int TNp = cmg.minority.min_tn;
+			int FNp = cmg.minority.min_fn;
+			int TPu = cmg.majority.min_tp;
+			int FPu = cmg.majority.min_fp;
+			int TNu = cmg.majority.min_tn;
+			int FNu = cmg.majority.min_fn;
+                       
+            // Start measuring time
+            struct timespec begin, end; 
+            //printf("Calling solver with parameters : (%d,%d,%d,%d,%d,%d,%f,%d,%d,%d,%d,%d,%d,%d,%d)\n", nb_sp_plus,nb_sp_minus, nb_su_plus, nb_su_minus, L,U , fairness_tolerence, TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu);
+            clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &begin); //CLOCK_REALTIME for wall clock time, CLOCK_PROCESS_CPUTIME_ID for CPU time
+            FilteringEqualizedOdds check_bounds(nb_sp_plus,nb_sp_minus, nb_su_plus, nb_su_minus, L,U , fairness_tolerence, TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu);
+            check_bounds.run(0);
+
+            // Stop measuring time and calculate the elapsed time
+            clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);
+            total_solver_calls+=1;
+            long seconds = end.tv_sec - begin.tv_sec;
+            long nanoseconds = end.tv_nsec - begin.tv_nsec;
+            double timediff = (seconds*1000000) + (nanoseconds*1e-3);
+            total_solving_time += timediff;
+            if(timediff > longestfilteringrun){
+                longestfilteringrun = timediff;
+                args_longest_run.nb_sp_plus = nb_sp_plus;
+                args_longest_run.nb_sp_minus = nb_sp_minus;
+                args_longest_run.nb_su_plus = nb_su_plus;
+                args_longest_run.nb_su_minus = nb_su_minus;
+                args_longest_run.L = L;
+                args_longest_run.U = U;
+                args_longest_run.fairness_tolerence = fairness_tolerence;
+                args_longest_run.TPp = TPp;
+                args_longest_run.FPp = FPp;
+                args_longest_run.TNp = TNp;
+                args_longest_run.FNp = FNp;
+                args_longest_run.TPu = TPu;
+                args_longest_run.FPu = FPu;
+                args_longest_run.TNu = TNu;
+                args_longest_run.FNu = FNu;
+            }
+            if(!check_bounds.isFeasible()){ // no solution => the fairness constraint can never be satisfied using the current prefix -> we skip its evaluation without adding it to the queue
+                improvedPruningCnt++;
+                continue;
+            }   
+        }
+
         fairness_metrics fm = compute_fairness_metrics(cmg);
         
         switch (fairness)
         {
             case 1:
                 unfairness = fm.statistical_parity;
+                cmg.unfairnessLB = 0; //THIS CANCELS THE EFFECT OF THIS PART OF THE CODE FOR STATISTICAL PARITY (as we use CP now) -> delete line to use former pruning again
                 break;
             case 2:
                 unfairness = fm.predictive_parity;
@@ -599,7 +948,7 @@ void evaluate_children(CacheTree* tree,
                 break;
         }
         if(useUnfairnessLB) {
-            if(unfairness < cmg.unfairnessLB) {
+            if(unfairness < cmg.unfairnessLB) { // should never happen ; if it happens we print useful information
                 printf("PPV_min = %lf (in [%lf,%lf]), PPV_maj = %lf (in [%lf,%lf])\n",
                 cmg.minority.nPPV, cmg.minority.min_ppv, cmg.minority.max_ppv, cmg.majority.nPPV, cmg.majority.min_ppv, cmg.majority.max_ppv);
                 printf("TP_min = %d (in [%d,%d]), TP_maj = %d (in [%d,%d])\n",
@@ -636,31 +985,35 @@ void evaluate_children(CacheTree* tree,
             //objective = distance + lower_bound;
             objective =  (1-beta)*misc + beta*unfairness + lower_bound;
         }
-        exploredNodes++;
         /* --- unfairness lower bound */
-        double fairnesslb = 1.0;
+        /*double fairnesslb = 1.0;
         if(mode == 3) {
             if(useUnfairnessLB) {
                 fairnesslb = 1 - cmg.unfairnessLB;
                 if(fairnesslb < min_fairness_acceptable)
                     pruningCnt++;
             }
-        }
+        }*/
         logger->addToObjTime(time_diff(t2));
         logger->incObjNum();
         if (objective < tree->min_objective()) {
             if(mode == 3) { // if mode 3 we check if the constraint on fairness is satisfied
                 if((1-unfairness) > min_fairness_acceptable) {
-                    //printf("min(objectivee): %1.5f -> %1.5f, length: %d, cache size: %zu\n",
-                    //tree->min_objective(), objective, len_prefix, tree->num_nodes());
+                    best_rl_length = len_prefix;
+                    if(debug) {
+                    printf("min(objectivee): %1.5f -> %1.5f, length: %d (check -> %d), cache size: %zu, explored %lu nodes, pushed %d nodes (opt pruning = %d/%d), arriveHere = %d, permBound = %d.\n",
+                    tree->min_objective(), objective, len_prefix, best_rl_length, tree->num_nodes(), exploredNodes, pushingTicket, improvedPruningCnt, improvedPruningCntTot, arriveHere, permBound);
                     //printf("(1-unfairness) = %lf, min_fairness_acceptable = %lf, fairnessLB=%lf\n",(1-unfairness),min_fairness_acceptable,fairnesslb);
                     //printf("TPmaj=%d, FPmaj=%d, TNmaj=%d, FNmaj=%d, TPmin=%d, FPmin=%d, TNmin=%d, FNmin=%d\n", cmg.majority.nTP,cmg.majority.nFP,cmg.majority.nTN,cmg.majority.nFN,cmg.minority.nTP,cmg.minority.nFP,cmg.minority.nTN,cmg.minority.nFN);
                     //printf("explored %d nodes before best solution.\n", exploredNodes);
+                    }
+                    nodesBeforeBest = exploredNodes;
+                    cacheBeforeBest = tree->num_nodes();      
                     logger->setTreeMinObj(objective);
                     tree->update_min_objective(objective);
                     tree->update_opt_rulelist(parent_prefix, i);
                     tree->update_opt_predictions(parent, prediction, default_prediction);
-                    logger->dumpState();            
+                    logger->dumpState();                             
                 }
             } else {                
                 //printf("min(objectivee): %1.5f -> %1.5f, length: %d, cache size: %zu\n",
@@ -685,7 +1038,8 @@ void evaluate_children(CacheTree* tree,
         else
             lookahead_bound = lower_bound;
         // only add node to our datastructures if its children will be viable
-        if ((lookahead_bound < tree->min_objective()) && (fairnesslb>=min_fairness_acceptable)) {
+        if ((lookahead_bound < tree->min_objective()) && !pass) { //&& (fairnesslb>=min_fairness_acceptable)
+            arriveHere++;
             double t3 = timestamp();
             // check permutation bound
             Node* n = p->insert(i, nrules, prediction, default_prediction,
@@ -707,6 +1061,8 @@ void evaluate_children(CacheTree* tree,
                 if (tree->calculate_size())
                     logger->addQueueElement(len_prefix, lower_bound, false);
                 logger->addToQueueInsertionTime(time_diff(t5));
+            } else {
+                permBound++;
             }
         } // else:  objective lower bound with one-step lookahead
     }
@@ -776,7 +1132,8 @@ void bbound_loop(CacheTree* tree,
                 bool useUnfairnessLB,
                 double min_fairness_acceptable,
                 int kBest,
-                bool forbidSensAttr){
+                bool forbidSensAttr,
+                double accuracyUpperBound){
 
     double t0 = timestamp();
     int verbosity = logger->getVerbosity();
@@ -792,7 +1149,7 @@ void bbound_loop(CacheTree* tree,
                      tree->rule(0).truthtable, captured,
                      tree->nsamples(), &cnt);
         evaluate_children(tree, node_ordered.first, node_ordered.second, not_captured, q, p, beta, fairness, maj_v, min_v, mode, useUnfairnessLB,
-                        min_fairness_acceptable, forbidSensAttr);
+                        min_fairness_acceptable, forbidSensAttr, accuracyUpperBound);
         logger->addToEvalChildrenTime(time_diff(t1));
         logger->incEvalChildrenNum();
 
@@ -825,9 +1182,46 @@ void bbound_loop(CacheTree* tree,
     }
 }
     
-int bbound_end(CacheTree* tree, Queue* q, PermutationMap* p, bool early, rule_t* rules, rule_t* labels) {
+std::vector<unsigned long> bbound_end(CacheTree* tree, Queue* q, PermutationMap* p, bool early, rule_t* rules, rule_t* labels) {
     int verbosity = logger->getVerbosity();
     bool print_queue = 0;
+    if(debug) {
+        printf("explored %lu nodes.\n", exploredNodes);
+        printf("using new filtering pruned %d/%d nodes.\n", improvedPruningCnt, improvedPruningCntTot);
+        printf("Total solving time = %Lf s\n", total_solving_time/1000000.0);
+        printf("Longest fitlering run took %f ms.\n", longestfilteringrun/1000.0);
+        printf("Average time per solver call = %Lf ms\n", (total_solving_time/1000.0)/total_solver_calls);
+        printf("%d/%f solver calls timed out.\n", timeoutCnt, total_solver_calls);
+        printf("Number of nodes in the trie at exit : %d\n",  tree->num_nodes());
+        printf("params : (%d,%d,%d,%d,%d,%d,%f,%d,%d,%d,%d,%d,%d,%d,%d)\n",args_longest_run.nb_sp_plus,
+                    args_longest_run.nb_sp_minus,
+                    args_longest_run.nb_su_plus,
+                    args_longest_run.nb_su_minus,
+                    args_longest_run.L,
+                    args_longest_run.U,
+                    args_longest_run.fairness_tolerence,
+                    args_longest_run.TPp,
+                    args_longest_run.FPp,
+                    args_longest_run.TNp,
+                    args_longest_run.FNp,
+                    args_longest_run.TPu,
+                    args_longest_run.FPu,
+                    args_longest_run.TNu,
+                    args_longest_run.FNu);
+    }
+    improvedPruningCnt = 0;
+    improvedPruningCntTot = 0;
+    longestfilteringrun = -1.0;
+    total_solving_time = 0.0;
+    total_solver_calls = 0.0;
+    max_depth = 0;
+    pushingTicket = 0;
+    pruningCnt = 0;
+    best_rl_length = 0;
+    exploredNodes = 0;
+    firstPass = true;
+    firstPass2 = true;
+    firstCall = true;
     logger->dumpState(); // second last log record (before queue elements deleted)
    // if(pruningCnt > 0)
         //printf("Pruned %d subtrees with unfairness lower bound.\n", pruningCnt);
@@ -911,5 +1305,9 @@ int bbound_end(CacheTree* tree, Queue* q, PermutationMap* p, bool early, rule_t*
 
     rule_vfree(&captured);
     rule_vfree(&not_captured);
-    return num_iter;
+    std::vector<unsigned long> returnVal;
+    returnVal.push_back(nodesBeforeBest);
+    returnVal.push_back(cacheBeforeBest);
+
+    return returnVal;
 }

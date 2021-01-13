@@ -1,8 +1,13 @@
 from __future__ import print_function, division, with_statement
 from ._corels import fit_wrap_begin, fit_wrap_end, fit_wrap_loop, predict_wrap, predict_score_wrap
-from .utils import check_consistent_length, check_array, check_is_fitted, get_feature, check_in, check_features, check_rulelist, RuleList
+from .utils import check_consistent_length, check_array, check_is_fitted, get_feature, check_in, check_features, check_rulelist, RuleList, computeAccuracyUpperBound
 import numpy as np
 import pickle
+from joblib import Parallel, delayed
+from tqdm import tqdm # tentative display
+from metrics import ConfusionMatrix, Metric
+
+debug = False
 
 class CorelsClassifier:
     """Certifiably Optimal RulE ListS classifier.
@@ -26,6 +31,7 @@ class CorelsClassifier:
 
     n_iter : int, optional (default=1000)
         Maximum number of nodes (rulelists) to search before exiting.
+        Can be used to limit the memory footprint of faircorels.
 
     map_type : str, optional (default="prefix")
         The type of prefix map to use. Supported maps are "none" for no map,
@@ -73,7 +79,7 @@ class CorelsClassifier:
     
     fairness: int optional (default=1)
         The type of fairness metric used. 
-        1 : statistical parity, 2 : predictive parity, 3 : predictive equality, 4 : equal opportunity
+        1 : statistical parity, 2 : predictive parity, 3 : predictive equality, 4 : equal opportunity, 5 : equalized odds, 6 : conditional use accuracy equality
 
     maj_pos: int optional (default=-1)
         The position of the rule that defined the majority group
@@ -98,6 +104,7 @@ class CorelsClassifier:
 
     useUnfairnessLB: bool optional (default=False)
         Use the unfairness lower bound
+        -> Use the CP filtering when it is implemented, else uses a simple lower bound
     
     epsilon: float optional (default=0.05)
         max acceptable unfairness
@@ -203,7 +210,7 @@ class CorelsClassifier:
         self.bfs_mode = bfs_mode
         self.random_state = random_state
 
-    def fit(self, X, y, features=[], prediction_name="prediction", performRestarts=0, initNBNodes=1000, geomRReason=1.5):
+    def fit(self, X, y, features=[], prediction_name="prediction", performRestarts=0, initNBNodes=1000, geomRReason=1.5, max_evals=1000000000, time_limit = None):
         """
         Build a CORELS classifier from the training set (X, y).
 
@@ -223,6 +230,11 @@ class CorelsClassifier:
 
         prediction_name : string, optional(default="prediction")
             The name of the feature that is being predicted.
+
+        max_evals : int, maximum number of calls to evaluate_children (ie maximum number of nodes explored in the prefix tree)
+
+        time_limit : int, maximum number of seconds allowed for the model building
+        Note that this specifies the CPU time and NOT THE WALL-CLOCK TIME
 
         Returns
         -------
@@ -261,6 +273,8 @@ class CorelsClassifier:
             raise TypeError("Unfairness weight (beta) must be a float, got: " + str(type(self.beta)))
         if not isinstance(self.fairness, int):
             raise TypeError("Fairness metric id must be an integer between 1 and 4, got: " + str(type(self.fairness)))
+        if self.fairness < 1 or self.fairness > 6:
+            raise ValueError("Fairness metric id must be an integer between 1 and 4, got: " + str((self.fairness)))
         if not isinstance(self.maj_pos, int):
             raise TypeError("The position maj_pos of the rule that defined the majority group  must be an integer, got: " + str(type(self.maj_pos)))
         if not isinstance(self.min_pos, int):
@@ -354,28 +368,36 @@ class CorelsClassifier:
 
         map_id = map_types.index(self.map_type)
         policy_id = policies.index(self.policy)
-        
+        accuracy_upper_bound = computeAccuracyUpperBound(X, y, verbose=0)
         fr = fit_wrap_begin(samples.astype(np.uint8, copy=False),
                              labels.astype(np.uint8, copy=False), rl.features,
                              self.max_card, self.min_support, verbose, mine_verbose, minor_verbose,
                              self.c, policy_id, map_id, self.ablation, False, self.forbidSensAttr, self.bfs_mode, self.random_state,
-                             self.maj_vect.astype(np.uint8, copy=False), self.min_vect.astype(np.uint8, copy=False))
+                             self.maj_vect.astype(np.uint8, copy=False), self.min_vect.astype(np.uint8, copy=False), accuracy_upper_bound, max_evals)
         
         if fr:
             early = False
             try:
-                while fit_wrap_loop(self.n_iter, self.beta, self.fairness, self.mode, self.useUnfairnessLB, self.epsilon, self.kbest, performRestarts, initNBNodes, geomRReason):
-                    pass
+                if time_limit is None: 
+                    while fit_wrap_loop(self.n_iter, self.beta, self.fairness, self.mode, self.useUnfairnessLB, self.epsilon, self.kbest, performRestarts, initNBNodes, geomRReason):
+                        pass
+                else:
+                    import time
+                    start = time.clock()
+                    while fit_wrap_loop(self.n_iter, self.beta, self.fairness, self.mode, self.useUnfairnessLB, self.epsilon, self.kbest, performRestarts, initNBNodes, geomRReason):
+                        end = time.clock()
+                        if end - start > time_limit:
+                            if debug:
+                                print("Exiting because CPU time limit is reached (", end - start, " seconds / ", time_limit, ".")
+                            break
             except:
                 print("\nExiting early")
-                rl.rules = fit_wrap_end(True)
-                
+                rl.rules, self.nbExplored, self.nbCache = fit_wrap_end(True)
                 self.rl_ = rl
 
                 raise
              
-            rl.rules = fit_wrap_end(False)
-            
+            rl.rules, self.nbExplored, self.nbCache = fit_wrap_end(False)
             self.rl_ = rl
 
             if "rulelist" in self.verbosity:
@@ -613,3 +635,533 @@ class CorelsClassifier:
             s += "\n" + self.rl_.__repr__()
 
         return s
+
+    def explain(self, anEx):
+        """
+        Explains a prediction
+        Arguments
+        ---------
+        anEx : array-like, shape = [n_features] 
+            The input sample
+        
+        Returns
+        -------
+        a : list l where
+            l[0] is the instance's prediction
+            l[1] is the implicant(s) that led to that decision
+            (both are strings - user friendly)
+        """
+        if len(self.rl_.rules) == 1:
+            return [self.predict([anEx]), "DEFAULT DECISION -> ", self.rl_.prediction_name + " = " + str(self.rl_.rules[0]["prediction"])] #+ " (conf score = " + str(self.rules[0]["score"]) + ")"
+        else:    
+            for i in range(len(self.rl_.rules) - 1):
+                match = True
+                feat = get_feature(self.rl_.features, self.rl_.rules[i]["antecedents"][0])
+                #print(anEx[self.rl_.rules[i]["antecedents"][0]-1] )
+                if anEx[self.rl_.rules[i]["antecedents"][0]-1] != 1:
+                    match = False
+                for j in range(1, len(self.rl_.rules[i]["antecedents"])):
+                    feat += " && " + get_feature(self.rl_.features, self.rl_.rules[i]["antecedents"][j])
+                    if anEx[ self.rl_.rules[i]["antecedents"][j]-1] != 1:
+                        match = False
+                if match:
+                    return [self.predict([anEx]), "[" + feat + "]-> " + self.rl_.prediction_name + " = " + str(bool(self.rl_.rules[i]["prediction"]))] # + " (conf score = " + str(self.rules[i]["score"]) + ")"
+            return [self.predict([anEx]), "DEFAULT DECISION -> ", self.rl_.prediction_name + " = " + str(self.rl_.rules[-1]["prediction"])]# + " (conf score = " + str(str(self.rules[-1]["score"])) + ")"
+
+    def explain_api(self, anEx):
+        """
+        Explains a prediction (shorter output)
+        Arguments
+        ---------
+        anEx : array-like, shape = [n_features] 
+            The input sample
+        
+        Returns
+        -------
+        a : list l where
+            l[0] is the instance's prediction
+            l[1] is the implicant(s) that led to that decision
+            (both are API-oriented - easy to use by a program)
+        """
+        if len(self.rl_.rules) == 1:
+            return [self.rl_.rules[0]["prediction"], "DEFAULT DECISION"]
+        else:    
+            for i in range(len(self.rl_.rules) - 1):
+                match = True
+                feat = get_feature(self.rl_.features, self.rl_.rules[i]["antecedents"][0])
+                if anEx[self.rl_.rules[i]["antecedents"][0]-1] != 1:
+                    match = False
+                for j in range(1, len(self.rl_.rules[i]["antecedents"])):
+                    feat += " && " + get_feature(self.rl_.features, self.rl_.rules[i]["antecedents"][j])
+                    if anEx[ self.rl_.rules[i]["antecedents"][j]-1] != 1:
+                        match = False
+                if match:
+                    return [self.rl_.rules[i]["prediction"],feat]
+            return [self.rl_.rules[-1]["prediction"], "DEFAULT DECISION"]
+
+    def explain_long(self, anEx):
+        """
+        Explains a prediction
+        Adds by the negation of previous implicants, when applicable
+        Arguments
+        ---------
+        anEx : array-like, shape = [n_features] 
+            The input sample
+        
+        Returns
+        -------
+        a : list l where
+            l[0] is the instance's prediction
+            l[1] is the implicant(s) that led to that decision
+            (both are strings - user friendly)
+        """
+        if len(self.rl_.rules) == 1:
+            return [self.predict([anEx]), "DEFAULT DECISION -> ", self.rl_.prediction_name + " = " + str(self.rl_.rules[0]["prediction"])] #+ " (conf score = " + str(self.rules[0]["score"]) + ")"
+        else:    
+            neg = ""
+            for i in range(len(self.rl_.rules) - 1):
+                match = True
+                feat = get_feature(self.rl_.features, self.rl_.rules[i]["antecedents"][0])
+                #print(anEx[self.rl_.rules[i]["antecedents"][0]-1] )
+                if anEx[self.rl_.rules[i]["antecedents"][0]-1] != 1:
+                    match = False
+                for j in range(1, len(self.rl_.rules[i]["antecedents"])):
+                    feat += " && " + get_feature(self.rl_.features, self.rl_.rules[i]["antecedents"][j])
+                    if anEx[ self.rl_.rules[i]["antecedents"][j]-1] != 1:
+                        match = False
+                if match:
+                    if len(neg) > 0:
+                        neg += " AND "
+                    return [self.predict([anEx]), "[" + neg + feat + "]-> " + self.rl_.prediction_name + " = " + str(bool(self.rl_.rules[i]["prediction"]))] # + " (conf score = " + str(self.rules[i]["score"]) + ")"
+                else:
+                    if len(neg) == 0:
+                        neg+="NOT [%s]" %feat
+                    else:
+                        neg+=" AND NOT [%s]" %feat
+            return [self.predict([anEx]), neg, self.rl_.prediction_name + " = " + str(self.rl_.rules[-1]["prediction"])]# + " (conf score = " + str(str(self.rules[-1]["score"])) + ")"
+
+    def explain_long_api(self, anEx):
+            """
+            Explains a prediction (shorter output)
+            Adds by the negation of previous implicants, when applicable
+            Arguments
+            ---------
+            anEx : array-like, shape = [n_features] 
+                The input sample
+            
+            Returns
+            -------
+            a : list l where
+                l[0] is the instance's prediction
+                l[1] is the implicant(s) (and previous negations) that led to that decision
+                (both are API-oriented - easy to use by a program)
+            """
+            if len(self.rl_.rules) == 1:
+                return [self.rl_.rules[0]["prediction"], "DEFAULT DECISION"]
+            else:    
+                neg = ""
+                for i in range(len(self.rl_.rules) - 1):
+                    match = True
+                    feat = get_feature(self.rl_.features, self.rl_.rules[i]["antecedents"][0])
+                    if anEx[self.rl_.rules[i]["antecedents"][0]-1] != 1:
+                        match = False
+                    for j in range(1, len(self.rl_.rules[i]["antecedents"])):
+                        feat += " && " + get_feature(self.rl_.features, self.rl_.rules[i]["antecedents"][j])
+                        if anEx[ self.rl_.rules[i]["antecedents"][j]-1] != 1:
+                            match = False
+                    if match:
+                        if len(neg) > 0:
+                            neg += " AND "
+                        return [self.rl_.rules[i]["prediction"],neg+feat]
+                    else:
+                        if len(neg) == 0:
+                            neg+="NOT [%s]" %feat
+                        else:
+                            neg+=" AND NOT [%s]" %feat
+                return [self.rl_.rules[-1]["prediction"], neg]
+
+class CorelsBagging:
+    """
+    Attributes
+    ----------
+    n_learners : # base learners
+    sample_size : size of one subsample (used to train exactly one base learner)
+    + all CorelsClassifier attributes used to create the base learners
+    """
+    _estimator_type = "classifier"
+
+    def __init__(self, X, y, n_learners, sample_size, features=[], prediction_name="prediction", c=0.01, n_iter=10000, map_type="prefix", policy="lower_bound",
+                 verbosity=["rulelist"], ablation=0, max_card=2, min_support=0.01,
+                 beta=0.0, fairness=1, maj_pos=-1, min_pos=2, maj_vect = np.empty(shape=(0)), min_vect = np.empty(shape=(0)),
+                 mode=4, useUnfairnessLB=False, epsilon=0.0, kbest=1, forbidSensAttr=False,
+                 bfs_mode=0, random_state=42, baggingVerbose=0):   
+        # Check arguments
+        if not isinstance(n_learners, int):
+            raise TypeError("n_learners must be an integer, got: " + str(type(self.n_learners)))
+        if n_learners < 0:
+            raise ValueError("n_learners must be strictly greater than 0, got: " + str(self.n_learners)) 
+        if not isinstance(sample_size, int):
+            raise TypeError("sample_size must be an integer, got: " + str(type(self.sample_size)))
+        if sample_size < 0:
+            raise ValueError("sample_size must be strictly greater than 0, got: " + str(self.sample_size)) 
+        
+        # Ensemble parameters
+        self.n_learners = n_learners
+        self.sample_size = sample_size
+
+        # Other parameters assignment and check
+        self.X = X
+        self.y = y
+        self.features = features
+        self.c = c
+        self.n_iter = n_iter
+        self.map_type = map_type
+        self.policy = policy
+        self.verbosity = verbosity
+        self.ablation = ablation
+        self.max_card = max_card
+        self.min_support = min_support
+        self.forbidSensAttr=forbidSensAttr
+        self.beta = beta
+        self.fairness = fairness
+        self.prediction_name = prediction_name
+        if not isinstance(self.c, float):
+            raise TypeError("Regularization constant (c) must be a float, got: " + str(type(self.c)))
+        if self.c < 0.0 or self.c > 1.0:
+            raise ValueError("Regularization constant (c) must be between 0.0 and 1.0, got: " + str(self.c))
+        if not isinstance(self.n_iter, int):
+            raise TypeError("Max nodes must be an integer, got: " + str(type(self.n_iter)))
+        if self.n_iter < 0:
+            raise ValueError("Max nodes must be positive, got: " + str(self.n_iter))
+        if not isinstance(self.ablation, int):
+            raise TypeError("Ablation must be an integer, got: " + str(type(self.ablation)))
+        if self.ablation > 2 or self.ablation < 0:
+            raise ValueError("Ablation must be between 0 and 2, inclusive, got: " + str(self.ablation))
+        if not isinstance(self.map_type, str):
+            raise TypeError("Map type must be a string, got: " + str(type(self.map_type)))
+        if not isinstance(self.policy, str):
+            raise TypeError("Policy must be a string, got: " + str(type(self.policy)))
+        if not isinstance(self.verbosity, list):
+            raise TypeError("Verbosity must be a list of strings, got: " + str(type(self.verbosity)))
+        if not isinstance(self.min_support, float):
+            raise TypeError("Minimum support must be a float, got: " + str(type(self.min_support)))
+        if self.min_support < 0.0 or self.min_support > 0.5:
+            raise ValueError("Minimum support must be between 0.0 and 0.5, got: " + str(self.min_support))
+        if not isinstance(self.max_card, int):
+            raise TypeError("Max cardinality must be an integer, got: " + str(type(self.max_card)))
+        if self.max_card < 1:
+            raise ValueError("Max cardinality must be greater than or equal to 1, got: " + str(self.max_card))
+        if not isinstance(prediction_name, str):
+            raise TypeError("Prediction name must be a string, got: " + str(type(prediction_name)))
+        # Fairness params
+        if not isinstance(self.beta, float):
+            raise TypeError("Unfairness weight (beta) must be a float, got: " + str(type(self.beta)))
+        if not isinstance(self.fairness, int):
+            raise TypeError("Fairness metric id must be an integer between 1 and 4, got: " + str(type(self.fairness)))
+        if self.fairness < 1 or self.fairness > 6:
+            raise ValueError("Fairness metric id must be an integer between 1 and 4, got: " + str((self.fairness)))
+        if not isinstance(maj_pos, int):
+            raise TypeError("The position maj_pos of the rule that defined the majority group  must be an integer, got: " + str(type(maj_pos)))
+        if not isinstance(min_pos, int):
+            raise TypeError("The position min_pos of the rule that defined the minority group  must be an integer, got: " + str(type(min_pos)))
+
+        self.mode = mode
+        self.useUnfairnessLB = useUnfairnessLB
+        self.epsilon = epsilon
+        self.kbest = kbest
+        self.bfs_mode = bfs_mode
+        self.random_state = random_state
+        self.baggingVerbose = baggingVerbose
+        # Prepare min_vect and maj_vect for entire original training set whatever args were given
+        if(maj_vect.size == 0):
+            # Majority group is not explicitely defined
+            # We will have to use maj_pos to compute the associated vector
+            self.maj_pos = maj_pos
+            if(maj_pos == -1):
+                self.maj_vect = []
+            #if(maj_pos != -1):
+                #print("maj vect not specified, position ", maj_pos, " will be used.")
+            #else:
+                #print("no majority group defined, maj group will be all instances except minority group ones.")
+                #self.maj_vect = []
+        else:
+            self.maj_pos = -2
+            #print("maj vect specified")
+            maj_vect = check_array(maj_vect, ndim=1)
+            maj_vect = np.stack([ np.invert(maj_vect), maj_vect ])
+            self.maj_vect = maj_vect
+
+
+        if(min_vect.size == 0):
+            # Majority group is not explicitely defined
+            # We will have to use maj_pos to compute the associated vector
+            self.min_pos = min_pos
+            #print("min vect not specified, position ", min_pos, " will be used.")
+        else:
+            self.min_pos = -2
+            min_vect = check_array(min_vect, ndim=1)
+            min_vect = np.stack([ np.invert(min_vect), min_vect ])
+            self.min_vect = min_vect
+            #print("min vect specified")
+
+        if(self.min_pos != -2):
+            min_vect = X[:,self.min_pos]
+            min_vect = check_array(min_vect, ndim=1)
+            min_vect = np.stack([ np.invert(min_vect), min_vect ])
+            self.min_vect = min_vect
+        #print(len(self.min_vect), " elements in min_vect, %d captured" %(self.min_vect.count(1)))
+        if(self.maj_pos != -2):
+            if self.maj_pos == -1: # Nor vector for majority group given neither column number => all instances not in min group are in maj group
+                self.maj_vect = np.empty(shape=(self.min_vect.shape))
+                for e in range(self.min_vect.shape[1]):
+                    if self.min_vect[0][e] == 1:
+                        self.maj_vect[0][e] = 0
+                        self.maj_vect[1][e] = 1
+                    else:
+                        self.maj_vect[0][e] = 1
+                        self.maj_vect[1][e] = 0
+            else:
+                maj_vect =  X[:,self.maj_pos]
+                maj_vect = check_array(maj_vect, ndim=1)
+                maj_vect = np.stack([ np.invert(maj_vect), maj_vect ])
+                self.maj_vect = maj_vect
+
+  
+        self.X_sets = []
+        self.Y_sets = []
+        self.maj_sets = []
+        self.min_sets = []
+        self.learners = []
+        captTab = []
+        if self.baggingVerbose > 0:
+            print("[BAGGING - MAIN] Initializing ", self.n_learners, " training sets of size ", self.sample_size, ".")
+        np.random.seed(self.random_state+1) # so that the random_state used inside corels is different
+        for i in range(self.n_learners):
+            indices = np.random.randint(low=0, high=self.X.shape[0], size=self.sample_size)  # np.asarray(range(self.X.shape[0])) # to keep X identical for all base learners
+            self.X_sets.append(self.X[indices])
+            self.Y_sets.append(self.y[indices])
+            captTab.append(np.shape(np.unique(indices))[0])
+            #print(self.maj_vect.shape)
+            #print(indices)
+            temp_maj_vect = self.maj_vect[0][indices]
+            #self.maj_sets.append(np.stack([ np.invert(temp_maj_vect), temp_maj_vect ]))
+            self.maj_sets.append(temp_maj_vect)
+            temp_min_vect = self.min_vect[0][indices]
+            #self.min_sets.append(np.stack([ np.invert(temp_min_vect), temp_min_vect ]))
+            self.min_sets.append(temp_min_vect)
+        if self.baggingVerbose > 0:
+            captAv = np.average(captTab)
+            print("[BAGGING - MAIN] prepared bags contain average of %f/%d (%f) of original instances each." %(captAv, self.X.shape[0], captAv/self.X.shape[0]))
+            print("[BAGGING - MAIN] Initializing ", self.n_learners, " learners.")
+        for i in range(self.n_learners):
+            self.learners.append(CorelsClassifier(c=self.c, n_iter=self.n_iter, map_type=self.map_type, policy=self.policy,
+                 verbosity=self.verbosity, ablation=self.ablation, max_card=self.max_card, min_support=self.min_support,
+                 beta=self.beta, fairness=self.fairness, 
+                 maj_pos=self.maj_pos, 
+                 min_pos=self.min_pos, 
+                 maj_vect = self.maj_sets[i], 
+                 min_vect = self.min_sets[i],
+                 mode=self.mode, useUnfairnessLB=self.useUnfairnessLB, epsilon=self.epsilon, kbest=self.kbest, forbidSensAttr=self.forbidSensAttr,
+                 bfs_mode=self.bfs_mode, random_state=self.random_state))
+        if self.baggingVerbose > 0:
+            print("Initialized learners")
+
+    def train_one(self, modelIndex):
+        my_learner = self.learners[modelIndex]
+        my_learner.fit(self.X_sets[modelIndex], self.Y_sets[modelIndex], features=self.features, prediction_name=self.prediction_name, 
+        performRestarts=self.performRestarts, initNBNodes=self.initNBNodes, geomRReason = self.geomRReason, max_evals=self.max_evals, time_limit = self.time_limit)
+        return my_learner
+
+    def fit(self, performRestarts=0, initNBNodes=1000, geomRReason=1.5, max_evals=1000000000, time_limit = None, n_workers=-1):
+        """
+        Trains all the base learners on their respective bags
+
+        Parameters
+        ----------
+        n_workers : int, maximum number of threads allowed to parallelize the training of the different learners
+
+        max_evals : int, maximum number of calls to evaluate_children (ie maximum number of nodes explored in the prefix tree)
+
+        time_limit : int, maximum number of seconds allowed for the model building
+        Note that this specifies the CPU time and NOT THE WALL-CLOCK TIME
+
+        + restart parameters (see above in CorelsClassifier doc)
+
+        Returns
+        -------
+        self : obj
+        """
+        self.performRestarts=performRestarts
+        self.initNBNodes=initNBNodes
+        self.geomRReason=geomRReason
+        self.max_evals=max_evals
+        self.time_limit = time_limit
+        if self.baggingVerbose > 0:
+            print("[BAGGING - MAIN] Training ", self.n_learners, " learners (using at most %d threads)." %n_workers)
+        trained_learners = Parallel(n_jobs=n_workers)(delayed(self.train_one)(modelIndex) for modelIndex in tqdm(range(self.n_learners)))
+        self.learners = trained_learners
+        if self.baggingVerbose > 0:
+            print("[BAGGING - MAIN] Trained ", self.n_learners, " learners.")
+        ruleLists = []
+        nbExploredList = []
+        nbCacheList = []
+        for i in range(self.n_learners):
+            ruleLists.append(self.learners[i].rl_)
+            nbExploredList.append(self.learners[i].nbExplored)
+            nbCacheList.append(self.learners[i].nbCache)
+        
+        self.ruleLists = ruleLists
+        self.nbExploredList = nbExploredList
+        self.nbCacheList = nbCacheList
+        # --- the remaining of this function is only a redundant check for debugging ---
+        # check that each model meets unf constraint on its training set
+        #print("epsilon = ", self.epsilon)
+        import pandas as pd
+        for i in range(self.n_learners):
+            df_train = pd.DataFrame(self.X_sets[i], columns=self.features)
+            df_train['two_year_recid'] = self.Y_sets[i]
+            df_train["predictions"] = self.learners[i].predict(self.X_sets[i])
+            cm_train = ConfusionMatrix(self.min_sets[i], self.maj_sets[i], df_train["predictions"], df_train["two_year_recid"])
+            cm_minority_train, cm_majority_train = cm_train.get_matrix()
+            fm_train = Metric(cm_minority_train, cm_majority_train)
+
+            if self.fairness == 1:
+                unfTraining = fm_train.statistical_parity()
+            elif self.fairness == 2:
+                unfTraining = fm_train.predictive_parity()
+            elif self.fairness == 3:
+                unfTraining = fm_train.predictive_equality()
+            elif self.fairness == 4:
+                unfTraining = fm_train.equal_opportunity()
+            else:
+                unfTraining = -1
+            #print("unf = ", unfTraining)
+            if unfTraining > 1 - self.epsilon:
+                print("ERROR unf too high on his own training set ! :o")
+                raise ValueError
+
+    def majority(self, n):
+        """
+        Voting function (majority wins)
+        Also updates the tie global counter
+        """
+        #print("[BAGGING - MAIN] Aggregator got %d votes 1 and %d votes 0." %(n, self.n_learners-n))
+        if n > (self.n_learners-n):
+            return 1
+        else:
+            if n == (self.n_learners-n):
+                self.num_ties += 1
+            return 0
+
+    def predict(self, X):
+        """
+        Predict classifications of the input samples X.
+
+        Arguments
+        ---------
+        X : array-like, shape = [n_samples, n_features]
+            The training input samples. All features must be binary, and the matrix
+            is internally converted to dtype=np.uint8. The features must be the same
+            as those of the data used to train the model.
+
+        Returns
+        -------
+        p : array of shape = [n_samples].
+            The classifications of the input samples.
+        """
+        first = True
+        self.num_ties = 0
+        for i in range(self.n_learners):
+            if first:
+                preds = self.learners[i].predict(X)
+                first = False
+            else:
+                preds = np.add(preds, self.learners[i].predict(X))
+        final_preds = np.asarray([self.majority(preds[i]) for i in range(preds.shape[0])])
+        if self.baggingVerbose > 0:
+            print("Aggregator had to break %d ties. (over %d total votes)" %(self.num_ties,final_preds.size))
+        return final_preds
+    
+    def score(self, X, y):
+        """
+        Score the algorithm on the input samples X with the labels y. Alternatively,
+        score the predictions X against the labels y (where X has been generated by 
+        `predict` or something similar).
+
+        Arguments
+        ---------
+        X : array-like, shape = [n_samples, n_features] OR shape = [n_samples]
+            The input samples, or the sample predictions. All features must be binary.
+        
+        y : array-like, shape = [n_samples]
+            The input labels. All labels must be binary.
+
+        Returns
+        -------
+        a : float
+            The accuracy, from 0.0 to 1.0, of the rulelist predictions
+        """
+
+        labels = check_array(y, ndim=1)
+        p = check_array(X)
+        check_consistent_length(p, labels)
+        
+        if p.ndim == 2:
+            p = self.predict(p)
+        elif p.ndim != 1:
+            raise ValueError("Input samples must have only 1 or 2 dimensions, got " + str(p.ndim) +
+                             " dimensions")
+
+        a = np.mean(np.invert(np.logical_xor(p, labels)))
+
+        return a
+
+    def explain(self, anInst):
+        """
+        Explains a prediction
+        Arguments
+        ---------
+        anInst : array-like, shape = [n_features]
+            The input sample
+        
+        Returns
+        -------
+        d : dictionnary {'implicants':i, 'prediction':p}
+            where i is the list of implicants that led majority voters to their prediction
+            and p is the associated prediction
+        """
+        pred = self.predict([anInst])
+        expls = []
+        for i in range(self.n_learners):
+            if self.learners[i].predict([anInst]) == pred:
+                expl = self.learners[i].explain_api(anInst)
+                if int(expl[0]) != pred[0]:
+                    print("ERROR, redundant check failed :(")
+                    raise ValueError
+                expls.append(expl[1])
+        return {'prediction': self.prediction_name + " = " + str(bool(pred[0])), 'implicants':list(dict.fromkeys(expls))}
+
+    def explain_complete(self, anInst):
+        """
+        Explains a prediction (adds complete implications, including antecedents negation for all learners)
+        Arguments
+        ---------
+        anInst : array-like, shape = [n_features]
+            The input sample
+        
+        Returns
+        -------
+        d : dictionnary {'implicants':i, 'prediction':p}
+            where i is the list of implicants that led majority voters to their prediction
+            and p is the associated prediction
+        """
+        pred = self.predict([anInst])
+        expls = []
+        for i in range(self.n_learners):
+            if self.learners[i].predict([anInst]) == pred:
+                expl = self.learners[i].explain_long_api(anInst)
+                if int(expl[0]) != pred[0]:
+                    print("ERROR, redundant check failed :(")
+                    raise ValueError
+                expls.append(expl[1])
+        return {'prediction': self.prediction_name + " = " + str(bool(pred[0])), 'implicants':list(dict.fromkeys(expls))}

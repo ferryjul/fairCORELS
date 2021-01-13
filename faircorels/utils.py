@@ -2,6 +2,59 @@ from __future__ import print_function, division, with_statement
 import numpy as np
 import pickle
 
+def computeAccuracyUpperBound(X, y, verbose=0):
+    import pandas as pd
+    import numpy as np
+    """
+    Parameters
+    ----------
+    X : Features vector
+    y : Labels vector
+    verbose : Int
+    0 -> No display
+    1 -> Minimal Display
+    1 -> Debug (also performs additional checks)
+    Returns
+    -------
+    Int : Minimum number of instances that can not be classified correctly due to dataset inconsistency
+    """
+    values, counts = np.unique(X, axis=0, return_counts=True)
+    values = values[counts > 1]
+    counts = counts[counts > 1]
+    if verbose >= 1:
+        print("Found ", values.shape[0], " unique duplicates.")
+    incorrCnt = 0
+    for ii, anEl in enumerate(list(values)):
+        occurences = np.where((X == anEl).all(axis=1))
+        if verbose >= 2:
+            print("Value ", anEl, " appears ", counts[ii], " times. (CHECK = ", occurences[0].shape[0], ")")
+            # Additional check
+            if counts[ii] != occurences[0].shape[0]:
+                exit(-1)
+        labels = y[occurences[0]]
+        if verbose >= 2:
+            print(labels)
+            # Additional check
+            els = X[occurences[0]]
+            elsC = np.unique(els, axis=0, return_counts=True)
+            if elsC[0].shape[0] > 1:
+                exit(-1)
+        labelsData = np.unique(labels, return_counts = True)
+        if labelsData[0].size > 1:
+            if labelsData[0].size != 2:
+                exit(-1)
+            minErrors = np.min(labelsData[1])
+            if verbose >= 2:
+                print("min errors possible : ", minErrors)
+            incorrCnt += minErrors
+        else:
+            if verbose >= 2:
+                print("no inconsistency")
+    if verbose >= 1:
+        print("At least ", incorrCnt, " elements can not be classified correctly.")
+        print("accuracy upper bound = 1 - ", incorrCnt, "/", X.shape[0], " (", 1.0-(incorrCnt/X.shape[0]), ")")        
+    return 1.0-(incorrCnt/X.shape[0])
+    
 def check_array(x, ndim=None):
     if not hasattr(x, 'shape') and \
        (type(x) == str or not hasattr(x, '__len__')) and \
@@ -187,7 +240,7 @@ class RuleList:
         return tot
     
     def __repr__(self):
-        return self.__str__() + "\nAll features: (" + str(self.features) + ")"
+        return self.__str__() #+ "\nAll features: (" + str(self.features) + ")"
 
 def load_from_csv(fname):
     """

@@ -233,7 +233,7 @@ int main(int argc, char *argv[]) {
         int rulelist_size = 0;
         int* classes = NULL;
 
-        run_corels_end(&rulelist, &rulelist_size, &classes, NULL, 0, latex_out, rules, labels, &opt_fname[0]);
+        run_corels_end(&rulelist, &rulelist_size, &classes, NULL, 0, latex_out, rules, labels, &opt_fname[0], NULL);
 
         if(rulelist)
             free(rulelist);

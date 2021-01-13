@@ -2,8 +2,7 @@ from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
 import os
 import sys
-
-#from Cython.Build import cythonize
+from Cython.Build import cythonize
 
 class build_numpy(build_ext):
     def finalize_options(self):
@@ -15,16 +14,21 @@ class build_numpy(build_ext):
 def install(gmp):
     description = 'FairCORELS, a modified version of CORELS to build fair and interpretable models'
     long_description = description
-    with open('faircorels/README.txt') as f:
+    with open('faircorels/README.md') as f:
         long_description = f.read()
 
-    version = '0.8'
+    version = '0.9'
 
     pyx_file = 'faircorels/_corels.pyx'
 
     source_dir = 'faircorels/src/corels/src/'
     sources = ['utils.cpp', 'rulelib.cpp', 'run.cpp', 'pmap.cpp', 
-               'corels.cpp', 'cache.cpp']
+               'corels.cpp', 'cache.cpp',
+               # files under this line are for improved filtering only
+               'statistical_parity_improved_pruning.cpp', 'mistral_backtrack.cpp', 'mistral_constraint.cpp',
+               'mistral_global.cpp', 'mistral_sat.cpp', 'mistral_search.cpp',
+               'mistral_solver.cpp', 'mistral_structure.cpp', 'mistral_variable.cpp'
+               ]
     
     for i in range(len(sources)):
         sources[i] = source_dir + sources[i]
@@ -56,7 +60,7 @@ def install(gmp):
                 extra_compile_args = cpp_args)
 
     extensions = [extension]
-    #extensions = cythonize(extensions)
+    extensions = cythonize(extensions)
 
     numpy_version = 'numpy'
 
