@@ -5,7 +5,7 @@ import numpy as np
 import pickle
 from joblib import Parallel, delayed
 from tqdm import tqdm # tentative display
-from metrics import ConfusionMatrix, Metric
+from .metrics import ConfusionMatrix, Metric
 
 debug = False
 
@@ -104,7 +104,11 @@ class CorelsClassifier:
 
     useUnfairnessLB: bool optional (default=False)
         Use the unfairness lower bound
-        -> Use the CP filtering when it is implemented, else uses a simple lower bound
+        -> Use the CP filtering when it is implemented, else uses a simple (less efficient) lower bound.        
+        Note that the simple lower bound effect may be negligible, depending on the search heuristic and the max. size of the prefix tree.
+
+        Note that the CP filtering is implemented for SP (metric 1) and EO (metric 4) only.
+        Implementation for the other metrics is coming soon !
     
     epsilon: float optional (default=0.05)
         max acceptable unfairness

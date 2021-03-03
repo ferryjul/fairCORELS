@@ -18,7 +18,7 @@ def install(gmp):
     with open('faircorels/README.md') as f:
         long_description = f.read()
 
-    version = '0.92'
+    version = '0.93'
 
     pyx_file = 'faircorels/_corels.pyx'
 
@@ -26,7 +26,7 @@ def install(gmp):
     sources = ['utils.cpp', 'rulelib.cpp', 'run.cpp', 'pmap.cpp', 
                'corels.cpp', 'cache.cpp',
                # files under this line are for improved filtering only
-               'statistical_parity_improved_pruning.cpp', 'mistral_backtrack.cpp', 'mistral_constraint.cpp',
+               'filtering_algorithms.cpp', 'mistral_backtrack.cpp', 'mistral_constraint.cpp',
                'mistral_global.cpp', 'mistral_sat.cpp', 'mistral_search.cpp',
                'mistral_solver.cpp', 'mistral_structure.cpp', 'mistral_variable.cpp'
                ]

@@ -33,7 +33,7 @@
             "faircorels/src/corels/src/pmap.cpp",
             "faircorels/src/corels/src/corels.cpp",
             "faircorels/src/corels/src/cache.cpp",
-            "faircorels/src/corels/src/statistical_parity_improved_pruning.cpp",
+            "faircorels/src/corels/src/filtering_algorithms.cpp",
             "faircorels/src/corels/src/mistral_backtrack.cpp",
             "faircorels/src/corels/src/mistral_constraint.cpp",
             "faircorels/src/corels/src/mistral_global.cpp",

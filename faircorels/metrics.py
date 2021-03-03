@@ -69,7 +69,7 @@ class ConfusionMatrix(namedtuple('ConfusionMatrix', 'minority majority label tru
             'FPR' : nFPR_maj,
             'FOR' : nFOR_maj,
             'FNR' : nFNR_maj,
-            'NPV' : nPPV_maj,
+            'NPV' : nNPV_maj,
             'TNR' : nTNR_maj}
 
         matrix_min = {
@@ -83,7 +83,7 @@ class ConfusionMatrix(namedtuple('ConfusionMatrix', 'minority majority label tru
             'FPR' : nFPR_min,
             'FOR' : nFOR_min,
             'FNR' : nFNR_min,
-            'NPV' : nPPV_min,
+            'NPV' : nNPV_min,
             'TNR' : nTNR_min}
 
         return matrix_min, matrix_maj
@@ -104,7 +104,10 @@ class Metric(namedtuple('Metric', 'cm_minority cm_majority')):
         return np.fabs(self.cm_majority['FNR'] - self.cm_minority['FNR'])
 
     def conditional_procedure_accuracy_equality(self):
-        return (np.fabs(self.cm_majority['TPR'] - self.cm_minority['TPR']) + np.fabs(self.cm_majority['FPR'] - self.cm_minority['FPR']))/2
+        return (np.fabs(self.cm_majority['TPR'] - self.cm_minority['TPR']) + np.fabs(self.cm_majority['FPR'] - self.cm_minority['FPR']))
+
+    def equalized_odds(self):
+        return (np.fabs(self.cm_majority['FNR'] - self.cm_minority['FNR']) + np.fabs(self.cm_majority['FPR'] - self.cm_minority['FPR']))
 
     def conditional_use_accuracy_equality(self):
-        return (np.fabs(self.cm_majority['PPV'] - self.cm_minority['PPV']) + np.fabs(self.cm_majority['NPV'] - self.cm_minority['NPV']))/2
+        return (np.fabs(self.cm_majority['PPV'] - self.cm_minority['PPV']) + np.fabs(self.cm_majority['NPV'] - self.cm_minority['NPV']))

@@ -5,8 +5,7 @@ from sklearn.model_selection import KFold
 from joblib import Parallel, delayed
 from collections import Counter
 import argparse
-from faircorels import load_from_csv, CorelsClassifier, CorelsBagging
-from metrics import ConfusionMatrix, Metric
+from faircorels import load_from_csv, CorelsBagging, ConfusionMatrix, Metric
 import csv
 import time
 
@@ -21,25 +20,19 @@ print("Unsensitive attribute is ", features[unsensitive_attr_column])
 
 # parser initialization
 parser = argparse.ArgumentParser(description='Analysis of FairCORELS results')
-parser.add_argument('--epsilon', type=int, default=0, help='epsilon value (min fairness acceptable) for epsilon-constrained method')
+parser.add_argument('--epsilon', type=float, default=0.0, help='epsilon value (min fairness acceptable) for epsilon-constrained method')
 parser.add_argument('--uselb', type=int, default=0, help='use filtering : 0  no, 1  yes')
 parser.add_argument('--metric', type=int, default=1, help='fairness metric: 1 statistical_parity, 2 predictive_parity, 3 predictive_equality, 4 equal_opportunity, 5 Equalized Odds, 6 Conditional use accuracy equality')
 
 args = parser.parse_args()
 
-# list of values for epsilon, we take the given index
-epsilon_range = np.arange(0.95, 1.001, 0.002) #0.001
-base = [0.6, 0.7, 0.75, 0.8, 0.85, 0.875, 0.9, 0.905, 0.91, 0.915, 0.92, 0.925, 0.93,0.935, 0.94,0.945]
-epsilon_range = base + list(epsilon_range)
-epsilons = [round(x,3) for x in epsilon_range] #60 values
-epsilon = epsilons[args.epsilon]
-print("epsilons = ", epsilons, ", len = ", len(epsilons))
+epsilon = args.epsilon
 print("epsilon = ", epsilon)
-
 fairnessMetric = args.metric
 bools = [False, True]
 useLB = bools[args.uselb]
-lambdaParam = 1e-3
+lambdaParam = 1e-3  # The regularization parameter penalizing rule lists length
+
 # We prepare the folds for our 5-folds cross-validation
 kf = KFold(n_splits=5, shuffle=True, random_state=42)
 folds = []
@@ -47,15 +40,13 @@ for train_index, test_index in kf.split(X):
     X_train, X_test = X[train_index], X[test_index]
     y_train, y_test = y[train_index], y[test_index]
     folds.append([X_train, y_train, X_test, y_test])
-    print('------------------------------>>>>>>>>>>')
-    print('train distribution ------', sorted(Counter(y_train).items()))
-    print('test distribution ------', sorted(Counter(y_test).items()))
 
 accuracy = []
 unfairness = []
-n_learners = 8
-n_workers = 8
-baggingRatio = 1.0 
+n_learners = 8 # Number of base learners
+n_workers = 8 # Maximum nhumber of parallel threads for training
+baggingRatio = 1.0 # Size of the bootstrap sampling subsamples
+
 def oneFold(foldIndex, X_fold_data): # This part could be multithreaded for better performance
     print("Fold ", foldIndex)
     X_train, y_train, X_test, y_test = X_fold_data
@@ -74,7 +65,7 @@ def oneFold(foldIndex, X_fold_data): # This part could be multithreaded for bett
     unSensDict = dict(zip(unique2, counts2))
     print("Unsensitive vector captures %d instances" %unSensDict[1])
 
-    # Create the CorelsClassifier object
+    # Create the CorelsBagging object
     clf = CorelsBagging(X_train[:,2:], 
                         y_train,
                         n_learners=n_learners,
@@ -118,6 +109,10 @@ def oneFold(foldIndex, X_fold_data): # This part could be multithreaded for bett
         unf = fm.predictive_equality()
     elif fairnessMetric == 4:
         unf = fm.equal_opportunity()
+    elif fairnessMetric == 5:
+        unf = fm.equalized_odds()
+    elif fairnessMetric == 6:
+        unf = fm.conditional_use_accuracy_equality()
     else:
         unf = -1
     length = np.average([len(clf.ruleLists[ri].rules)-1 for ri in range(n_learners)])

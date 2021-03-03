@@ -3,7 +3,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <math.h>
-#include "statistical_parity_improved_pruning.cpp"
+#include "filtering_algorithms.cpp"
 #include <time.h> // for cp filtering running time measures
 
 Queue::Queue(std::function<bool(Node*, Node*)> cmp, char const *type)
@@ -666,8 +666,9 @@ void evaluate_children(CacheTree* tree,
             printf("Now working at depth %d.\n", max_depth);
         }    
 
-        // ----------------------------------- HERE OCCURS THE PPC FILTERING -----------------------------------                                      
-        if(fairness == 1 && useUnfairnessLB && best_rl_length > 0){  // Statistical Parity
+        // ----------------------------------- HERE OCCURS THE CP FILTERING -----------------------------------      
+        // Currently supported metrics: Statistical Parity, Equal Opportunity. Other models coming soon!                                
+        if(fairness == 1 && useUnfairnessLB && best_rl_length > 0){  // Statistical Parity - Implemented
 			int L = (1 - (tree->min_objective() + ((best_rl_length-len_prefix)*c)))*tree->nsamples(); // (1 - misc)*nb_samples = nb inst well classif by current best model
             //if(improvedPruningCntTot % 10000 == 0)
             //    printf("new lower bound : %f\n", (tree->min_objective() + ((best_rl_length-len_prefix)*c)));
@@ -687,7 +688,7 @@ void evaluate_children(CacheTree* tree,
             clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &begin); //CLOCK_REALTIME for wall clock time, CLOCK_PROCESS_CPUTIME_ID for CPU time
 
             FilteringStatisticalParity check_bounds(nb_sp_plus,nb_sp_minus, nb_su_plus, nb_su_minus, L,U , fairness_tolerence, TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu);
-            check_bounds.run(0);
+            check_bounds.run(0, 0);
 
             // Stop measuring time and calculate the elapsed time
             clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);
@@ -718,7 +719,7 @@ void evaluate_children(CacheTree* tree,
                 improvedPruningCnt++;
                 continue;
             }   
-        } else if(fairness == 2 && useUnfairnessLB && best_rl_length > 0){  // Predictive Parity
+        } /*else if(fairness == 2 && useUnfairnessLB && best_rl_length > 0){  // Predictive Parity - Coming soon
 			int L = (1 - (tree->min_objective() + ((best_rl_length-len_prefix)*c)))*tree->nsamples(); // (1 - misc)*nb_samples = nb inst well classif by current best model
 			int U = accuracyUpperBound * (tree->nsamples());
 			float fairness_tolerence = 1-min_fairness_acceptable; // equiv max unfairness acceptable
@@ -736,7 +737,7 @@ void evaluate_children(CacheTree* tree,
             //printf("Calling solver with parameters : (%d,%d,%d,%d,%d,%d,%f,%d,%d,%d,%d,%d,%d,%d,%d)\n", nb_sp_plus,nb_sp_minus, nb_su_plus, nb_su_minus, L,U , fairness_tolerence, TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu);
             clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &begin); //CLOCK_REALTIME for wall clock time, CLOCK_PROCESS_CPUTIME_ID for CPU time
             FilteringPredictiveParity check_bounds(nb_sp_plus,nb_sp_minus, nb_su_plus, nb_su_minus, L,U , fairness_tolerence, TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu);
-            check_bounds.run(0);
+            check_bounds.run(0, 0);
 
             // Stop measuring time and calculate the elapsed time
             clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);
@@ -767,7 +768,7 @@ void evaluate_children(CacheTree* tree,
                 improvedPruningCnt++;
                 continue;
             }   
-        } else if(fairness == 3 && useUnfairnessLB && best_rl_length > 0){  // Predictive Parity
+        } else if(fairness == 3 && useUnfairnessLB && best_rl_length > 0){  // Predictive Equality - Coming soon
 			int L = (1 - (tree->min_objective() + ((best_rl_length-len_prefix)*c)))*tree->nsamples(); // (1 - misc)*nb_samples = nb inst well classif by current best model
 			int U = accuracyUpperBound * (tree->nsamples());
 			float fairness_tolerence = 1-min_fairness_acceptable; // equiv max unfairness acceptable
@@ -816,7 +817,8 @@ void evaluate_children(CacheTree* tree,
                 improvedPruningCnt++;
                 pass = true;
             }   
-        } else if(fairness == 4 && useUnfairnessLB && best_rl_length > 0){  // Predictive Parity
+        }*/ 
+        else if(fairness == 4 && useUnfairnessLB && best_rl_length > 0){  // Equal Opportunity - Implemented
 			int L = (1 - (tree->min_objective() + ((best_rl_length-len_prefix)*c)))*tree->nsamples(); // (1 - misc)*nb_samples = nb inst well classif by current best model
 			int U = accuracyUpperBound * (tree->nsamples());
 			float fairness_tolerence = 1-min_fairness_acceptable; // equiv max unfairness acceptable
@@ -834,7 +836,7 @@ void evaluate_children(CacheTree* tree,
             //printf("Calling solver with parameters : (%d,%d,%d,%d,%d,%d,%f,%d,%d,%d,%d,%d,%d,%d,%d)\n", nb_sp_plus,nb_sp_minus, nb_su_plus, nb_su_minus, L,U , fairness_tolerence, TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu);
             clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &begin); //CLOCK_REALTIME for wall clock time, CLOCK_PROCESS_CPUTIME_ID for CPU time
             FilteringEqualOpportunity check_bounds(nb_sp_plus,nb_sp_minus, nb_su_plus, nb_su_minus, L,U , fairness_tolerence, TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu);
-            check_bounds.run(0);
+            check_bounds.run(0, 0);
 
             // Stop measuring time and calculate the elapsed time
             clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);
@@ -865,7 +867,7 @@ void evaluate_children(CacheTree* tree,
                 improvedPruningCnt++;
                 continue;
             }   
-        } else if(fairness == 5 && useUnfairnessLB && best_rl_length > 0){  // Predictive Parity
+        } /* else if(fairness == 5 && useUnfairnessLB && best_rl_length > 0){  // Equalized Odds - Coming soon
 			int L = (1 - (tree->min_objective() + ((best_rl_length-len_prefix)*c)))*tree->nsamples(); // (1 - misc)*nb_samples = nb inst well classif by current best model
 			int U = accuracyUpperBound * (tree->nsamples());
 			float fairness_tolerence = 1-min_fairness_acceptable; // equiv max unfairness acceptable
@@ -914,7 +916,56 @@ void evaluate_children(CacheTree* tree,
                 improvedPruningCnt++;
                 continue;
             }   
-        }
+        } else if(fairness == 5 && useUnfairnessLB && best_rl_length > 0){  // CUAE - Coming soon
+			int L = (1 - (tree->min_objective() + ((best_rl_length-len_prefix)*c)))*tree->nsamples(); // (1 - misc)*nb_samples = nb inst well classif by current best model
+			int U = accuracyUpperBound * (tree->nsamples());
+			float fairness_tolerence = 1-min_fairness_acceptable; // equiv max unfairness acceptable
+			int TPp = cmg.minority.min_tp;
+			int FPp = cmg.minority.min_fp;
+			int TNp = cmg.minority.min_tn;
+			int FNp = cmg.minority.min_fn;
+			int TPu = cmg.majority.min_tp;
+			int FPu = cmg.majority.min_fp;
+			int TNu = cmg.majority.min_tn;
+			int FNu = cmg.majority.min_fn;
+                       
+            // Start measuring time
+            struct timespec begin, end; 
+            //printf("Calling solver with parameters : (%d,%d,%d,%d,%d,%d,%f,%d,%d,%d,%d,%d,%d,%d,%d)\n", nb_sp_plus,nb_sp_minus, nb_su_plus, nb_su_minus, L,U , fairness_tolerence, TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu);
+            clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &begin); //CLOCK_REALTIME for wall clock time, CLOCK_PROCESS_CPUTIME_ID for CPU time
+            FilteringEqualizedOdds check_bounds(nb_sp_plus,nb_sp_minus, nb_su_plus, nb_su_minus, L,U , fairness_tolerence, TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu);
+            check_bounds.run(0);
+
+            // Stop measuring time and calculate the elapsed time
+            clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);
+            total_solver_calls+=1;
+            long seconds = end.tv_sec - begin.tv_sec;
+            long nanoseconds = end.tv_nsec - begin.tv_nsec;
+            double timediff = (seconds*1000000) + (nanoseconds*1e-3);
+            total_solving_time += timediff;
+            if(timediff > longestfilteringrun){
+                longestfilteringrun = timediff;
+                args_longest_run.nb_sp_plus = nb_sp_plus;
+                args_longest_run.nb_sp_minus = nb_sp_minus;
+                args_longest_run.nb_su_plus = nb_su_plus;
+                args_longest_run.nb_su_minus = nb_su_minus;
+                args_longest_run.L = L;
+                args_longest_run.U = U;
+                args_longest_run.fairness_tolerence = fairness_tolerence;
+                args_longest_run.TPp = TPp;
+                args_longest_run.FPp = FPp;
+                args_longest_run.TNp = TNp;
+                args_longest_run.FNp = FNp;
+                args_longest_run.TPu = TPu;
+                args_longest_run.FPu = FPu;
+                args_longest_run.TNu = TNu;
+                args_longest_run.FNu = FNu;
+            }
+            if(!check_bounds.isFeasible()){ // no solution => the fairness constraint can never be satisfied using the current prefix -> we skip its evaluation without adding it to the queue
+                improvedPruningCnt++;
+                continue;
+            }   
+        }*/
 
         fairness_metrics fm = compute_fairness_metrics(cmg);
         
@@ -922,11 +973,11 @@ void evaluate_children(CacheTree* tree,
         {
             case 1:
                 unfairness = fm.statistical_parity;
-                cmg.unfairnessLB = 0; //THIS CANCELS THE EFFECT OF THIS PART OF THE CODE FOR STATISTICAL PARITY (as we use CP now) -> delete line to use former pruning again
+                cmg.unfairnessLB = 0; // cancels the effect of the simple bound, now useless as we use improved cp filtering
                 break;
             case 2:
                 unfairness = fm.predictive_parity;
-                cmg.unfairnessLB = cmg.predparityLB; // lower bound is now for fairness metric nb 2
+                cmg.unfairnessLB = cmg.predparityLB;
                 break;
             case 3:
                 unfairness = fm.predictive_equality;
@@ -934,11 +985,11 @@ void evaluate_children(CacheTree* tree,
                 break;
             case 4:
                 unfairness = fm.equal_opportunity;
-                cmg.unfairnessLB = cmg.equalOppLB;
+                cmg.unfairnessLB = 0; // cancels the effect of the simple bound, now useless as we use improved cp filtering
                 break;
             case 5:
                 unfairness = fm.equalized_odds;
-                cmg.unfairnessLB = 0;
+                cmg.unfairnessLB = 0; 
                 break;
             case 6:
                 unfairness = fm.cond_use_acc_equality;
