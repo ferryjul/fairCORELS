@@ -150,7 +150,7 @@ Both files show how to load data, how to train our classifiers, how to evaluate 
 
 * `useUnfairnessLB` : bool optional (default=False)
     Use the unfairness lower bound
-    -> For some metrics, an improved filtering using CP is applied
+    -> For some metrics (SP and EO), an improved filtering using CP is applied
     For some others, it is not implemented and a simple, less effective lower bound is computed and used
 
 * `epsilon` : float optional (default=0.05)
