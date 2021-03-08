@@ -7,8 +7,8 @@ The use of Python 3 is strongly recommended !
 ## Overview
 
 FairCORELS is a modified version of CORELS to learn fair rule list. 
-Our module includes two classifier methods : `CorelsClassifier` and `CorelsBagging`. 
-The `CorelsClassifier` class implements the fairCORELS method. The `CorelsBagging` class provides a wrapper to perform the Bagging ensemble method using `CorelsClassifier` as a base learner.
+Our module includes two classifier methods : `FairCorelsClassifier` and `FairCorelsBagging`. 
+The `FairCorelsClassifier` class implements the fairCORELS method. The `FairCorelsBagging` class provides a wrapper to perform the Bagging ensemble method using `FairCorelsClassifier` as a base learner.
 The currently supported fairness notions are : statistical parity, predictive parity, predictive equality, equal opportunity, equalized odds, and conditional use accuracy equality.
 
 
@@ -49,7 +49,7 @@ from faircorels import *
 X, y = load_from_csv("data/compas_rules_full.csv")
 
 # Create the model, with 10000 as the maximum number of iterations 
-c = CorelsClassifier(n_iter=10000)
+c = FairCorelsClassifier(n_iter=10000)
 
 # Fit, and score the model on the training set
 a = c.fit(X, y).score(X, y)
@@ -61,15 +61,15 @@ print(a)
 ### Complete examples
 Detailed example files, using 5-folds cross-validation for the COMPAS dataset, are provided in the `example` directory :
 
-* `newExample-compas.py` uses the `CorelsClassifier` classifier
+* `example-compas.py` uses the `FairCorelsClassifier` classifier
 
-* `newExample-ensemble-compas.py` uses the `CorelsBagging` classifier
+* `example-bagging-compas.py` uses the `FairCorelsBagging` classifier
 
 Both files show how to load data, how to train our classifiers, how to evaluate them, and how to store results in a clear and easily exploitable manner.
 
 ## Detail of the classifiers' parameters :
 
-### CorelsClassifier :
+### FairCorelsClassifier :
 
 #### Constructor arguments :
 
@@ -326,20 +326,20 @@ Method to explain a prediction (by providing the matching rule and all the previ
     `l[1]` is the implicant(s) that led to that decision
     (both are API-oriented - easy to use by a program)
 
-### CorelsBagging :
+### FairCorelsBagging :
 
-This class provides an easy wrapper for the Bagging method that uses the `CorelsClassifier` class as underlying base learning. Hence, arguments directly passed to the `CorelsClassifier` object will not be detailed again.
+This class provides an easy wrapper for the Bagging method that uses the `FairCorelsClassifier` class as underlying base learning. Hence, arguments directly passed to the `FairCorelsClassifier` object will not be detailed again.
 
 #### Constructor arguments :
 The training sets for the different base learners are automatically computed from the entire provided training set, using the provided parameters.
 
-* `n_learners` : int, number of base learners of type `CorelsClassifier` that will be used
+* `n_learners` : int, number of base learners of type `FairCorelsClassifier` that will be used
 
 * `sample_size` : size of one subsample (used to train exactly one base learner)
 
 * Note that, as training sets will be automatically determined here, the training set `X`, `y`, the features `features`, the textual prediction name `prediction_name` must be provided directly here (NOT IN THE .fit call)
 
-* Other `CorelsClassifier` arguments for the base learners : `c=0.01`, `n_iter=10000`, `map_type="prefix"`, `policy="lower_bound"`, `verbosity=["rulelist"]`, `ablation=0`, `max_card=2`, `min_support=0.01`, `beta=0.0`, `fairness=1`, `maj_pos=-1`, `min_pos=2`, `maj_vect = np.empty(shape=(0))`, `min_vect = np.empty(shape=(0))`, `mode=4`, `useUnfairnessLB=False`, `epsilon=0.0`, `kbest=1`, `forbidSensAttr=False`, `bfs_mode=0`, `random_state=42` and `baggingVerbose=0`
+* Other `FairCorelsClassifier` arguments for the base learners : `c=0.01`, `n_iter=10000`, `map_type="prefix"`, `policy="lower_bound"`, `verbosity=["rulelist"]`, `ablation=0`, `max_card=2`, `min_support=0.01`, `beta=0.0`, `fairness=1`, `maj_pos=-1`, `min_pos=2`, `maj_vect = np.empty(shape=(0))`, `min_vect = np.empty(shape=(0))`, `mode=4`, `useUnfairnessLB=False`, `epsilon=0.0`, `kbest=1`, `forbidSensAttr=False`, `bfs_mode=0`, `random_state=42` and `baggingVerbose=0`
   
 #### Methods :
 
@@ -348,7 +348,7 @@ Method to train the base learners.
 
 * `n_workers` : int, maximum number of threads allowed to parallelize the training of the different learners
 
-* + all `CorelsClassifier` attributes used to create the base learners
+* + all `FairCorelsClassifier` attributes used to create the base learners
 
 ##### .predict(X):
 Predict classifications of the input samples X. Uses majority vote as aggregation function.

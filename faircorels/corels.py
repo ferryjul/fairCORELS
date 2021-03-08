@@ -9,7 +9,7 @@ from .metrics import ConfusionMatrix, Metric
 
 debug = False
 
-class CorelsClassifier:
+class FairCorelsClassifier:
     """Certifiably Optimal RulE ListS classifier.
 
     This class implements the CORELS algorithm, designed to produce human-interpretable, optimal
@@ -17,7 +17,7 @@ class CorelsClassifier:
     tree based algorithms such as CART, CORELS provides a certificate of optimality for its 
     rulelist given a training set, leveraging multiple algorithmic bounds to do so.
 
-    In order to use run the algorithm, create an instance of the `CorelsClassifier` class, 
+    In order to use run the algorithm, create an instance of the `FairCorelsClassifier` class, 
     providing any necessary parameters in its constructor, and then call `fit` to generate
     a rulelist. `printrl` prints the generated rulelist, while `predict` provides
     classification predictions for a separate test dataset with the same features. To determine 
@@ -116,7 +116,7 @@ class CorelsClassifier:
     kbest: int optional (default=1)
         Randomly use one of the k best objectives
     
-    forbidSensAttr: bool optional (default=False)
+    forbidSensAttr: bool optional (default=False) -> This attribute is not used anymore !
         Forbid the use of the sensitive and (if specified) unsensitive attributes in the produced rule lists
 
     bfs_mode: int optinal (default=0)
@@ -149,10 +149,10 @@ class CorelsClassifier:
     Examples
     --------
     >>> import numpy as np
-    >>> from corels import CorelsClassifier
+    >>> from corels import FairCorelsClassifier
     >>> X = np.array([ [1, 0, 1], [0, 1, 0], [1, 1, 1] ])
     >>> y = np.array([ 1, 0, 1])
-    >>> c = CorelsClassifier(verbosity=[])
+    >>> c = FairCorelsClassifier(verbosity=[])
     >>> c.fit(X, y)
     ...
     >>> print(c.predict(X))
@@ -625,7 +625,7 @@ class CorelsClassifier:
         return self.rl_
     
     def __str__(self):
-        s = "CorelsClassifier (" + str(self.get_params()) + ")"
+        s = "FairCorelsClassifier (" + str(self.get_params()) + ")"
 
         if hasattr(self, "rl_"):
             s += "\n" + self.rl_.__str__()
@@ -633,7 +633,7 @@ class CorelsClassifier:
         return s
     
     def __repr__(self):
-        s = "CorelsClassifier (" + str(self.get_params()) + ")"
+        s = "FairCorelsClassifier (" + str(self.get_params()) + ")"
 
         if hasattr(self, "rl_"):
             s += "\n" + self.rl_.__repr__()
@@ -784,13 +784,13 @@ class CorelsClassifier:
                             neg+=" AND NOT [%s]" %feat
                 return [self.rl_.rules[-1]["prediction"], neg]
 
-class CorelsBagging:
+class FairCorelsBagging:
     """
     Attributes
     ----------
     n_learners : # base learners
     sample_size : size of one subsample (used to train exactly one base learner)
-    + all CorelsClassifier attributes used to create the base learners
+    + all FairCorelsClassifier attributes used to create the base learners
     """
     _estimator_type = "classifier"
 
@@ -958,7 +958,7 @@ class CorelsBagging:
             print("[BAGGING - MAIN] prepared bags contain average of %f/%d (%f) of original instances each." %(captAv, self.X.shape[0], captAv/self.X.shape[0]))
             print("[BAGGING - MAIN] Initializing ", self.n_learners, " learners.")
         for i in range(self.n_learners):
-            self.learners.append(CorelsClassifier(c=self.c, n_iter=self.n_iter, map_type=self.map_type, policy=self.policy,
+            self.learners.append(FairCorelsClassifier(c=self.c, n_iter=self.n_iter, map_type=self.map_type, policy=self.policy,
                  verbosity=self.verbosity, ablation=self.ablation, max_card=self.max_card, min_support=self.min_support,
                  beta=self.beta, fairness=self.fairness, 
                  maj_pos=self.maj_pos, 
@@ -989,7 +989,7 @@ class CorelsBagging:
         time_limit : int, maximum number of seconds allowed for the model building
         Note that this specifies the CPU time and NOT THE WALL-CLOCK TIME
 
-        + restart parameters (see above in CorelsClassifier doc)
+        + restart parameters (see above in FairCorelsClassifier doc)
 
         Returns
         -------

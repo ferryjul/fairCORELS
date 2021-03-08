@@ -111,3 +111,5 @@ class Metric(namedtuple('Metric', 'cm_minority cm_majority')):
 
     def conditional_use_accuracy_equality(self):
         return (np.fabs(self.cm_majority['PPV'] - self.cm_minority['PPV']) + np.fabs(self.cm_majority['NPV'] - self.cm_minority['NPV']))
+
+            

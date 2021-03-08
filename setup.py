@@ -18,7 +18,7 @@ def install(gmp):
     with open('faircorels/README.md') as f:
         long_description = f.read()
 
-    version = '0.93'
+    version = '1.0'
 
     pyx_file = 'faircorels/_corels.pyx'
 
