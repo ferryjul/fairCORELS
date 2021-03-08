@@ -43,7 +43,7 @@ The currently supported fairness notions are : statistical parity, predictive pa
     - "label" prints a summary of the class labels.
     - "minor" prints a summary of the minority bound.
     - "samples" produces a complete dump of the rules, label, and/or minor data. You must also provide at least one of "rule", "label", or "minor" to specify which data you want to dump, or "loud" for all data. The "samples" option often spits out a lot of output.
-    - "progress" prints periodic messages as corels runs.
+    - "progress" prints periodic messages as faircorels runs.
     - "mine" prints debug information while mining rules, including each rule as it is generated.
     - "loud" is the equivalent of ["progress", "label", "rule", "mine", "minor"].
 

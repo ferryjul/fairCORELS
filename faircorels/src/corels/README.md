@@ -1,4 +1,5 @@
-# CORELS
+# FairCORELS
+This is a modified version of CORELS, whose original README is presented before. To use FairCORELS please refer to the python wrapper documentation.
 Certifiably Optimal RulE ListS
 
 **CORELS is a custom discrete optimization

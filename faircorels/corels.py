@@ -12,9 +12,9 @@ debug = False
 class FairCorelsClassifier:
     """Certifiably Optimal RulE ListS classifier.
 
-    This class implements the CORELS algorithm, designed to produce human-interpretable, optimal
+    This class implements the FairCORELS algorithm, designed to produce human-interpretable, optimal
     rulelists for binary feature data and binary classification. As an alternative to other
-    tree based algorithms such as CART, CORELS provides a certificate of optimality for its 
+    tree based algorithms such as CART, FairCORELS provides a certificate of optimality for its 
     rulelist given a training set, leveraging multiple algorithmic bounds to do so.
 
     In order to use run the algorithm, create an instance of the `FairCorelsClassifier` class, 
@@ -55,7 +55,7 @@ class FairCorelsClassifier:
         - "label" prints a summary of the class labels.
         - "minor" prints a summary of the minority bound.
         - "samples" produces a complete dump of the rules, label, and/or minor data. You must also provide at least one of "rule", "label", or "minor" to specify which data you want to dump, or "loud" for all data. The "samples" option often spits out a lot of output.
-        - "progress" prints periodic messages as corels runs.
+        - "progress" prints periodic messages as faircorels runs.
         - "mine" prints debug information while mining rules, including each rule as it is generated.
         - "loud" is the equivalent of ["progress", "label", "rule", "mine", "minor"].
 
@@ -149,7 +149,7 @@ class FairCorelsClassifier:
     Examples
     --------
     >>> import numpy as np
-    >>> from corels import FairCorelsClassifier
+    >>> from faircorels import FairCorelsClassifier
     >>> X = np.array([ [1, 0, 1], [0, 1, 0], [1, 1, 1] ])
     >>> y = np.array([ 1, 0, 1])
     >>> c = FairCorelsClassifier(verbosity=[])
@@ -216,7 +216,7 @@ class FairCorelsClassifier:
 
     def fit(self, X, y, features=[], prediction_name="prediction", performRestarts=0, initNBNodes=1000, geomRReason=1.5, max_evals=1000000000, time_limit = None):
         """
-        Build a CORELS classifier from the training set (X, y).
+        Build a FairCORELS classifier from the training set (X, y).
 
         Parameters
         ----------
