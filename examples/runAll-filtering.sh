@@ -9,6 +9,6 @@
 #SBATCH -e slurmout_%A.errarray
 #SBATCH --array=0-39
 
-python newExample-compas.py --epsilon=${SLURM_ARRAY_TASK_ID} --uselb=1
+python3 newExample-compas.py --epsilon=${SLURM_ARRAY_TASK_ID} --uselb=1
 
 
