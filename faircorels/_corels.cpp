@@ -36,7 +36,6 @@
             "faircorels/src/corels/src/pmap.cpp",
             "faircorels/src/corels/src/corels.cpp",
             "faircorels/src/corels/src/cache.cpp",
-            "faircorels/src/corels/src/filtering_algorithms.cpp",
             "faircorels/src/corels/src/mistral_backtrack.cpp",
             "faircorels/src/corels/src/mistral_constraint.cpp",
             "faircorels/src/corels/src/mistral_global.cpp",
@@ -953,7 +952,7 @@ typedef struct {
 } __Pyx_BufFmt_Context;
 
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":689
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":689
  * # in Cython to enable them only on the right systems.
  * 
  * ctypedef npy_int8       int8_t             # <<<<<<<<<<<<<<
@@ -962,7 +961,7 @@ typedef struct {
  */
 typedef npy_int8 __pyx_t_5numpy_int8_t;
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":690
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":690
  * 
  * ctypedef npy_int8       int8_t
  * ctypedef npy_int16      int16_t             # <<<<<<<<<<<<<<
@@ -971,7 +970,7 @@ typedef npy_int8 __pyx_t_5numpy_int8_t;
  */
 typedef npy_int16 __pyx_t_5numpy_int16_t;
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":691
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":691
  * ctypedef npy_int8       int8_t
  * ctypedef npy_int16      int16_t
  * ctypedef npy_int32      int32_t             # <<<<<<<<<<<<<<
@@ -980,7 +979,7 @@ typedef npy_int16 __pyx_t_5numpy_int16_t;
  */
 typedef npy_int32 __pyx_t_5numpy_int32_t;
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":692
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":692
  * ctypedef npy_int16      int16_t
  * ctypedef npy_int32      int32_t
  * ctypedef npy_int64      int64_t             # <<<<<<<<<<<<<<
@@ -989,7 +988,7 @@ typedef npy_int32 __pyx_t_5numpy_int32_t;
  */
 typedef npy_int64 __pyx_t_5numpy_int64_t;
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":696
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":696
  * #ctypedef npy_int128     int128_t
  * 
  * ctypedef npy_uint8      uint8_t             # <<<<<<<<<<<<<<
@@ -998,7 +997,7 @@ typedef npy_int64 __pyx_t_5numpy_int64_t;
  */
 typedef npy_uint8 __pyx_t_5numpy_uint8_t;
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":697
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":697
  * 
  * ctypedef npy_uint8      uint8_t
  * ctypedef npy_uint16     uint16_t             # <<<<<<<<<<<<<<
@@ -1007,7 +1006,7 @@ typedef npy_uint8 __pyx_t_5numpy_uint8_t;
  */
 typedef npy_uint16 __pyx_t_5numpy_uint16_t;
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":698
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":698
  * ctypedef npy_uint8      uint8_t
  * ctypedef npy_uint16     uint16_t
  * ctypedef npy_uint32     uint32_t             # <<<<<<<<<<<<<<
@@ -1016,7 +1015,7 @@ typedef npy_uint16 __pyx_t_5numpy_uint16_t;
  */
 typedef npy_uint32 __pyx_t_5numpy_uint32_t;
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":699
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":699
  * ctypedef npy_uint16     uint16_t
  * ctypedef npy_uint32     uint32_t
  * ctypedef npy_uint64     uint64_t             # <<<<<<<<<<<<<<
@@ -1025,7 +1024,7 @@ typedef npy_uint32 __pyx_t_5numpy_uint32_t;
  */
 typedef npy_uint64 __pyx_t_5numpy_uint64_t;
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":703
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":703
  * #ctypedef npy_uint128    uint128_t
  * 
  * ctypedef npy_float32    float32_t             # <<<<<<<<<<<<<<
@@ -1034,7 +1033,7 @@ typedef npy_uint64 __pyx_t_5numpy_uint64_t;
  */
 typedef npy_float32 __pyx_t_5numpy_float32_t;
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":704
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":704
  * 
  * ctypedef npy_float32    float32_t
  * ctypedef npy_float64    float64_t             # <<<<<<<<<<<<<<
@@ -1043,7 +1042,7 @@ typedef npy_float32 __pyx_t_5numpy_float32_t;
  */
 typedef npy_float64 __pyx_t_5numpy_float64_t;
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":713
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":713
  * # The int types are mapped a bit surprising --
  * # numpy.int corresponds to 'l' and numpy.long to 'q'
  * ctypedef npy_long       int_t             # <<<<<<<<<<<<<<
@@ -1052,7 +1051,7 @@ typedef npy_float64 __pyx_t_5numpy_float64_t;
  */
 typedef npy_long __pyx_t_5numpy_int_t;
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":714
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":714
  * # numpy.int corresponds to 'l' and numpy.long to 'q'
  * ctypedef npy_long       int_t
  * ctypedef npy_longlong   long_t             # <<<<<<<<<<<<<<
@@ -1061,7 +1060,7 @@ typedef npy_long __pyx_t_5numpy_int_t;
  */
 typedef npy_longlong __pyx_t_5numpy_long_t;
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":715
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":715
  * ctypedef npy_long       int_t
  * ctypedef npy_longlong   long_t
  * ctypedef npy_longlong   longlong_t             # <<<<<<<<<<<<<<
@@ -1070,7 +1069,7 @@ typedef npy_longlong __pyx_t_5numpy_long_t;
  */
 typedef npy_longlong __pyx_t_5numpy_longlong_t;
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":717
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":717
  * ctypedef npy_longlong   longlong_t
  * 
  * ctypedef npy_ulong      uint_t             # <<<<<<<<<<<<<<
@@ -1079,7 +1078,7 @@ typedef npy_longlong __pyx_t_5numpy_longlong_t;
  */
 typedef npy_ulong __pyx_t_5numpy_uint_t;
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":718
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":718
  * 
  * ctypedef npy_ulong      uint_t
  * ctypedef npy_ulonglong  ulong_t             # <<<<<<<<<<<<<<
@@ -1088,7 +1087,7 @@ typedef npy_ulong __pyx_t_5numpy_uint_t;
  */
 typedef npy_ulonglong __pyx_t_5numpy_ulong_t;
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":719
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":719
  * ctypedef npy_ulong      uint_t
  * ctypedef npy_ulonglong  ulong_t
  * ctypedef npy_ulonglong  ulonglong_t             # <<<<<<<<<<<<<<
@@ -1097,7 +1096,7 @@ typedef npy_ulonglong __pyx_t_5numpy_ulong_t;
  */
 typedef npy_ulonglong __pyx_t_5numpy_ulonglong_t;
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":721
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":721
  * ctypedef npy_ulonglong  ulonglong_t
  * 
  * ctypedef npy_intp       intp_t             # <<<<<<<<<<<<<<
@@ -1106,7 +1105,7 @@ typedef npy_ulonglong __pyx_t_5numpy_ulonglong_t;
  */
 typedef npy_intp __pyx_t_5numpy_intp_t;
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":722
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":722
  * 
  * ctypedef npy_intp       intp_t
  * ctypedef npy_uintp      uintp_t             # <<<<<<<<<<<<<<
@@ -1115,7 +1114,7 @@ typedef npy_intp __pyx_t_5numpy_intp_t;
  */
 typedef npy_uintp __pyx_t_5numpy_uintp_t;
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":724
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":724
  * ctypedef npy_uintp      uintp_t
  * 
  * ctypedef npy_double     float_t             # <<<<<<<<<<<<<<
@@ -1124,7 +1123,7 @@ typedef npy_uintp __pyx_t_5numpy_uintp_t;
  */
 typedef npy_double __pyx_t_5numpy_float_t;
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":725
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":725
  * 
  * ctypedef npy_double     float_t
  * ctypedef npy_double     double_t             # <<<<<<<<<<<<<<
@@ -1133,7 +1132,7 @@ typedef npy_double __pyx_t_5numpy_float_t;
  */
 typedef npy_double __pyx_t_5numpy_double_t;
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":726
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":726
  * ctypedef npy_double     float_t
  * ctypedef npy_double     double_t
  * ctypedef npy_longdouble longdouble_t             # <<<<<<<<<<<<<<
@@ -1168,7 +1167,7 @@ static CYTHON_INLINE __pyx_t_double_complex __pyx_t_double_complex_from_parts(do
 
 /*--- Type declarations ---*/
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":728
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":728
  * ctypedef npy_longdouble longdouble_t
  * 
  * ctypedef npy_cfloat      cfloat_t             # <<<<<<<<<<<<<<
@@ -1177,7 +1176,7 @@ static CYTHON_INLINE __pyx_t_double_complex __pyx_t_double_complex_from_parts(do
  */
 typedef npy_cfloat __pyx_t_5numpy_cfloat_t;
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":729
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":729
  * 
  * ctypedef npy_cfloat      cfloat_t
  * ctypedef npy_cdouble     cdouble_t             # <<<<<<<<<<<<<<
@@ -1186,7 +1185,7 @@ typedef npy_cfloat __pyx_t_5numpy_cfloat_t;
  */
 typedef npy_cdouble __pyx_t_5numpy_cdouble_t;
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":730
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":730
  * ctypedef npy_cfloat      cfloat_t
  * ctypedef npy_cdouble     cdouble_t
  * ctypedef npy_clongdouble clongdouble_t             # <<<<<<<<<<<<<<
@@ -1195,7 +1194,7 @@ typedef npy_cdouble __pyx_t_5numpy_cdouble_t;
  */
 typedef npy_clongdouble __pyx_t_5numpy_clongdouble_t;
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":732
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":732
  * ctypedef npy_clongdouble clongdouble_t
  * 
  * ctypedef npy_cdouble     complex_t             # <<<<<<<<<<<<<<
@@ -1922,6 +1921,7 @@ static const char __pyx_k_nsamples_chk[] = "nsamples_chk";
 static const char __pyx_k_predict_wrap[] = "predict_wrap";
 static const char __pyx_k_samples_vecs[] = "samples_vecs";
 static const char __pyx_k_and_rule_data[] = ") and rule data (";
+static const char __pyx_k_filteringMode[] = "filteringMode";
 static const char __pyx_k_fit_wrap_loop[] = "fit_wrap_loop";
 static const char __pyx_k_max_num_nodes[] = "max_num_nodes";
 static const char __pyx_k_minor_verbose[] = "minor_verbose";
@@ -1933,15 +1933,14 @@ static const char __pyx_k_forbidSensAttr[] = "forbidSensAttr";
 static const char __pyx_k_geomReason_val[] = "geomReason_val";
 static const char __pyx_k_fairness_metric[] = "fairness_metric";
 static const char __pyx_k_initNBNodes_val[] = "initNBNodes_val";
-static const char __pyx_k_useUnfairnessLB[] = "useUnfairnessLB";
 static const char __pyx_k_verbosity_ascii[] = "verbosity_ascii";
 static const char __pyx_k_and_feature_names[] = ") and feature names (";
+static const char __pyx_k_filteringMode_val[] = "filteringMode_val";
 static const char __pyx_k_antecedent_lengths[] = "antecedent_lengths";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
 static const char __pyx_k_faircorels__corels[] = "faircorels._corels";
 static const char __pyx_k_forbidSensAttr_val[] = "forbidSensAttr_val";
 static const char __pyx_k_predict_score_wrap[] = "predict_score_wrap";
-static const char __pyx_k_useUnfairnessLB_val[] = "useUnfairnessLB_val";
 static const char __pyx_k_accuracy_upper_bound[] = "accuracy_upper_bound";
 static const char __pyx_k_Could_not_load_samples[] = "Could not load samples";
 static const char __pyx_k_faircorels__corels_pyx[] = "faircorels/_corels.pyx";
@@ -1996,6 +1995,8 @@ static PyObject *__pyx_n_s_fairness;
 static PyObject *__pyx_n_s_fairness_metric;
 static PyObject *__pyx_n_s_features;
 static PyObject *__pyx_n_s_features_vec;
+static PyObject *__pyx_n_s_filteringMode;
+static PyObject *__pyx_n_s_filteringMode_val;
 static PyObject *__pyx_n_s_fit_wrap_begin;
 static PyObject *__pyx_n_s_fit_wrap_end;
 static PyObject *__pyx_n_s_fit_wrap_loop;
@@ -2067,8 +2068,6 @@ static PyObject *__pyx_n_s_seed;
 static PyObject *__pyx_n_s_seed_val;
 static PyObject *__pyx_n_s_test;
 static PyObject *__pyx_n_s_uint8;
-static PyObject *__pyx_n_s_useUnfairnessLB;
-static PyObject *__pyx_n_s_useUnfairnessLB_val;
 static PyObject *__pyx_n_s_verbosity;
 static PyObject *__pyx_n_s_verbosity_ascii;
 static PyObject *__pyx_n_s_verbosity_str;
@@ -2076,7 +2075,7 @@ static PyObject *__pyx_n_s_zeros;
 static PyObject *__pyx_pf_10faircorels_7_corels_predict_wrap(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_X, PyObject *__pyx_v_rules); /* proto */
 static PyObject *__pyx_pf_10faircorels_7_corels_2predict_score_wrap(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_X, PyObject *__pyx_v_rules); /* proto */
 static PyObject *__pyx_pf_10faircorels_7_corels_4fit_wrap_begin(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_samples, PyArrayObject *__pyx_v_labels, PyObject *__pyx_v_features, int __pyx_v_max_card, double __pyx_v_min_support, PyObject *__pyx_v_verbosity_str, int __pyx_v_mine_verbose, int __pyx_v_minor_verbose, double __pyx_v_c, int __pyx_v_policy, int __pyx_v_map_type, int __pyx_v_ablation, int __pyx_v_calculate_size, int __pyx_v_forbidSensAttr, int __pyx_v_BFSmode, int __pyx_v_seed, PyArrayObject *__pyx_v_maj_vect, PyArrayObject *__pyx_v_min_vect, double __pyx_v_accuracy_upper_bound, int __pyx_v_max_calls); /* proto */
-static PyObject *__pyx_pf_10faircorels_7_corels_6fit_wrap_loop(CYTHON_UNUSED PyObject *__pyx_self, size_t __pyx_v_max_nodes, double __pyx_v_beta, int __pyx_v_fairness, int __pyx_v_mode, int __pyx_v_useUnfairnessLB, double __pyx_v_min_fairness_acceptable, int __pyx_v_kBest, int __pyx_v_restart, int __pyx_v_initNBNodes, double __pyx_v_geomReason); /* proto */
+static PyObject *__pyx_pf_10faircorels_7_corels_6fit_wrap_loop(CYTHON_UNUSED PyObject *__pyx_self, size_t __pyx_v_max_nodes, double __pyx_v_beta, int __pyx_v_fairness, int __pyx_v_mode, int __pyx_v_filteringMode, double __pyx_v_min_fairness_acceptable, int __pyx_v_kBest, int __pyx_v_restart, int __pyx_v_initNBNodes, double __pyx_v_geomReason); /* proto */
 static PyObject *__pyx_pf_10faircorels_7_corels_8fit_wrap_end(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_early); /* proto */
 static PyObject *__pyx_int_0;
 static PyObject *__pyx_tuple__2;
@@ -7539,7 +7538,7 @@ static PyObject *__pyx_pf_10faircorels_7_corels_4fit_wrap_begin(CYTHON_UNUSED Py
  * 
  * 
  * def fit_wrap_loop(size_t max_nodes, double beta, int fairness,             # <<<<<<<<<<<<<<
- *                 int mode, int useUnfairnessLB, double min_fairness_acceptable, int kBest, int restart, int initNBNodes, double geomReason):
+ *                 int mode, int filteringMode, double min_fairness_acceptable, int kBest, int restart, int initNBNodes, double geomReason):
  * 
  */
 
@@ -7551,7 +7550,7 @@ static PyObject *__pyx_pw_10faircorels_7_corels_7fit_wrap_loop(PyObject *__pyx_s
   double __pyx_v_beta;
   int __pyx_v_fairness;
   int __pyx_v_mode;
-  int __pyx_v_useUnfairnessLB;
+  int __pyx_v_filteringMode;
   double __pyx_v_min_fairness_acceptable;
   int __pyx_v_kBest;
   int __pyx_v_restart;
@@ -7564,7 +7563,7 @@ static PyObject *__pyx_pw_10faircorels_7_corels_7fit_wrap_loop(PyObject *__pyx_s
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("fit_wrap_loop (wrapper)", 0);
   {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_max_nodes,&__pyx_n_s_beta,&__pyx_n_s_fairness,&__pyx_n_s_mode,&__pyx_n_s_useUnfairnessLB,&__pyx_n_s_min_fairness_acceptable,&__pyx_n_s_kBest,&__pyx_n_s_restart,&__pyx_n_s_initNBNodes,&__pyx_n_s_geomReason,0};
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_max_nodes,&__pyx_n_s_beta,&__pyx_n_s_fairness,&__pyx_n_s_mode,&__pyx_n_s_filteringMode,&__pyx_n_s_min_fairness_acceptable,&__pyx_n_s_kBest,&__pyx_n_s_restart,&__pyx_n_s_initNBNodes,&__pyx_n_s_geomReason,0};
     PyObject* values[10] = {0,0,0,0,0,0,0,0,0,0};
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
@@ -7618,7 +7617,7 @@ static PyObject *__pyx_pw_10faircorels_7_corels_7fit_wrap_loop(PyObject *__pyx_s
         }
         CYTHON_FALLTHROUGH;
         case  4:
-        if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_useUnfairnessLB)) != 0)) kw_args--;
+        if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_filteringMode)) != 0)) kw_args--;
         else {
           __Pyx_RaiseArgtupleInvalid("fit_wrap_loop", 1, 10, 10, 4); __PYX_ERR(0, 534, __pyx_L3_error)
         }
@@ -7674,7 +7673,7 @@ static PyObject *__pyx_pw_10faircorels_7_corels_7fit_wrap_loop(PyObject *__pyx_s
     __pyx_v_beta = __pyx_PyFloat_AsDouble(values[1]); if (unlikely((__pyx_v_beta == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 534, __pyx_L3_error)
     __pyx_v_fairness = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_fairness == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 534, __pyx_L3_error)
     __pyx_v_mode = __Pyx_PyInt_As_int(values[3]); if (unlikely((__pyx_v_mode == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 535, __pyx_L3_error)
-    __pyx_v_useUnfairnessLB = __Pyx_PyInt_As_int(values[4]); if (unlikely((__pyx_v_useUnfairnessLB == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 535, __pyx_L3_error)
+    __pyx_v_filteringMode = __Pyx_PyInt_As_int(values[4]); if (unlikely((__pyx_v_filteringMode == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 535, __pyx_L3_error)
     __pyx_v_min_fairness_acceptable = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_min_fairness_acceptable == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 535, __pyx_L3_error)
     __pyx_v_kBest = __Pyx_PyInt_As_int(values[6]); if (unlikely((__pyx_v_kBest == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 535, __pyx_L3_error)
     __pyx_v_restart = __Pyx_PyInt_As_int(values[7]); if (unlikely((__pyx_v_restart == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 535, __pyx_L3_error)
@@ -7689,19 +7688,19 @@ static PyObject *__pyx_pw_10faircorels_7_corels_7fit_wrap_loop(PyObject *__pyx_s
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_10faircorels_7_corels_6fit_wrap_loop(__pyx_self, __pyx_v_max_nodes, __pyx_v_beta, __pyx_v_fairness, __pyx_v_mode, __pyx_v_useUnfairnessLB, __pyx_v_min_fairness_acceptable, __pyx_v_kBest, __pyx_v_restart, __pyx_v_initNBNodes, __pyx_v_geomReason);
+  __pyx_r = __pyx_pf_10faircorels_7_corels_6fit_wrap_loop(__pyx_self, __pyx_v_max_nodes, __pyx_v_beta, __pyx_v_fairness, __pyx_v_mode, __pyx_v_filteringMode, __pyx_v_min_fairness_acceptable, __pyx_v_kBest, __pyx_v_restart, __pyx_v_initNBNodes, __pyx_v_geomReason);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10faircorels_7_corels_6fit_wrap_loop(CYTHON_UNUSED PyObject *__pyx_self, size_t __pyx_v_max_nodes, double __pyx_v_beta, int __pyx_v_fairness, int __pyx_v_mode, int __pyx_v_useUnfairnessLB, double __pyx_v_min_fairness_acceptable, int __pyx_v_kBest, int __pyx_v_restart, int __pyx_v_initNBNodes, double __pyx_v_geomReason) {
+static PyObject *__pyx_pf_10faircorels_7_corels_6fit_wrap_loop(CYTHON_UNUSED PyObject *__pyx_self, size_t __pyx_v_max_nodes, double __pyx_v_beta, int __pyx_v_fairness, int __pyx_v_mode, int __pyx_v_filteringMode, double __pyx_v_min_fairness_acceptable, int __pyx_v_kBest, int __pyx_v_restart, int __pyx_v_initNBNodes, double __pyx_v_geomReason) {
   size_t __pyx_v_max_num_nodes;
   double __pyx_v_beta_val;
   int __pyx_v_fairness_metric;
   int __pyx_v_mode_val;
-  int __pyx_v_useUnfairnessLB_val;
+  int __pyx_v_filteringMode_val;
   double __pyx_v_min_fairness_acceptable_val;
   int __pyx_v_kBest_val;
   int __pyx_v_restart_val;
@@ -7716,7 +7715,7 @@ static PyObject *__pyx_pf_10faircorels_7_corels_6fit_wrap_loop(CYTHON_UNUSED PyO
   __Pyx_RefNannySetupContext("fit_wrap_loop", 0);
 
   /* "faircorels/_corels.pyx":537
- *                 int mode, int useUnfairnessLB, double min_fairness_acceptable, int kBest, int restart, int initNBNodes, double geomReason):
+ *                 int mode, int filteringMode, double min_fairness_acceptable, int kBest, int restart, int initNBNodes, double geomReason):
  * 
  *     cdef size_t max_num_nodes = max_nodes             # <<<<<<<<<<<<<<
  *     cdef double beta_val = beta
@@ -7738,7 +7737,7 @@ static PyObject *__pyx_pf_10faircorels_7_corels_6fit_wrap_loop(CYTHON_UNUSED PyO
  *     cdef double beta_val = beta
  *     cdef int fairness_metric = fairness             # <<<<<<<<<<<<<<
  *     cdef int mode_val = mode
- *     cdef int useUnfairnessLB_val = useUnfairnessLB
+ *     cdef int filteringMode_val = filteringMode
  */
   __pyx_v_fairness_metric = __pyx_v_fairness;
 
@@ -7746,7 +7745,7 @@ static PyObject *__pyx_pf_10faircorels_7_corels_6fit_wrap_loop(CYTHON_UNUSED PyO
  *     cdef double beta_val = beta
  *     cdef int fairness_metric = fairness
  *     cdef int mode_val = mode             # <<<<<<<<<<<<<<
- *     cdef int useUnfairnessLB_val = useUnfairnessLB
+ *     cdef int filteringMode_val = filteringMode
  *     cdef double min_fairness_acceptable_val = min_fairness_acceptable
  */
   __pyx_v_mode_val = __pyx_v_mode;
@@ -7754,15 +7753,15 @@ static PyObject *__pyx_pf_10faircorels_7_corels_6fit_wrap_loop(CYTHON_UNUSED PyO
   /* "faircorels/_corels.pyx":541
  *     cdef int fairness_metric = fairness
  *     cdef int mode_val = mode
- *     cdef int useUnfairnessLB_val = useUnfairnessLB             # <<<<<<<<<<<<<<
+ *     cdef int filteringMode_val = filteringMode             # <<<<<<<<<<<<<<
  *     cdef double min_fairness_acceptable_val = min_fairness_acceptable
  *     cdef int kBest_val = kBest
  */
-  __pyx_v_useUnfairnessLB_val = __pyx_v_useUnfairnessLB;
+  __pyx_v_filteringMode_val = __pyx_v_filteringMode;
 
   /* "faircorels/_corels.pyx":542
  *     cdef int mode_val = mode
- *     cdef int useUnfairnessLB_val = useUnfairnessLB
+ *     cdef int filteringMode_val = filteringMode
  *     cdef double min_fairness_acceptable_val = min_fairness_acceptable             # <<<<<<<<<<<<<<
  *     cdef int kBest_val = kBest
  *     cdef int restart_val = restart
@@ -7770,7 +7769,7 @@ static PyObject *__pyx_pf_10faircorels_7_corels_6fit_wrap_loop(CYTHON_UNUSED PyO
   __pyx_v_min_fairness_acceptable_val = __pyx_v_min_fairness_acceptable;
 
   /* "faircorels/_corels.pyx":543
- *     cdef int useUnfairnessLB_val = useUnfairnessLB
+ *     cdef int filteringMode_val = filteringMode
  *     cdef double min_fairness_acceptable_val = min_fairness_acceptable
  *     cdef int kBest_val = kBest             # <<<<<<<<<<<<<<
  *     cdef int restart_val = restart
@@ -7801,19 +7800,19 @@ static PyObject *__pyx_pf_10faircorels_7_corels_6fit_wrap_loop(CYTHON_UNUSED PyO
  *     cdef double geomReason_val = geomReason
  *     cdef int initNBNodes_val = initNBNodes             # <<<<<<<<<<<<<<
  *     # This is where the magic happens
- *     return (run_corels_loop(max_num_nodes, beta_val, fairness_metric, mode_val, useUnfairnessLB_val, min_fairness_acceptable_val, kBest_val, restart_val, initNBNodes_val, geomReason_val) != -1)
+ *     return (run_corels_loop(max_num_nodes, beta_val, fairness_metric, mode_val, filteringMode_val, min_fairness_acceptable_val, kBest_val, restart_val, initNBNodes_val, geomReason_val) != -1)
  */
   __pyx_v_initNBNodes_val = __pyx_v_initNBNodes;
 
   /* "faircorels/_corels.pyx":548
  *     cdef int initNBNodes_val = initNBNodes
  *     # This is where the magic happens
- *     return (run_corels_loop(max_num_nodes, beta_val, fairness_metric, mode_val, useUnfairnessLB_val, min_fairness_acceptable_val, kBest_val, restart_val, initNBNodes_val, geomReason_val) != -1)             # <<<<<<<<<<<<<<
+ *     return (run_corels_loop(max_num_nodes, beta_val, fairness_metric, mode_val, filteringMode_val, min_fairness_acceptable_val, kBest_val, restart_val, initNBNodes_val, geomReason_val) != -1)             # <<<<<<<<<<<<<<
  * 
  * def fit_wrap_end(int early):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBool_FromLong((run_corels_loop(__pyx_v_max_num_nodes, __pyx_v_beta_val, __pyx_v_fairness_metric, __pyx_v_mode_val, __pyx_v_useUnfairnessLB_val, __pyx_v_min_fairness_acceptable_val, __pyx_v_kBest_val, __pyx_v_restart_val, __pyx_v_initNBNodes_val, __pyx_v_geomReason_val) != -1L)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 548, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyBool_FromLong((run_corels_loop(__pyx_v_max_num_nodes, __pyx_v_beta_val, __pyx_v_fairness_metric, __pyx_v_mode_val, __pyx_v_filteringMode_val, __pyx_v_min_fairness_acceptable_val, __pyx_v_kBest_val, __pyx_v_restart_val, __pyx_v_initNBNodes_val, __pyx_v_geomReason_val) != -1L)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 548, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -7823,7 +7822,7 @@ static PyObject *__pyx_pf_10faircorels_7_corels_6fit_wrap_loop(CYTHON_UNUSED PyO
  * 
  * 
  * def fit_wrap_loop(size_t max_nodes, double beta, int fairness,             # <<<<<<<<<<<<<<
- *                 int mode, int useUnfairnessLB, double min_fairness_acceptable, int kBest, int restart, int initNBNodes, double geomReason):
+ *                 int mode, int filteringMode, double min_fairness_acceptable, int kBest, int restart, int initNBNodes, double geomReason):
  * 
  */
 
@@ -7839,7 +7838,7 @@ static PyObject *__pyx_pf_10faircorels_7_corels_6fit_wrap_loop(CYTHON_UNUSED PyO
 }
 
 /* "faircorels/_corels.pyx":550
- *     return (run_corels_loop(max_num_nodes, beta_val, fairness_metric, mode_val, useUnfairnessLB_val, min_fairness_acceptable_val, kBest_val, restart_val, initNBNodes_val, geomReason_val) != -1)
+ *     return (run_corels_loop(max_num_nodes, beta_val, fairness_metric, mode_val, filteringMode_val, min_fairness_acceptable_val, kBest_val, restart_val, initNBNodes_val, geomReason_val) != -1)
  * 
  * def fit_wrap_end(int early):             # <<<<<<<<<<<<<<
  *     global rules
@@ -8415,7 +8414,7 @@ static PyObject *__pyx_pf_10faircorels_7_corels_8fit_wrap_end(CYTHON_UNUSED PyOb
   goto __pyx_L0;
 
   /* "faircorels/_corels.pyx":550
- *     return (run_corels_loop(max_num_nodes, beta_val, fairness_metric, mode_val, useUnfairnessLB_val, min_fairness_acceptable_val, kBest_val, restart_val, initNBNodes_val, geomReason_val) != -1)
+ *     return (run_corels_loop(max_num_nodes, beta_val, fairness_metric, mode_val, filteringMode_val, min_fairness_acceptable_val, kBest_val, restart_val, initNBNodes_val, geomReason_val) != -1)
  * 
  * def fit_wrap_end(int early):             # <<<<<<<<<<<<<<
  *     global rules
@@ -8436,7 +8435,7 @@ static PyObject *__pyx_pf_10faircorels_7_corels_8fit_wrap_end(CYTHON_UNUSED PyOb
   return __pyx_r;
 }
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":734
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":734
  * ctypedef npy_cdouble     complex_t
  * 
  * cdef inline object PyArray_MultiIterNew1(a):             # <<<<<<<<<<<<<<
@@ -8453,7 +8452,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew1(PyObject *__
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("PyArray_MultiIterNew1", 0);
 
-  /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":735
+  /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":735
  * 
  * cdef inline object PyArray_MultiIterNew1(a):
  *     return PyArray_MultiIterNew(1, <void*>a)             # <<<<<<<<<<<<<<
@@ -8467,7 +8466,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew1(PyObject *__
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":734
+  /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":734
  * ctypedef npy_cdouble     complex_t
  * 
  * cdef inline object PyArray_MultiIterNew1(a):             # <<<<<<<<<<<<<<
@@ -8486,7 +8485,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew1(PyObject *__
   return __pyx_r;
 }
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":737
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":737
  *     return PyArray_MultiIterNew(1, <void*>a)
  * 
  * cdef inline object PyArray_MultiIterNew2(a, b):             # <<<<<<<<<<<<<<
@@ -8503,7 +8502,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew2(PyObject *__
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("PyArray_MultiIterNew2", 0);
 
-  /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":738
+  /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":738
  * 
  * cdef inline object PyArray_MultiIterNew2(a, b):
  *     return PyArray_MultiIterNew(2, <void*>a, <void*>b)             # <<<<<<<<<<<<<<
@@ -8517,7 +8516,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew2(PyObject *__
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":737
+  /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":737
  *     return PyArray_MultiIterNew(1, <void*>a)
  * 
  * cdef inline object PyArray_MultiIterNew2(a, b):             # <<<<<<<<<<<<<<
@@ -8536,7 +8535,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew2(PyObject *__
   return __pyx_r;
 }
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":740
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":740
  *     return PyArray_MultiIterNew(2, <void*>a, <void*>b)
  * 
  * cdef inline object PyArray_MultiIterNew3(a, b, c):             # <<<<<<<<<<<<<<
@@ -8553,7 +8552,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew3(PyObject *__
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("PyArray_MultiIterNew3", 0);
 
-  /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":741
+  /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":741
  * 
  * cdef inline object PyArray_MultiIterNew3(a, b, c):
  *     return PyArray_MultiIterNew(3, <void*>a, <void*>b, <void*> c)             # <<<<<<<<<<<<<<
@@ -8567,7 +8566,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew3(PyObject *__
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":740
+  /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":740
  *     return PyArray_MultiIterNew(2, <void*>a, <void*>b)
  * 
  * cdef inline object PyArray_MultiIterNew3(a, b, c):             # <<<<<<<<<<<<<<
@@ -8586,7 +8585,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew3(PyObject *__
   return __pyx_r;
 }
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":743
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":743
  *     return PyArray_MultiIterNew(3, <void*>a, <void*>b, <void*> c)
  * 
  * cdef inline object PyArray_MultiIterNew4(a, b, c, d):             # <<<<<<<<<<<<<<
@@ -8603,7 +8602,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew4(PyObject *__
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("PyArray_MultiIterNew4", 0);
 
-  /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":744
+  /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":744
  * 
  * cdef inline object PyArray_MultiIterNew4(a, b, c, d):
  *     return PyArray_MultiIterNew(4, <void*>a, <void*>b, <void*>c, <void*> d)             # <<<<<<<<<<<<<<
@@ -8617,7 +8616,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew4(PyObject *__
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":743
+  /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":743
  *     return PyArray_MultiIterNew(3, <void*>a, <void*>b, <void*> c)
  * 
  * cdef inline object PyArray_MultiIterNew4(a, b, c, d):             # <<<<<<<<<<<<<<
@@ -8636,7 +8635,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew4(PyObject *__
   return __pyx_r;
 }
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":746
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":746
  *     return PyArray_MultiIterNew(4, <void*>a, <void*>b, <void*>c, <void*> d)
  * 
  * cdef inline object PyArray_MultiIterNew5(a, b, c, d, e):             # <<<<<<<<<<<<<<
@@ -8653,7 +8652,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew5(PyObject *__
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("PyArray_MultiIterNew5", 0);
 
-  /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":747
+  /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":747
  * 
  * cdef inline object PyArray_MultiIterNew5(a, b, c, d, e):
  *     return PyArray_MultiIterNew(5, <void*>a, <void*>b, <void*>c, <void*> d, <void*> e)             # <<<<<<<<<<<<<<
@@ -8667,7 +8666,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew5(PyObject *__
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":746
+  /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":746
  *     return PyArray_MultiIterNew(4, <void*>a, <void*>b, <void*>c, <void*> d)
  * 
  * cdef inline object PyArray_MultiIterNew5(a, b, c, d, e):             # <<<<<<<<<<<<<<
@@ -8686,7 +8685,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew5(PyObject *__
   return __pyx_r;
 }
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":749
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":749
  *     return PyArray_MultiIterNew(5, <void*>a, <void*>b, <void*>c, <void*> d, <void*> e)
  * 
  * cdef inline tuple PyDataType_SHAPE(dtype d):             # <<<<<<<<<<<<<<
@@ -8700,7 +8699,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyDataType_SHAPE(PyArray_Descr *__
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("PyDataType_SHAPE", 0);
 
-  /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":750
+  /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":750
  * 
  * cdef inline tuple PyDataType_SHAPE(dtype d):
  *     if PyDataType_HASSUBARRAY(d):             # <<<<<<<<<<<<<<
@@ -8710,7 +8709,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyDataType_SHAPE(PyArray_Descr *__
   __pyx_t_1 = (PyDataType_HASSUBARRAY(__pyx_v_d) != 0);
   if (__pyx_t_1) {
 
-    /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":751
+    /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":751
  * cdef inline tuple PyDataType_SHAPE(dtype d):
  *     if PyDataType_HASSUBARRAY(d):
  *         return <tuple>d.subarray.shape             # <<<<<<<<<<<<<<
@@ -8722,7 +8721,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyDataType_SHAPE(PyArray_Descr *__
     __pyx_r = ((PyObject*)__pyx_v_d->subarray->shape);
     goto __pyx_L0;
 
-    /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":750
+    /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":750
  * 
  * cdef inline tuple PyDataType_SHAPE(dtype d):
  *     if PyDataType_HASSUBARRAY(d):             # <<<<<<<<<<<<<<
@@ -8731,7 +8730,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyDataType_SHAPE(PyArray_Descr *__
  */
   }
 
-  /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":753
+  /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":753
  *         return <tuple>d.subarray.shape
  *     else:
  *         return ()             # <<<<<<<<<<<<<<
@@ -8745,7 +8744,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyDataType_SHAPE(PyArray_Descr *__
     goto __pyx_L0;
   }
 
-  /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":749
+  /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":749
  *     return PyArray_MultiIterNew(5, <void*>a, <void*>b, <void*>c, <void*> d, <void*> e)
  * 
  * cdef inline tuple PyDataType_SHAPE(dtype d):             # <<<<<<<<<<<<<<
@@ -8760,7 +8759,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyDataType_SHAPE(PyArray_Descr *__
   return __pyx_r;
 }
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":868
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":868
  *     int _import_umath() except -1
  * 
  * cdef inline void set_array_base(ndarray arr, object base):             # <<<<<<<<<<<<<<
@@ -8772,7 +8771,7 @@ static CYTHON_INLINE void __pyx_f_5numpy_set_array_base(PyArrayObject *__pyx_v_a
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("set_array_base", 0);
 
-  /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":869
+  /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":869
  * 
  * cdef inline void set_array_base(ndarray arr, object base):
  *     Py_INCREF(base) # important to do this before stealing the reference below!             # <<<<<<<<<<<<<<
@@ -8781,7 +8780,7 @@ static CYTHON_INLINE void __pyx_f_5numpy_set_array_base(PyArrayObject *__pyx_v_a
  */
   Py_INCREF(__pyx_v_base);
 
-  /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":870
+  /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":870
  * cdef inline void set_array_base(ndarray arr, object base):
  *     Py_INCREF(base) # important to do this before stealing the reference below!
  *     PyArray_SetBaseObject(arr, base)             # <<<<<<<<<<<<<<
@@ -8790,7 +8789,7 @@ static CYTHON_INLINE void __pyx_f_5numpy_set_array_base(PyArrayObject *__pyx_v_a
  */
   (void)(PyArray_SetBaseObject(__pyx_v_arr, __pyx_v_base));
 
-  /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":868
+  /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":868
  *     int _import_umath() except -1
  * 
  * cdef inline void set_array_base(ndarray arr, object base):             # <<<<<<<<<<<<<<
@@ -8802,7 +8801,7 @@ static CYTHON_INLINE void __pyx_f_5numpy_set_array_base(PyArrayObject *__pyx_v_a
   __Pyx_RefNannyFinishContext();
 }
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":872
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":872
  *     PyArray_SetBaseObject(arr, base)
  * 
  * cdef inline object get_array_base(ndarray arr):             # <<<<<<<<<<<<<<
@@ -8817,7 +8816,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_get_array_base(PyArrayObject *__py
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("get_array_base", 0);
 
-  /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":873
+  /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":873
  * 
  * cdef inline object get_array_base(ndarray arr):
  *     base = PyArray_BASE(arr)             # <<<<<<<<<<<<<<
@@ -8826,7 +8825,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_get_array_base(PyArrayObject *__py
  */
   __pyx_v_base = PyArray_BASE(__pyx_v_arr);
 
-  /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":874
+  /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":874
  * cdef inline object get_array_base(ndarray arr):
  *     base = PyArray_BASE(arr)
  *     if base is NULL:             # <<<<<<<<<<<<<<
@@ -8836,7 +8835,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_get_array_base(PyArrayObject *__py
   __pyx_t_1 = ((__pyx_v_base == NULL) != 0);
   if (__pyx_t_1) {
 
-    /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":875
+    /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":875
  *     base = PyArray_BASE(arr)
  *     if base is NULL:
  *         return None             # <<<<<<<<<<<<<<
@@ -8847,7 +8846,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_get_array_base(PyArrayObject *__py
     __pyx_r = Py_None; __Pyx_INCREF(Py_None);
     goto __pyx_L0;
 
-    /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":874
+    /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":874
  * cdef inline object get_array_base(ndarray arr):
  *     base = PyArray_BASE(arr)
  *     if base is NULL:             # <<<<<<<<<<<<<<
@@ -8856,7 +8855,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_get_array_base(PyArrayObject *__py
  */
   }
 
-  /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":876
+  /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":876
  *     if base is NULL:
  *         return None
  *     return <object>base             # <<<<<<<<<<<<<<
@@ -8868,7 +8867,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_get_array_base(PyArrayObject *__py
   __pyx_r = ((PyObject *)__pyx_v_base);
   goto __pyx_L0;
 
-  /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":872
+  /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":872
  *     PyArray_SetBaseObject(arr, base)
  * 
  * cdef inline object get_array_base(ndarray arr):             # <<<<<<<<<<<<<<
@@ -8883,7 +8882,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_get_array_base(PyArrayObject *__py
   return __pyx_r;
 }
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":880
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":880
  * # Versions of the import_* functions which are more suitable for
  * # Cython code.
  * cdef inline int import_array() except -1:             # <<<<<<<<<<<<<<
@@ -8907,7 +8906,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("import_array", 0);
 
-  /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":881
+  /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":881
  * # Cython code.
  * cdef inline int import_array() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -8923,7 +8922,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
     __Pyx_XGOTREF(__pyx_t_3);
     /*try:*/ {
 
-      /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":882
+      /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":882
  * cdef inline int import_array() except -1:
  *     try:
  *         __pyx_import_array()             # <<<<<<<<<<<<<<
@@ -8932,7 +8931,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
  */
       __pyx_t_4 = _import_array(); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(1, 882, __pyx_L3_error)
 
-      /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":881
+      /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":881
  * # Cython code.
  * cdef inline int import_array() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -8946,7 +8945,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
     goto __pyx_L8_try_end;
     __pyx_L3_error:;
 
-    /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":883
+    /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":883
  *     try:
  *         __pyx_import_array()
  *     except Exception:             # <<<<<<<<<<<<<<
@@ -8961,7 +8960,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_GOTREF(__pyx_t_7);
 
-      /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":884
+      /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":884
  *         __pyx_import_array()
  *     except Exception:
  *         raise ImportError("numpy.core.multiarray failed to import")             # <<<<<<<<<<<<<<
@@ -8977,7 +8976,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
     goto __pyx_L5_except_error;
     __pyx_L5_except_error:;
 
-    /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":881
+    /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":881
  * # Cython code.
  * cdef inline int import_array() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -8992,7 +8991,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
     __pyx_L8_try_end:;
   }
 
-  /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":880
+  /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":880
  * # Versions of the import_* functions which are more suitable for
  * # Cython code.
  * cdef inline int import_array() except -1:             # <<<<<<<<<<<<<<
@@ -9015,7 +9014,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
   return __pyx_r;
 }
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":886
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":886
  *         raise ImportError("numpy.core.multiarray failed to import")
  * 
  * cdef inline int import_umath() except -1:             # <<<<<<<<<<<<<<
@@ -9039,7 +9038,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("import_umath", 0);
 
-  /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":887
+  /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":887
  * 
  * cdef inline int import_umath() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -9055,7 +9054,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
     __Pyx_XGOTREF(__pyx_t_3);
     /*try:*/ {
 
-      /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":888
+      /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":888
  * cdef inline int import_umath() except -1:
  *     try:
  *         _import_umath()             # <<<<<<<<<<<<<<
@@ -9064,7 +9063,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
  */
       __pyx_t_4 = _import_umath(); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(1, 888, __pyx_L3_error)
 
-      /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":887
+      /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":887
  * 
  * cdef inline int import_umath() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -9078,7 +9077,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
     goto __pyx_L8_try_end;
     __pyx_L3_error:;
 
-    /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":889
+    /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":889
  *     try:
  *         _import_umath()
  *     except Exception:             # <<<<<<<<<<<<<<
@@ -9093,7 +9092,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_GOTREF(__pyx_t_7);
 
-      /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":890
+      /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":890
  *         _import_umath()
  *     except Exception:
  *         raise ImportError("numpy.core.umath failed to import")             # <<<<<<<<<<<<<<
@@ -9109,7 +9108,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
     goto __pyx_L5_except_error;
     __pyx_L5_except_error:;
 
-    /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":887
+    /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":887
  * 
  * cdef inline int import_umath() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -9124,7 +9123,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
     __pyx_L8_try_end:;
   }
 
-  /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":886
+  /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":886
  *         raise ImportError("numpy.core.multiarray failed to import")
  * 
  * cdef inline int import_umath() except -1:             # <<<<<<<<<<<<<<
@@ -9147,7 +9146,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
   return __pyx_r;
 }
 
-/* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":892
+/* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":892
  *         raise ImportError("numpy.core.umath failed to import")
  * 
  * cdef inline int import_ufunc() except -1:             # <<<<<<<<<<<<<<
@@ -9171,7 +9170,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("import_ufunc", 0);
 
-  /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":893
+  /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":893
  * 
  * cdef inline int import_ufunc() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -9187,7 +9186,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
     __Pyx_XGOTREF(__pyx_t_3);
     /*try:*/ {
 
-      /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":894
+      /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":894
  * cdef inline int import_ufunc() except -1:
  *     try:
  *         _import_umath()             # <<<<<<<<<<<<<<
@@ -9196,7 +9195,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
  */
       __pyx_t_4 = _import_umath(); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(1, 894, __pyx_L3_error)
 
-      /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":893
+      /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":893
  * 
  * cdef inline int import_ufunc() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -9210,7 +9209,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
     goto __pyx_L8_try_end;
     __pyx_L3_error:;
 
-    /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":895
+    /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":895
  *     try:
  *         _import_umath()
  *     except Exception:             # <<<<<<<<<<<<<<
@@ -9225,7 +9224,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_GOTREF(__pyx_t_7);
 
-      /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":896
+      /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":896
  *         _import_umath()
  *     except Exception:
  *         raise ImportError("numpy.core.umath failed to import")             # <<<<<<<<<<<<<<
@@ -9241,7 +9240,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
     goto __pyx_L5_except_error;
     __pyx_L5_except_error:;
 
-    /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":893
+    /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":893
  * 
  * cdef inline int import_ufunc() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -9256,7 +9255,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
     __pyx_L8_try_end:;
   }
 
-  /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":892
+  /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":892
  *         raise ImportError("numpy.core.umath failed to import")
  * 
  * cdef inline int import_ufunc() except -1:             # <<<<<<<<<<<<<<
@@ -9368,6 +9367,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_fairness_metric, __pyx_k_fairness_metric, sizeof(__pyx_k_fairness_metric), 0, 0, 1, 1},
   {&__pyx_n_s_features, __pyx_k_features, sizeof(__pyx_k_features), 0, 0, 1, 1},
   {&__pyx_n_s_features_vec, __pyx_k_features_vec, sizeof(__pyx_k_features_vec), 0, 0, 1, 1},
+  {&__pyx_n_s_filteringMode, __pyx_k_filteringMode, sizeof(__pyx_k_filteringMode), 0, 0, 1, 1},
+  {&__pyx_n_s_filteringMode_val, __pyx_k_filteringMode_val, sizeof(__pyx_k_filteringMode_val), 0, 0, 1, 1},
   {&__pyx_n_s_fit_wrap_begin, __pyx_k_fit_wrap_begin, sizeof(__pyx_k_fit_wrap_begin), 0, 0, 1, 1},
   {&__pyx_n_s_fit_wrap_end, __pyx_k_fit_wrap_end, sizeof(__pyx_k_fit_wrap_end), 0, 0, 1, 1},
   {&__pyx_n_s_fit_wrap_loop, __pyx_k_fit_wrap_loop, sizeof(__pyx_k_fit_wrap_loop), 0, 0, 1, 1},
@@ -9439,8 +9440,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_seed_val, __pyx_k_seed_val, sizeof(__pyx_k_seed_val), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
   {&__pyx_n_s_uint8, __pyx_k_uint8, sizeof(__pyx_k_uint8), 0, 0, 1, 1},
-  {&__pyx_n_s_useUnfairnessLB, __pyx_k_useUnfairnessLB, sizeof(__pyx_k_useUnfairnessLB), 0, 0, 1, 1},
-  {&__pyx_n_s_useUnfairnessLB_val, __pyx_k_useUnfairnessLB_val, sizeof(__pyx_k_useUnfairnessLB_val), 0, 0, 1, 1},
   {&__pyx_n_s_verbosity, __pyx_k_verbosity, sizeof(__pyx_k_verbosity), 0, 0, 1, 1},
   {&__pyx_n_s_verbosity_ascii, __pyx_k_verbosity_ascii, sizeof(__pyx_k_verbosity_ascii), 0, 0, 1, 1},
   {&__pyx_n_s_verbosity_str, __pyx_k_verbosity_str, sizeof(__pyx_k_verbosity_str), 0, 0, 1, 1},
@@ -9472,7 +9471,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
 
-  /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":884
+  /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":884
  *         __pyx_import_array()
  *     except Exception:
  *         raise ImportError("numpy.core.multiarray failed to import")             # <<<<<<<<<<<<<<
@@ -9483,7 +9482,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__4);
   __Pyx_GIVEREF(__pyx_tuple__4);
 
-  /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":890
+  /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":890
  *         _import_umath()
  *     except Exception:
  *         raise ImportError("numpy.core.umath failed to import")             # <<<<<<<<<<<<<<
@@ -9534,16 +9533,16 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  * 
  * def fit_wrap_loop(size_t max_nodes, double beta, int fairness,             # <<<<<<<<<<<<<<
- *                 int mode, int useUnfairnessLB, double min_fairness_acceptable, int kBest, int restart, int initNBNodes, double geomReason):
+ *                 int mode, int filteringMode, double min_fairness_acceptable, int kBest, int restart, int initNBNodes, double geomReason):
  * 
  */
-  __pyx_tuple__12 = PyTuple_Pack(20, __pyx_n_s_max_nodes, __pyx_n_s_beta, __pyx_n_s_fairness, __pyx_n_s_mode, __pyx_n_s_useUnfairnessLB, __pyx_n_s_min_fairness_acceptable, __pyx_n_s_kBest, __pyx_n_s_restart, __pyx_n_s_initNBNodes, __pyx_n_s_geomReason, __pyx_n_s_max_num_nodes, __pyx_n_s_beta_val, __pyx_n_s_fairness_metric, __pyx_n_s_mode_val, __pyx_n_s_useUnfairnessLB_val, __pyx_n_s_min_fairness_acceptable_val, __pyx_n_s_kBest_val, __pyx_n_s_restart_val, __pyx_n_s_geomReason_val, __pyx_n_s_initNBNodes_val); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(0, 534, __pyx_L1_error)
+  __pyx_tuple__12 = PyTuple_Pack(20, __pyx_n_s_max_nodes, __pyx_n_s_beta, __pyx_n_s_fairness, __pyx_n_s_mode, __pyx_n_s_filteringMode, __pyx_n_s_min_fairness_acceptable, __pyx_n_s_kBest, __pyx_n_s_restart, __pyx_n_s_initNBNodes, __pyx_n_s_geomReason, __pyx_n_s_max_num_nodes, __pyx_n_s_beta_val, __pyx_n_s_fairness_metric, __pyx_n_s_mode_val, __pyx_n_s_filteringMode_val, __pyx_n_s_min_fairness_acceptable_val, __pyx_n_s_kBest_val, __pyx_n_s_restart_val, __pyx_n_s_geomReason_val, __pyx_n_s_initNBNodes_val); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(0, 534, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__12);
   __Pyx_GIVEREF(__pyx_tuple__12);
   __pyx_codeobj__13 = (PyObject*)__Pyx_PyCode_New(10, 0, 20, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__12, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_faircorels__corels_pyx, __pyx_n_s_fit_wrap_loop, 534, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__13)) __PYX_ERR(0, 534, __pyx_L1_error)
 
   /* "faircorels/_corels.pyx":550
- *     return (run_corels_loop(max_num_nodes, beta_val, fairness_metric, mode_val, useUnfairnessLB_val, min_fairness_acceptable_val, kBest_val, restart_val, initNBNodes_val, geomReason_val) != -1)
+ *     return (run_corels_loop(max_num_nodes, beta_val, fairness_metric, mode_val, filteringMode_val, min_fairness_acceptable_val, kBest_val, restart_val, initNBNodes_val, geomReason_val) != -1)
  * 
  * def fit_wrap_end(int early):             # <<<<<<<<<<<<<<
  *     global rules
@@ -9972,7 +9971,7 @@ if (!__Pyx_RefNanny) {
  * 
  * 
  * def fit_wrap_loop(size_t max_nodes, double beta, int fairness,             # <<<<<<<<<<<<<<
- *                 int mode, int useUnfairnessLB, double min_fairness_acceptable, int kBest, int restart, int initNBNodes, double geomReason):
+ *                 int mode, int filteringMode, double min_fairness_acceptable, int kBest, int restart, int initNBNodes, double geomReason):
  * 
  */
   __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10faircorels_7_corels_7fit_wrap_loop, NULL, __pyx_n_s_faircorels__corels); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 534, __pyx_L1_error)
@@ -9981,7 +9980,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "faircorels/_corels.pyx":550
- *     return (run_corels_loop(max_num_nodes, beta_val, fairness_metric, mode_val, useUnfairnessLB_val, min_fairness_acceptable_val, kBest_val, restart_val, initNBNodes_val, geomReason_val) != -1)
+ *     return (run_corels_loop(max_num_nodes, beta_val, fairness_metric, mode_val, filteringMode_val, min_fairness_acceptable_val, kBest_val, restart_val, initNBNodes_val, geomReason_val) != -1)
  * 
  * def fit_wrap_end(int early):             # <<<<<<<<<<<<<<
  *     global rules
@@ -10002,7 +10001,7 @@ if (!__Pyx_RefNanny) {
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_1) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":892
+  /* "../../../.local/lib/python3.6/site-packages/numpy/__init__.pxd":892
  *         raise ImportError("numpy.core.umath failed to import")
  * 
  * cdef inline int import_ufunc() except -1:             # <<<<<<<<<<<<<<

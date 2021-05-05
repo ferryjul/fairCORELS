@@ -35,7 +35,7 @@ cdef extern from "src/corels/src/run.hh":
                       int max_calls)
 
     int run_corels_loop(size_t max_num_nodes, double beta, int fairness,
-                    int mode, int useUnfairnessLB, double min_fairness_acceptable, int kBest, int restart, int initNBNodes, double geomReason)
+                    int mode, int filteringMode, double min_fairness_acceptable, int kBest, int restart, int initNBNodes, double geomReason)
 
     double run_corels_end(int** rulelist, int* rulelist_size, 
     int** classes, double** confScores, int early, int latex_out, 
@@ -532,20 +532,20 @@ def fit_wrap_begin(np.ndarray[np.uint8_t, ndim=2] samples,
 
 
 def fit_wrap_loop(size_t max_nodes, double beta, int fairness,
-                int mode, int useUnfairnessLB, double min_fairness_acceptable, int kBest, int restart, int initNBNodes, double geomReason):
+                int mode, int filteringMode, double min_fairness_acceptable, int kBest, int restart, int initNBNodes, double geomReason):
     
     cdef size_t max_num_nodes = max_nodes
     cdef double beta_val = beta
     cdef int fairness_metric = fairness
     cdef int mode_val = mode
-    cdef int useUnfairnessLB_val = useUnfairnessLB
+    cdef int filteringMode_val = filteringMode
     cdef double min_fairness_acceptable_val = min_fairness_acceptable
     cdef int kBest_val = kBest
     cdef int restart_val = restart
     cdef double geomReason_val = geomReason
     cdef int initNBNodes_val = initNBNodes
     # This is where the magic happens
-    return (run_corels_loop(max_num_nodes, beta_val, fairness_metric, mode_val, useUnfairnessLB_val, min_fairness_acceptable_val, kBest_val, restart_val, initNBNodes_val, geomReason_val) != -1)
+    return (run_corels_loop(max_num_nodes, beta_val, fairness_metric, mode_val, filteringMode_val, min_fairness_acceptable_val, kBest_val, restart_val, initNBNodes_val, geomReason_val) != -1)
 
 def fit_wrap_end(int early):
     global rules

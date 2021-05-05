@@ -82,7 +82,7 @@ def oneFold(foldIndex, X_fold_data): # This part could be multithreaded for bett
                             policy="bfs", # exploration heuristic: BFS
                             bfs_mode=2, # type of BFS: objective-aware
                             mode=3, # epsilon-constrained mode
-                            useUnfairnessLB=useLB,
+                            filteringMode=useLB,
                             forbidSensAttr=False,
                             fairness=fairnessMetric, 
                             epsilon=epsilon, # fairness constrait

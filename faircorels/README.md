@@ -280,7 +280,7 @@ The training sets for the different base learners are automatically computed fro
 
 * Note that, as training sets will be automatically determined here, the training set `X`, `y`, the features `features`, the textual prediction name `prediction_name` must be provided directly here (NOT IN THE .fit call)
 
-* Other `FairCorelsClassifier` arguments for the base learners : `c=0.01`, `n_iter=10000`, `map_type="prefix"`, `policy="lower_bound"`, `verbosity=["rulelist"]`, `ablation=0`, `max_card=2`, `min_support=0.01`, `beta=0.0`, `fairness=1`, `maj_pos=-1`, `min_pos=2`, `maj_vect = np.empty(shape=(0))`, `min_vect = np.empty(shape=(0))`, `mode=4`, `useUnfairnessLB=False`, `epsilon=0.0`, `kbest=1`, `forbidSensAttr=False`, `bfs_mode=0`, `random_state=42` and `baggingVerbose=0`
+* Other `FairCorelsClassifier` arguments for the base learners : `c=0.01`, `n_iter=10000`, `map_type="prefix"`, `policy="lower_bound"`, `verbosity=["rulelist"]`, `ablation=0`, `max_card=2`, `min_support=0.01`, `beta=0.0`, `fairness=1`, `maj_pos=-1`, `min_pos=2`, `maj_vect = np.empty(shape=(0))`, `min_vect = np.empty(shape=(0))`, `mode=4`, `filteringMode=False`, `epsilon=0.0`, `kbest=1`, `forbidSensAttr=False`, `bfs_mode=0`, `random_state=42` and `baggingVerbose=0`
   
 ### Methods :
 

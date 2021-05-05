@@ -7,7 +7,7 @@ from joblib import Parallel, delayed
 from tqdm import tqdm # tentative display
 from .metrics import ConfusionMatrix, Metric
 
-debug = False
+debug = True
 
 class FairCorelsClassifier:
     """Certifiably Optimal RulE ListS classifier.
@@ -102,7 +102,7 @@ class FairCorelsClassifier:
         Method used for the multi-ojective framework
         1: weigted sum, 2: maximum fairness, 3: epsilon-constraint, 4: maximum accuracy
 
-    useUnfairnessLB: bool optional (default=False)
+    filteringMode: bool optional (default=False)
         Use the unfairness lower bound
         -> Use the CP filtering when it is implemented, else uses a simple (less efficient) lower bound.        
         Note that the simple lower bound effect may be negligible, depending on the search heuristic and the max. size of the prefix tree.
@@ -164,7 +164,7 @@ class FairCorelsClassifier:
     def __init__(self, c=0.01, n_iter=10000, map_type="prefix", policy="lower_bound",
                  verbosity=["rulelist"], ablation=0, max_card=2, min_support=0.01,
                  beta=0.0, fairness=1, maj_pos=-1, min_pos=2, maj_vect = np.empty(shape=(0)), min_vect = np.empty(shape=(0)),
-                 mode=4, useUnfairnessLB=False, epsilon=0.0, kbest=1, forbidSensAttr=False,
+                 mode=4, filteringMode=False, epsilon=0.0, kbest=1, forbidSensAttr=False,
                  bfs_mode=0, random_state=42):
         self.c = c
         self.n_iter = n_iter
@@ -208,7 +208,7 @@ class FairCorelsClassifier:
             self.min_vect = min_vect
             #print("min vect specified")
         self.mode = mode
-        self.useUnfairnessLB = useUnfairnessLB
+        self.filteringMode = filteringMode
         self.epsilon = epsilon
         self.kbest = kbest
         self.bfs_mode = bfs_mode
@@ -383,12 +383,12 @@ class FairCorelsClassifier:
             early = False
             try:
                 if time_limit is None: 
-                    while fit_wrap_loop(self.n_iter, self.beta, self.fairness, self.mode, self.useUnfairnessLB, self.epsilon, self.kbest, performRestarts, initNBNodes, geomRReason):
+                    while fit_wrap_loop(self.n_iter, self.beta, self.fairness, self.mode, self.filteringMode, self.epsilon, self.kbest, performRestarts, initNBNodes, geomRReason):
                         pass
                 else:
                     import time
                     start = time.clock()
-                    while fit_wrap_loop(self.n_iter, self.beta, self.fairness, self.mode, self.useUnfairnessLB, self.epsilon, self.kbest, performRestarts, initNBNodes, geomRReason):
+                    while fit_wrap_loop(self.n_iter, self.beta, self.fairness, self.mode, self.filteringMode, self.epsilon, self.kbest, performRestarts, initNBNodes, geomRReason):
                         end = time.clock()
                         if end - start > time_limit:
                             if debug:
@@ -527,7 +527,7 @@ class FairCorelsClassifier:
             "maj_vect": self.maj_vect,
             "min_vect": self.min_vect,
             "mode": self.mode,
-            "useUnfairnessLB": self.useUnfairnessLB,
+            "filteringMode": self.filteringMode,
             "epsilon": self.epsilon,
             "kbest": self.kbest,
             "bfs_mode": self.bfs_mode,

@@ -268,6 +268,30 @@ confusion_matrix_groups compute_confusion_matrix(VECTOR parent_prefix_prediction
     cm_minority.nNPV = nNPV_min;
     cm_minority.nTNR = nTNR_min;
 
+
+    // restrict to instances captured by prefix
+    int nminTP_min, nminFP_min, nminFN_min, nminTN_min;
+    rule_vandnot(TP_min, TP_min, not_captured, nsamples, &nminTP_min);
+    rule_vandnot(FP_min, FP_min, not_captured, nsamples, &nminFP_min);
+    rule_vandnot(FN_min, FN_min, not_captured, nsamples, &nminFN_min);
+    rule_vandnot(TN_min, TN_min, not_captured, nsamples, &nminTN_min);
+
+    cm_minority.nminTP = nminTP_min;
+    cm_minority.nminFP = nminFP_min;
+    cm_minority.nminFN = nminFN_min;
+    cm_minority.nminTN = nminTN_min;
+
+    int nminTP_maj, nminFP_maj, nminFN_maj, nminTN_maj;
+    rule_vandnot(TP_maj, TP_maj, not_captured, nsamples, &nminTP_maj);
+    rule_vandnot(FP_maj, FP_maj, not_captured, nsamples, &nminFP_maj);
+    rule_vandnot(FN_maj, FN_maj, not_captured, nsamples, &nminFN_maj);
+    rule_vandnot(TN_maj, TN_maj, not_captured, nsamples, &nminTN_maj);
+
+    cm_majority.nminTP = nminTP_maj;
+    cm_majority.nminFP = nminFP_maj;
+    cm_majority.nminFN = nminFN_maj;
+    cm_majority.nminTN = nminTN_maj;
+
     cmg.majority = cm_majority;
     cmg.minority = cm_minority;
 
@@ -340,7 +364,7 @@ void evaluate_children(CacheTree* tree,
                         rule_t* maj_v,
                         rule_t* min_v,
                         int mode,
-                        bool useUnfairnessLB,
+                        int filteringMode,
                         double min_fairness_acceptable,
                         bool forbidSensAttr,
                         double accuracyUpperBound){
@@ -363,15 +387,15 @@ void evaluate_children(CacheTree* tree,
             printf("U is %d/%d.\n", U, tree->nsamples());
         }
         if(debug) {
-            if(fairness == 1 && useUnfairnessLB)
+            if(fairness == 1 && filteringMode)
                 printf("will perform improved SP pruning\n");
-            else if(fairness == 2 && useUnfairnessLB)
+            else if(fairness == 2 && filteringMode)
                 printf("will perform improved PP pruning\n");
-            else if(fairness == 3 && useUnfairnessLB)
+            else if(fairness == 3 && filteringMode)
                 printf("will perform improved PE pruning\n");
-            else if(fairness == 4 && useUnfairnessLB)
+            else if(fairness == 4 && filteringMode)
                 printf("will perform improved EO pruning\n");
-            else if(fairness == 5 && useUnfairnessLB)
+            else if(fairness == 5 && filteringMode)
                 printf("will perform improved EOdds pruning\n");
         }
         longestfilteringrun = -1;
@@ -438,7 +462,7 @@ void evaluate_children(CacheTree* tree,
         printf("count differ: a = %d, b = %d\n", a, b);
     } */
     bool prefixPassedCP = true;
-    if(useUnfairnessLB && best_rl_length > 0 && (fairness == 1 || fairness == 3 || fairness == 4 || fairness == 5)){  // Here occurs the PPC Filtering
+    if(filteringMode == 1 && best_rl_length > 0 && (fairness == 1 || fairness == 3 || fairness == 4 || fairness == 5)){  // Here occurs the PPC Filtering
 			int L = (1 - (tree->min_objective() + ((best_rl_length-len_prefix)*c)))*tree->nsamples(); // (1 - misc)*nb_samples = nb inst well classif by current best model
 			int U = accuracyUpperBound * (tree->nsamples());
 			float fairness_tolerence = 1-min_fairness_acceptable; // equiv max unfairness acceptable
@@ -549,6 +573,44 @@ void evaluate_children(CacheTree* tree,
             max_depth = depth;
             printf("Now working at depth %d.\n", max_depth);
         }    
+
+        if(filteringMode == 2 && best_rl_length > 0 && (fairness == 1 || fairness == 3 || fairness == 4 || fairness == 5)){  // Here occurs the PPC Filtering
+			int L = (1 - (tree->min_objective() + ((best_rl_length-len_prefix)*c)))*tree->nsamples(); // (1 - misc)*nb_samples = nb inst well classif by current best model
+			int U = accuracyUpperBound * (tree->nsamples());
+			float fairness_tolerence = 1-min_fairness_acceptable; // equiv max unfairness acceptable
+
+			int TPp = cmg.minority.nminTP;
+			int FPp = cmg.minority.nminFP;
+			int TNp = cmg.minority.nminTN;
+			int FNp = cmg.minority.nminFN;
+			int TPu = cmg.majority.nminTP;
+			int FPu = cmg.majority.nminFP;
+			int TNu = cmg.majority.nminTN;
+			int FNu = cmg.majority.nminFN;
+
+            int config = 0;
+            if(fairness == 1){
+                config = 8;
+            } else if(fairness == 4){
+                config = 2;
+            }
+            //FilteringStatisticalParity check_bounds(nb_sp_plus,nb_sp_minus, nb_su_plus, nb_su_minus, L,U , fairness_tolerence, TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu);
+            //check_bounds.run(0, 0);
+            struct runResult res = runFiltering(fairness, //metric
+                                config, //solver config
+                                nb_sp_plus,nb_sp_minus, 
+                                nb_su_plus, nb_su_minus, 
+                                L,U , 
+                                fairness_tolerence, 
+                                TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu,
+                                -1 //timeout (nanoseconds, or -1 for no timeout)
+                                );
+
+            if(res.result == UNSAT){ // no solution => the fairness constraint can never be satisfied using the current prefix -> we skip its evaluation without adding it to the queue
+                improvedPruningCnt++;
+                prefixPassedCP = false;
+            }   
+    }
         /*
         // ----------------------------------- HERE OCCURS THE CP FILTERING -----------------------------------      
         // Currently supported metrics: Statistical Parity, Equal Opportunity. Other models coming soon!                                
@@ -1065,7 +1127,7 @@ void bbound_loop(CacheTree* tree,
                 rule_t* maj_v,
                 rule_t* min_v,
                 int mode,
-                bool useUnfairnessLB,
+                int filteringMode,
                 double min_fairness_acceptable,
                 int kBest,
                 bool forbidSensAttr,
@@ -1084,7 +1146,7 @@ void bbound_loop(CacheTree* tree,
         rule_vandnot(not_captured,
                      tree->rule(0).truthtable, captured,
                      tree->nsamples(), &cnt);
-        evaluate_children(tree, node_ordered.first, node_ordered.second, not_captured, q, p, beta, fairness, maj_v, min_v, mode, useUnfairnessLB,
+        evaluate_children(tree, node_ordered.first, node_ordered.second, not_captured, q, p, beta, fairness, maj_v, min_v, mode, filteringMode,
                         min_fairness_acceptable, forbidSensAttr, accuracyUpperBound);
         logger->addToEvalChildrenTime(time_diff(t1));
         logger->incEvalChildrenNum();

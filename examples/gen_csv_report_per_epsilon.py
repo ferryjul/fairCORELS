@@ -8,11 +8,11 @@ parser.add_argument('--metric', type=int, default=1, help='fairness metric: 1 st
 
 args = parser.parse_args()
 
-epsilon_range = np.arange(0.95, 1.00, 0.001) #0.001
-base = [0.0, 0.1, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.85, 0.875, 0.9, 0.905, 0.91, 0.915, 0.92, 0.925, 0.93,0.935, 0.94,0.945]
+#epsilon_range = np.arange(0.95, 1.00, 0.001) #0.001
+#base = [0.0, 0.1, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.85, 0.875, 0.9, 0.905, 0.91, 0.915, 0.92, 0.925, 0.93,0.935, 0.94,0.945]
 
-epsilon_range = base + list(epsilon_range)
-epsL = [round(x,3) for x in epsilon_range] #60 values
+#epsilon_range = base + list(epsilon_range)
+epsL = [0.7, 0.8, 0.9, 0.95, 0.975, 0.98, 0.985, 0.99, 0.995, 0.999]#[round(x,3) for x in epsilon_range] #60 values
 
 fairnessMetric = args.metric
 
@@ -25,8 +25,8 @@ for epsilon in epsL:
     if epsilon == 1.0:
         continue
     epsilonList.append(epsilon)
-    dataNoBound = pd.read_csv("./results/eps%f_metric%d_LB0-prefix.csv" %(epsilon, fairnessMetric)) 
-    dataBound = pd.read_csv("./results/eps%f_metric%d_LB1-prefix.csv" %(epsilon, fairnessMetric)) 
+    dataNoBound = pd.read_csv("./results/faircorels_eps%f_metric%d_LB0.csv" %(epsilon, fairnessMetric)) 
+    dataBound = pd.read_csv("./results/faircorels_eps%f_metric%d_LB1.csv" %(epsilon, fairnessMetric)) 
     objBound = dataBound.values[5][3]
     objNoBound = dataNoBound.values[5][3]
     if objBound == objNoBound: # if same sol we compute average cache improvement
@@ -58,3 +58,4 @@ with open('./results_merged/compile_eps_metric%d_cacheSize.csv' %(fairnessMetric
     csv_writer.writerow(['epsilon', 'obj_bound - obj_nobound', 'relative cache size for best sol', 'relative #nodes explored for best sol'])
     for index in range(len(epsilonList)):
         csv_writer.writerow([epsilonList[index], objFListDelta[index], relCacheSize[index], relExplored[index]])
+    print("Generated file :", './results_merged/compile_eps_metric%d_cacheSize.csv' %(fairnessMetric))

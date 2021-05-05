@@ -184,6 +184,10 @@ struct confusion_matrix {
     int nFP;
     int nFN;
     int nTN;
+    int nminTP;
+    int nminFP;
+    int nminFN;
+    int nminTN;
     double nPPV;
     double nTPR;
     double nFDR;
@@ -255,7 +259,7 @@ extern void bbound_loop(CacheTree* tree,
                             rule_t* maj_v,
                             rule_t* min_v,
                             int mode, 
-                            bool useUnfairnessLB,
+                            int filteringMode,
                             double min_fairness_acceptable,
                             int kBest,
                             bool forbidSensAttr,
@@ -272,7 +276,7 @@ extern void evaluate_children(CacheTree* tree,
                                 rule_t* maj_v,
                                 rule_t* min_v,
                                 int mode,
-                                bool useUnfairnessLB,
+                                int filteringMode,
                                 double min_fairness_acceptable,
                                 double accuracyUpperBound);
 

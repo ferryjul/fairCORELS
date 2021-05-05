@@ -91,7 +91,7 @@ def oneFold(foldIndex, X_fold_data): # This part could be multithreaded for bett
                         policy="bfs",
                         bfs_mode=2,
                         mode=3,
-                        useUnfairnessLB=useLB,
+                        filteringMode=useLB,
                         forbidSensAttr=False,
                         fairness=fairnessMetric, 
                         epsilon=epsilon,

@@ -231,7 +231,7 @@ int run_corels_begin(double c, char* vstring, int curiosity_policy,
     return 0;
 }
 
-int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int mode, bool useUnfairnessLB,
+int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int mode, int filteringMode,
                         double min_fairness_acceptable, int kBest, int restart, int initNBNodes, double geomReason) {
     // Check arguments
     if(mode < 1 || mode > 4) {
@@ -258,7 +258,7 @@ int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int mode, b
             printf("Will perform geometric restarts from %d to %lu.\n", currLimit, max_num_nodes);
         }
         if((g_tree->num_nodes() < currLimit) && !g_queue->empty()) {
-            bbound_loop(g_tree, g_queue, g_pmap, beta, fairness, Gmaj_vect, Gmin_vect, mode, useUnfairnessLB,
+            bbound_loop(g_tree, g_queue, g_pmap, beta, fairness, Gmaj_vect, Gmin_vect, mode, filteringMode,
                             min_fairness_acceptable, kBest, forbidSensAttr, accUpperBound); 
             return 0;
         } else {
@@ -389,7 +389,7 @@ int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int mode, b
             //printf("Initial limit = %d \n", currLimit);
         }
         if((g_tree->num_nodes() < currLimit) && !g_queue->empty()) {
-            bbound_loop(g_tree, g_queue, g_pmap, beta, fairness, Gmaj_vect, Gmin_vect, mode, useUnfairnessLB,
+            bbound_loop(g_tree, g_queue, g_pmap, beta, fairness, Gmaj_vect, Gmin_vect, mode, filteringMode,
                             min_fairness_acceptable, kBest, forbidSensAttr, accUpperBound); 
             return 0;
         } else {
@@ -483,7 +483,7 @@ int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int mode, b
     } 
     else { // Normal run (no restart)
             if((g_tree->num_nodes() < max_num_nodes) && !g_queue->empty() && (callsNB > 0)) {
-                bbound_loop(g_tree, g_queue, g_pmap, beta, fairness, Gmaj_vect, Gmin_vect, mode, useUnfairnessLB,
+                bbound_loop(g_tree, g_queue, g_pmap, beta, fairness, Gmaj_vect, Gmin_vect, mode, filteringMode,
                                 min_fairness_acceptable, kBest, forbidSensAttr, accUpperBound);
                 callsNB--;
                 if(callsNB == 0){
