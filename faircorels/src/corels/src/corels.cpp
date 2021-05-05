@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <math.h>
 #include "filtering_algorithms.cpp"
-#include <time.h> // for cp filtering running time measures
+//#include <time.h> // for cp filtering running time measures
 
 Queue::Queue(std::function<bool(Node*, Node*)> cmp, char const *type)
     : q_(new q (cmp)), type_(type) {}
@@ -57,6 +57,92 @@ double min2El(double e1, double e2) {
     }
 }
 
+// reduced version, working slightly faster, for prefix only (used for PPC filtering variables init)
+confusion_matrix_groups compute_confusion_matrix_prefix(VECTOR parent_prefix_predictions,
+                                                CacheTree* tree,
+                                                VECTOR parent_not_captured, 
+                                                rule_t* maj_v,
+                                                rule_t* min_v,
+                                                bool prediction, 
+                                                bool default_prediction){
+
+    // datastructures to store the results
+    confusion_matrix_groups cmg;
+    confusion_matrix cm_minority;
+    confusion_matrix cm_majority;
+    int nsamples = tree->nsamples();
+    int pm;
+
+    // true positives, false negatives, true negatives, and false positives
+    VECTOR TP, FP, FN, TN;
+    rule_vinit(nsamples, &TP);
+    rule_vinit(nsamples, &FP);
+    rule_vinit(nsamples, &FN);
+    rule_vinit(nsamples, &TN);
+
+    rule_vand(TP, parent_prefix_predictions, tree->label(1).truthtable, nsamples, &pm);
+    rule_vand(FP, parent_prefix_predictions, tree->label(0).truthtable, nsamples, &pm);
+    rule_vandnot(FN, tree->label(1).truthtable, parent_prefix_predictions, nsamples, &pm);
+    rule_vandnot(TN, tree->label(0).truthtable, parent_prefix_predictions, nsamples, &pm);
+
+    // restrict to instances captured by prefix
+    rule_vandnot(TP, TP, parent_not_captured, nsamples, &pm);
+    rule_vandnot(FP, FP, parent_not_captured, nsamples, &pm);
+    rule_vandnot(FN, FN, parent_not_captured, nsamples, &pm);
+    rule_vandnot(TN, TN, parent_not_captured, nsamples, &pm);
+
+    // true positives, false negatives, true negatives, and false positives for majority group
+    VECTOR TP_maj, FP_maj, FN_maj, TN_maj;
+    rule_vinit(tree->nsamples(), &TP_maj);
+    rule_vinit(tree->nsamples(), &FP_maj);
+    rule_vinit(tree->nsamples(), &FN_maj);
+    rule_vinit(tree->nsamples(), &TN_maj);
+
+    int nTP_maj, nFP_maj, nFN_maj, nTN_maj;
+    rule_vand(TP_maj, TP, maj_v[1].truthtable, nsamples, &nTP_maj);
+    rule_vand(FP_maj, FP, maj_v[1].truthtable, nsamples, &nFP_maj);
+    rule_vand(FN_maj, FN, maj_v[1].truthtable, nsamples, &nFN_maj);
+    rule_vand(TN_maj, TN, maj_v[1].truthtable, nsamples, &nTN_maj);
+    
+    
+    // true positives, false negatives, true negatives, and false positives for minority group
+    VECTOR TP_min, FP_min, FN_min, TN_min;
+    rule_vinit(nsamples, &TP_min);
+    rule_vinit(nsamples, &FP_min);
+    rule_vinit(nsamples, &FN_min);
+    rule_vinit(nsamples, &TN_min);
+
+    int nTP_min, nFP_min, nFN_min, nTN_min;
+    rule_vand(TP_min, TP, min_v[1].truthtable, nsamples, &nTP_min);
+    rule_vand(FP_min, FP, min_v[1].truthtable, nsamples, &nFP_min);
+    rule_vand(FN_min, FN, min_v[1].truthtable, nsamples, &nFN_min);
+    rule_vand(TN_min, TN, min_v[1].truthtable, nsamples, &nTN_min);
+
+
+    cmg.minority.nTP = nTP_min;
+    cmg.majority.nTP = nTP_maj;
+    cmg.minority.nFP = nFP_min;
+    cmg.majority.nFP = nFP_maj;
+    cmg.minority.nTN = nTN_min;
+    cmg.majority.nTN = nTN_maj;
+    cmg.minority.nFN = nFN_min;
+    cmg.majority.nFN = nFN_maj;
+    rule_vfree(&TP);
+    rule_vfree(&FP);
+    rule_vfree(&FN);
+    rule_vfree(&TN);
+    rule_vfree(&TP_maj);
+    rule_vfree(&FP_maj);
+    rule_vfree(&FN_maj);
+    rule_vfree(&TN_maj);
+    rule_vfree(&TP_min);
+    rule_vfree(&FP_min);
+    rule_vfree(&FN_min);
+    rule_vfree(&TN_min);
+
+    return cmg;
+}
+
 confusion_matrix_groups compute_confusion_matrix(VECTOR parent_prefix_predictions,
                                                 CacheTree* tree,
                                                 VECTOR parent_not_captured, 
@@ -70,14 +156,6 @@ confusion_matrix_groups compute_confusion_matrix(VECTOR parent_prefix_prediction
     confusion_matrix_groups cmg;
     confusion_matrix cm_minority;
     confusion_matrix cm_majority;
-
-    /*if(firstPass) { // TODO : Update display ? (with group vectors there isn't an attribute name to display ?)
-        printf("Fairness calc infos :\n");
-        printf("Sensitive attribute : %s, unsensitive attribute : %s\n", tree->rule(min_pos).features, tree->rule(maj_pos).features);
-    }*/
-    /*if(firstPass)
-        printf("Number of rules = %d\n", tree->nrules());*/
-    firstPass = false;
 
 
     int nsamples = tree->nsamples();
@@ -193,214 +271,6 @@ confusion_matrix_groups compute_confusion_matrix(VECTOR parent_prefix_prediction
     cmg.majority = cm_majority;
     cmg.minority = cm_minority;
 
-    /* UPPER BOUND CALC */
-    // true positives, false negatives, true negatives, and false positives tables for minority group
-    VECTOR TP_min_ub, FN_min_ub, TN_min_ub, FP_min_ub;
-    rule_vinit(tree->nsamples(), &TP_min_ub);
-    rule_vinit(tree->nsamples(), &FN_min_ub);
-    rule_vinit(tree->nsamples(), &TN_min_ub);
-    rule_vinit(tree->nsamples(), &FP_min_ub);
-    VECTOR TP_maj_ub, FN_maj_ub, TN_maj_ub, FP_maj_ub;
-    rule_vinit(tree->nsamples(), &TP_maj_ub);
-    rule_vinit(tree->nsamples(), &FN_maj_ub);
-    rule_vinit(tree->nsamples(), &TN_maj_ub);
-    rule_vinit(tree->nsamples(), &FP_maj_ub);
-
-    int nTP_maj_ub;
-    int nFN_maj_ub;
-    int nTN_maj_ub;
-    int nFP_maj_ub;
-    // for lower bounds we do not consider instances captured by the default decision
-    rule_vandnot(TP_maj_ub, TP_maj, not_captured, tree->nsamples(), &nTP_maj_ub);
-    rule_vandnot(FN_maj_ub, FN_maj, not_captured, tree->nsamples(), &nFN_maj_ub);
-    rule_vandnot(FP_maj_ub, FP_maj, not_captured, tree->nsamples(), &nFP_maj_ub);
-    rule_vandnot(TN_maj_ub, TN_maj, not_captured, tree->nsamples(), &nTN_maj_ub);
-
-    int nTP_min_ub;
-    int nFN_min_ub;
-    int nTN_min_ub;
-    int nFP_min_ub;
-
-    rule_vandnot(TP_min_ub, TP_min, not_captured, tree->nsamples(), &nTP_min_ub);
-    rule_vandnot(FN_min_ub, FN_min, not_captured, tree->nsamples(), &nFN_min_ub);
-    rule_vandnot(FP_min_ub, FP_min, not_captured, tree->nsamples(), &nFP_min_ub);
-    rule_vandnot(TN_min_ub, TN_min, not_captured, tree->nsamples(), &nTN_min_ub);
-
-    int totMAJ = nTP_maj + nFN_maj + nFP_maj + nTN_maj;
-    int totMIN = nTP_min + nFN_min + nFP_min + nTN_min;
-
-    double B1 = (double)((double)(totMAJ - nFN_maj_ub - nTN_maj_ub)/(double)totMAJ);
-    double B2 = (double) ((double)(nTP_maj_ub + nFP_maj_ub)/(double)totMAJ);
-    double B3 = (double) ((double)(totMIN - nFN_min_ub - nTN_min_ub)/(double)totMIN);
-    double B4 = (double) ((double)(nTP_min_ub + nFP_min_ub)/(double)totMIN);
-    double min_val = 0;
-    if(B1 < B2 || B3 < B4) {
-        printf("problem !\n");
-        exit(-1);
-    }
-    if(B3 < B2) {
-        min_val = (B2-B3);
-    } else if(B4 > B1) {
-        min_val = (B4-B1);
-    } else {
-        min_val = 0;
-    }
-
-    cmg.unfairnessLB = min_val;
-
-    /* OTHER METRICS */
-    
-    int totPos_maj = nTP_maj + nFN_maj;
-    int totPos_min = nTP_min + nFN_min;
-    int totNeg_maj = nTN_maj + nFP_maj;
-    int totNeg_min = nTN_min + nFP_min;
-
-    int maxFP_maj = totNeg_maj - nTN_maj_ub;
-    int maxFP_min = totNeg_min - nTN_min_ub;
-    int minFP_maj = nFP_maj_ub;
-    int minFP_min = nFP_min_ub;
-
-    int maxTP_maj = totPos_maj - nFN_maj_ub;
-    int maxTP_min = totPos_min - nFN_min_ub;
-    int minTP_maj = nTP_maj_ub;
-    int minTP_min = nTP_min_ub;
-
-    int maxTN_maj = totNeg_maj - nFP_maj_ub;
-    int maxTN_min = totNeg_min - nFP_min_ub;
-    int minTN_maj = nTN_maj_ub;
-    int minTN_min = nTN_min_ub;
-
-    int maxFN_maj = totPos_maj - nTP_maj_ub;
-    int maxFN_min = totPos_min - nTP_min_ub;
-    int minFN_maj = nFN_maj_ub;
-    int minFN_min = nFN_min_ub;
-
-    /* Predictive parity */
-    // Bound (A)
-    double PPV_maj_min1 = (double) (minTP_maj) / (double) (maxTP_maj + maxFP_maj);
-    double PPV_maj_max1 = (double) (maxTP_maj) / (double) (minTP_maj + minFP_maj);
-    double PPV_min_min1 = (double) (minTP_min) / (double) (maxTP_min + maxFP_min);
-    double PPV_min_max1 = (double) (maxTP_min) / (double) (minTP_min + minFP_min);
-    // Bound (B)
-    double PPV_maj_min2 = ((double) (minTP_maj + minFP_maj - maxFP_maj))/((double) (minTP_maj + minFP_maj));
-    double PPV_maj_max2 = ((double) (maxTP_maj + maxFP_maj - minFP_maj))/((double)(maxTP_maj + maxFP_maj));
-    double PPV_min_min2 = ((double) (minTP_min + minFP_min - maxFP_min))/((double) (minTP_min + minFP_min));
-    double PPV_min_max2 = ((double) (maxTP_min + maxFP_min - minFP_min))/((double)(maxTP_min + maxFP_min));
-    // Take the best bound
-    double PPV_maj_min = max2El(PPV_maj_min1, PPV_maj_min2);
-    double PPV_maj_max = min2El(PPV_maj_max1, PPV_maj_max2);
-    double PPV_min_min = max2El(PPV_min_min1, PPV_min_min2);
-    double PPV_min_max = min2El(PPV_min_max1, PPV_min_max2);
-    // Corrects max values in case they are too big (max value might be very bad)
-    if(PPV_maj_max > 1)
-        PPV_maj_max = 1;
-    if(PPV_min_max > 1)
-        PPV_min_max = 1;
-
-    // Compute distance between intervals
-    double min_pred_par = 0;
-    if(PPV_maj_min > PPV_min_max) {
-        min_pred_par = PPV_maj_min - PPV_min_max;
-    }
-    if(PPV_min_min > PPV_maj_max) {
-        min_pred_par = PPV_min_min - PPV_maj_max;
-    }
-    cmg.predparityLB = min_pred_par;
-
-    /* Predictive equality */
-    // Bound (A)
-    double FPR_maj_min1 = (double) (minFP_maj) / (double) min2El((maxTN_maj + maxFP_maj),totNeg_maj);
-    double FPR_maj_max1 = (double) (maxFP_maj) / (double) (minTN_maj + minFP_maj);
-    double FPR_min_min1 = (double) (minFP_min) / (double) min2El((maxTN_min + maxFP_min),totNeg_min);
-    double FPR_min_max1 = (double) (maxFP_min) / (double) (minTN_min + minFP_min);
-    // Bound (B)
-    double FPR_maj_min2 = ((double) (max2El((minFP_maj + minTN_maj),totNeg_maj) - maxTN_maj))/((double) max2El((minFP_maj + minTN_maj),totNeg_maj));
-    double FPR_maj_max2 = ((double) (min2El((maxTN_maj + maxFP_maj),totNeg_maj) - minTN_maj))/((double) min2El((maxTN_maj + maxFP_maj),totNeg_maj));
-    double FPR_min_min2 = ((double) (max2El((minFP_min + minTN_min),totNeg_min) - maxTN_min))/((double) max2El((minFP_min + minTN_min),totNeg_min));
-    double FPR_min_max2 = ((double) (min2El((maxTN_min + maxFP_min),totNeg_min) - minTN_min))/((double) min2El((maxTN_min + maxFP_min),totNeg_min));
-    // Take the best bound
-    double FPR_maj_min = max2El(FPR_maj_min1, FPR_maj_min2);
-    double FPR_maj_max = min2El(FPR_maj_max1, FPR_maj_max2);
-    double FPR_min_min = max2El(FPR_min_min1, FPR_min_min2);
-    double FPR_min_max = min2El(FPR_min_max1, FPR_min_max2);
-    // Corrects max values in case they are too big (max value might be very bad)
-    if(FPR_maj_max > 1)
-        FPR_maj_max = 1;
-    if(FPR_min_max > 1)
-        FPR_min_max = 1;
-    
-    // Compute distance between intervals
-    double min_pred_equ = 0;
-    if(FPR_maj_min > FPR_min_max) {
-        min_pred_equ = FPR_maj_min - FPR_min_max;
-    }
-    if(FPR_min_min > FPR_maj_max) {
-        min_pred_equ = FPR_min_min - FPR_maj_max;
-    }
-    cmg.predequalityLB = min_pred_equ;
-
-    /* Equal opportunity */
-    // Bound (A)
-    double FNR_maj_min1 = (double) (minFN_maj) / (double) min2El((maxTP_maj + maxFN_maj), totPos_maj);
-    double FNR_maj_max1 = (double) (maxFN_maj) / (double) (minTP_maj + minFN_maj);
-    double FNR_min_min1 = (double) (minFN_min) / (double) min2El((maxTP_min + maxFN_min), totPos_min);
-    double FNR_min_max1 = (double) (maxFN_min) / (double) (minTP_min + minFN_min);
-    // Bound (B)
-    double FNR_maj_min2 = ((double) (max2El((minFN_maj + minTP_maj),totPos_maj) - maxTP_maj))/((double) max2El((minFN_maj + minTP_maj),totPos_maj));
-    double FNR_maj_max2 = ((double) (min2El((maxTP_maj + maxFN_maj), totPos_maj) - minTP_maj))/((double)(min2El((maxTP_maj + maxFN_maj), totPos_maj)));
-    double FNR_min_min2 = ((double) (max2El((minFN_min + minTP_min),totPos_min) - maxTP_min))/((double) max2El((minFN_min + minTP_min),totPos_min));
-    double FNR_min_max2 = ((double) (min2El((maxTP_min + maxFN_min), totPos_min) - minTP_min))/((double)(min2El((maxTP_min + maxFN_min), totPos_min)));
-    // Take the best bound
-    double FNR_maj_min = max2El(FNR_maj_min1, FNR_maj_min2);
-    double FNR_maj_max = min2El(FNR_maj_max1, FNR_maj_max2);
-    double FNR_min_min = max2El(FNR_min_min1, FNR_min_min2);
-    double FNR_min_max = min2El(FNR_min_max1, FNR_min_max2);
-    // Corrects max values in case they are too big (max value might be very bad)
-    if(FNR_maj_max > 1)
-        FNR_maj_max = 1;
-    if(FNR_min_max > 1)
-        FNR_min_max = 1;
-
-    // Compute distance between intervals
-    double min_equ_op = 0;
-
-    if(FNR_maj_min > FNR_min_max) {
-        min_equ_op = FNR_maj_min - FNR_min_max;
-    }
-    if(FNR_min_min > FNR_maj_max) {
-        min_equ_op = FNR_min_min - FNR_maj_max;
-    }
-    cmg.equalOppLB = min_equ_op;
-
-    /* ADDITIONNAL INFO, FOR DEBUGGING */
-    cmg.minority.min_ppv = PPV_min_min;
-    cmg.minority.max_ppv = PPV_min_max;
-    cmg.majority.min_ppv = PPV_maj_min;
-    cmg.majority.max_ppv = PPV_maj_max;
-    cmg.minority.min_fpr = FPR_min_min;
-    cmg.minority.max_fpr = FPR_min_max;
-    cmg.majority.min_fpr = FPR_maj_min;
-    cmg.majority.max_fpr = FPR_maj_max;
-    cmg.minority.min_fnr = FNR_min_min;
-    cmg.minority.max_fnr = FNR_min_max;
-    cmg.majority.min_fnr = FNR_maj_min;
-    cmg.majority.max_fnr = FNR_maj_max;
-    cmg.minority.min_tp = minTP_min;
-    cmg.majority.min_tp = minTP_maj;
-    cmg.minority.max_tp = maxTP_min;
-    cmg.majority.max_tp = maxTP_maj;
-    cmg.minority.min_fp = minFP_min;
-    cmg.majority.min_fp = minFP_maj;
-    cmg.minority.max_fp = maxFP_min;
-    cmg.majority.max_fp = maxFP_maj;
-    cmg.minority.min_tn = minTN_min;
-    cmg.majority.min_tn = minTN_maj;
-    cmg.minority.max_tn = maxTN_min;
-    cmg.majority.max_tn = maxTN_maj;
-    cmg.minority.min_fn = minFN_min;
-    cmg.majority.min_fn = minFN_maj;
-    cmg.minority.max_fn = maxFN_min;
-    cmg.majority.max_fn = maxFN_maj;
     rule_vfree(&not_captured);
     rule_vfree(&preds_prefix);
     rule_vfree(&TP);
@@ -415,15 +285,6 @@ confusion_matrix_groups compute_confusion_matrix(VECTOR parent_prefix_prediction
     rule_vfree(&FP_min);
     rule_vfree(&FN_min);
     rule_vfree(&TN_min);
-    rule_vfree(&TP_maj_ub);
-    rule_vfree(&FN_maj_ub);
-    rule_vfree(&TN_maj_ub);
-    rule_vfree(&FP_maj_ub);
-    rule_vfree(&TP_min_ub);
-    rule_vfree(&FN_min_ub);
-    rule_vfree(&TN_min_ub);
-    rule_vfree(&FP_min_ub);
-
     return cmg;
 }
 
@@ -541,7 +402,7 @@ void evaluate_children(CacheTree* tree,
     double t0 = timestamp();
 
     // Compute prefix's predictions
-    VECTOR captured_it, not_captured_yet, captured_zeros_j, preds_prefix;
+    VECTOR captured_it, not_captured_yet, captured_zeros_j, preds_prefix, captured_prefix;
 
     int nb, nb2, pm;
 
@@ -549,44 +410,19 @@ void evaluate_children(CacheTree* tree,
     rule_vinit(tree->nsamples(), &not_captured_yet);
     rule_vinit(tree->nsamples(), &preds_prefix);
     rule_vinit(tree->nsamples(), &captured_zeros_j);
-
+    //rule_vinit(tree->nsamples(), &captured_prefix);
     // Initially not_captured_yet is full of ones
     rule_vor(not_captured_yet, tree->label(0).truthtable, tree->label(1).truthtable, tree->nsamples(),&nb);
 
     // Initially preds_prefix is full of zeros
     rule_vclear(tree->nsamples(), preds_prefix);
+    //rule_vclear(tree->nsamples(), captured_prefix);
+
     int depth = len_prefix;
     tracking_vector<unsigned short, DataStruct::Tree>::iterator it;
-    /*--- tobedeleted ---*/
-    /*bool isPrefixCorresp = true;
-    if (len_prefix == 4)  {
-        int ind = 0;
-        for (it = parent_prefix.begin(); it != parent_prefix.end() && isPrefixCorresp; it++) {
-            switch(ind){
-                case 0: 
-                    if(strcmp(tree->rule(*it).features,"age_26-45__AND__juvenile-crimes_=0"))
-                        isPrefixCorresp = false;
-                    break;
-                case 1: 
-                    if(strcmp(tree->rule(*it).features,"gender_Male__AND__juvenile-crimes_>0"))
-                        isPrefixCorresp = false;
-                    break;
-                case 2: 
-                    if(strcmp(tree->rule(*it).features,"priors_2-3"))
-                        isPrefixCorresp = false;
-                    break;
-                
-            }
-            ind++;
-        }   
-    } else {
-        isPrefixCorresp = false;
-    }
-    if(isPrefixCorresp){
-        printf("Prefix found !\n");
-    }*/
-    /* --- --- */
+
     for (it = parent_prefix.begin(); it != parent_prefix.end(); it++) {
+        //rule_vor(captured_prefix, captured_prefix, tree->rule(*it).truthtable, tree->nsamples(), &nb);
         rule_vand(captured_it, not_captured_yet, tree->rule(*it).truthtable, tree->nsamples(), &nb);
         rule_vandnot(not_captured_yet, not_captured_yet, captured_it, tree->nsamples(), &pm);
         rule_vand(captured_zeros_j, captured_it, tree->label(0).truthtable, tree->nsamples(), &nb2);
@@ -594,10 +430,58 @@ void evaluate_children(CacheTree* tree,
             rule_vor(preds_prefix, preds_prefix, captured_it, tree->nsamples(), &nb);
         }
     }
-    
+    /*int a, b;
+    a = count_ones_vector(captured_prefix, tree->nsamples());
+    b =  tree->nsamples() - count_ones_vector(parent_not_captured, tree->nsamples());
+
+    if (a != b){
+        printf("count differ: a = %d, b = %d\n", a, b);
+    } */
+    bool prefixPassedCP = true;
+    if(useUnfairnessLB && best_rl_length > 0 && (fairness == 1 || fairness == 3 || fairness == 4 || fairness == 5)){  // Here occurs the PPC Filtering
+			int L = (1 - (tree->min_objective() + ((best_rl_length-len_prefix)*c)))*tree->nsamples(); // (1 - misc)*nb_samples = nb inst well classif by current best model
+			int U = accuracyUpperBound * (tree->nsamples());
+			float fairness_tolerence = 1-min_fairness_acceptable; // equiv max unfairness acceptable
+
+            confusion_matrix_groups cmg = compute_confusion_matrix_prefix(preds_prefix, tree, parent_not_captured,
+                                                                                 maj_v, min_v, prediction, default_prediction);
+
+			int TPp = cmg.minority.nTP;
+			int FPp = cmg.minority.nFP;
+			int TNp = cmg.minority.nTN;
+			int FNp = cmg.minority.nFN;
+			int TPu = cmg.majority.nTP;
+			int FPu = cmg.majority.nFP;
+			int TNu = cmg.majority.nTN;
+			int FNu = cmg.majority.nFN;
+
+            int config = 0;
+            if(fairness == 1){
+                config = 8;
+            } else if(fairness == 4){
+                config = 2;
+            }
+            //FilteringStatisticalParity check_bounds(nb_sp_plus,nb_sp_minus, nb_su_plus, nb_su_minus, L,U , fairness_tolerence, TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu);
+            //check_bounds.run(0, 0);
+            struct runResult res = runFiltering(fairness, //metric
+                                config, //solver config
+                                nb_sp_plus,nb_sp_minus, 
+                                nb_su_plus, nb_su_minus, 
+                                L,U , 
+                                fairness_tolerence, 
+                                TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu,
+                                -1 //timeout (nanoseconds, or -1 for no timeout)
+                                );
+
+            if(res.result == UNSAT){ // no solution => the fairness constraint can never be satisfied using the current prefix -> we skip its evaluation without adding it to the queue
+                improvedPruningCnt++;
+                prefixPassedCP = false;
+            }   
+    }
+
     // begin evaluating children
     bool pass;
-    for (i = 1; i < nrules; i++) {
+    for (i = 1; prefixPassedCP && i < nrules; i++) {
         pass = false;
         /*if (isPrefixCorresp && !strcmp(tree-> rule(i).features,"priors_>3__AND__age_23-25")){
             printf("rule list evaluated ! \n");
@@ -665,7 +549,7 @@ void evaluate_children(CacheTree* tree,
             max_depth = depth;
             printf("Now working at depth %d.\n", max_depth);
         }    
-
+        /*
         // ----------------------------------- HERE OCCURS THE CP FILTERING -----------------------------------      
         // Currently supported metrics: Statistical Parity, Equal Opportunity. Other models coming soon!                                
         if(fairness == 1 && useUnfairnessLB && best_rl_length > 0){  // Statistical Parity - Implemented
@@ -817,7 +701,7 @@ void evaluate_children(CacheTree* tree,
                 improvedPruningCnt++;
                 pass = true;
             }   
-        }*/ 
+        }
         else if(fairness == 4 && useUnfairnessLB && best_rl_length > 0){  // Equal Opportunity - Implemented
 			int L = (1 - (tree->min_objective() + ((best_rl_length-len_prefix)*c)))*tree->nsamples(); // (1 - misc)*nb_samples = nb inst well classif by current best model
 			int U = accuracyUpperBound * (tree->nsamples());
@@ -867,7 +751,7 @@ void evaluate_children(CacheTree* tree,
                 improvedPruningCnt++;
                 continue;
             }   
-        } /* else if(fairness == 5 && useUnfairnessLB && best_rl_length > 0){  // Equalized Odds - Coming soon
+        } else if(fairness == 5 && useUnfairnessLB && best_rl_length > 0){  // Equalized Odds - Coming soon
 			int L = (1 - (tree->min_objective() + ((best_rl_length-len_prefix)*c)))*tree->nsamples(); // (1 - misc)*nb_samples = nb inst well classif by current best model
 			int U = accuracyUpperBound * (tree->nsamples());
 			float fairness_tolerence = 1-min_fairness_acceptable; // equiv max unfairness acceptable
@@ -973,32 +857,32 @@ void evaluate_children(CacheTree* tree,
         {
             case 1:
                 unfairness = fm.statistical_parity;
-                cmg.unfairnessLB = 0; // cancels the effect of the simple bound, now useless as we use improved cp filtering
+                //cmg.unfairnessLB = 0; // cancels the effect of the simple bound, now useless as we use improved cp filtering
                 break;
             case 2:
                 unfairness = fm.predictive_parity;
-                cmg.unfairnessLB = cmg.predparityLB;
+                //cmg.unfairnessLB = cmg.predparityLB;
                 break;
             case 3:
                 unfairness = fm.predictive_equality;
-                cmg.unfairnessLB = cmg.predequalityLB;
+                //cmg.unfairnessLB = cmg.predequalityLB;
                 break;
             case 4:
                 unfairness = fm.equal_opportunity;
-                cmg.unfairnessLB = 0; // cancels the effect of the simple bound, now useless as we use improved cp filtering
+                //cmg.unfairnessLB = 0; // cancels the effect of the simple bound, now useless as we use improved cp filtering
                 break;
             case 5:
                 unfairness = fm.equalized_odds;
-                cmg.unfairnessLB = 0; 
+                //cmg.unfairnessLB = 0; 
                 break;
             case 6:
                 unfairness = fm.cond_use_acc_equality;
-                cmg.unfairnessLB = 0;
+                //cmg.unfairnessLB = 0;
                 break;
             default:
                 break;
         }
-        if(useUnfairnessLB) {
+        /*if(useUnfairnessLB) {
             if(unfairness < cmg.unfairnessLB) { // should never happen ; if it happens we print useful information
                 printf("PPV_min = %lf (in [%lf,%lf]), PPV_maj = %lf (in [%lf,%lf])\n",
                 cmg.minority.nPPV, cmg.minority.min_ppv, cmg.minority.max_ppv, cmg.majority.nPPV, cmg.majority.min_ppv, cmg.majority.max_ppv);
@@ -1015,7 +899,7 @@ void evaluate_children(CacheTree* tree,
                 printf("FNR_min = %lf (in [%lf,%lf]), FNR_maj = %lf (in [%lf,%lf])\n",
                 cmg.minority.nFNR, cmg.minority.min_fnr, cmg.minority.max_fnr, cmg.majority.nFNR, cmg.majority.min_fnr, cmg.majority.max_fnr);
             }
-        }
+        }*/
         /* --- compute the objective function --- */
         if(mode == 2) { // Max fairness
             objective = unfairness + lower_bound;
@@ -1118,6 +1002,7 @@ void evaluate_children(CacheTree* tree,
         } // else:  objective lower bound with one-step lookahead
     }
     rule_vfree(&captured_it);
+    //rule_vfree(&captured_prefix);
     rule_vfree(&not_captured_yet);
     rule_vfree(&preds_prefix);
     rule_vfree(&captured_zeros_j);

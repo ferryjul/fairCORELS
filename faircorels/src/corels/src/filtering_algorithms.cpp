@@ -399,6 +399,73 @@ public:
 
 };
 
+class FilteringPredictiveEquality : public FilteringAlgorithm {
+
+public:
+	/*	ub_sp_plus is the number of examples protected with a positive class
+		ub_sp_minus is the number of examples protected with a negative class
+		ub_su_plus is the number of examples unprotected with a positive class
+		ub_su_minus is the number of examples unprotected with a negative class
+		TPp is the number of True Positive protected instances (among instances captured by the prefix)
+	 */
+	FilteringPredictiveEquality(
+			int nb_sp_plus,
+			int nb_sp_minus,
+			int nb_su_plus,
+			int nb_su_minus,
+			int L,
+			int U,
+			double fairness_tolerence,
+			int TPp,
+			int FPp,
+			int TNp,
+			int FNp,
+			int TPu,
+			int FPu,
+			int TNu,
+			int FNu
+			 ) : FilteringAlgorithm(nb_sp_plus,
+			nb_sp_minus,
+			nb_su_plus,
+			nb_su_minus,
+			L,
+			U,
+			fairness_tolerence,
+			TPp,
+			FPp,
+			TNp,
+			FNp,
+			TPu,
+			FPu,
+			TNu,
+			FNu,
+			"Predictive Equality")
+{
+		//Fairness constraints
+		std::vector<int> fairness_coefficient;
+		fairness_coefficient.push_back(nb_unprotected_negative);
+		fairness_coefficient.push_back(-nb_protected_negative);
+
+		// only vars we need
+		Mistral::VarArray fairness_constraint_variables;
+		fairness_constraint_variables.add (scope[1]) ; // sp -
+		fairness_constraint_variables.add (scope[3]) ; // su -
+
+		int fairness_bound = (int ) ( (double) nb_unprotected_negative *(double) nb_protected_negative * fairness_tolerence );
+
+		s.add( Sum(fairness_constraint_variables, fairness_coefficient) <= fairness_bound ) ;
+		s.add( Sum(fairness_constraint_variables, fairness_coefficient) >= (-fairness_bound) ) ;
+}
+
+
+	double compute_fairness(int sp_plus, int sp_minus, int su_plus, int su_minus){
+		return ((double)sp_minus/(double) (nb_protected_negative)  )  - 	 ((double)su_minus/(double) (nb_unprotected_negative)  );
+	}
+
+
+
+};
+
 class FilteringEqualOpportunity : public FilteringAlgorithm{
 	
 public:
@@ -464,3 +531,221 @@ public:
 	}
 
 };
+
+class FilteringEqualizedOdds : public FilteringAlgorithm {
+	
+public:
+	/*	ub_sp_plus is the number of examples protected with a positive class
+		ub_sp_minus is the number of examples protected with a negative class
+		ub_su_plus is the number of examples unprotected with a positive class
+		ub_su_minus is the number of examples unprotected with a negative class
+		TPp is the number of True Positive protected instances (among instances captured by the prefix)
+	 */
+	FilteringEqualizedOdds(
+			int nb_sp_plus,
+			int nb_sp_minus,
+			int nb_su_plus,
+			int nb_su_minus,
+			int L,
+			int U,
+			double fairness_tolerence,
+			int TPp,
+			int FPp,
+			int TNp,
+			int FNp,
+			int TPu,
+			int FPu,
+			int TNu,
+			int FNu
+			) : FilteringAlgorithm(nb_sp_plus,
+			nb_sp_minus,
+			nb_su_plus,
+			nb_su_minus,
+			L,
+			U,
+			fairness_tolerence,
+			TPp,
+			FPp,
+			TNp,
+			FNp,
+			TPu,
+			FPu,
+			TNu,
+			FNu,
+			"Equalized Odds")
+{
+
+		//Fairness constraints
+		// 1) For EO (FNR)
+		// only vars we need
+		Mistral::VarArray fairness_constraint_variables_1;
+		fairness_constraint_variables_1.add (scope[0]) ; // sp +
+		fairness_constraint_variables_1.add (scope[2]) ; // su +
+
+		std::vector<int> fairness_coefficient_1;
+		fairness_coefficient_1.push_back(-nb_su_plus);
+		fairness_coefficient_1.push_back(nb_sp_plus);
+	
+		int fairness_bound_1 = (int ) ( (float) nb_su_plus *(float) nb_sp_plus * fairness_tolerence );
+
+		s.add( Sum(fairness_constraint_variables_1, fairness_coefficient_1) <= fairness_bound_1 ) ;
+		s.add( Sum(fairness_constraint_variables_1, fairness_coefficient_1) >= (-fairness_bound_1) ) ;
+
+		// 2) For PE (FPR)
+		// only vars we need
+		Mistral::VarArray fairness_constraint_variables_2;
+		fairness_constraint_variables_2.add (scope[1]) ; // sp -
+		fairness_constraint_variables_2.add (scope[3]) ; // su -
+
+		std::vector<int> fairness_coefficient_2;
+		fairness_coefficient_2.push_back(nb_unprotected_negative);
+		fairness_coefficient_2.push_back(-nb_protected_negative);
+
+		int fairness_bound_2 = (int ) ( (float) nb_unprotected_negative *(float) nb_protected_negative * fairness_tolerence );
+
+		s.add( Sum(fairness_constraint_variables_2, fairness_coefficient_2) <= fairness_bound_2 ) ;
+		s.add( Sum(fairness_constraint_variables_2, fairness_coefficient_2) >= (-fairness_bound_2) ) ;
+
+}
+
+	double compute_fairness(int sp_plus, int sp_minus, int su_plus, int su_minus){
+		double fairness_FNR = ((double)((nb_protected_positive - sp_plus) /(double) (nb_protected_positive)  )  - 	 ((double)(nb_unprotected_positive - su_plus)/(double) (nb_unprotected_positive)  ));
+		double fairness_FPR = ((double)sp_minus/(double) (nb_protected_negative)  )  - 	 ((double)su_minus/(double) (nb_unprotected_negative)  );
+
+		return max(fabs(fairness_FNR), fabs(fairness_FPR)); // only need this to CHECK the correctness of the solution
+	}
+
+};
+
+// Data structure used to return solver results
+struct runResult {
+	/*
+	Declared values for Outcome :
+	#define SAT      1
+	#define OPT      3
+	#define UNSAT    0
+	#define UNKNOWN  2
+	#define LIMITOUT 4
+	*/
+	Mistral::Outcome result;
+	unsigned long solvingTime;
+} runResult;
+
+/*
+Runs the filtering algorithm corresponding to metric, with the provided parameters, and returns the measured running time (in nanoseconds)
+The solver in ran with the provided configuration
+*/
+struct runResult runFiltering(
+			int metric, 
+			int solverConfig,
+			int nb_sp_plus,
+			int nb_sp_minus,
+			int nb_su_plus,
+			int nb_su_minus,
+			int L,
+			int U,
+			float tolerence,
+			int TPp,
+			int FPp,
+			int TNp,
+			int FNp,
+			int TPu,
+			int FPu,
+			int TNu,
+			int FNu,
+			double timeout
+			){
+		struct runResult res;
+		switch(metric)
+		{
+			case 1:
+			{
+				FilteringStatisticalParity check_bounds(nb_sp_plus,nb_sp_minus, nb_su_plus, nb_su_minus, L,U , tolerence, TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu);
+				if(timeout > 0){
+					check_bounds.set_timeout(timeout);
+				}
+				//std::cout << check_bounds << std::endl;
+				//std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+				check_bounds.run(0, solverConfig);
+				//check_bounds.print_and_verify_solution();
+				//std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+				res.result = check_bounds.get_outcome();
+				res.solvingTime =  check_bounds.get_cpu_time();//std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
+				break;
+			}
+			case 2:
+			{
+				/*FilteringPredictiveParity check_bounds(nb_sp_plus,nb_sp_minus, nb_su_plus, nb_su_minus, L,U , tolerence, TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu);
+				if(timeout > 0){
+					check_bounds.set_timeout(timeout);
+				}
+				//std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+				check_bounds.run(0, solverConfig);
+				//std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+				res.result = check_bounds.get_outcome();
+				res.solvingTime = check_bounds.get_cpu_time();//std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();*/
+				std::cout <<  "Filtering not supported for PP " << std::endl;
+				exit(1);
+			}
+			case 3:
+			{
+				FilteringPredictiveEquality check_bounds(nb_sp_plus,nb_sp_minus, nb_su_plus, nb_su_minus, L,U , tolerence, TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu);
+				if(timeout > 0){
+					check_bounds.set_timeout(timeout);
+				}
+				//std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+				check_bounds.run(0, solverConfig);
+				//std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+				res.result = check_bounds.get_outcome();
+				res.solvingTime = check_bounds.get_cpu_time();//std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
+				break;
+			}
+			case 4:
+			{
+				FilteringEqualOpportunity check_bounds(nb_sp_plus,nb_sp_minus, nb_su_plus, nb_su_minus, L,U , tolerence, TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu);
+				if(timeout > 0){
+					check_bounds.set_timeout(timeout);
+				}
+				//std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+				check_bounds.run(0, solverConfig);
+				//std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+				res.result = check_bounds.get_outcome();
+				res.solvingTime = check_bounds.get_cpu_time();//std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
+				break;
+			}
+			case 5:
+			{
+				FilteringEqualizedOdds check_bounds(nb_sp_plus,nb_sp_minus, nb_su_plus, nb_su_minus, L,U , tolerence, TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu);
+				if(timeout > 0){
+					check_bounds.set_timeout(timeout);
+				}
+				//std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+				check_bounds.run(0, solverConfig);
+				//std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+				res.result = check_bounds.get_outcome();
+				res.solvingTime = check_bounds.get_cpu_time();//std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
+				break;
+			}
+			case 6:
+			{
+				/*FilteringConditionalUseAccuracyEquality check_bounds(nb_sp_plus,nb_sp_minus, nb_su_plus, nb_su_minus, L,U , tolerence, TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu);
+				if(timeout > 0){
+					check_bounds.set_timeout(timeout);
+				}
+				//std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+				check_bounds.run(0, solverConfig);
+				//std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+				res.result = check_bounds.get_outcome();
+				res.solvingTime = check_bounds.get_cpu_time();//std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();*/
+				std::cout <<  "Filtering not supported for CUAE " << std::endl;
+				exit(1);
+			}
+			default:
+			{
+				std::cout <<  "Error : metric should be an integer in [1,6] " << std::endl;
+				exit(1);
+			}
+		}
+	
+		return res;
+}

@@ -26,7 +26,8 @@ def install(gmp):
     sources = ['utils.cpp', 'rulelib.cpp', 'run.cpp', 'pmap.cpp', 
                'corels.cpp', 'cache.cpp',
                # files under this line are for improved filtering only
-               'filtering_algorithms.cpp', 'mistral_backtrack.cpp', 'mistral_constraint.cpp',
+               #'filtering_algorithms.cpp', 
+               'mistral_backtrack.cpp', 'mistral_constraint.cpp',
                'mistral_global.cpp', 'mistral_sat.cpp', 'mistral_search.cpp',
                'mistral_solver.cpp', 'mistral_structure.cpp', 'mistral_variable.cpp'
                ]

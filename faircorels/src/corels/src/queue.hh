@@ -192,7 +192,7 @@ struct confusion_matrix {
     double nFNR;
     double nNPV;
     double nTNR;
-    double min_ppv;
+    /*double min_ppv;
     double max_ppv;
     double min_fpr;
     double max_fpr;
@@ -205,7 +205,7 @@ struct confusion_matrix {
     int min_tn;
     int max_tn;
     int min_fn;
-    int max_fn;
+    int max_fn;*/
 };
 
 struct solver_args {

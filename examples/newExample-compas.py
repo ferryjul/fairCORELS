@@ -1,32 +1,44 @@
+import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 from sklearn.model_selection import KFold
 from joblib import Parallel, delayed
+from collections import Counter
 import argparse
 from faircorels import load_from_csv, FairCorelsClassifier, ConfusionMatrix, Metric
 import csv
+import time
 
-N_ITER = 1*10**7 # The maximum number of nodes in the prefix tree
-sensitive_attr_column = 0 # Column of the dataset used to define protected group membership (=> sensitive attribute)
-unsensitive_attr_column = 1 
+N_ITER = 1*10**5 # The maximum number of nodes in the prefix tree
+sensitive_attr_column = 0
+unsensitive_attr_column = 1
 
 X, y, features, prediction = load_from_csv("./data/compas_rules_full.csv")#("./data/adult_full.csv") # Load the dataset
 
-print("Sensitive attribute is ", features[sensitive_attr_column])
-print("Unsensitive attribute is ", features[unsensitive_attr_column])
-
 # parser initialization
 parser = argparse.ArgumentParser(description='Analysis of FairCORELS results')
-parser.add_argument('--epsilon', type=float, default=0.0, help='epsilon value (min fairness acceptable) for epsilon-constrained method')
-parser.add_argument('--uselb', type=int, default=1, help='use filtering : 0  no, 1  yes')
-parser.add_argument('--metric', type=int, default=1, help='fairness metric: 1 statistical_parity, 2 predictive_parity, 3 predictive_equality, 4 equal_opportunity, 5 Equalized Odds, 6 Conditional use accuracy equality')
+parser.add_argument('--epsilon', type=int, default=0, help='epsilon value (min fairness acceptable) for epsilon-constrained method')
+parser.add_argument('--uselb', type=int, default=0, help='use filtering : 0  no, 1  yes')
+#parser.add_argument('--metric', type=int, default=1, help='fairness metric: 1 statistical_parity, 2 predictive_parity, 3 predictive_equality, 4 equal_opportunity')
 
 args = parser.parse_args()
 
-epsilon = args.epsilon
-fairnessMetric = args.metric
+#epsilon_range = np.arange(0.95, 1.001, 0.001) #0.001
+#base = [0.0, 0.1, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.85, 0.875, 0.9, 0.905, 0.91, 0.915, 0.92, 0.925, 0.93,0.935, 0.94,0.945]
+
+#epsilon_range = base + list(epsilon_range)
+epsilons = [0.7, 0.8, 0.9, 0.95, 0.975, 0.98, 0.985, 0.99, 0.995, 0.999] # 10 values #[round(x,3) for x in epsilon_range] #72 values
+#fairnessMetric = args.metric
+fairnessMetric = int(np.floor(args.epsilon/len(epsilons))+1)
+epsInd = int(args.epsilon - ((fairnessMetric-1)*len(epsilons)))
+epsilon = epsilons[epsInd]
+if fairnessMetric == 2:
+    fairnessMetric = 5
+print("metric=", fairnessMetric, ", epsInd= ", epsInd, "epsilon=", epsilon)
+# 10 values for epsilon, 4 fairness metrics, slurm array ranges from 0 to 39
 bools = [False, True]
 useLB = bools[args.uselb]
-lambdaParam = 1e-3 # The regularization parameter penalizing rule lists length
+lambdaParam = 1e-3
 
 # We prepare the folds for our 5-folds cross-validation
 kf = KFold(n_splits=5, shuffle=True, random_state=42)
