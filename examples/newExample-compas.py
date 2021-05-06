@@ -9,7 +9,7 @@ from faircorels import load_from_csv, FairCorelsClassifier, ConfusionMatrix, Met
 import csv
 import time
 
-N_ITER = 1*10**6 # The maximum number of nodes in the prefix tree
+N_ITER = 1*10**7 # The maximum number of nodes in the prefix tree
 sensitive_attr_column = 0
 unsensitive_attr_column = 1
 

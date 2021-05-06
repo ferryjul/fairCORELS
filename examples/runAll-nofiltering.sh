@@ -10,7 +10,6 @@
 #SBATCH --array=0-39
 
 python3 newExample-compas.py --epsilon=${SLURM_ARRAY_TASK_ID} --filteringMode=0
+python3 newExample-compas.py --epsilon=${SLURM_ARRAY_TASK_ID} --filteringMode=0 --maxTime=30
 python3 newExample-compas.py --epsilon=${SLURM_ARRAY_TASK_ID} --filteringMode=0 --maxTime=60
 python3 newExample-compas.py --epsilon=${SLURM_ARRAY_TASK_ID} --filteringMode=0 --maxTime=120
-python3 newExample-compas.py --epsilon=${SLURM_ARRAY_TASK_ID} --filteringMode=0 --maxTime=300
-python3 newExample-compas.py --epsilon=${SLURM_ARRAY_TASK_ID} --filteringMode=0 --maxTime=600
