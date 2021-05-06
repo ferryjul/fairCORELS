@@ -487,6 +487,7 @@ void evaluate_children(CacheTree* tree,
             }
             //FilteringStatisticalParity check_bounds(nb_sp_plus,nb_sp_minus, nb_su_plus, nb_su_minus, L,U , fairness_tolerence, TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu);
             //check_bounds.run(0, 0);
+            double maxSolvingTime = 5*10e9; // <- 5 seconds is already a lot, it simply helps avoiding to get stuck
             struct runResult res = runFiltering(fairness, //metric
                                 config, //solver config
                                 nb_sp_plus,nb_sp_minus, 
@@ -494,7 +495,7 @@ void evaluate_children(CacheTree* tree,
                                 L,U , 
                                 fairness_tolerence, 
                                 TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu,
-                                -1 //timeout (nanoseconds, or -1 for no timeout)
+                                maxSolvingTime //timeout (nanoseconds, or -1 for no timeout)
                                 );
 
             if(res.result == UNSAT){ // no solution => the fairness constraint can never be satisfied using the current prefix -> we skip its evaluation without adding it to the queue
