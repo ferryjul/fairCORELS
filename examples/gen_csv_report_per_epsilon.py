@@ -16,7 +16,7 @@ epsL = [0.7, 0.8, 0.9, 0.95, 0.975, 0.98, 0.985, 0.99, 0.995, 0.999]#[round(x,3)
 
 fairnessMetric = args.metric
 
-suffixList = ["", "_tLimit60", "_tLimit120", "_tLimit300", "_tLimit600"]
+suffixList = ["", "_tLimit30", "_tLimit60", "_tLimit120"]#, "_tLimit300", "_tLimit600"]
 
 for suffix in suffixList:
     epsilonList = []
@@ -66,7 +66,7 @@ for suffix in suffixList:
             continue
         epsilonListAll.append(epsilon)
         dataNoBound = pd.read_csv("./results/faircorels_eps%f_metric%d_LB0%s.csv" %(epsilon, fairnessMetric, suffix)) 
-        dataBound = pd.read_csv("./results/faircorels_eps%f_metric%d_LB2%s.csv" %(epsilon, fairnessMetric, suffix)) 
+        dataBound = pd.read_csv("./results/faircorels_eps%f_metric%d_LB1%s.csv" %(epsilon, fairnessMetric, suffix)) 
         objBound = dataBound.values[5][3]
         objNoBound = dataNoBound.values[5][3]
         if objBound == objNoBound: # if same sol we compute average cache improvement
@@ -96,10 +96,10 @@ for suffix in suffixList:
         print("[Metric %d, Suffix %s] Error: #epsilons mismatch between LB1 and LB2. Some result files probably miss." %(fairnessMetric, suffix))
         exit(1)
 
-    with open('./results_merged/compile_eps_metric%d_cacheSize_%s.csv' %(fairnessMetric, suffix), mode='w') as csv_file:
+    with open('./results_merged/compile_eps_metric%d_cacheSize%s.csv' %(fairnessMetric, suffix), mode='w') as csv_file:
         csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         csv_writer.writerow(['', 'LB1', 'LB1', 'LB1', 'LB2', 'LB2', 'LB2'])
         csv_writer.writerow(['epsilon', 'obj_bound - obj_nobound', 'relative cache size for best sol', 'relative #nodes explored for best sol', 'obj_bound - obj_nobound', 'relative cache size for best sol', 'relative #nodes explored for best sol'])
         for index in range(len(epsilonList)):
             csv_writer.writerow([epsilonList[index], objFListDelta[index], relCacheSize[index], relExplored[index], objFListDeltaAll[index], relCacheSizeAll[index], relExploredAll[index]])
-        print("[Metric %d, Suffix %s] Success - Generated file :", './results_merged/compile_eps_metric%d_cacheSize_%s.csv' %(fairnessMetric, suffix, fairnessMetric, suffix))
+        print("[Metric %d, Suffix %s] Success - Generated file :" %(fairnessMetric, suffix), './results_merged/compile_eps_metric%d_cacheSize%s.csv' %(fairnessMetric, suffix))
