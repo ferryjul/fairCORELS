@@ -20,11 +20,13 @@ parser = argparse.ArgumentParser(description='Analysis of FairCORELS results')
 parser.add_argument('--epsilon', type=int, default=0, help='epsilon value (min fairness acceptable) for epsilon-constrained method')
 parser.add_argument('--filteringMode', type=int, default=0, help='filtering : 0 no, 1 prefix, 2 all extensions')
 parser.add_argument('--maxTime', type=int, default=-1, help='filtering : 0 no, 1 prefix, 2 all extensions')
+parser.add_argument('--policy', type=str, default="bfs", help='search heuristic - function used to order the priority queue')
 
 #parser.add_argument('--uselb', type=int, default=0, help='use filtering : 0  no, 1  yes')
 #parser.add_argument('--metric', type=int, default=1, help='fairness metric: 1 statistical_parity, 2 predictive_parity, 3 predictive_equality, 4 equal_opportunity')
 
 args = parser.parse_args()
+policy = args.policy
 
 max_time = None
 if args.maxTime > 0:
@@ -99,7 +101,7 @@ def oneFold(foldIndex, X_fold_data): # This part could be multithreaded for bett
     clf = FairCorelsClassifier(n_iter=N_ITER,
                             c=lambdaParam, # sparsity regularization parameter
                             max_card=1, # one rule = one attribute
-                            policy="bfs", # exploration heuristic: BFS
+                            policy=policy, # exploration heuristic
                             bfs_mode=2, # type of BFS: objective-aware
                             mode=3, # epsilon-constrained mode
                             filteringMode=filteringMode,
@@ -162,9 +164,9 @@ for aRes in ret:
     resPerFold[aRes[0]] = [aRes[1], aRes[2], aRes[3], aRes[4], aRes[5], aRes[6], aRes[7], aRes[8], aRes[9]]
 
 if max_time is None: 
-    fileName = './results/faircorels_eps%f_metric%d_LB%d.csv' %(epsilon, fairnessMetric, filteringMode)
+    fileName = './results/faircorels_eps%f_metric%d_LB%d_%s.csv' %(epsilon, fairnessMetric, filteringMode, policy)
 else:
-    fileName = './results/faircorels_eps%f_metric%d_LB%d_tLimit%d.csv' %(epsilon, fairnessMetric, filteringMode, max_time)
+    fileName = './results/faircorels_eps%f_metric%d_LB%d_%s_tLimit%d.csv' %(epsilon, fairnessMetric, filteringMode, policy, max_time)
 with open(fileName, mode='w') as csv_file:
     csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
     csv_writer.writerow(['Fold#', 'Training accuracy', 'Training Unfairness(%d)' %fairnessMetric, 'Training objective function', 'Test accuracy', 'Test unfairness', '#Nodes explored for best solution', 'Cache size for best solution', 'Average length', 'CPU running time (s)'])#, 'Fairness STD', 'Accuracy STD'])

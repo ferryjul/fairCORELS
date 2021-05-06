@@ -13,6 +13,8 @@ python3 newExample-compas.py --epsilon=${SLURM_ARRAY_TASK_ID} --filteringMode=1
 python3 newExample-compas.py --epsilon=${SLURM_ARRAY_TASK_ID} --filteringMode=1 --maxTime=30
 python3 newExample-compas.py --epsilon=${SLURM_ARRAY_TASK_ID} --filteringMode=1 --maxTime=60
 python3 newExample-compas.py --epsilon=${SLURM_ARRAY_TASK_ID} --filteringMode=1 --maxTime=120
+python3 newExample-compas.py --epsilon=${SLURM_ARRAY_TASK_ID} --filteringMode=1 --maxTime=120 --policy="objective"
+python3 newExample-compas.py --epsilon=${SLURM_ARRAY_TASK_ID} --filteringMode=1 --maxTime=600 --policy="objective"
 
 
 
