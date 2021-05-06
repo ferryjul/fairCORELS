@@ -3,7 +3,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=5
 #SBATCH --mem-per-cpu=7000
-#SBATCH --time=01:00:00
+#SBATCH --time=02:00:00
 #SBATCH --job-name=evCPFiltering
 #SBATCH -o slurmout_%A.out
 #SBATCH -e slurmout_%A.errarray
