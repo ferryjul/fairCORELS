@@ -486,18 +486,28 @@ int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int mode, i
                 bbound_loop(g_tree, g_queue, g_pmap, beta, fairness, Gmaj_vect, Gmin_vect, mode, filteringMode,
                                 min_fairness_acceptable, kBest, forbidSensAttr, accUpperBound);
                 callsNB--;
-                if(callsNB == 0){
-                    if(debugRun){
+                /*if(callsNB == 0){
+                   // if(debugRun){
                         printf("Performed max allowed #calls to bbound_loop (%d)\n", initCallsNB);
-                    }
+                  //  }
                 }
                 if(max_num_nodes <= g_tree->num_nodes()){
-                     if(debugRun){
+                    // if(debugRun){
                         printf("Exiting because max #nodes in the trie was reached : %d/%d\n", max_num_nodes, g_tree->num_nodes());
-                    }
-                }
+                  //  }
+                }*/
                 return 0;
             }
+    }
+    if(max_num_nodes <= g_tree->num_nodes()){
+        printf("Exiting because max #nodes in the trie was reached : %d/%d\n", max_num_nodes, g_tree->num_nodes());
+        return 1;
+    } else if(callsNB <= 0){
+        printf("Performed max allowed #calls to bbound_loop (%d)\n", initCallsNB);
+        return 2;
+    } else if(g_queue->empty()){
+        printf("Optimum found and proved!\n");
+        return 3;
     }
     return -1;
 }

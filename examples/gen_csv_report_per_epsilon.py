@@ -16,7 +16,7 @@ epsL = [0.7, 0.8, 0.9, 0.95, 0.975, 0.98, 0.985, 0.99, 0.995, 0.999]#[round(x,3)
 
 fairnessMetric = args.metric
 
-suffixList = ["", "_tLimit30", "_tLimit60", "_tLimit120"]#, "_tLimit300", "_tLimit600"]
+suffixList = ["_bfs", "_bfs_tLimit30", "_bfs_tLimit60", "_bfs_tLimit120", "_objective_tLimit120", "_objective_tLimit600"]#, "_tLimit300", "_tLimit600"]
 
 for suffix in suffixList:
     epsilonList = []

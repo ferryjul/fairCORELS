@@ -175,6 +175,7 @@ class FairCorelsClassifier:
         self.max_card = max_card
         self.min_support = min_support
         self.forbidSensAttr=forbidSensAttr
+        self.status = -1
         self.beta = beta
         self.fairness = fairness
         if(maj_vect.size == 0):
@@ -213,6 +214,20 @@ class FairCorelsClassifier:
         self.kbest = kbest
         self.bfs_mode = bfs_mode
         self.random_state = random_state
+
+    def get_solving_status(self):
+        if self.status == -1:
+            return "UNFITTED"
+        elif self.status == 1:
+            return "MEM_OUT"
+        elif self.status == 2:
+            return "EXPL_OUT"
+        elif self.status == 3:
+            return "OPT"
+        elif self.status == 4:
+            return "TIME_OUT"
+        else:
+            return "ERROR"
 
     def fit(self, X, y, features=[], prediction_name="prediction", performRestarts=0, initNBNodes=1000, geomRReason=1.5, max_evals=1000000000, time_limit = None):
         """
@@ -383,17 +398,23 @@ class FairCorelsClassifier:
             early = False
             try:
                 if time_limit is None: 
-                    while fit_wrap_loop(self.n_iter, self.beta, self.fairness, self.mode, self.filteringMode, self.epsilon, self.kbest, performRestarts, initNBNodes, geomRReason):
-                        pass
+                    exitCode = 0
+                    while exitCode == 0:
+                        exitCode = fit_wrap_loop(self.n_iter, self.beta, self.fairness, self.mode, self.filteringMode, self.epsilon, self.kbest, performRestarts, initNBNodes, geomRReason)
+                    self.status = exitCode
                 else:
                     import time
                     start = time.clock()
-                    while fit_wrap_loop(self.n_iter, self.beta, self.fairness, self.mode, self.filteringMode, self.epsilon, self.kbest, performRestarts, initNBNodes, geomRReason):
+                    exitCode = 0
+                    while exitCode == 0:
+                        exitCode = fit_wrap_loop(self.n_iter, self.beta, self.fairness, self.mode, self.filteringMode, self.epsilon, self.kbest, performRestarts, initNBNodes, geomRReason)
                         end = time.clock()
                         if end - start > time_limit:
+                            exitCode = 4
                             if debug:
                                 print("Exiting because CPU time limit is reached (", end - start, " seconds / ", time_limit, ".")
                             break
+                    self.status = exitCode
             except:
                 print("\nExiting early")
                 rl.rules, self.nbExplored, self.nbCache = fit_wrap_end(True)

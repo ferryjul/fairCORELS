@@ -545,7 +545,8 @@ def fit_wrap_loop(size_t max_nodes, double beta, int fairness,
     cdef double geomReason_val = geomReason
     cdef int initNBNodes_val = initNBNodes
     # This is where the magic happens
-    return (run_corels_loop(max_num_nodes, beta_val, fairness_metric, mode_val, filteringMode_val, min_fairness_acceptable_val, kBest_val, restart_val, initNBNodes_val, geomReason_val) != -1)
+    #return (run_corels_loop(max_num_nodes, beta_val, fairness_metric, mode_val, filteringMode_val, min_fairness_acceptable_val, kBest_val, restart_val, initNBNodes_val, geomReason_val) != -1)
+    return run_corels_loop(max_num_nodes, beta_val, fairness_metric, mode_val, filteringMode_val, min_fairness_acceptable_val, kBest_val, restart_val, initNBNodes_val, geomReason_val)
 
 def fit_wrap_end(int early):
     global rules

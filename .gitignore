@@ -19,3 +19,5 @@ env.sh
 env/
 *.vscode
 examples/results/*
+examples/results-tests/*
+examples/results_merged/*
