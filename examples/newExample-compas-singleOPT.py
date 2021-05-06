@@ -10,7 +10,6 @@ import csv
 import time
 
 N_ITER = 1*10**7 # The maximum number of nodes in the prefix tree
-max_threads = -1 # The maximum number of parallel threads used for the k-folds cross-validation
 sensitive_attr_column = 0
 unsensitive_attr_column = 1
 
@@ -106,7 +105,7 @@ def oneFold(foldIndex, X_fold_data): # This part could be multithreaded for bett
                             bfs_mode=2, # type of BFS: objective-aware
                             mode=3, # epsilon-constrained mode
                             filteringMode=filteringMode,
-                            map_type="prefix",
+                            map_type="none",
                             forbidSensAttr=False,
                             fairness=fairnessMetric, 
                             epsilon=epsilon, # fairness constrait
@@ -142,10 +141,10 @@ def oneFold(foldIndex, X_fold_data): # This part could be multithreaded for bett
     objF = ((1-accTraining) + (lambdaParam*length)) # best objective function reached
     exploredBeforeBest = int(clf.nbExplored)
     cacheSizeAtExit = int(clf.nbCache)
-    return [foldIndex, accTraining, unfTraining, objF, accTest, unfTest, exploredBeforeBest, cacheSizeAtExit, length, time_elapsed, clf.get_solving_status()]
+    return [foldIndex, accTraining, unfTraining, objF, accTest, unfTest, exploredBeforeBest, cacheSizeAtExit, length, time_elapsed,  clf.get_solving_status()]
 
 # Run training/evaluation for all folds using multi-threading
-ret = Parallel(n_jobs=max_threads)(delayed(oneFold)(foldIndex, X_fold_data) for foldIndex, X_fold_data in enumerate(folds))
+ret = Parallel(n_jobs=-1)(delayed(oneFold)(foldIndex, X_fold_data) for foldIndex, X_fold_data in enumerate(folds))
 
 # Unwrap the results
 accuracy = [ret[i][4] for i in range(0,5)]
@@ -166,9 +165,9 @@ for aRes in ret:
     resPerFold[aRes[0]] = [aRes[1], aRes[2], aRes[3], aRes[4], aRes[5], aRes[6], aRes[7], aRes[8], aRes[9], aRes[10]]
 
 if max_time is None: 
-    fileName = './results-tests/faircorels_eps%f_metric%d_LB%d_%s.csv' %(epsilon, fairnessMetric, filteringMode, policy)
+    fileName = './results/faircorels_eps%f_metric%d_LB%d_%s_single.csv' %(epsilon, fairnessMetric, filteringMode, policy)
 else:
-    fileName = './results-tests/faircorels_eps%f_metric%d_LB%d_%s_tLimit%d.csv' %(epsilon, fairnessMetric, filteringMode, policy, max_time)
+    fileName = './results/faircorels_eps%f_metric%d_LB%d_%s_tLimit%d_single.csv' %(epsilon, fairnessMetric, filteringMode, policy, max_time)
 with open(fileName, mode='w') as csv_file:
     csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
     csv_writer.writerow(['Fold#', 'Training accuracy', 'Training Unfairness(%d)' %fairnessMetric, 'Training objective function', 'Test accuracy', 'Test unfairness', '#Nodes explored for best solution', 'Cache size for best solution', 'Average length', 'CPU running time (s)', 'Solving Status'])#, 'Fairness STD', 'Accuracy STD'])
