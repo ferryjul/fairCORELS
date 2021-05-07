@@ -105,8 +105,8 @@ def oneFold(foldIndex, X_fold_data): # This part could be multithreaded for bett
                             bfs_mode=2, # type of BFS: objective-aware
                             mode=3, # epsilon-constrained mode
                             filteringMode=filteringMode,
-                            map_type="none",
                             forbidSensAttr=False,
+                            map_type="none",
                             fairness=fairnessMetric, 
                             epsilon=epsilon, # fairness constrait
                             verbosity=[], # don't print anything
