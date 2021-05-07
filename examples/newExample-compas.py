@@ -106,6 +106,7 @@ def oneFold(foldIndex, X_fold_data): # This part could be multithreaded for bett
                             mode=3, # epsilon-constrained mode
                             filteringMode=filteringMode,
                             forbidSensAttr=False,
+                            map_type="none",
                             fairness=fairnessMetric, 
                             epsilon=epsilon, # fairness constrait
                             verbosity=[], # don't print anything

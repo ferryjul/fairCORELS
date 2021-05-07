@@ -215,7 +215,20 @@ class FairCorelsClassifier:
         self.bfs_mode = bfs_mode
         self.random_state = random_state
 
+    
     def get_solving_status(self):
+        """
+        Returns the status of the classifier object.
+        It is either unfitted or gives the reason for which the exploration had been stopped.
+        It can be:
+        - "UNFITTED" -> if classifier has not been trained yet
+        - "TRIE_SIZE_OUT" -> if max size of the prefix tree (n_iter) is exceeded
+        - "EXPL_OUT" -> if max_evals given to fit() is exceeded
+        - "OPT" -> if the entire search space has been explored and optimum has been found
+        - "TIME_OUT" -> if time_limit given to fit() is exceeded
+        - "MEMORY_OUT" -> if memory_limit given to fit() is exceeded
+        - "ERROR" -> should never happen
+        """
         if self.status == -1:
             return "UNFITTED"
         elif self.status == 1:
