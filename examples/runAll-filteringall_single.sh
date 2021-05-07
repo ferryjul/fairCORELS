@@ -9,7 +9,7 @@
 #SBATCH -e slurmout_%A.errarray
 #SBATCH --array=0-39
 
-python3 newExample-compas-singleOPT.py --epsilon=${SLURM_ARRAY_TASK_ID} --filteringMode=2 --maxTime=600 --policy="bfs"
+python3 newExample-compas-singleOPT.py --epsilon=${SLURM_ARRAY_TASK_ID} --filteringMode=2 --maxTime=600 --policy="bfs" --maxMemory=5000
 
 
 

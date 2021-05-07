@@ -10,7 +10,7 @@ import csv
 import time
 
 N_ITER = 1*10**7 # The maximum number of nodes in the prefix tree
-max_threads = 1 # The maximum number of parallel threads used for the k-folds cross-validation
+max_threads = -1 # The maximum number of parallel threads used for the k-folds cross-validation
 sensitive_attr_column = 0
 unsensitive_attr_column = 1
 

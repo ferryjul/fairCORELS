@@ -25,13 +25,14 @@ class Node {
     inline bool default_prediction() const;
     inline double lower_bound() const;
     inline double objective() const;
+    inline double unfairness() const;
     inline bool done() const;
     inline void set_done();
     inline bool deleted() const;
     inline void set_deleted(); 
     inline int get_num();
     inline int set_num(int val);
-
+    inline int set_unfairness(double unf);
     // Returns pair of prefixes and predictions for the path from this node to the root
     inline std::pair<tracking_vector<unsigned short, DataStruct::Tree>, tracking_vector<bool, DataStruct::Tree> >
       get_prefix_and_predictions();
@@ -57,6 +58,7 @@ class Node {
     double lower_bound_;
     int num_insert;
     double objective_;
+    double unfairness_;
     double equivalent_minority_;
     size_t depth_;
     size_t num_captured_;
@@ -183,6 +185,10 @@ inline double Node::objective() const {
     return objective_;
 }
 
+inline double Node::unfairness() const {
+    return unfairness_;
+}
+
 inline bool Node::done() const{
     return done_;
 }
@@ -201,6 +207,11 @@ inline int Node::get_num(){
 
 inline int Node::set_num(int val){
     num_insert = val;
+    return 0;
+}
+
+inline int Node::set_unfairness(double unf){
+    unfairness_= unf;
     return 0;
 }
 

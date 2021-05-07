@@ -219,17 +219,19 @@ class FairCorelsClassifier:
         if self.status == -1:
             return "UNFITTED"
         elif self.status == 1:
-            return "MEM_OUT"
+            return "TRIE_SIZE_OUT"
         elif self.status == 2:
             return "EXPL_OUT"
         elif self.status == 3:
             return "OPT"
         elif self.status == 4:
             return "TIME_OUT"
+        elif self.status == 5:
+            return "MEMORY_OUT"
         else:
             return "ERROR"
 
-    def fit(self, X, y, features=[], prediction_name="prediction", performRestarts=0, initNBNodes=1000, geomRReason=1.5, max_evals=1000000000, time_limit = None):
+    def fit(self, X, y, features=[], prediction_name="prediction", performRestarts=0, initNBNodes=1000, geomRReason=1.5, max_evals=1000000000, time_limit = None, memory_limit=None):
         """
         Build a FairCORELS classifier from the training set (X, y).
 
@@ -254,6 +256,8 @@ class FairCorelsClassifier:
 
         time_limit : int, maximum number of seconds allowed for the model building
         Note that this specifies the CPU time and NOT THE WALL-CLOCK TIME
+
+        memory_limit: int, maximum memory use (in MB)
 
         Returns
         -------
@@ -396,11 +400,18 @@ class FairCorelsClassifier:
         
         if fr:
             early = False
+            if not (memory_limit is None):
+                import os, psutil
             try:
                 if time_limit is None: 
                     exitCode = 0
                     while exitCode == 0:
                         exitCode = fit_wrap_loop(self.n_iter, self.beta, self.fairness, self.mode, self.filteringMode, self.epsilon, self.kbest, performRestarts, initNBNodes, geomRReason)
+                        if not (memory_limit is None):
+                            mem_used = (psutil.Process(os.getpid()).memory_info().rss / 1024 ** 2)
+                            if mem_used > memory_limit:
+                                exitCode = 5
+                                print("Exiting because max memory used is reached :", mem_used, " MB/ ", memory_limit, " MB")
                     self.status = exitCode
                 else:
                     import time
@@ -409,6 +420,11 @@ class FairCorelsClassifier:
                     while exitCode == 0:
                         exitCode = fit_wrap_loop(self.n_iter, self.beta, self.fairness, self.mode, self.filteringMode, self.epsilon, self.kbest, performRestarts, initNBNodes, geomRReason)
                         end = time.clock()
+                        if not (memory_limit is None):
+                            mem_used = (psutil.Process(os.getpid()).memory_info().rss / 1024 ** 2)
+                            if mem_used > memory_limit:
+                                exitCode = 5
+                                print("Exiting because max memory used is reached :", mem_used, " MB/ ", memory_limit, " MB")
                         if end - start > time_limit:
                             exitCode = 4
                             if debug:

@@ -15,6 +15,9 @@ static std::function<bool(Node*, Node*)> base_cmp = [](Node* left, Node* right) 
     return left->depth() >= right->depth();
 };
 
+// order based on unfairness
+
+
 // Custom BFS policies
 static std::function<bool(Node*, Node*)> base_cmp_fifo = [](Node* left, Node* right) {
     if(left->depth() == right->depth()) {

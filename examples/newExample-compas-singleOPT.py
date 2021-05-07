@@ -9,7 +9,7 @@ from faircorels import load_from_csv, FairCorelsClassifier, ConfusionMatrix, Met
 import csv
 import time
 
-N_ITER = 1*10**7 # The maximum number of nodes in the prefix tree
+N_ITER = 1*10**8 # The maximum number of nodes in the prefix tree
 sensitive_attr_column = 0
 unsensitive_attr_column = 1
 
@@ -21,6 +21,7 @@ parser.add_argument('--epsilon', type=int, default=0, help='epsilon value (min f
 parser.add_argument('--filteringMode', type=int, default=0, help='filtering : 0 no, 1 prefix, 2 all extensions')
 parser.add_argument('--maxTime', type=int, default=-1, help='filtering : 0 no, 1 prefix, 2 all extensions')
 parser.add_argument('--policy', type=str, default="bfs", help='search heuristic - function used to order the priority queue')
+parser.add_argument('--maxMemory', type=int, default=-1, help='filtering : 0 no, 1 prefix, 2 all extensions')
 
 #parser.add_argument('--uselb', type=int, default=0, help='use filtering : 0  no, 1  yes')
 #parser.add_argument('--metric', type=int, default=1, help='fairness metric: 1 statistical_parity, 2 predictive_parity, 3 predictive_equality, 4 equal_opportunity')
@@ -31,6 +32,10 @@ policy = args.policy
 max_time = None
 if args.maxTime > 0:
     max_time = args.maxTime
+
+max_memory = None
+if args.maxMemory > 0:
+    max_memory = args.maxMemory
 
 #epsilon_range = np.arange(0.95, 1.001, 0.001) #0.001
 #base = [0.0, 0.1, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.85, 0.875, 0.9, 0.905, 0.91, 0.915, 0.92, 0.925, 0.93,0.935, 0.94,0.945]
@@ -118,7 +123,7 @@ def oneFold(foldIndex, X_fold_data): # This part could be multithreaded for bett
     start = time.clock()
 
     # Train it
-    clf.fit(X_train_unprotected, y_train, features=features[2:], prediction_name="(recidivism:yes)", time_limit = max_time)# max_evals=100000) # time_limit=8100, 
+    clf.fit(X_train_unprotected, y_train, features=features[2:], prediction_name="(recidivism:yes)", time_limit = max_time, memory_limit=max_memory)# max_evals=100000) # time_limit=8100, 
 
     time_elapsed = time.clock() - start
 

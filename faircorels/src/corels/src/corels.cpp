@@ -496,7 +496,7 @@ void evaluate_children(CacheTree* tree,
         printf("count differ: a = %d, b = %d\n", a, b);
     } */
     bool prefixPassedCP = true;
-    if(filteringMode == 1 && best_rl_length > 0 && (fairness == 1 || fairness == 3 || fairness == 4 || fairness == 5)){  // Here occurs the PPC Filtering
+    if((filteringMode == 1 || filteringMode == 3)&& best_rl_length > 0 && (fairness == 1 || fairness == 3 || fairness == 4 || fairness == 5)){  // Here occurs the PPC Filtering
 			int L = (1 - (tree->min_objective() + ((best_rl_length-len_prefix)*c)))*tree->nsamples(); // (1 - misc)*nb_samples = nb inst well classif by current best model
 			int U = accuracyUpperBound * (tree->nsamples());
 			float fairness_tolerence = 1-min_fairness_acceptable; // equiv max unfairness acceptable
@@ -617,7 +617,7 @@ void evaluate_children(CacheTree* tree,
         if(! strcmp(tree->rule(i).features, "not_age_middle") && prefixMatched){
             printf("Working on RL\n");
         }*/
-        if(filteringMode == 2 && best_rl_length > 0 && (fairness == 1 || fairness == 3 || fairness == 4 || fairness == 5)){  // Here occurs the PPC Filtering
+        if((filteringMode == 2 || filteringMode == 3) && best_rl_length > 0 && (fairness == 1 || fairness == 3 || fairness == 4 || fairness == 5)){  // Here occurs the PPC Filtering
 			
             int L = (1 - (tree->min_objective() + ((best_rl_length-len_prefix)*c)))*tree->nsamples(); // (1 - misc)*nb_samples = nb inst well classif by current best model
 			int U = accuracyUpperBound * (tree->nsamples());
@@ -1096,6 +1096,7 @@ void evaluate_children(CacheTree* tree,
             if (n) {
                 pushingTicket++;
                 n->set_num(pushingTicket);
+                n->set_unfairness(unfairness);
                 double t4 = timestamp();
                 tree->insert(n);
                 logger->incTreeInsertionNum();

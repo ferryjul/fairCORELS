@@ -12,11 +12,11 @@ args = parser.parse_args()
 #base = [0.0, 0.1, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.85, 0.875, 0.9, 0.905, 0.91, 0.915, 0.92, 0.925, 0.93,0.935, 0.94,0.945]
 
 #epsilon_range = base + list(epsilon_range)
-epsL = [0.7, 0.8, 0.9, 0.95, 0.975, 0.98, 0.985, 0.99, 0.995, 0.999]#[round(x,3) for x in epsilon_range] #60 values
+epsL = [0.7, 0.8, 0.9, 0.95, 0.975, 0.98, 0.985, 0.99, 0.995]#, 0.999]#[round(x,3) for x in epsilon_range] #60 values
 
 fairnessMetric = args.metric
 
-suffixList = ["_bfs", "_bfs_tLimit30", "_bfs_tLimit60", "_bfs_tLimit120", "_objective_tLimit120", "_objective_tLimit600"]#, "_tLimit300", "_tLimit600"]
+suffixList = ["_bfs_tLimit600_single"]#"_bfs", "_bfs_tLimit30", "_bfs_tLimit60", "_bfs_tLimit120", "_objective_tLimit120", "_objective_tLimit600"]#, "_tLimit300", "_tLimit600"]
 
 for suffix in suffixList:
     try:
@@ -30,6 +30,9 @@ for suffix in suffixList:
         relExploredAll = []
         relTimeAll = []
         relTime = []
+        statusL = []
+        statusLB1 = []
+        statusLB2 = []
         # LB1
         for epsilon in epsL:
             if epsilon == 1.0:
@@ -39,6 +42,31 @@ for suffix in suffixList:
             dataBound = pd.read_csv("./results/faircorels_eps%f_metric%d_LB1%s.csv" %(epsilon, fairnessMetric, suffix)) 
             objBound = dataBound.values[5][3]
             objNoBound = dataNoBound.values[5][3]
+            '''statusTmpNB = []
+            statusTmpLB1 = []
+            statusTmpLB2 = []
+            for i in range(5):
+                statusTmpNB.append(dataNoBound.values[i][10])
+                statusTmpLB1.append(dataBound.values[i][10])
+                statusTmpLB2.append(dataBound.values[i][10])
+            tempS = statusTmpLB2[0]
+            for t in statusTmpLB2:
+                if t != tempS:
+                    print("need manual analysis, status mismatch. Eps=", epsilon, ", metric=", fairnessMetric, " status are:", statusTmpLB2)
+                    exit()
+            statusLB2.append(tempS)
+            tempS = statusTmpNB[0]
+            for t in statusTmpNB:
+                if t != tempS:
+                    print("need manual analysis, status mismatch. Eps=", epsilon, ", metric=", fairnessMetric, " status are:", statusTmpLB2)
+                    exit()
+            statusL.append(tempS)
+            tempS = statusTmpLB1[0]
+            for t in statusTmpLB1:
+                if t != tempS:
+                    print("need manual analysis, status mismatch. Eps=", epsilon, ", metric=", fairnessMetric, " status are:", statusTmpLB2)
+                    exit()
+            statusLB1.append(tempS)'''
             if objBound == objNoBound: # if same sol we compute average cache improvement
                 objFListDelta.append(0)
                 boundList = []
@@ -79,12 +107,14 @@ for suffix in suffixList:
             dataBound = pd.read_csv("./results/faircorels_eps%f_metric%d_LB2%s.csv" %(epsilon, fairnessMetric, suffix)) 
             objBound = dataBound.values[5][3]
             objNoBound = dataNoBound.values[5][3]
+            
             if objBound == objNoBound: # if same sol we compute average cache improvement
                 objFListDeltaAll.append(0)
                 boundList = []
                 noboundList = []
                 timeBoundList = []
                 timeNoBoundList = []
+                
                 for i in range(5):
                     boundList.append(dataBound.values[i][7])
                     noboundList.append(dataNoBound.values[i][7])
@@ -98,6 +128,7 @@ for suffix in suffixList:
                     noboundList.append(dataNoBound.values[i][6])
                     timeBoundList.append(dataBound.values[i][9])
                     timeNoBoundList.append(dataNoBound.values[i][9])
+                    
                 boundAv = np.average(boundList)
                 noboundAv = np.average(noboundList)
                 timeBoundAv = np.average(timeBoundList)
@@ -123,6 +154,13 @@ for suffix in suffixList:
             for index in range(len(epsilonList)):
                 csv_writer.writerow([epsilonList[index], objFListDelta[index], relCacheSize[index], relExplored[index], relTime[index], objFListDeltaAll[index], relCacheSizeAll[index], relExploredAll[index], relTimeAll[index]])
             print("[Metric %d, Suffix %s] Success - Generated file :" %(fairnessMetric, suffix), './results_merged/compile_eps_metric%d_cacheSize%s.csv' %(fairnessMetric, suffix))
+        '''with open('./results_merged/compile_eps_metric%d_cacheSize%s_forLatex.csv' %(fairnessMetric, suffix), mode='w') as csv_file:
+            csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            #csv_writer.writerow(['', 'LB1', 'LB1', 'LB1', 'LB2', 'LB2', 'LB2'])
+            csv_writer.writerow(['epsilon', 'no bound status', 'LB1 status', 'obj_bound - obj_nobound', 'relative cache size for best sol', 'relative #nodes explored for best sol', 'LB2 Status', 'obj_bound - obj_nobound', 'relative cache size for best sol', 'relative #nodes explored for best sol'])
+            for index in range(len(epsilonList)):
+                csv_writer.writerow([epsilonList[index], statusL[index], objFListDelta[index], relCacheSize[index], relExplored[index], statusLB1[index], objFListDeltaAll[index], relCacheSizeAll[index], relExploredAll[index], statusLB2[index]])
+            print("[Metric %d, Suffix %s] Success - Generated file :" %(fairnessMetric, suffix), './results_merged/compile_eps_metric%d_cacheSize%s.csv' %(fairnessMetric, suffix))'''
     except FileNotFoundError as not_found:
         print("[Metric %d, Suffix %s] Error: Some result files probably miss." %(fairnessMetric, suffix))
         print("Missing file: ", not_found.filename)
