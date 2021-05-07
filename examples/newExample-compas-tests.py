@@ -10,7 +10,7 @@ import csv
 import time
 
 N_ITER = 1*10**7 # The maximum number of nodes in the prefix tree
-max_threads = -1 # The maximum number of parallel threads used for the k-folds cross-validation
+max_threads = 1 # The maximum number of parallel threads used for the k-folds cross-validation
 sensitive_attr_column = 0
 unsensitive_attr_column = 1
 
@@ -44,7 +44,7 @@ epsInd = int(args.epsilon - ((fairnessMetric-1)*len(epsilons)))
 epsilon = epsilons[epsInd]
 if fairnessMetric == 2:
     fairnessMetric = 5
-# print("metric=", fairnessMetric, ", epsInd= ", epsInd, "epsilon=", epsilon)
+print("metric=", fairnessMetric, ", epsInd= ", epsInd, "epsilon=", epsilon)
 # 10 values for epsilon, 4 fairness metrics, slurm array ranges from 0 to 39
 #bools = [False, True]
 #useLB = bools[args.uselb]
@@ -106,7 +106,7 @@ def oneFold(foldIndex, X_fold_data): # This part could be multithreaded for bett
                             bfs_mode=2, # type of BFS: objective-aware
                             mode=3, # epsilon-constrained mode
                             filteringMode=filteringMode,
-                            map_type="prefix",
+                            map_type="none",
                             forbidSensAttr=False,
                             fairness=fairnessMetric, 
                             epsilon=epsilon, # fairness constrait

@@ -19,87 +19,110 @@ fairnessMetric = args.metric
 suffixList = ["_bfs", "_bfs_tLimit30", "_bfs_tLimit60", "_bfs_tLimit120", "_objective_tLimit120", "_objective_tLimit600"]#, "_tLimit300", "_tLimit600"]
 
 for suffix in suffixList:
-    epsilonList = []
-    epsilonListAll = []
-    objFListDelta = []
-    objFListDeltaAll = []
-    relCacheSize = []
-    relExplored = []
-    relCacheSizeAll = []
-    relExploredAll = []
+    try:
+        epsilonList = []
+        epsilonListAll = []
+        objFListDelta = []
+        objFListDeltaAll = []
+        relCacheSize = []
+        relExplored = []
+        relCacheSizeAll = []
+        relExploredAll = []
+        relTimeAll = []
+        relTime = []
+        # LB1
+        for epsilon in epsL:
+            if epsilon == 1.0:
+                continue
+            epsilonList.append(epsilon)
+            dataNoBound = pd.read_csv("./results/faircorels_eps%f_metric%d_LB0%s.csv" %(epsilon, fairnessMetric, suffix)) 
+            dataBound = pd.read_csv("./results/faircorels_eps%f_metric%d_LB1%s.csv" %(epsilon, fairnessMetric, suffix)) 
+            objBound = dataBound.values[5][3]
+            objNoBound = dataNoBound.values[5][3]
+            if objBound == objNoBound: # if same sol we compute average cache improvement
+                objFListDelta.append(0)
+                boundList = []
+                noboundList = []
+                timeBoundList = []
+                timeNoBoundList = []
+                for i in range(5):
+                    boundList.append(dataBound.values[i][7])
+                    noboundList.append(dataNoBound.values[i][7])
+                    timeBoundList.append(dataBound.values[i][9])
+                    timeNoBoundList.append(dataNoBound.values[i][9])
+                boundAv = np.average(boundList)
+                noboundAv = np.average(noboundList)
+                timeBoundAv = np.average(timeBoundList)
+                timeNoBoundAv = np.average(timeNoBoundList)
+                relTime.append(float(timeBoundAv)/float(timeNoBoundAv))
+                relCacheSize.append(float(boundAv)/float(noboundAv))
+                boundList = []
+                noboundList = []
+                for i in range(5):
+                    boundList.append(dataBound.values[i][6])
+                    noboundList.append(dataNoBound.values[i][6])
+                boundAv = np.average(boundList)
+                noboundAv = np.average(noboundList)
+                relExplored.append(float(boundAv)/float(noboundAv))
+            else: # else we compute the solution's difference
+                objFListDelta.append(objBound - objNoBound)
+                relCacheSize.append(0) # non sense to compare cache sizes if objs are not the same so we simply put 0
+                relExplored.append(0) # non sense to compare #explored nodes if objs are not the same so we simply put 0
+                relTime.append(0)
 
-    # LB1
-    for epsilon in epsL:
-        if epsilon == 1.0:
-            continue
-        epsilonList.append(epsilon)
-        dataNoBound = pd.read_csv("./results/faircorels_eps%f_metric%d_LB0%s.csv" %(epsilon, fairnessMetric, suffix)) 
-        dataBound = pd.read_csv("./results/faircorels_eps%f_metric%d_LB1%s.csv" %(epsilon, fairnessMetric, suffix)) 
-        objBound = dataBound.values[5][3]
-        objNoBound = dataNoBound.values[5][3]
-        if objBound == objNoBound: # if same sol we compute average cache improvement
-            objFListDelta.append(0)
-            boundList = []
-            noboundList = []
-            for i in range(5):
-                boundList.append(dataBound.values[i][7])
-                noboundList.append(dataNoBound.values[i][7])
-            boundAv = np.average(boundList)
-            noboundAv = np.average(noboundList)
-            relCacheSize.append(float(boundAv)/float(noboundAv))
-            boundList = []
-            noboundList = []
-            for i in range(5):
-                boundList.append(dataBound.values[i][6])
-                noboundList.append(dataNoBound.values[i][6])
-            boundAv = np.average(boundList)
-            noboundAv = np.average(noboundList)
-            relExplored.append(float(boundAv)/float(noboundAv))
-        else: # else we compute the solution's difference
-            objFListDelta.append(objBound - objNoBound)
-            relCacheSize.append(0) # non sense to compare cache sizes if objs are not the same so we simply put 0
-            relExplored.append(0) # non sense to compare #explored nodes if objs are not the same so we simply put 0
+        # LB2
+        for epsilon in epsL:
+            if epsilon == 1.0:
+                continue
+            epsilonListAll.append(epsilon)
+            dataNoBound = pd.read_csv("./results/faircorels_eps%f_metric%d_LB0%s.csv" %(epsilon, fairnessMetric, suffix)) 
+            dataBound = pd.read_csv("./results/faircorels_eps%f_metric%d_LB2%s.csv" %(epsilon, fairnessMetric, suffix)) 
+            objBound = dataBound.values[5][3]
+            objNoBound = dataNoBound.values[5][3]
+            if objBound == objNoBound: # if same sol we compute average cache improvement
+                objFListDeltaAll.append(0)
+                boundList = []
+                noboundList = []
+                timeBoundList = []
+                timeNoBoundList = []
+                for i in range(5):
+                    boundList.append(dataBound.values[i][7])
+                    noboundList.append(dataNoBound.values[i][7])
+                boundAv = np.average(boundList)
+                noboundAv = np.average(noboundList)
+                relCacheSizeAll.append(float(boundAv)/float(noboundAv))
+                boundList = []
+                noboundList = []
+                for i in range(5):
+                    boundList.append(dataBound.values[i][6])
+                    noboundList.append(dataNoBound.values[i][6])
+                    timeBoundList.append(dataBound.values[i][9])
+                    timeNoBoundList.append(dataNoBound.values[i][9])
+                boundAv = np.average(boundList)
+                noboundAv = np.average(noboundList)
+                timeBoundAv = np.average(timeBoundList)
+                timeNoBoundAv = np.average(timeNoBoundList)
+                relTimeAll.append(float(timeBoundAv)/float(timeNoBoundAv))
+                boundAv = np.average(boundList)
+                noboundAv = np.average(noboundList)
+                relExploredAll.append(float(boundAv)/float(noboundAv))
+            else: # else we compute the solution's difference
+                objFListDeltaAll.append(objBound - objNoBound)
+                relCacheSizeAll.append(0) # non sense to compare cache sizes if objs are not the same so we simply put 0
+                relExploredAll.append(0) # non sense to compare #explored nodes if objs are not the same so we simply put 0
+                relTimeAll.append(0)
 
-    # LB2
-    for epsilon in epsL:
-        if epsilon == 1.0:
-            continue
-        epsilonListAll.append(epsilon)
-        dataNoBound = pd.read_csv("./results/faircorels_eps%f_metric%d_LB0%s.csv" %(epsilon, fairnessMetric, suffix)) 
-        dataBound = pd.read_csv("./results/faircorels_eps%f_metric%d_LB1%s.csv" %(epsilon, fairnessMetric, suffix)) 
-        objBound = dataBound.values[5][3]
-        objNoBound = dataNoBound.values[5][3]
-        if objBound == objNoBound: # if same sol we compute average cache improvement
-            objFListDeltaAll.append(0)
-            boundList = []
-            noboundList = []
-            for i in range(5):
-                boundList.append(dataBound.values[i][7])
-                noboundList.append(dataNoBound.values[i][7])
-            boundAv = np.average(boundList)
-            noboundAv = np.average(noboundList)
-            relCacheSizeAll.append(float(boundAv)/float(noboundAv))
-            boundList = []
-            noboundList = []
-            for i in range(5):
-                boundList.append(dataBound.values[i][6])
-                noboundList.append(dataNoBound.values[i][6])
-            boundAv = np.average(boundList)
-            noboundAv = np.average(noboundList)
-            relExploredAll.append(float(boundAv)/float(noboundAv))
-        else: # else we compute the solution's difference
-            objFListDeltaAll.append(objBound - objNoBound)
-            relCacheSizeAll.append(0) # non sense to compare cache sizes if objs are not the same so we simply put 0
-            relExploredAll.append(0) # non sense to compare #explored nodes if objs are not the same so we simply put 0
-        
-    if not(len(epsilonListAll) == len(epsilonList)):
-        print("[Metric %d, Suffix %s] Error: #epsilons mismatch between LB1 and LB2. Some result files probably miss." %(fairnessMetric, suffix))
-        exit(1)
+        if not(len(epsilonListAll) == len(epsilonList)):
+            print("[Metric %d, Suffix %s] Error: #epsilons mismatch between LB1 and LB2. Some result files probably miss." %(fairnessMetric, suffix))
+            exit(1)
 
-    with open('./results_merged/compile_eps_metric%d_cacheSize%s.csv' %(fairnessMetric, suffix), mode='w') as csv_file:
-        csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-        csv_writer.writerow(['', 'LB1', 'LB1', 'LB1', 'LB2', 'LB2', 'LB2'])
-        csv_writer.writerow(['epsilon', 'obj_bound - obj_nobound', 'relative cache size for best sol', 'relative #nodes explored for best sol', 'obj_bound - obj_nobound', 'relative cache size for best sol', 'relative #nodes explored for best sol'])
-        for index in range(len(epsilonList)):
-            csv_writer.writerow([epsilonList[index], objFListDelta[index], relCacheSize[index], relExplored[index], objFListDeltaAll[index], relCacheSizeAll[index], relExploredAll[index]])
-        print("[Metric %d, Suffix %s] Success - Generated file :" %(fairnessMetric, suffix), './results_merged/compile_eps_metric%d_cacheSize%s.csv' %(fairnessMetric, suffix))
+        with open('./results_merged/compile_eps_metric%d_cacheSize%s.csv' %(fairnessMetric, suffix), mode='w') as csv_file:
+            csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            csv_writer.writerow(['', 'LB1', 'LB1', 'LB1', 'LB2', 'LB2', 'LB2'])
+            csv_writer.writerow(['epsilon', 'obj_bound - obj_nobound', 'relative cache size for best sol', 'relative #nodes explored for best sol', 'relative time', 'obj_bound - obj_nobound', 'relative cache size for best sol', 'relative #nodes explored for best sol', 'relative time'])
+            for index in range(len(epsilonList)):
+                csv_writer.writerow([epsilonList[index], objFListDelta[index], relCacheSize[index], relExplored[index], relTime[index], objFListDeltaAll[index], relCacheSizeAll[index], relExploredAll[index], relTimeAll[index]])
+            print("[Metric %d, Suffix %s] Success - Generated file :" %(fairnessMetric, suffix), './results_merged/compile_eps_metric%d_cacheSize%s.csv' %(fairnessMetric, suffix))
+    except FileNotFoundError as not_found:
+        print("[Metric %d, Suffix %s] Error: Some result files probably miss." %(fairnessMetric, suffix))
+        print("Missing file: ", not_found.filename)

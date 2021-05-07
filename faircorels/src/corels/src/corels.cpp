@@ -445,15 +445,49 @@ void evaluate_children(CacheTree* tree,
     int depth = len_prefix;
     tracking_vector<unsigned short, DataStruct::Tree>::iterator it;
 
+    /*bool prefixMatched = true;
+    int nbRules = 0;*/
+    //printf("Prefix:\n");
     for (it = parent_prefix.begin(); it != parent_prefix.end(); it++) {
         //rule_vor(captured_prefix, captured_prefix, tree->rule(*it).truthtable, tree->nsamples(), &nb);
         rule_vand(captured_it, not_captured_yet, tree->rule(*it).truthtable, tree->nsamples(), &nb);
         rule_vandnot(not_captured_yet, not_captured_yet, captured_it, tree->nsamples(), &pm);
         rule_vand(captured_zeros_j, captured_it, tree->label(0).truthtable, tree->nsamples(), &nb2);
+       // nbRules++;
         if(nb2 <= (nb - nb2)) { //then prediction is 1
             rule_vor(preds_prefix, preds_prefix, captured_it, tree->nsamples(), &nb);
         }
+    /*    if(nbRules == 1){
+            //printf("1: %s\n", tree->rule(*it).features);
+            if( strcmp(tree->rule(*it).features, "sex_Female")){
+                prefixMatched = false;
+            }
+        }else if(nbRules == 2){
+            //printf("2: %s\n", tree->rule(*it).features);
+            if( strcmp(tree->rule(*it).features, "age_high")){
+                prefixMatched = false;
+            }
+        }else if(nbRules == 3){
+            //printf("3: %s\n", tree->rule(*it).features);
+                if( strcmp(tree->rule(*it).features, "priors_count_low")){
+                prefixMatched = false;
+            }
+        }else if(nbRules == 4){
+           // printf("4: %s\n", tree->rule(*it).features);
+            if( strcmp(tree->rule(*it).features, "not_age_middle")){
+                prefixMatched = false;
+            }
+        }*/
     }
+  /*  if(nbRules != 3){
+        prefixMatched = false;
+    }
+    if(prefixMatched){
+        printf("found prefix!\n");
+        for (it = parent_prefix.begin(); it != parent_prefix.end(); it++) {
+            printf("%s\n", tree->rule(*it).features);
+        }
+    }*/
     /*int a, b;
     a = count_ones_vector(captured_prefix, tree->nsamples());
     b =  tree->nsamples() - count_ones_vector(parent_not_captured, tree->nsamples());
@@ -508,6 +542,9 @@ void evaluate_children(CacheTree* tree,
     bool pass;
     for (i = 1; prefixPassedCP && i < nrules; i++) {
         pass = false;
+     /*   if(prefixMatched){
+             printf("Working on RL: %s\n", tree->rule(i).features);
+        }*/
         /*if (isPrefixCorresp && !strcmp(tree-> rule(i).features,"priors_>3__AND__age_23-25")){
             printf("rule list evaluated ! \n");
         }*/
@@ -574,9 +611,15 @@ void evaluate_children(CacheTree* tree,
             max_depth = depth;
             printf("Now working at depth %d.\n", max_depth);
         }    
-
+       /* if(prefixMatched){
+             printf("Working on RL(2): %s\n", tree->rule(i).features);
+        }
+        if(! strcmp(tree->rule(i).features, "not_age_middle") && prefixMatched){
+            printf("Working on RL\n");
+        }*/
         if(filteringMode == 2 && best_rl_length > 0 && (fairness == 1 || fairness == 3 || fairness == 4 || fairness == 5)){  // Here occurs the PPC Filtering
-			int L = (1 - (tree->min_objective() + ((best_rl_length-len_prefix)*c)))*tree->nsamples(); // (1 - misc)*nb_samples = nb inst well classif by current best model
+			
+            int L = (1 - (tree->min_objective() + ((best_rl_length-len_prefix)*c)))*tree->nsamples(); // (1 - misc)*nb_samples = nb inst well classif by current best model
 			int U = accuracyUpperBound * (tree->nsamples());
 			float fairness_tolerence = 1-min_fairness_acceptable; // equiv max unfairness acceptable
 
@@ -610,8 +653,12 @@ void evaluate_children(CacheTree* tree,
 
             if(res.result == UNSAT){ // no solution => the fairness constraint can never be satisfied using the current prefix -> we skip its evaluation without adding it to the queue
                 improvedPruningCnt++;
-                prefixPassedCP = false;
+                //prefixPassedCP = false;
+                continue;
             }   
+            /*if(! strcmp(tree->rule(i).features, "not_age_middle") && prefixMatched){
+                printf("Rule list found, result of filtering = %d!\n", res.result);
+            }*/
     }
         /*
         // ----------------------------------- HERE OCCURS THE CP FILTERING -----------------------------------      
@@ -999,13 +1046,13 @@ void evaluate_children(CacheTree* tree,
             if(mode == 3) { // if mode 3 we check if the constraint on fairness is satisfied
                 if((1-unfairness) > min_fairness_acceptable) {
                     best_rl_length = len_prefix;
-                    if(debug) {
+                    //if(debug) {
                     printf("min(objectivee): %1.5f -> %1.5f, length: %d (check -> %d), cache size: %zu, explored %lu nodes, pushed %d nodes (opt pruning = %d/%d), arriveHere = %d, permBound = %d.\n",
                     tree->min_objective(), objective, len_prefix, best_rl_length, tree->num_nodes(), exploredNodes, pushingTicket, improvedPruningCnt, improvedPruningCntTot, arriveHere, permBound);
                     //printf("(1-unfairness) = %lf, min_fairness_acceptable = %lf, fairnessLB=%lf\n",(1-unfairness),min_fairness_acceptable,fairnesslb);
                     //printf("TPmaj=%d, FPmaj=%d, TNmaj=%d, FNmaj=%d, TPmin=%d, FPmin=%d, TNmin=%d, FNmin=%d\n", cmg.majority.nTP,cmg.majority.nFP,cmg.majority.nTN,cmg.majority.nFN,cmg.minority.nTP,cmg.minority.nFP,cmg.minority.nTN,cmg.minority.nFN);
                     //printf("explored %d nodes before best solution.\n", exploredNodes);
-                    }
+                    //}
                     nodesBeforeBest = exploredNodes;
                     cacheBeforeBest = tree->num_nodes();      
                     logger->setTreeMinObj(objective);
