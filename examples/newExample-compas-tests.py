@@ -109,7 +109,7 @@ def oneFold(foldIndex, X_fold_data): # This part could be multithreaded for bett
                             map_type="none",
                             forbidSensAttr=False,
                             fairness=fairnessMetric, 
-                            epsilon=epsilon, # fairness constrait
+                            epsilon=epsilon, # fairness constraint
                             verbosity=[], # don't print anything
                             maj_vect=unSensVect_train, # vector defining unprotected group
                             min_vect=sensVect_train, # vector defining protected group
