@@ -30,16 +30,16 @@ expe_id = args.expe
 cart_product = []
 
 # -----------------------------------------------------
-datasets=["adult", "compas"]
+datasets= ["compas"]#["adult", "compas"]
 
-epsilons = [0.9, 0.95, 0.98, 0.99, 0.995] #0.7, 0.8, 0.9, 
+epsilons = [0.0, 0.9, 0.925, 0.95, 0.98, 0.99, 0.995] #0.7, 0.8, 0.9,
 seeds = []
 for i in range(0,20):
     seeds.append(i)
 
 metrics=[1,3,4,5]
 
-max_times=[60] #60,300,1800
+max_times=[120, 300, 400, 500, 600, 900, 1200] #60,300,1800
 
 filteringModes = [0, 1, 2]
 # -----------------------------------------------------
@@ -62,7 +62,7 @@ max_time = cart_product[expe_id][4]
 filteringMode = cart_product[expe_id][5]
 print("Expe %d: dataset=%s, epsilon=%f, seed=%d, fairnessMetric=%d, max_time=%d, filteringMode=%d" %(expe_id, dataset, epsilon, seed, fairnessMetric, max_time, filteringMode))
 lambdaParam = 1e-3
-max_memory = 2500
+max_memory = 4000
 policy="bfs"
 
 X, y, features, prediction = load_from_csv("./data/%s_rules_full_single.csv" %dataset)#("./data/adult_full.csv") # Load the dataset
