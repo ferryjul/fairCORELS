@@ -23,6 +23,7 @@ parser.add_argument('--maxMemory', type=int, default=-1, help='filtering : 0 no,
 parser.add_argument('--dataset', type=str, default="compas", help='either adult or compas')
 parser.add_argument('--seed', type=str, default="compas", help='either adult or compas')'''
 parser.add_argument('--expe', type=int, default=0, help='expe id for cartesian product')
+parser.add_argument('--maxTime', type=int, default=600, help='filtering : 0 no, 1 prefix, 2 all extensions')
 
 args = parser.parse_args()
 expe_id = args.expe
@@ -32,14 +33,14 @@ cart_product = []
 # -----------------------------------------------------
 datasets= ["compas"]#["adult", "compas"]
 
-epsilons = [0.0, 0.9, 0.925, 0.95, 0.98, 0.99, 0.995] #0.7, 0.8, 0.9,
+epsilons = [0.95, 0.98, 0.99, 0.995] #0.7, 0.8, 0.9,
 seeds = []
 for i in range(0,20):
     seeds.append(i)
 
-metrics=[1,3,4,5]
+metrics=[1, 3, 4, 5]#,3,4,5]
 
-max_times=[1200] #
+#max_times=[120, 300, 600, 1200] #
 
 filteringModes = [0, 1, 2]
 # -----------------------------------------------------
@@ -48,9 +49,9 @@ for d in datasets:
     for e in epsilons:
         for s in seeds:
             for m in metrics:
-                for mt in max_times:
-                    for fm in filteringModes:
-                        cart_product.append([d,e,s,m,mt,fm])
+                #for mt in max_times:
+                for fm in filteringModes:
+                    cart_product.append([d,e,s,m,fm])
 
 print("cart product has len ", len(cart_product))
 
@@ -58,8 +59,8 @@ dataset = cart_product[expe_id][0]
 epsilon = cart_product[expe_id][1]
 seed = cart_product[expe_id][2]
 fairnessMetric = cart_product[expe_id][3]
-max_time = cart_product[expe_id][4]
-filteringMode = cart_product[expe_id][5]
+max_time = args.maxTime#cart_product[expe_id][4]
+filteringMode = cart_product[expe_id][4]
 print("Expe %d: dataset=%s, epsilon=%f, seed=%d, fairnessMetric=%d, max_time=%d, filteringMode=%d" %(expe_id, dataset, epsilon, seed, fairnessMetric, max_time, filteringMode))
 lambdaParam = 1e-3
 max_memory = 4000
