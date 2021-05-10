@@ -497,7 +497,8 @@ void evaluate_children(CacheTree* tree,
     } */
     bool prefixPassedCP = true;
     if((filteringMode == 1 || filteringMode == 3)&& best_rl_length > 0 && (fairness == 1 || fairness == 3 || fairness == 4 || fairness == 5)){  // Here occurs the PPC Filtering
-			int L = (1 - (tree->min_objective() + ((best_rl_length-len_prefix)*c)))*tree->nsamples(); // (1 - misc)*nb_samples = nb inst well classif by current best model
+			int L = (1 - (tree->min_objective()  - (len_prefix*c) ) )*tree->nsamples();
+            // old, wrong computation : (1 - (tree->min_objective() + ((best_rl_length-len_prefix)*c)))*tree->nsamples(); // (1 - misc)*nb_samples = nb inst well classif by current best model
 			int U = accuracyUpperBound * (tree->nsamples());
 			float fairness_tolerence = 1-min_fairness_acceptable; // equiv max unfairness acceptable
 
@@ -617,9 +618,12 @@ void evaluate_children(CacheTree* tree,
         if(! strcmp(tree->rule(i).features, "not_age_middle") && prefixMatched){
             printf("Working on RL\n");
         }*/
+        bool filteringOK = true;
         if((filteringMode == 2 || filteringMode == 3) && best_rl_length > 0 && (fairness == 1 || fairness == 3 || fairness == 4 || fairness == 5)){  // Here occurs the PPC Filtering
-			
-            int L = (1 - (tree->min_objective() + ((best_rl_length-len_prefix)*c)))*tree->nsamples(); // (1 - misc)*nb_samples = nb inst well classif by current best model
+            int L = (1 - (tree->min_objective()  - ((len_prefix+1)*c) ) )*tree->nsamples();
+            // Filtering performed to know whether extension will be a viable prefix, hence the +1
+            // Note that solver can say UNSAT for chlidren and RL meet the fairness constraint
+            // old, wrong computation : (1 - (tree->min_objective() + ((best_rl_length-len_prefix)*c)))*tree->nsamples(); // (1 - misc)*nb_samples = nb inst well classif by current best model
 			int U = accuracyUpperBound * (tree->nsamples());
 			float fairness_tolerence = 1-min_fairness_acceptable; // equiv max unfairness acceptable
 
@@ -654,7 +658,8 @@ void evaluate_children(CacheTree* tree,
             if(res.result == UNSAT){ // no solution => the fairness constraint can never be satisfied using the current prefix -> we skip its evaluation without adding it to the queue
                 improvedPruningCnt++;
                 //prefixPassedCP = false;
-                continue;
+                //continue;
+                filteringOK = false;
             }   
             /*if(! strcmp(tree->rule(i).features, "not_age_middle") && prefixMatched){
                 printf("Rule list found, result of filtering = %d!\n", res.result);
@@ -1059,7 +1064,22 @@ void evaluate_children(CacheTree* tree,
                     tree->update_min_objective(objective);
                     tree->update_opt_rulelist(parent_prefix, i);
                     tree->update_opt_predictions(parent, prediction, default_prediction);
-                    logger->dumpState();                             
+                    logger->dumpState();      
+                    /*printf("To improve objective function value, must classify correctly #examples: (lambda = %lf)\n", c);
+                    printf("(Note that current best objective is %lf, for RL with length %d.\n", tree->min_objective(), best_rl_length);
+                    int test =  (1 - (tree->min_objective()  - c))*tree->nsamples();
+                    printf("%d/%d for RL of length 1.\n", test, tree->nsamples());
+                    test =  (1 - (tree->min_objective()  - (2*c)))*tree->nsamples();
+                    printf("%d/%d for RL of length 2.\n", test, tree->nsamples());
+                    test =  (1 - (tree->min_objective()  - (3*c)))*tree->nsamples();
+                    int test2 = (1 - (tree->min_objective()  - ((4+1)*c) ) )*tree->nsamples();
+                    printf("%d/%d for RL of length 3 (test2=%d).\n", test, tree->nsamples(), test2);
+                    test =  (1 - (tree->min_objective()  - (4*c)))*tree->nsamples();
+                    printf("%d/%d for RL of length 4.\n", test, tree->nsamples());
+                    test =  (1 - (tree->min_objective()  - (5*c)))*tree->nsamples();
+                    printf("%d/%d for RL of length 5.\n", test, tree->nsamples());         
+                    int U = accuracyUpperBound * (tree->nsamples());
+                    printf("--(upper bound is %d/%d)\n", U, tree->nsamples());   */           
                 }
             } else {                
                 //printf("min(objectivee): %1.5f -> %1.5f, length: %d, cache size: %zu\n",
@@ -1072,6 +1092,9 @@ void evaluate_children(CacheTree* tree,
                 // dump state when min objective is updated
                 logger->dumpState();
             }
+        }
+        if(filteringOK == false){ // do not insert children nodes if filering not OK
+            continue;
         }
         // calculate equivalent points bound to capture the fact that the minority points can never be captured correctly
         if (tree->has_minority()) {

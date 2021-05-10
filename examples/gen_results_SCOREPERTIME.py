@@ -25,7 +25,7 @@ for i in range(0,20):
 
 metrics=[1,3,4,5]
 
-max_times=[120, 300, 400, 500, 600] #60,300,1800
+max_times=[120, 300, 400, 500, 600, 900, 1200] #60,300,1800
 
 filteringModes = [0, 1, 2]
 
@@ -34,22 +34,28 @@ dataset = cart_product[0]
 fairnessMetric = cart_product[1]
 epsilon = cart_product[2]
 policy = "bfs"
-
+folderPrefix= "results-4Go/" #"results-2.5Go/"
 
 optList = {}
 for f in filteringModes:
     optList[f] = []
 
+# compute scores for each instance
+scoresAll={}
+for f in filteringModes:
+    scoresAll[f]=[]
+    for max_time in max_times:
+        scoresAll[f].append([]) # for each time period, score for every instance
 
-for max_time in max_times:
+for seed in seeds: # for each instance
     resList = {}
     for f in filteringModes:
-        resList[f] = []
+        resList[f] = [] # for each filtering algo, for an instance, obj function for different time limits
 
-    for seed in seeds: # for each "instance"
+    for max_time in max_times:
         for filteringMode in filteringModes: # for each filtering strategy/policy
             try:
-                fileName = './results/%s_eps%f_metric%d_LB%d_%s_tLimit%d_single_seed%d.csv' %(dataset, epsilon, fairnessMetric, filteringMode, policy, max_time, seed)
+                fileName = './results/%s%s_eps%f_metric%d_LB%d_%s_tLimit%d_single_seed%d.csv' %(folderPrefix, dataset, epsilon, fairnessMetric, filteringMode, policy, max_time, seed)
                 fileContent = pd.read_csv(fileName)
                 seedVal = fileContent.values[0][0]
                 if seedVal != seed:
@@ -74,30 +80,34 @@ for max_time in max_times:
                 print("Error: Some result files probably miss.")
                 print("Missing file: ", not_found.filename)
 
-    # compute scores for each instance
-    scoresAll={}
-    for f in filteringModes:
-        scoresAll[f]=[]
-    for seedV in seeds:
-        # retrieve objective function for each filtering algo
-        objs = []
-        for f in filteringModes:
-            objs.append(resList[f][seedV][3])
-        #print("objective functions for instance %d are:" %seedV, objs)
-        ub = max(objs)
-        lb = min(objs)
-        if ub != lb:
-            print("inst %d, time %d" %(seedV, max_time))
-            print(objs)
-        for f in filteringModes:
-            score = objs[f] #(objs[f] - lb +1) / (ub - lb + 1)
-            scoresAll[f].append(score)
     
-    # put average scores for this time limit
-    for f in filteringModes:
+
+    # compute lb and ub
+    ub = -1
+    lb = 2
+    for index, max_time in enumerate(max_times):
+        for f in filteringModes:
+            currObj = resList[f][index][3]
+            if ub < currObj:
+                ub = currObj
+            if lb > currObj:
+                lb = currObj
+
+    # compute scores
+    for index, max_time in enumerate(max_times):
+        for f in filteringModes:
+            score = (ub -resList[f][index][3]+1) / (ub - lb + 1) # objs[f]
+            #if score != 1:
+            #    print(score)
+            scoresAll[f][index].append(score)
+    
+#print(scoresAll)
+# put average scores for all time limits
+for f in filteringModes:
+    for index, max_time in enumerate(max_times):
         #print(scoresAll[f])
         #print(np.average(scoresAll[f]))
-        optList[f].append(np.average(scoresAll[f]))
+        optList[f].append(np.average(scoresAll[f][index])) # averages for every time period (over scores for all instances)
 
 
 

@@ -24,7 +24,13 @@ for i in range(0,20):
 
 metrics=[1,3,4,5]
 
-max_times=[120, 300, 400, 500, 600] #60,300,1800
+max_times=[120, 300, 400, 500, 600, 900, 1200] 
+# pour expes 2.5 Go : [120, 300, 400, 500, 600]
+# pour expes 4 Go : [120, 300, 400, 500, 600, 900, 1200] ; eps: [0.95, 0.98, 0.99, 0.995]
+
+
+
+
 
 filteringModes = [0, 1, 2]
 
@@ -33,7 +39,7 @@ dataset = cart_product[0]
 fairnessMetric = cart_product[1]
 epsilon = cart_product[2]
 policy = "bfs"
-
+folderPrefix= "results-4Go/" #"results-2.5Go/"
 
 optList = {}
 for f in filteringModes:
@@ -48,7 +54,7 @@ for max_time in max_times:
     for seed in seeds: # for each "instance"
         for filteringMode in filteringModes: # for each filtering strategy/policy
             try:
-                fileName = './results/%s_eps%f_metric%d_LB%d_%s_tLimit%d_single_seed%d.csv' %(dataset, epsilon, fairnessMetric, filteringMode, policy, max_time, seed)
+                fileName = './results/%s%s_eps%f_metric%d_LB%d_%s_tLimit%d_single_seed%d.csv' %(folderPrefix, dataset, epsilon, fairnessMetric, filteringMode, policy, max_time, seed)
                 fileContent = pd.read_csv(fileName)
                 seedVal = fileContent.values[0][0]
                 if seedVal != seed:

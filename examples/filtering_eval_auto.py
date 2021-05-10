@@ -61,7 +61,7 @@ fairnessMetric = cart_product[expe_id][3]
 max_time = cart_product[expe_id][4]
 filteringMode = cart_product[expe_id][5]
 print("Expe %d: dataset=%s, epsilon=%f, seed=%d, fairnessMetric=%d, max_time=%d, filteringMode=%d" %(expe_id, dataset, epsilon, seed, fairnessMetric, max_time, filteringMode))
-lambdaParam = 1e-3
+lambdaParam = 0.005 #1e-3
 max_memory = 4000
 policy="bfs"
 

@@ -15,13 +15,14 @@ unsensitive_attr_column = 1
 
 # parser initialization
 parser = argparse.ArgumentParser(description='Analysis of FairCORELS results')
-parser.add_argument('--epsilon', type=int, default=0, help='epsilon value (min fairness acceptable) for epsilon-constrained method')
+parser.add_argument('--epsilon', type=float, default=0, help='epsilon value (min fairness acceptable) for epsilon-constrained method')
 parser.add_argument('--filteringMode', type=int, default=0, help='filtering : 0 no, 1 prefix, 2 all extensions')
 parser.add_argument('--maxTime', type=int, default=-1, help='filtering : 0 no, 1 prefix, 2 all extensions')
 parser.add_argument('--policy', type=str, default="bfs", help='search heuristic - function used to order the priority queue')
 parser.add_argument('--maxMemory', type=int, default=-1, help='filtering : 0 no, 1 prefix, 2 all extensions')
 parser.add_argument('--dataset', type=str, default="compas", help='either adult or compas')
 parser.add_argument('--seed', type=str, default="compas", help='either adult or compas')
+parser.add_argument('--metric', type=int, default=1, help='fairness metric: 1 statistical_parity, 2 predictive_parity, 3 predictive_equality, 4 equal_opportunity')
 
 args = parser.parse_args()
 
@@ -40,9 +41,9 @@ if args.maxMemory > 0:
 
 epsilons = [0.7, 0.8, 0.9, 0.95, 0.975, 0.98, 0.985, 0.99, 0.995, 0.999] # 10 values #[round(x,3) for x in epsilon_range] #72 values
 
-fairnessMetric = int(np.floor(args.epsilon/len(epsilons))+1)
+fairnessMetric = args.metric #int(np.floor(args.epsilon/len(epsilons))+1)
 epsInd = int(args.epsilon - ((fairnessMetric-1)*len(epsilons)))
-epsilon = epsilons[epsInd]
+epsilon = args.epsilon#epsilons[epsInd]
 if fairnessMetric == 2:
     fairnessMetric = 5
 # print("metric=", fairnessMetric, ", epsInd= ", epsInd, "epsilon=", epsilon)

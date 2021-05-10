@@ -18,7 +18,7 @@ args = parser.parse_args()
 
 datasets=["adult", "compas"]
 
-epsilons = [0.9, 0.95, 0.98, 0.99, 0.995] #0.7, 0.8, 0.9, 
+epsilons = [0.70, 0.80, 0.90, 0.92, 0.95, 0.96, 0.97, 0.98, 0.99, 0.995] #0.7, 0.8, 0.9, 
 seeds = []
 for i in range(0,20):
     seeds.append(i)
@@ -34,6 +34,7 @@ dataset = cart_product[0]
 fairnessMetric = cart_product[1]
 max_time = cart_product[2]
 policy = "bfs"
+folderPrefix= "results-4Go/" #"results-2.5Go/"
 
 
 optList = {}
@@ -49,7 +50,7 @@ for epsilon in epsilons:
     for seed in seeds: # for each "instance"
         for filteringMode in filteringModes: # for each filtering strategy/policy
             try:
-                fileName = './results/%s_eps%f_metric%d_LB%d_%s_tLimit%d_single_seed%d.csv' %(dataset, epsilon, fairnessMetric, filteringMode, policy, max_time, seed)
+                fileName = './results/%s%s_eps%f_metric%d_LB%d_%s_tLimit%d_single_seed%d.csv' %(folderPrefix, dataset, epsilon, fairnessMetric, filteringMode, policy, max_time, seed)
                 fileContent = pd.read_csv(fileName)
                 seedVal = fileContent.values[0][0]
                 if seedVal != seed:
@@ -71,7 +72,7 @@ for epsilon in epsilons:
                 resList[filteringMode].append(fileContent.values[0])
 
             except FileNotFoundError as not_found:
-                print("[Metric %d, Suffix %s] Error: Some result files probably miss." %(fairnessMetric, suffix))
+                print("Error: Some result files probably miss.")
                 print("Missing file: ", not_found.filename)
             
     # compute scores for each instance
@@ -97,7 +98,7 @@ for epsilon in epsilons:
                 score = (sizes[f]) / max((M),1)
                 if sizes[f] == 0 and M == 0:
                     score = 1
-                print(score)
+                #print(score)
                 scoresAll[f].append(score)
     
     # put average scores for this time limit
