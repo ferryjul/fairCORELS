@@ -154,9 +154,9 @@ cacheSizeAtExit = int(clf.nbCache)
 
 
 if max_time is None: 
-    fileName = './results/%s_eps%f_metric%d_LB%d_%s_single_seed%d_broadwell.csv' %(dataset, epsilon, fairnessMetric, filteringMode, policy, seed)
+    fileName = './results_same_arch_4Go/%s_eps%f_metric%d_LB%d_%s_single_seed%d_broadwell.csv' %(dataset, epsilon, fairnessMetric, filteringMode, policy, seed)
 else:
-    fileName = './results/%s_eps%f_metric%d_LB%d_%s_tLimit%d_single_seed%d_broadwell.csv' %(dataset, epsilon, fairnessMetric, filteringMode, policy, max_time, seed)
+    fileName = './results_same_arch_4Go/%s_eps%f_metric%d_LB%d_%s_tLimit%d_single_seed%d_broadwell.csv' %(dataset, epsilon, fairnessMetric, filteringMode, policy, max_time, seed)
 with open(fileName, mode='w') as csv_file:
     csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
     csv_writer.writerow(['Seed', 'Training accuracy', 'Training Unfairness(%d)' %fairnessMetric, 'Training objective function', 'Test accuracy', 'Test unfairness', '#Nodes explored for best solution', 'Cache size for best solution', 'Average length', 'CPU running time (s)', 'Solving Status', 'Model'])#, 'Fairness STD', 'Accuracy STD'])
