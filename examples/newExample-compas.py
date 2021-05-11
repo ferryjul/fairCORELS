@@ -86,6 +86,7 @@ def compute_unfairness(sensVect, unSensVect, y, y_pred):
 def oneFold(foldIndex, X_fold_data): # This part could be multithreaded for better performance
     X_train, y_train, X_test, y_test = X_fold_data
 
+    print("Got %d instances for training." %X_train.shape[0])
     # Separate protected features to avoid disparate treatment
     # - Training set
     sensVect_train =  X_train[:,sensitive_attr_column]
@@ -144,7 +145,7 @@ def oneFold(foldIndex, X_fold_data): # This part could be multithreaded for bett
     return [foldIndex, accTraining, unfTraining, objF, accTest, unfTest, exploredBeforeBest, cacheSizeAtExit, length, time_elapsed,  clf.get_solving_status()]
 
 # Run training/evaluation for all folds using multi-threading
-ret = Parallel(n_jobs=-1)(delayed(oneFold)(foldIndex, X_fold_data) for foldIndex, X_fold_data in enumerate(folds))
+ret = Parallel(n_jobs=1)(delayed(oneFold)(foldIndex, X_fold_data) for foldIndex, X_fold_data in enumerate(folds))
 
 # Unwrap the results
 accuracy = [ret[i][4] for i in range(0,5)]

@@ -55,11 +55,11 @@ for d in datasets:
 print("cart product has len ", len(cart_product))
 
 dataset = "compas" #cart_product[expe_id][0]
-epsilon =0.995 #0.999#0.995 #cart_product[expe_id][1]
-seed = 4#cart_product[expe_id][2]
-fairnessMetric = 3#cart_product[expe_id][3]
+epsilon = 0.97 #0.999 #0.999#0.995 #cart_product[expe_id][1]
+seed = 13#cart_product[expe_id][2]
+fairnessMetric = 4#cart_product[expe_id][3]
 max_time = 600#cart_product[expe_id][4]
-filteringMode = 2#cart_product[expe_id][5]
+filteringMode = 1#cart_product[expe_id][5]
 print("Expe %d: dataset=%s, epsilon=%f, seed=%d, fairnessMetric=%d, max_time=%d, filteringMode=%d" %(expe_id, dataset, epsilon, seed, fairnessMetric, max_time, filteringMode))
 lambdaParam = 1e-3
 max_memory = 4000
