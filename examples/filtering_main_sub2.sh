@@ -7,6 +7,7 @@
 #SBATCH --job-name=filtering
 #SBATCH -o slurmout_%A.out
 #SBATCH -e slurmout_%A.errarray
+#SBATCH --constraint=broadwell
 #SBATCH --array=0-959
 
 python3 filtering_eval_auto_sub2.py --expe=${SLURM_ARRAY_TASK_ID} --maxTime=120
