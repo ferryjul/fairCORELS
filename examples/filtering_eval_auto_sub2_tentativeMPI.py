@@ -39,7 +39,7 @@ seeds = []
 for i in range(0,20):
     seeds.append(i)
 
-metrics=[3] #, 3, 4, 5]#,3,4,5]
+metrics=[3, 4, 5] #, 3, 4, 5]#,3,4,5]
 
 #max_times=[120, 300, 600, 1200] #
 
@@ -76,7 +76,7 @@ else:
 jobs = COMM.scatter(jobs, root=0)
 
 for job in jobs:
-    seed = job[0]
+    seed = job#[0]
     print("Expe %d: dataset=%s, epsilon=%f, seed=%d, fairnessMetric=%d, max_time=%d, filteringMode=%d" %(expe_id, dataset, epsilon, seed, fairnessMetric, max_time, filteringMode))
     lambdaParam = 1e-3
     max_memory = 4000
