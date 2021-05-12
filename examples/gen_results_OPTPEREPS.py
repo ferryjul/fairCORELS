@@ -95,7 +95,15 @@ from matplotlib import pyplot as plt
 shapes = ['o', 'x', 'x']
 for filteringMode in filteringModes:
     #plt.scatter(epsilons, optList[filteringMode], label="filtering mode %d" %filteringMode, marker=shapes[filteringMode])
-    plt.plot(epsilons, optList[filteringMode], label="filtering mode %d" %filteringMode, marker=shapes[filteringMode])
+    if filteringMode == 0:
+        label = "no filtering"
+    elif filteringMode == 1:
+        label = "lazy filtering"
+    elif filteringMode == 2:
+        label = "eager filtering"
+    plt.plot(epsilons, optList[filteringMode], label=label, marker=shapes[filteringMode])
     plt.legend()
-plt.title("#Instances solved to optimality as a function of epsilon (metric %d, tLimit= %d s)" %(fairnessMetric, max_time))
+#plt.title("#Instances solved to optimality as a function of epsilon (metric %d, tLimit= %d s)" %(fairnessMetric, max_time))
+plt.xlabel("1-epsilon")
+plt.ylabel("%instances solved to optimality")
 plt.show()

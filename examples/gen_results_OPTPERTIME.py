@@ -107,10 +107,18 @@ for filteringMode in filteringModes:
     elif mode == "cactus":
         #for i in range(1,len(optList[filteringMode])):
         #    optList[filteringMode][i] += optList[filteringMode][i-1]
-        plt.plot(optList[filteringMode], max_times, label="filtering mode %d" %filteringMode, marker=shapes[filteringMode])
+        if filteringMode == 0:
+            label = "no filtering"
+        elif filteringMode == 1:
+            label = "lazy filtering"
+        elif filteringMode == 2:
+            label = "eager filtering"
+        plt.plot(optList[filteringMode], max_times, label=label, marker=shapes[filteringMode])
+        plt.xlabel("%instances solved to optimality")
+        plt.ylabel("CPU time (s)")
     else:
         print("Unknown plot mode (%s), exiting." %mode)
         exit()
     plt.legend()
-plt.title("#Instances solved to optimality as a function of running time (metric %d) - epsilon=%f" %(fairnessMetric, epsilon))
+#plt.title("#Instances solved to optimality as a function of running time (metric %d) - epsilon=%f" %(fairnessMetric, epsilon))
 plt.show()

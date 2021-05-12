@@ -54,7 +54,7 @@ for d in datasets:
 
 print("cart product has len ", len(cart_product))
 
-dataset = "compas" #cart_product[expe_id][0]
+dataset = "german_credit" #cart_product[expe_id][0]
 epsilon =0.995 #0.999#0.995 #cart_product[expe_id][1]
 seed = 4#cart_product[expe_id][2]
 fairnessMetric = 3#cart_product[expe_id][3]

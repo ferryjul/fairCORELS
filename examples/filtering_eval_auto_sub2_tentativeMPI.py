@@ -63,9 +63,17 @@ fairnessMetric = cart_product[expe_id][2]
 max_time = args.maxTime#cart_product[expe_id][4]
 filteringMode = cart_product[expe_id][3]
 
+def split(container, count):
+    return [container[_i::count] for _i in range(count)]
+
 COMM = MPI.COMM_WORLD
 
-jobs = COMM.scatter(seeds, root=0)
+if COMM.rank == 0:
+    jobs = split(seeds, COMM.size)
+else:
+    jobs = None
+
+jobs = COMM.scatter(jobs, root=0)
 
 for job in jobs:
     seed = job[0]
