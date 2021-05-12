@@ -5,7 +5,7 @@ max_times=[120, 300, 400, 500, 600, 900, 1200]
 
 cart_product = []
 policy = "bfs"
-folderPrefix= "results_same_arch_4Go/" #"results_run_broadwell/"#"results-4Go/" #"results-2.5Go/"
+folderPrefix= "results_full_compas_broadwell/" #"results_run_broadwell/"#"results-4Go/" #"results-2.5Go/"
 archSuffix = "_broadwell"
 # -----------------------------------------------------
 datasets= ["compas"]#["adult", "compas"]
@@ -42,11 +42,11 @@ for expe_id in expe_ids:
     filteringMode = cart_product[expe_id][4]
     for seed in seeds:
         fileName = './results/%s%s_eps%f_metric%d_LB%d_%s_tLimit%d_single_seed%d%s.csv' %(folderPrefix, dataset, epsilon, fairnessMetric, filteringMode, policy, max_time, seed, archSuffix)
-        if os.path.isfile(fileName):
+        if not os.path.isfile(fileName):
             if not expe_id in torerun:
                 torerun.append(expe_id)
-            else:
-                cnt+=1
+        else:
+            cnt+=1
         '''try:
             fileContent = pd.read_csv(fileName)
         except FileNotFoundError as not_found:
