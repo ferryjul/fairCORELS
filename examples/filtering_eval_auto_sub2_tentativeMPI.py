@@ -44,27 +44,29 @@ metrics=[3, 4, 5] #, 3, 4, 5]#,3,4,5]
 #max_times=[120, 300, 600, 1200] #
 
 filteringModes = [0, 1, 2]
+max_times=[120, 300, 400, 500, 600, 900, 1200] 
+
 # -----------------------------------------------------
 
 for d in datasets:
     for e in epsilons:
         #for s in seeds:
         for m in metrics:
-            #for mt in max_times:
-            for fm in filteringModes:
-                cart_product.append([d,e,m,fm])
+            for mt in max_times:
+                for fm in filteringModes:
+                    cart_product.append([d,e,m,mt,fm])
 
 print("cart product has len ", len(cart_product))
 
 dataset = cart_product[expe_id][0]
 epsilon = cart_product[expe_id][1]
-#seed = cart_product[expe_id][2]
 fairnessMetric = cart_product[expe_id][2]
-max_time = args.maxTime#cart_product[expe_id][4]
-filteringMode = cart_product[expe_id][3]
+max_time = cart_product[expe_id][3]
+filteringMode = cart_product[expe_id][4]
 
 def split(container, count):
     return [container[_i::count] for _i in range(count)]
+
 
 COMM = MPI.COMM_WORLD
 
@@ -76,7 +78,7 @@ else:
 jobs = COMM.scatter(jobs, root=0)
 
 for job in jobs:
-    seed = job#[0]
+    seed = job
     print("Expe %d: dataset=%s, epsilon=%f, seed=%d, fairnessMetric=%d, max_time=%d, filteringMode=%d" %(expe_id, dataset, epsilon, seed, fairnessMetric, max_time, filteringMode))
     lambdaParam = 1e-3
     max_memory = 4000
