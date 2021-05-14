@@ -45,6 +45,7 @@ for expe_id in expe_ids:
         if not os.path.isfile(fileName):
             if not expe_id in torerun:
                 torerun.append(expe_id)
+                print("Missing file :", fileName)
         else:
             cnt+=1
         '''try:
