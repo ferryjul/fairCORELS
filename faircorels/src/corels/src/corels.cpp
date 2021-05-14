@@ -33,6 +33,7 @@ int nb_su_plus;
 int nb_su_minus;
 bool firstCall = true;
 int improvedPruningCnt = 0;
+int tout_cnt = 0;
 int improvedPruningCntTot = 0;
 double longestfilteringrun = -1.0;
 int best_rl_length = 0;
@@ -336,7 +337,8 @@ fairness_metrics compute_fairness_metrics(confusion_matrix_groups cmg){
     metrics.equal_opportunity = fabs(cmg.majority.nFNR - cmg.minority.nFNR);
 
     // equalized_odds
-    metrics.equalized_odds = fabs(cmg.majority.nFNR - cmg.minority.nFNR) + fabs(cmg.majority.nFPR - cmg.minority.nFPR);
+    //metrics.equalized_odds = fabs(cmg.majority.nFNR - cmg.minority.nFNR) + fabs(cmg.majority.nFPR - cmg.minority.nFPR);
+    metrics.equalized_odds = max(fabs(cmg.majority.nFNR - cmg.minority.nFNR), fabs(cmg.majority.nFPR - cmg.minority.nFPR));
 
     // cond_use_acc_equality
     metrics.cond_use_acc_equality = fabs(cmg.majority.nPPV - cmg.minority.nPPV) + fabs(cmg.majority.nNPV - cmg.minority.nNPV);
@@ -377,15 +379,15 @@ void evaluate_children(CacheTree* tree,
         rule_vand(captured_it, min_v[1].truthtable, tree->label(0).truthtable, tree->nsamples(), &nb_sp_minus);
         rule_vand(captured_it, maj_v[1].truthtable, tree->label(1).truthtable, tree->nsamples(), &nb_su_plus);
         rule_vand(captured_it, maj_v[1].truthtable, tree->label(0).truthtable, tree->nsamples(), &nb_su_minus);
-        if(debug) {
+        //if(debug) {
             printf("Initializing cardinalities for SP improved pruning : \n");
             printf("Got %d protected positives, %d protected negatives, %d unprotected positives, %d unprotected negatives.\n", nb_sp_plus, nb_sp_minus, nb_su_plus, nb_su_minus);
-        }
+        //}
         rule_vfree(&captured_it);
         int U = accuracyUpperBound * (tree->nsamples());
-        if(debug) {
+        //if(debug) {
             printf("U is %d/%d.\n", U, tree->nsamples());
-        }
+        //}
         if(debug) {
             if(fairness == 1 && filteringMode)
                 printf("will perform improved SP pruning\n");
@@ -635,16 +637,42 @@ void evaluate_children(CacheTree* tree,
 			int FPu = cmg.majority.nminFP;
 			int TNu = cmg.majority.nminTN;
 			int FNu = cmg.majority.nminFN;
-
+            //printf("FNu = %d\n", FNu);
             int config = 0;
             if(fairness == 1){
                 config = 8;
             } else if(fairness == 4){
                 config = 2;
             }
+            bool ok = true;
+            if(TPp < 0 || FPp < 0 ||TNp <0 || FNp <0 ||TPu <0 || FPu<0 || TNu <0 || FNu<0 || 
+            nb_sp_plus <0 || nb_sp_minus <0|| nb_su_plus<0 || nb_su_minus<0){
+                ok = false;
+            }
+            if((TPp+FNp) > nb_sp_plus || (FPp+TNp) > nb_sp_minus ){
+                ok = false;
+            }
+            if((TPu+FNu) > nb_su_plus || (FPu+TNu) > nb_su_minus ){
+                ok = false;
+            }
+            if(nb_su_plus > 45000 || nb_sp_minus > 45000 || nb_sp_plus > 45000 || nb_su_minus > 45000){
+                    ok = false;
+            }
+            //if(!ok){
+
+            //printf("percent captured = %lf\n", (float)(TPp+TNp+FPp+FNp+TPu+TNu+FPu+FNu)/(float) (nb_sp_plus+nb_sp_minus +nb_su_plus+nb_su_minus));
+            
+            //printf("Got parameters: nb_protected_negative=%d, nb_unprotected_negative=%d,nb_protected_positive=%d,nb_unprotected_positive=%d.\n",nb_sp_minus, nb_su_minus,nb_sp_plus, nb_su_plus);
+            //printf("captured: TPp=%d, FPp=%d, TNp=%d, FNp=%d, TPu=%d, FPu=%d, TNu=%d, FNu=%d\n", TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu);
+
+            //}
+
             //FilteringStatisticalParity check_bounds(nb_sp_plus,nb_sp_minus, nb_su_plus, nb_su_minus, L,U , fairness_tolerence, TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu);
             //check_bounds.run(0, 0);
             double maxSolvingTime = 5*10e9; // <- 5 seconds is already a lot, it simply helps avoiding to get stuck
+            //printf("parameters: fairness=%d, config=%d, nb_sp_plus=%d, nb_sp_plus=%d,nb_sp_minus=%d, nb_su_plus=%d, nb_su_minus=%d\n", config, nb_sp_plus,nb_sp_minus, nb_su_plus, nb_su_minus);
+            //printf("L=%d,U=%d, fairness_tolerence=%lf\n", L,U , fairness_tolerence);
+            //printf("captured: TPp=%d, FPp=%d, TNp=%d, FNp=%d, TPu=%d, FPu=%d, TNu=%d, FNu=%d\n", TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu);
             struct runResult res = runFiltering(fairness, //metric
                                 config, //solver config
                                 nb_sp_plus,nb_sp_minus, 
@@ -660,7 +688,12 @@ void evaluate_children(CacheTree* tree,
                 //prefixPassedCP = false;
                 //continue;
                 filteringOK = false;
-            }   
+            }   else if(res.result == LIMITOUT){
+                tout_cnt++;
+                printf("Time out %d times.\n", tout_cnt);
+            } /*else if(res.result == SAT){
+                printf("SAT.\n");
+            }*/
             /*if(! strcmp(tree->rule(i).features, "not_age_middle") && prefixMatched){
                 printf("Rule list found, result of filtering = %d!\n", res.result);
             }*/
@@ -1256,6 +1289,7 @@ void bbound_loop(CacheTree* tree,
 std::vector<unsigned long> bbound_end(CacheTree* tree, Queue* q, PermutationMap* p, bool early, rule_t* rules, rule_t* labels) {
     int verbosity = logger->getVerbosity();
     bool print_queue = 0;
+    printf("tout_cnt=%d\n",tout_cnt);
     if(debug) {
         printf("explored %lu nodes.\n", exploredNodes);
         printf("using new filtering pruned %d/%d nodes.\n", improvedPruningCnt, improvedPruningCntTot);

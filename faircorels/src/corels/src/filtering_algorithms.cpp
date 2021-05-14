@@ -42,7 +42,7 @@ class FilteringAlgorithm {
 			U(U),
 			fairness_tolerence(fairness_tolerence),
 			fairness_name(metric_name)
-			{
+			{	
 				/* DECLARE MODEL BASE VARIABLES AND ACCURACY CONSTRAINTS */
 				//scope[0] is sp_plus
 				scope.add(Mistral::Variable(TPp, nb_sp_plus - FNp) );
@@ -85,6 +85,7 @@ class FilteringAlgorithm {
 		}
 
 		void run(int verbosity, int config){
+				
 			s.parameters.verbosity = verbosity;
 			//std::cout <<  s << std::endl;
 			//s.rewrite();
