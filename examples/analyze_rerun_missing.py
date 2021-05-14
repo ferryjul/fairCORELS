@@ -44,10 +44,10 @@ for expe_id in expe_ids:
         fileName = './results/%s%s_eps%f_metric%d_LB%d_%s_tLimit%d_single_seed%d%s.csv' %(folderPrefix, dataset, epsilon, fairnessMetric, filteringMode, policy, max_time, seed, archSuffix)
         if not os.path.isfile(fileName):
             if not expe_id in torerun:
-                torerun.append(expe_id)
-                print("Missing file :", fileName)
+                torerun.append(expe_id)               
         else:
             cnt+=1
+            
         '''try:
             fileContent = pd.read_csv(fileName)
         except FileNotFoundError as not_found:
