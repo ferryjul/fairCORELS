@@ -7,7 +7,7 @@
 #SBATCH -o slurmout_%A.out
 #SBATCH -e slurmout_%A.errarray
 #SBATCH --constraint=broadwell
-#SBATCH --array=0-383
+#SBATCH --array=0-372
 
 srun -W 2400 -n 5 python3 learning_quality_german.py --expe=${SLURM_ARRAY_TASK_ID}
                                                                                                                  
