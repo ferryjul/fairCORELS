@@ -27,7 +27,9 @@ cart_product = []
 # -----------------------------------------------------
 datasets= ["compas"]#["adult", "compas"]
 
-epsilons = [0.70, 0.75, 0.80, 0.85, 0.90, 0.91, 0.92, 0.93, 0.94, 0.95, 0.96, 0.97, 0.98, 0.985, 0.99, 0.995] #0.7, 0.8, 0.9,
+# epsilons = [0.70, 0.75, 0.80, 0.85, 0.90, 0.91, 0.92, 0.93, 0.94, 0.95, 0.96, 0.97, 0.98, 0.985, 0.99, 0.995] #0.7, 0.8, 0.9,
+# epsilon list extended for these experiments :
+epsilons = [0.70, 0.725, 0.75, 0.775, 0.80, 0.825, 0.85, 0.875, 0.90, 0.905, 0.91, 0.915, 0.92, 0.925, 0.93, 0.935, 0.94, 0.945, 0.95, 0.955, 0.96, 0.965, 0.97, 0.975, 0.98, 0.9825, 0.985, 0.9875, 0.99, 0.9925, 0.995, 0.9975] #0.7, 0.8, 0.9,
 
 metrics=[1, 3, 4, 5] #, 3, 4, 5]#,3,4,5]
 
@@ -40,7 +42,6 @@ max_times=[1200]
 
 for d in datasets:
     for e in epsilons:
-        #for s in seeds:
         for m in metrics:
             for mt in max_times:
                 for fm in filteringModes:
@@ -64,7 +65,8 @@ if rank == 0:
         print("Expected 5 workers for the 5 folds, got: ", size)
         print("Exiting")
         exit()
-seed = rank
+    else:
+        print("Init OK!")
 lambdaParam = 1e-3
 max_memory = 4000
 policy="bfs"
@@ -74,12 +76,12 @@ X, y, features, prediction = load_from_csv("./data/%s_rules_full_single.csv" %da
 # creating k-folds (all workers proceed)
 kf = KFold(n_splits=5, shuffle=True, random_state=42)
 
-folds = []
 i=0
-
-train_index, test_index = kf.split(X)[rank]
-X_train, X_test = X[train_index], X[test_index]
-y_train, y_test = y[train_index], y[test_index]
+for train_index, test_index in kf.split(X):
+    if rank == i:
+        X_train, X_test = X[train_index], X[test_index]
+        y_train, y_test = y[train_index], y[test_index]
+    i +=1
 
 accuracy = []
 unfairness = []
@@ -163,10 +165,10 @@ exploredBeforeBest = int(clf.nbExplored)
 cacheSizeAtExit = int(clf.nbCache)
 #return [foldIndex, accTraining, unfTraining, objF, accTest, unfTest, exploredBeforeBest, cacheSizeAtExit, length, time_elapsed,  clf.get_solving_status()]
 
-res = [[seed, accTraining, unfTraining, objF, accTest, unfTest, exploredBeforeBest, cacheSizeAtExit, length, time_elapsed, clf.get_solving_status(), clf.rl_]]
+res = [[rank, accTraining, unfTraining, objF, accTest, unfTest, exploredBeforeBest, cacheSizeAtExit, length, time_elapsed, clf.get_solving_status(), clf.rl_]]
 
 # Gather the results for the 5 folds on process 0
-MPI.COMM_WORLD.gather(res, root = 0)
+res = comm.gather(res, root=0)
 
 
 # Process 0 checks the results
