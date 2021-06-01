@@ -1,0 +1,2 @@
+min_epsilon(total_vals),train_acc_percentbest(average),test_acc_percentbest(average),test_unf_violation(average),train_acc_percentbest(average),test_acc_percentbest(average),test_unf_violation(average),train_acc_percentbest(average),test_acc_percentbest(average),test_unf_violation(average)
+0.900000 (30),0.433,0.3,0.104,1.0,0.633,0.104,0.4,0.333,0.101

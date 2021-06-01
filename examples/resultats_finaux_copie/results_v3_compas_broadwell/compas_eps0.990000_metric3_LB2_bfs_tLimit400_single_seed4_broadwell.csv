@@ -1,0 +1,8 @@
+Seed,Training accuracy,Training Unfairness(3),Training objective function,Test accuracy,Test unfairness,#Nodes explored for best solution,Cache size for best solution,Average length,CPU running time (s),Solving Status,Model
+4,0.5591689250225835,0.009522566940043848,0.4458310749774165,0.5235772357723577,0.02933723968643598,108245,77790,5,400.60942,TIME_OUT,"RULELIST:
+ if [c_charge_degree_Felony]: (recidivism:yes) = False
+else if [priors_count_very_low]: (recidivism:yes) = False
+else if [age_high]: (recidivism:yes) = False
+else if [priors_count_high]: (recidivism:yes) = True
+else if [age_very_low]: (recidivism:yes) = True
+else (recidivism:yes) = False"

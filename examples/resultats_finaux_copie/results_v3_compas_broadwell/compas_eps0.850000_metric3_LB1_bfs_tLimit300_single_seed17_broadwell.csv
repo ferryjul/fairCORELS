@@ -1,0 +1,10 @@
+Seed,Training accuracy,Training Unfairness(3),Training objective function,Test accuracy,Test unfairness,#Nodes explored for best solution,Cache size for best solution,Average length,CPU running time (s),Solving Status,Model
+17,0.6720867208672087,0.1447924934591528,0.33491327913279134,0.6699186991869919,0.18014500836586728,10128,2219,7,0.5547799999999992,OPT,"RULELIST:
+ if [priors_count_very_low]: (recidivism:yes) = False
+else if [age_very_low]: (recidivism:yes) = True
+else if [priors_count_low]: (recidivism:yes) = False
+else if [age_low]: (recidivism:yes) = True
+else if [priors_count_high]: (recidivism:yes) = True
+else if [sex_Female]: (recidivism:yes) = False
+else if [age_middle]: (recidivism:yes) = True
+else (recidivism:yes) = False"

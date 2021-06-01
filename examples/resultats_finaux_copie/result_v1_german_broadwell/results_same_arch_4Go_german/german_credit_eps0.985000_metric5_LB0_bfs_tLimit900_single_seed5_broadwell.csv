@@ -1,0 +1,12 @@
+Seed,Training accuracy,Training Unfairness(5),Training objective function,Test accuracy,Test unfairness,#Nodes explored for best solution,Cache size for best solution,Average length,CPU running time (s),Solving Status,Model
+5,0.7555555555555555,0.014155336189234494,0.25344444444444447,0.72,0.3833333333333333,167154934,11846174,9,915.499974,TIME_OUT,"RULELIST:
+ if [installment_rate(perc_disp_income)_low]: (recidivism:yes) = True
+else if [previous_credit_payment_status_other_credits_existing]: (recidivism:yes) = True
+else if [account_balance_na]: (recidivism:yes) = True
+else if [account_balance_little]: (recidivism:yes) = False
+else if [credit_purpose_radio/television]: (recidivism:yes) = True
+else if [occupation_skilled-employee__AND__other_credits_none]: (recidivism:yes) = True
+else if [credit_amount_low]: (recidivism:yes) = False
+else if [current_assets_real_estate]: (recidivism:yes) = True
+else if [foreign_worker_yes__AND__other_credits_none]: (recidivism:yes) = False
+else (recidivism:yes) = True"

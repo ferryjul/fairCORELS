@@ -1,0 +1,8 @@
+Seed,Training accuracy,Training Unfairness(5),Training objective function,Test accuracy,Test unfairness,#Nodes explored for best solution,Cache size for best solution,Average length,CPU running time (s),Solving Status,Model
+6,0.7422222222222222,0.026726286317905384,0.2627777777777778,0.75,0.358974358974359,1434388,353803,5,120.53461800000001,TIME_OUT,"RULELIST:
+ if [account_balance_na]: (recidivism:yes) = True
+else if [credit_duration_months_low]: (recidivism:yes) = True
+else if [savings_little__AND__foreign_worker_yes]: (recidivism:yes) = False
+else if [current_assets_car_other]: (recidivism:yes) = True
+else if [foreign_worker_yes__AND__previous_credit_payment_status_existing_credits_paid_till_now]: (recidivism:yes) = False
+else (recidivism:yes) = True"

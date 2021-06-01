@@ -1,0 +1,15 @@
+Seed,Training accuracy,Training Unfairness(1),Training objective function,Test accuracy,Test unfairness,#Nodes explored for best solution,Cache size for best solution,Average length,CPU running time (s),Solving Status,Model
+6,0.7588888888888888,0.015046662448592207,0.2531111111111112,0.73,0.1515151515151515,61297516,351706,12,720.6140909999999,OPT,"RULELIST:
+ if [credit_purpose_radio/television]: (recidivism:yes) = True
+else if [credit_duration_months_low]: (recidivism:yes) = True
+else if [account_balance_na]: (recidivism:yes) = True
+else if [credit_amount_low]: (recidivism:yes) = False
+else if [installment_rate(perc_disp_income)_low]: (recidivism:yes) = True
+else if [savings_little__AND__guarantor_none]: (recidivism:yes) = False
+else if [apartment_type_own]: (recidivism:yes) = True
+else if [residence_duration_low]: (recidivism:yes) = False
+else if [savings_little]: (recidivism:yes) = False
+else if [employment_duration_>7_year]: (recidivism:yes) = True
+else if [guarantor_none__AND__telephone_no]: (recidivism:yes) = False
+else if [account_balance_moderate]: (recidivism:yes) = True
+else (recidivism:yes) = False"

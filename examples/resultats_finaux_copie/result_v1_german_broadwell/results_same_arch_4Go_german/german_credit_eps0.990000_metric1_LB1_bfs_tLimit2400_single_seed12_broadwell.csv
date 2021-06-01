@@ -1,0 +1,17 @@
+Seed,Training accuracy,Training Unfairness(1),Training objective function,Test accuracy,Test unfairness,#Nodes explored for best solution,Cache size for best solution,Average length,CPU running time (s),Solving Status,Model
+12,0.7666666666666667,0.009045007442720743,0.2473333333333333,0.66,0.03205128205128205,75084175,806805,14,2039.21113,OPT,"RULELIST:
+ if [credit_duration_months_low]: (recidivism:yes) = True
+else if [account_balance_na]: (recidivism:yes) = True
+else if [credit_amount_low]: (recidivism:yes) = False
+else if [previous_credit_payment_status_other_credits_existing]: (recidivism:yes) = True
+else if [other_credits_none__AND__installment_rate(perc_disp_income)_high]: (recidivism:yes) = False
+else if [foreign_worker_yes__AND__installment_rate(perc_disp_income)_high]: (recidivism:yes) = True
+else if [other_credits_none__AND__guarantor_none]: (recidivism:yes) = True
+else if [employment_duration_>7_year]: (recidivism:yes) = False
+else if [guarantor_none__AND__telephone_no]: (recidivism:yes) = True
+else if [foreign_worker_yes__AND__previous_credit_payment_status_existing_credits_paid_till_now]: (recidivism:yes) = False
+else if [other_credits_none__AND__apartment_type_own]: (recidivism:yes) = True
+else if [foreign_worker_yes__AND__other_credits_none]: (recidivism:yes) = False
+else if [current_assets_car_other]: (recidivism:yes) = True
+else if [apartment_type_own]: (recidivism:yes) = False
+else (recidivism:yes) = True"

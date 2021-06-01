@@ -1,0 +1,10 @@
+Seed,Training accuracy,Training Unfairness(3),Training objective function,Test accuracy,Test unfairness,#Nodes explored for best solution,Cache size for best solution,Average length,CPU running time (s),Solving Status,Model
+10,0.7544444444444445,0.007388092133854829,0.25255555555555553,0.74,0.09523809523809523,8372958,658508,7,121.103321,TIME_OUT,"RULELIST:
+ if [credit_duration_months_low]: (recidivism:yes) = True
+else if [previous_credit_payment_status_other_credits_existing]: (recidivism:yes) = True
+else if [account_balance_little]: (recidivism:yes) = False
+else if [account_balance_na]: (recidivism:yes) = True
+else if [occupation_skilled-employee__AND__guarantor_none]: (recidivism:yes) = True
+else if [savings_little__AND__guarantor_none]: (recidivism:yes) = False
+else if [occupation_skilled-employee]: (recidivism:yes) = False
+else (recidivism:yes) = True"

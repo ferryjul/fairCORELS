@@ -1,0 +1,15 @@
+Seed,Training accuracy,Training Unfairness(4),Training objective function,Test accuracy,Test unfairness,#Nodes explored for best solution,Cache size for best solution,Average length,CPU running time (s),Solving Status,Model
+17,0.76,0.00060781505939074,0.252,0.68,0.15303030303030302,140883602,1804799,12,2402.169237,TIME_OUT,"RULELIST:
+ if [credit_duration_months_low]: (recidivism:yes) = True
+else if [account_balance_na]: (recidivism:yes) = True
+else if [credit_amount_low]: (recidivism:yes) = False
+else if [other_credits_none__AND__installment_rate(perc_disp_income)_high]: (recidivism:yes) = False
+else if [other_credits_none__AND__guarantor_none]: (recidivism:yes) = True
+else if [foreign_worker_yes__AND__installment_rate(perc_disp_income)_high]: (recidivism:yes) = True
+else if [employment_duration_>7_year]: (recidivism:yes) = False
+else if [residence_duration_high__AND__guarantor_none]: (recidivism:yes) = True
+else if [account_balance_moderate]: (recidivism:yes) = False
+else if [employment_duration_1<_<4_year]: (recidivism:yes) = True
+else if [telephone_yes]: (recidivism:yes) = False
+else if [previous_credit_payment_status_existing_credits_paid_till_now]: (recidivism:yes) = True
+else (recidivism:yes) = False"

@@ -1,0 +1,34 @@
+--- Experiments for the COMPAS dataset:
+- General information
+maximum memory use of 4 Go
+several time limits, values of epsilon
+20 random subsets of 90% of the whole dataset as training set
+all experiments launched on a computing platform using homogeneous nodes with Intel Xeon CPUs of Broadwell generation
+
+- FairCORELS config:
+lambda 1e-3
+min_support 0.01
+
+- Dataset preprocessing:
+sensitive attributes: race_caucasian vs race_african_american
+preproc: remove examples not in sensitive or unsensitive groups
+rule mining: 1 rule = 1 attr, one-hot for categorical, quantiles (5 bins) for numerical, min_support = 0.0
+-> 16 binary rules
+sensitive attributes not used for inference
+
+--- Experiments for the GERMAN CREDIT dataset:
+- General information
+maximum memory use of 4 Go
+several time limits, values of epsilon
+20 random subsets of 90% of the whole dataset as training set
+all experiments launched on a computing platform using homogeneous nodes with Intel Xeon CPUs of Broadwell generation
+
+- FairCORELS config:
+lambda 1e-3
+min_support 0.2
+
+- Dataset preprocessing:
+sensitive attributes: age_high vs age_low
+rule mining: 1 rule = 1 attr (min_support = 0.25) or conjunction of two attributes (min_support = 0.5), one-hot for categorical, quantiles (2 bins) for numerical, 
+-> 47 binary rules
+sensitive attributes not used for inference (idem gender_male and gender_female)

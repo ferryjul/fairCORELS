@@ -42,6 +42,7 @@ long double total_solving_time = 0.0;
 solver_args args_longest_run;
 int max_depth = 0;
 int timeoutCnt = 0;
+bool temoin = true; //TOBEDELETED
 double max2El(double e1, double e2) {
     if(e1 < e2) {
         return e2;
@@ -500,8 +501,16 @@ void evaluate_children(CacheTree* tree,
     bool prefixPassedCP = true;
     if((filteringMode == 1 || filteringMode == 3)&& best_rl_length > 0 && (fairness == 1 || fairness == 3 || fairness == 4 || fairness == 5)){  // Here occurs the PPC Filtering
 			int L = (1 - (tree->min_objective()  - (len_prefix*c) ) )*tree->nsamples();
+            
             // old, wrong computation : (1 - (tree->min_objective() + ((best_rl_length-len_prefix)*c)))*tree->nsamples(); // (1 - misc)*nb_samples = nb inst well classif by current best model
 			int U = accuracyUpperBound * (tree->nsamples());
+            if(L > 35000){
+                if(temoin){
+                    printf("L = %d\nU=%d\n", L, U);
+                    temoin = false;
+                }
+            
+            }
 			float fairness_tolerence = 1-min_fairness_acceptable; // equiv max unfairness acceptable
 
             confusion_matrix_groups cmg = compute_confusion_matrix_prefix(preds_prefix, tree, parent_not_captured,

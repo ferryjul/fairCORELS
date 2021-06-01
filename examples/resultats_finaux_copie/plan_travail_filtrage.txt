@@ -1,0 +1,39 @@
+intro - ML - fairness notions / fairness enhancing
+
+fairness - intro textuelle vars sp+ (etc...) 
+tableau 4 métriques avec formule utilisant notre notation
+
+domaine des vars sp+ (etc...) => Partie filtrage
+
+4 histogrammes solving time moyen
+configs une phrase possibilités
+
+
+U et L
+
+1) 4 figures: pour chaque métrique, #opt = f(epsilon) (sous-section 3.1)
+eps+=0.01
+
+2) 1 cactus plot, pour exemple (dire même tendance pour les autres) #opt = f(time)
+
+3) tableau une ligne = epsilon (quelques) + stratégie filtrage ; colonnes = métriques
+
+dire mem_out sans filtrage (exemple en %mem_out instances epsilon)
+
+4) 1 exemple cache = f(epsilon) ; 1 exemple cache = f(epsilon)
+idem explored
+
+
+-----------
+TODO 19/05
+
+-- filtrage
++30 instances pour COMPAS & German Credit
+Figures overleaf
+
+-- learning quality
+pour COMPAS & German Credit
+5 folds-validation
+valeurs epsilon suffisamment pour front de Pareto
+
+-----------

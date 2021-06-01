@@ -7,6 +7,9 @@ parser = argparse.ArgumentParser(description='Analysis of FairCORELS results')
 parser.add_argument('--metric', type=int, default=1, help='fairness metric: 1 statistical_parity, 2 predictive_parity, 3 predictive_equality, 4 equal_opportunity')
 parser.add_argument('--dataset', type=str, default="compas", help='either adult or compas')
 parser.add_argument('--maxTime', type=int, default=600, help='filtering : 0 no, 1 prefix, 2 all extensions')
+parser.add_argument('--save', type=bool, default=False, help='save plot png into figures folder')
+parser.add_argument('--show', type=int, default=1, help='display plot')
+parser.add_argument('--reverseEps', type=int, default=0, help='display plot')
 
 args = parser.parse_args()
 
@@ -17,10 +20,10 @@ args = parser.parse_args()
 #epsL = [0.7, 0.8, 0.9, 0.95, 0.975, 0.98, 0.985, 0.99, 0.995]#, 0.999]#[round(x,3) for x in epsilon_range] #60 values
 
 datasets=["adult", "compas"]
-
-epsilons = [0.70, 0.80, 0.90, 0.91, 0.92, 0.93, 0.94, 0.95, 0.96, 0.97, 0.98, 0.985, 0.99, 0.995]#[0.9, 0.95, 0.98, 0.99, 0.995] #0.7, 0.8, 0.9, 
+n_seeds = 100
+epsilons = [0.70, 0.75, 0.80, 0.85, 0.90, 0.91, 0.92, 0.93, 0.94, 0.95, 0.96, 0.97, 0.98, 0.985, 0.99, 0.995]#[0.9, 0.95, 0.98, 0.99, 0.995] #0.7, 0.8, 0.9, 
 seeds = []
-for i in range(0,20):
+for i in range(0,n_seeds):
     seeds.append(i)
 
 metrics=[1,3,4,5]
@@ -34,8 +37,12 @@ dataset = cart_product[0]
 fairnessMetric = cart_product[1]
 max_time = cart_product[2]
 policy = "bfs"
-folderPrefix= "results-4Go/" #"results-2.5Go/"
-
+if dataset == "compas":
+    folderPrefix= "results_v3_compas_broadwell/"#"results-4Go/" #"results-2.5Go/"
+elif dataset == "german_credit":
+    folderPrefix= "result_v1_german_broadwell/results_same_arch_4Go_german/" #"results_run_broadwell/"#"results-4Go/" #"results-2.5Go/"
+    epsilons = [0.90, 0.95, 0.96, 0.97, 0.98, 0.985, 0.99, 0.995]
+archSuffix = "_broadwell"
 optList = {}
 for f in filteringModes:
     optList[f] = []
@@ -49,7 +56,7 @@ for epsilon in epsilons:
     for seed in seeds: # for each "instance"
         for filteringMode in filteringModes: # for each filtering strategy/policy
             try:
-                fileName = './results/%s%s_eps%f_metric%d_LB%d_%s_tLimit%d_single_seed%d.csv' %(folderPrefix,dataset, epsilon, fairnessMetric, filteringMode, policy, max_time, seed)
+                fileName = './results/%s%s_eps%f_metric%d_LB%d_%s_tLimit%d_single_seed%d%s.csv' %(folderPrefix,dataset, epsilon, fairnessMetric, filteringMode, policy, max_time, seed, archSuffix)
                 fileContent = pd.read_csv(fileName)
                 seedVal = fileContent.values[0][0]
                 if seedVal != seed:
@@ -86,13 +93,18 @@ for epsilon in epsilons:
             nbOpt = statusList['OPT']
         else:
             nbOpt = 0
-        nbOpt = nbOpt/len(seeds)
+        nbOpt = 100*(nbOpt/len(seeds))
         optList[filteringMode].append(nbOpt)
         #print(statusList)
 
 from matplotlib import pyplot as plt
 
 shapes = ['o', 'x', 'x']
+
+if args.reverseEps == 0:
+    for i in range(len(epsilons)):
+        epsilons[i] = 1.0 - epsilons[i]
+
 for filteringMode in filteringModes:
     #plt.scatter(epsilons, optList[filteringMode], label="filtering mode %d" %filteringMode, marker=shapes[filteringMode])
     if filteringMode == 0:
@@ -101,9 +113,17 @@ for filteringMode in filteringModes:
         label = "lazy filtering"
     elif filteringMode == 2:
         label = "eager filtering"
+
     plt.plot(epsilons, optList[filteringMode], label=label, marker=shapes[filteringMode])
     plt.legend()
 #plt.title("#Instances solved to optimality as a function of epsilon (metric %d, tLimit= %d s)" %(fairnessMetric, max_time))
-plt.xlabel("1-epsilon")
+plt.xlabel("$ε$")
 plt.ylabel("%instances solved to optimality")
-plt.show()
+if args.save:
+    if args.reverseEps == 0:
+        plt.savefig('./figures/figures_paper/%s_opt_per_epsilon_metric%d_time%d.pdf' %(dataset, fairnessMetric, max_time), bbox_inches='tight')
+    else:
+        plt.xlabel("$1-ε$")
+        plt.savefig('./figures/figures_paper/%s_opt_per_epsilon_metric%d_time%d_reverse.pdf' %(dataset, fairnessMetric, max_time), bbox_inches='tight')
+if args.show == 1:
+    plt.show()
