@@ -111,6 +111,5 @@ class Metric(namedtuple('Metric', 'cm_minority cm_majority')):
         return max(np.fabs(self.cm_majority['FNR'] - self.cm_minority['FNR']), np.fabs(self.cm_majority['FPR'] - self.cm_minority['FPR']))
 
     def conditional_use_accuracy_equality(self):
-        return (np.fabs(self.cm_majority['PPV'] - self.cm_minority['PPV']) + np.fabs(self.cm_majority['NPV'] - self.cm_minority['NPV']))
-
+        return max(np.fabs(self.cm_majority['PPV'] - self.cm_minority['PPV']), np.fabs(self.cm_majority['NPV'] - self.cm_minority['NPV']))
             

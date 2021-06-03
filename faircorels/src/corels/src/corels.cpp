@@ -341,7 +341,7 @@ fairness_metrics compute_fairness_metrics(confusion_matrix_groups cmg){
     metrics.equalized_odds = max(fabs(cmg.majority.nFNR - cmg.minority.nFNR), fabs(cmg.majority.nFPR - cmg.minority.nFPR));
 
     // cond_use_acc_equality
-    metrics.cond_use_acc_equality = fabs(cmg.majority.nPPV - cmg.minority.nPPV) + fabs(cmg.majority.nNPV - cmg.minority.nNPV);
+    metrics.cond_use_acc_equality = max(fabs(cmg.majority.nPPV - cmg.minority.nPPV), fabs(cmg.majority.nNPV - cmg.minority.nNPV));
 
     return metrics;
 }
