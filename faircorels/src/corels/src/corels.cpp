@@ -1084,9 +1084,10 @@ void evaluate_children(CacheTree* tree,
             if(mode == 3) { // if mode 3 we check if the constraint on fairness is satisfied
                 if((1-unfairness) > min_fairness_acceptable) {
                     best_rl_length = len_prefix;
-                    //if(debug) {
-                    printf("min(objectivee): %1.5f -> %1.5f, length: %d (check -> %d), cache size: %zu, explored %lu nodes, pushed %d nodes (opt pruning = %d/%d), arriveHere = %d, permBound = %d.\n",
-                    tree->min_objective(), objective, len_prefix, best_rl_length, tree->num_nodes(), exploredNodes, pushingTicket, improvedPruningCnt, improvedPruningCntTot, arriveHere, permBound);
+                    if(debug) {
+                        printf("min(objectivee): %1.5f -> %1.5f, length: %d (check -> %d), cache size: %zu, explored %lu nodes, pushed %d nodes (opt pruning = %d/%d), arriveHere = %d, permBound = %d.\n",
+                        tree->min_objective(), objective, len_prefix, best_rl_length, tree->num_nodes(), exploredNodes, pushingTicket, improvedPruningCnt, improvedPruningCntTot, arriveHere, permBound);
+                    }
                     //printf("(1-unfairness) = %lf, min_fairness_acceptable = %lf, fairnessLB=%lf\n",(1-unfairness),min_fairness_acceptable,fairnesslb);
                     //printf("TPmaj=%d, FPmaj=%d, TNmaj=%d, FNmaj=%d, TPmin=%d, FPmin=%d, TNmin=%d, FNmin=%d\n", cmg.majority.nTP,cmg.majority.nFP,cmg.majority.nTN,cmg.majority.nFN,cmg.minority.nTP,cmg.minority.nFP,cmg.minority.nTN,cmg.minority.nFN);
                     //printf("explored %d nodes before best solution.\n", exploredNodes);

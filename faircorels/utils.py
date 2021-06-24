@@ -166,10 +166,11 @@ class RuleList:
         Name of the feature being predicted.
     """
 
-    def __init__(self, rules=[], features=[], prediction_name=""):
+    def __init__(self, rules=[], features=[], prediction_name="", predict_proba_mode='rule_id'):
         self.rules = rules
         self.features = features
         self.prediction_name = prediction_name
+        self.predict_proba_mode=predict_proba_mode
     def save(self, fname):
         """
         Save the rulelist to a file, using python's pickle module.
@@ -191,6 +192,9 @@ class RuleList:
 
         return self
 
+    def get_length(self):
+        return len(self.rules)
+        
     def load(self, fname):
         """
         Load a rulelist from a file, using python's pickle module.
@@ -239,6 +243,39 @@ class RuleList:
 
         return tot
     
+    def get_long_repr(self):
+        check_rulelist(self)
+
+        tot = "RULELIST:\n"
+        #print("number of scores in scores list = %d" %len(self.scores))
+        if self.predict_proba_mode == 'score':
+            if len(self.rules) == 1:
+                tot += self.prediction_name + " = " + str(self.rules[0]["prediction"]) + " (conf score = " + str(self.rules[0]["score"]) + ")"
+            else:    
+                for i in range(len(self.rules) - 1):
+                    feat = get_feature(self.features, self.rules[i]["antecedents"][0])
+                    for j in range(1, len(self.rules[i]["antecedents"])):
+                        feat += " && " + get_feature(self.features, self.rules[i]["antecedents"][j])
+                    tot += " if [" + feat + "]: " + self.prediction_name + " = " + str(bool(self.rules[i]["prediction"])) + " (conf score = " + str(self.rules[i]["score"]) + ")" + "\nelse" 
+                tot += " " + self.prediction_name + " = " + str(bool(self.rules[-1]["prediction"]))  + " (conf score = " + str(str(self.rules[-1]["score"])) + ")"
+        elif self.predict_proba_mode == 'rule_id':
+            if len(self.rules) == 1:
+                tot += self.prediction_name + " = " + str(self.rules[0]["prediction"]) + " (conf score = " + str(self.rules[0]["score"]) + ")"
+            else:    
+                for i in range(len(self.rules) - 1):
+                    feat = get_feature(self.features, self.rules[i]["antecedents"][0])
+                    for j in range(1, len(self.rules[i]["antecedents"])):
+                        feat += " && " + get_feature(self.features, self.rules[i]["antecedents"][j])
+                    tot += " if [" + feat + "]: " + self.prediction_name + " = " + str(bool(self.rules[i]["prediction"])) + " (conf score = " + str((0.5 + ((self.get_length()-i)/self.get_length())/2)) + ")" + "\nelse" 
+                tot += " " + self.prediction_name + " = " + str(bool(self.rules[-1]["prediction"]))  + " (conf score = " +  str((0.5 + ((1/self.get_length())/2))) + ")"
+        elif self.predict_proba_mode ==  'label_only':
+            return self.__str__()
+        else:
+            print("Unknown proba mode mentionned. Exiting")
+            exit()
+
+        return tot
+
     def __repr__(self):
         return self.__str__() #+ "\nAll features: (" + str(self.features) + ")"
 

@@ -1,5 +1,5 @@
 from __future__ import print_function, division, with_statement
-from ._corels import fit_wrap_begin, fit_wrap_end, fit_wrap_loop, predict_wrap, predict_score_wrap
+from ._corels import fit_wrap_begin, fit_wrap_end, fit_wrap_loop, predict_wrap, predict_score_wrap, predict_rule_wrap
 from .utils import check_consistent_length, check_array, check_is_fitted, get_feature, check_in, check_features, check_rulelist, RuleList, computeAccuracyUpperBound
 import numpy as np
 import pickle
@@ -140,6 +140,9 @@ class FairCorelsClassifier:
         When performRestarts=True, geomRReason is the reason used 
         for the geometric restart calculation
 
+    predict_proba_mode : string
+        either 'rule_id' or 'score'
+
     References
     ----------
     Elaine Angelino, Nicholas Larus-Stone, Daniel Alabi, Margo Seltzer, and Cynthia Rudin.
@@ -165,7 +168,7 @@ class FairCorelsClassifier:
                  verbosity=["rulelist"], ablation=0, max_card=2, min_support=0.01,
                  beta=0.0, fairness=1, maj_pos=-1, min_pos=2, maj_vect = np.empty(shape=(0)), min_vect = np.empty(shape=(0)),
                  mode=4, filteringMode=False, epsilon=0.0, kbest=1, forbidSensAttr=False,
-                 bfs_mode=0, random_state=42):
+                 bfs_mode=0, random_state=42, predict_proba_mode='rule_id', time_limit=None):
         self.c = c
         self.n_iter = n_iter
         self.map_type = map_type
@@ -176,8 +179,10 @@ class FairCorelsClassifier:
         self.min_support = min_support
         self.forbidSensAttr=forbidSensAttr
         self.status = -1
+        self.time_limit = time_limit
         self.beta = beta
         self.fairness = fairness
+        self.predict_proba_mode = predict_proba_mode # Used to define which policy to use for the predict_proba function
         if(maj_vect.size == 0):
             # Majority group is not explicitely defined
             # We will have to use maj_pos to compute the associated vector
@@ -317,7 +322,8 @@ class FairCorelsClassifier:
             raise TypeError("The position min_pos of the rule that defined the minority group  must be an integer, got: " + str(type(self.min_pos)))
 
         # Todo check mode, .... (?)
-       
+        if self.time_limit is None:
+            self.time_limit = time_limit
         if(self.min_pos != -2):
             min_vect = X[:,self.min_pos]
             min_vect = check_array(min_vect, ndim=1)
@@ -354,7 +360,7 @@ class FairCorelsClassifier:
 
         n_labels = labels.shape[0]
         
-        rl = RuleList()
+        rl = RuleList(predict_proba_mode=self.predict_proba_mode)
         
         if features:
             check_features(features)
@@ -416,7 +422,7 @@ class FairCorelsClassifier:
             if not (memory_limit is None):
                 import os, psutil
             try:
-                if time_limit is None: 
+                if self.time_limit is None: 
                     exitCode = 0
                     while exitCode == 0:
                         exitCode = fit_wrap_loop(self.n_iter, self.beta, self.fairness, self.mode, self.filteringMode, self.epsilon, self.kbest, performRestarts, initNBNodes, geomRReason)
@@ -438,10 +444,10 @@ class FairCorelsClassifier:
                             if mem_used > memory_limit:
                                 exitCode = 5
                                 print("Exiting because max memory used is reached :", mem_used, " MB/ ", memory_limit, " MB")
-                        if end - start > time_limit:
+                        if end - start > self.time_limit:
                             exitCode = 4
                             if debug:
-                                print("Exiting because CPU time limit is reached (", end - start, " seconds / ", time_limit, ".")
+                                print("Exiting because CPU time limit is reached (", end - start, " seconds / ", self.time_limit, ".")
                             break
                     self.status = exitCode
             except:
@@ -516,7 +522,70 @@ class FairCorelsClassifier:
         predsArray = np.array(preds, dtype=np.int32)
         scoresArray = np.array(scores, dtype=np.double)
         return np.array((predsArray, scoresArray))
-    
+
+    def predict_proba(self, X):
+        """
+        Scikit-like function
+        Predicts classifications' "probabilities" of the input samples X.
+
+        Arguments
+        ---------
+        X : array-like, shape = [n_samples, n_features]
+            The training input samples. All features must be binary, and the matrix
+            is internally converted to dtype=np.uint8. The features must be the same
+            as those of the data used to train the model.
+
+        Returns
+        -------
+        p : array of shape = array-like of shape (n_samples, n_classes)
+        """
+
+        check_is_fitted(self, "rl_")
+        check_rulelist(self.rl_)        
+
+        samples = check_array(X, ndim=2)
+        
+        if samples.shape[1] != len(self.rl_.features):
+            raise ValueError("Feature count mismatch between eval data (" + str(X.shape[1]) + 
+                             ") and feature names (" + str(len(self.rl_.features)) + ")")
+        if self.predict_proba_mode == 'score':
+            preds, scores = predict_score_wrap(samples.astype(np.uint8, copy=False), self.rl_.rules)
+            #predsArray = np.array(preds, dtype=np.int32)
+            #scoresArray = np.array(scores, dtype=np.double)
+            res = []
+            for i in range(preds.size):
+                if preds[i] == 1:
+                    res.append([1-scores[i], scores[i]])
+                else:
+                    res.append([scores[i], 1-scores[i]])
+            return np.array(res)#(predsArray, scoresArray))
+        elif self.predict_proba_mode == 'rule_id':
+            preds, scores = predict_rule_wrap(samples.astype(np.uint8, copy=False), self.rl_.rules)
+            res = []
+            for i in range(preds.size):
+                if scores[i] == 100:
+                    s = 0.5 + ((1/self.rl_.get_length())/2)
+                else: 
+                    s = 0.5 + ((self.rl_.get_length()-scores[i])/self.rl_.get_length())/2
+                if preds[i] == 1:
+                    res.append([1-s, s])
+                else:
+                    res.append([s, 1-s])
+            return np.array(res)#(predsArray, scoresArray))
+        elif self.predict_proba_mode == 'label_only':
+            preds, scores = predict_rule_wrap(samples.astype(np.uint8, copy=False), self.rl_.rules)
+            res = []
+            for i in range(preds.size):
+                if preds[i] == 1:
+                    res.append([0, 1])
+                else:
+                    res.append([1, 0])
+            return np.array(res)#(predsArray, scoresArray))
+        else:
+            print('self.predict_proba_mode is ', self.predict_proba_mode)
+            print("error, unknown version wanted, exiting!")
+            exit()
+
     def score(self, X, y):
         """
         Score the algorithm on the input samples X with the labels y. Alternatively,
@@ -1049,7 +1118,8 @@ class FairCorelsBagging:
         self.initNBNodes=initNBNodes
         self.geomRReason=geomRReason
         self.max_evals=max_evals
-        self.time_limit = time_limit
+        if self.time_limit is None:
+            self.time_limit = time_limit
         if self.baggingVerbose > 0:
             print("[BAGGING - MAIN] Training ", self.n_learners, " learners (using at most %d threads)." %n_workers)
         trained_learners = Parallel(n_jobs=n_workers)(delayed(self.train_one)(modelIndex) for modelIndex in tqdm(range(self.n_learners)))

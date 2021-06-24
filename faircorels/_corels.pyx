@@ -170,6 +170,70 @@ def predict_score_wrap(np.ndarray[np.uint8_t, ndim=2] X, rules):
     free(antecedent_lengths)
     return out, out2
 
+@cython.boundscheck(False)
+@cython.wraparound(False)
+def predict_rule_wrap(np.ndarray[np.uint8_t, ndim=2] X, rules):
+    cdef int nsamples = X.shape[0]
+    cdef int nfeatures = X.shape[1]
+    
+    cdef np.ndarray out = np.zeros(nsamples, dtype=np.uint8)
+    cdef np.ndarray out2 = np.zeros(nsamples, dtype=np.uint8)
+    cdef int n_rules = len(rules) - 1
+    cdef int s, r, next_rule, nidx, a, idx, c
+    cdef int default = bool(rules[n_rules]["prediction"])
+    
+
+    if n_rules < 0:
+        return out
+
+    cdef int* antecedent_lengths = <int*>malloc(sizeof(int) * n_rules)
+    cdef int* predictions = <int*>malloc(sizeof(int) * n_rules)
+    cdef int** antecedents = <int**>malloc(sizeof(int*) * n_rules)
+    cdef double* scores = <double*>malloc(sizeof(double) * (n_rules+1))
+    
+    for r in range(n_rules):
+        antecedent_lengths[r] = len(rules[r]["antecedents"])
+        predictions[r] = int(rules[r]["prediction"])
+        scores[r] = float(rules[r]["score"])
+        antecedents[r] = <int*>malloc(sizeof(int) * antecedent_lengths[r])
+        for a in range(antecedent_lengths[r]):
+            antecedents[r][a] = rules[r]["antecedents"][a]
+    scores[n_rules] = float(rules[n_rules]["score"])
+    # This compiles to C, so it's pretty fast!
+    for s in range(nsamples):
+        next_rule = 1
+        for r in range(n_rules):
+            next_rule = 0
+            nidx = antecedent_lengths[r]
+            for a in range(nidx):
+                idx = antecedents[r][a]
+                c = 1
+                if idx < 0:
+                    idx = -idx
+                    c = 0
+
+                idx = idx - 1
+                if idx >= nfeatures or X[s, idx] != c:
+                    next_rule = 1
+                    break
+
+            if next_rule == 0:
+                out[s] = predictions[r]
+                out2[s] = r
+                break
+
+        if next_rule == 1:
+            out[s] = default
+            out2[s] = 100
+
+    for r in range(n_rules):
+        free(antecedents[r])
+    free(antecedents)
+    free(predictions)
+    free(scores)
+    free(antecedent_lengths)
+    return out, out2
+
 cdef rule_t* _to_vector(np.ndarray[np.uint8_t, ndim=2] X, int* ncount_out):
     d0 = X.shape[0]
     d1 = X.shape[1]
