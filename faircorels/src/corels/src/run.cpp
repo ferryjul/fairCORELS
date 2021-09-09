@@ -40,13 +40,19 @@ double accUpperBound;
 rule_t* Gmaj_vect;
 rule_t* Gmin_vect;
 bool debugRun = false; // for printing more info while running/exploring
+rule_t* Gincons_minerrs_vecs;
+int upper_bound_filteringG;
 
 int run_corels_begin(double c, char* vstring, int curiosity_policy,
                   int map_type, int ablation, int calculate_size, int nrules, int nlabels,
                   int nsamples, rule_t* rules, rule_t* labels, rule_t* meta, int freq, 
                   char* log_fname, int BFSmode, int seed, bool forbidSensAttr_val, rule_t* maj_v, int nmaj_v,
-                  rule_t* min_v, int nmin_v, double accuracy_upper_bound, int max_calls)
+                  rule_t* min_v, int nmin_v, double accuracy_upper_bound, int max_calls, 
+                  rule_t* incons_minerrs_vecs, int nbInconsErrs, int upper_bound_filtering)
 {
+
+    Gincons_minerrs_vecs =  incons_minerrs_vecs;
+    upper_bound_filteringG = upper_bound_filtering;
     callsNB = max_calls;
     initCallsNB = max_calls;
     if(debugRun) {
@@ -55,6 +61,11 @@ int run_corels_begin(double c, char* vstring, int curiosity_policy,
     }
     
     accUpperBound = accuracy_upper_bound;
+    int nbInconsErrsMes = count_ones_vector(incons_minerrs_vecs[0].truthtable, nmaj_v);
+    if(nbInconsErrsMes != nbInconsErrs){
+        printf("#Incons mismatch: %d ones in vector, expected %d.\n", nbInconsErrsMes, nbInconsErrs);
+        exit(-1);
+    }
     // Check correctness
     if(nmaj_v != nmin_v){
         printf("Incorrect argument : nmaj and nmin should be equal\n");
@@ -227,7 +238,7 @@ int run_corels_begin(double c, char* vstring, int curiosity_policy,
     g_tree = new CacheTree(nsamples, nrules, c, rules, labels, meta, ablation, calculate_size, type);
     if (g_verbosity.count("progress"))
         printf("%s", run_type);
-    bbound_begin(g_tree, g_queue);
+    bbound_begin(g_tree, g_queue, Gincons_minerrs_vecs, upper_bound_filteringG);
     return 0;
 }
 
@@ -338,7 +349,7 @@ int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int mode, i
             }
             g_tree = new CacheTree(nsamplesG, nrulesG, Gc, Grules, Glabels, Gmeta, ablationG, calculate_sizeG, type);
 
-            bbound_begin(g_tree, g_queue);
+            bbound_begin(g_tree, g_queue, Gincons_minerrs_vecs, upper_bound_filteringG);
             return 0;
         }
     } else if(restart == 2) { // Perform luby restart
@@ -477,7 +488,7 @@ int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int mode, i
             }
             g_tree = new CacheTree(nsamplesG, nrulesG, Gc, Grules, Glabels, Gmeta, ablationG, calculate_sizeG, type);
 
-            bbound_begin(g_tree, g_queue);
+            bbound_begin(g_tree, g_queue, Gincons_minerrs_vecs, upper_bound_filteringG);
             return 0;
         }
     } 

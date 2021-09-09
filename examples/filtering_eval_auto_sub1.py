@@ -23,11 +23,6 @@ parser.add_argument('--maxMemory', type=int, default=-1, help='filtering : 0 no,
 parser.add_argument('--dataset', type=str, default="compas", help='either adult or compas')
 parser.add_argument('--seed', type=str, default="compas", help='either adult or compas')'''
 parser.add_argument('--expe', type=int, default=0, help='expe id for cartesian product')
-parser.add_argument('--filteringMode', type=int, default=0, help='filtering : 0 no, 1 prefix, 2 all extensions')
-parser.add_argument('--dataset', type=str, default="compas", help='either adult or compas')
-parser.add_argument('--epsilon', type=float, default=0, help='epsilon value (min fairness acceptable) for epsilon-constrained method')
-parser.add_argument('--metric', type=int, default=1, help='fairness metric: 1 statistical_parity, 2 predictive_parity, 3 predictive_equality, 4 equal_opportunity')
-parser.add_argument('--min_support', type=float, default=0, help='minimum support used for the minimum support bound (of the original CORELS)')
 
 args = parser.parse_args()
 expe_id = args.expe
@@ -58,28 +53,19 @@ for d in datasets:
                         cart_product.append([d,e,s,m,mt,fm])
 
 print("cart product has len ", len(cart_product))
-prediction_name_dict = {
-    "compas" : "(recidivism:yes)",
-    "adult_income" : "(income > 50K)",
-    "marketing" : "(subscribe:yes)",
-    "german_credit": "(credit_rating:yes)",
-    "default_credit": "(default_payment:yes)"
-}
 
-dataset = args.dataset #"default_credit" # "adult_income" #cart_product[expe_id][0]
-epsilon = args.epsilon #0#0.995 # 0.99#0.995# 0.995#0.995#0.995#0.995#0.995#0.995# 0.995#0.995# 0.995#0.995#0.995# 0.995#0.995 #0.999# 0.995#0.99#0.995#0.995#0.995 #0.999#0.995 #cart_product[expe_id][1]
-seed = 1#cart_product[expe_id][2]
-fairnessMetric = args.metric#cart_product[expe_id][3]
-faircorels_min_support = args.min_support
-max_time = 2400#cart_product[expe_id][4]
-filteringMode = args.filteringMode#cart_product[expe_id][5]
-print("Expe %d: dataset=%s, epsilon=%f, seed=%d, fairnessMetric=%d, max_time=%d, filteringMode=%d, min_support=%f" %(expe_id, dataset, epsilon, seed, fairnessMetric, max_time, filteringMode, faircorels_min_support))
+dataset = "compas" #cart_product[expe_id][0]
+epsilon =0.995 #0.999#0.995 #cart_product[expe_id][1]
+seed = 4#cart_product[expe_id][2]
+fairnessMetric = 3#cart_product[expe_id][3]
+max_time = 600#cart_product[expe_id][4]
+filteringMode = 2#cart_product[expe_id][5]
+print("Expe %d: dataset=%s, epsilon=%f, seed=%d, fairnessMetric=%d, max_time=%d, filteringMode=%d" %(expe_id, dataset, epsilon, seed, fairnessMetric, max_time, filteringMode))
 lambdaParam = 1e-3
 max_memory = 4000
-policy= "bfs"#"bfs"
-fileName = '%s_fullRules.csv' %dataset # 'marketing_fullRules.csv'# '%s_rules_full_single.csv' %dataset #'adult_income_fullRules.csv' #
+policy="bfs"
 
-X, y, features, prediction = load_from_csv("./data/%s" %fileName)#("./data/adult_full.csv") # Load the dataset
+X, y, features, prediction = load_from_csv("./data/%s_rules_full_single.csv" %dataset)#("./data/adult_full.csv") # Load the dataset
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.10, random_state=seed)
 
@@ -134,18 +120,18 @@ clf = FairCorelsClassifier(n_iter=N_ITER,
                         verbosity=[], # don't print anything
                         maj_vect=unSensVect_train, # vector defining unprotected group
                         min_vect=sensVect_train, # vector defining protected group
-                        min_support = faircorels_min_support
+                        min_support = 0.01 
                         )
 
 start = time.clock()
 
 # Train it
-clf.fit(X_train_unprotected, y_train, features=features[2:], prediction_name=prediction_name_dict[dataset], time_limit = max_time, memory_limit=max_memory)# max_evals=100000) # time_limit=8100, 
+clf.fit(X_train_unprotected, y_train, features=features[2:], prediction_name="(recidivism:yes)", time_limit = max_time, memory_limit=max_memory)# max_evals=100000) # time_limit=8100, 
 
 time_elapsed = time.clock() - start
 
 # Print the fitted model
-print(" Rule list: ", clf.rl_, "(RT: ", time_elapsed, " s)")
+#print("Fold ", foldIndex, " :", clf.rl_, "(RT: ", time_elapsed, " s)")
 
 # Evaluate our model's accuracy
 accTraining = clf.score(X_train_unprotected, y_train)
@@ -165,17 +151,6 @@ exploredBeforeBest = int(clf.nbExplored)
 cacheSizeAtExit = int(clf.nbCache)
 #return [foldIndex, accTraining, unfTraining, objF, accTest, unfTest, exploredBeforeBest, cacheSizeAtExit, length, time_elapsed,  clf.get_solving_status()]
 
-cm = ConfusionMatrix(sensVect_train, unSensVect_train, train_preds, y_train)
-cm_minority, cm_majority = cm.get_matrix()
-fm = Metric(cm_minority, cm_majority)
-
-print("Training accuracy is :", accTraining)
-print("Training unfairness is :", unfTraining)
-print("Training unfairness (all metrics:)")
-print("SP: ", fm.statistical_parity())
-print("PE: ", fm.predictive_equality())
-print("EO: ", fm.equal_opportunity())
-print("EOdds: ", fm.equalized_odds())
 
 if max_time is None: 
     fileName = './results/%s_eps%f_metric%d_LB%d_%s_single_seed%d.csv' %(dataset, epsilon, fairnessMetric, filteringMode, policy, seed)

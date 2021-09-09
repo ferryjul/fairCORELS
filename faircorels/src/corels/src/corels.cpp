@@ -33,7 +33,6 @@ int nb_su_plus;
 int nb_su_minus;
 bool firstCall = true;
 int improvedPruningCnt = 0;
-int tout_cnt = 0;
 int improvedPruningCntTot = 0;
 double longestfilteringrun = -1.0;
 int best_rl_length = 0;
@@ -42,7 +41,13 @@ long double total_solving_time = 0.0;
 solver_args args_longest_run;
 int max_depth = 0;
 int timeoutCnt = 0;
-bool temoin = true; //TOBEDELETED
+// for new upper bound (pruning)
+rule_t* incons_min_errs;
+VECTOR incons_remaining;
+int Gupper_bound_filtering = 0;
+int U_improved = 0;
+// -----------------------------
+
 double max2El(double e1, double e2) {
     if(e1 < e2) {
         return e2;
@@ -143,6 +148,18 @@ confusion_matrix_groups compute_confusion_matrix_prefix(VECTOR parent_prefix_pre
     rule_vfree(&TN_min);
 
     return cmg;
+}
+
+int countUncapturedIncons(VECTOR parent_not_captured, int nsamples){
+    int ret = 0;
+
+    rule_vand(incons_remaining, parent_not_captured, incons_min_errs[0].truthtable, nsamples, &ret);
+    //if(count_ones_vector(incons_remaining, nsamples)!=ret){
+    //    printf("count_ones_vector(incons_remaining, nsamples)=%d, ret=%d\n", count_ones_vector(incons_remaining, nsamples), ret);
+    //    printf("abnormal, exiting\n");
+    //    exit(-1);
+    //}
+    return ret;
 }
 
 confusion_matrix_groups compute_confusion_matrix(VECTOR parent_prefix_predictions,
@@ -338,8 +355,7 @@ fairness_metrics compute_fairness_metrics(confusion_matrix_groups cmg){
     metrics.equal_opportunity = fabs(cmg.majority.nFNR - cmg.minority.nFNR);
 
     // equalized_odds
-    //metrics.equalized_odds = fabs(cmg.majority.nFNR - cmg.minority.nFNR) + fabs(cmg.majority.nFPR - cmg.minority.nFPR);
-    metrics.equalized_odds = max(fabs(cmg.majority.nFNR - cmg.minority.nFNR), fabs(cmg.majority.nFPR - cmg.minority.nFPR));
+    metrics.equalized_odds = fabs(cmg.majority.nFNR - cmg.minority.nFNR) + fabs(cmg.majority.nFPR - cmg.minority.nFPR);
 
     // cond_use_acc_equality
     metrics.cond_use_acc_equality = fabs(cmg.majority.nPPV - cmg.minority.nPPV) + fabs(cmg.majority.nNPV - cmg.minority.nNPV);
@@ -380,16 +396,22 @@ void evaluate_children(CacheTree* tree,
         rule_vand(captured_it, min_v[1].truthtable, tree->label(0).truthtable, tree->nsamples(), &nb_sp_minus);
         rule_vand(captured_it, maj_v[1].truthtable, tree->label(1).truthtable, tree->nsamples(), &nb_su_plus);
         rule_vand(captured_it, maj_v[1].truthtable, tree->label(0).truthtable, tree->nsamples(), &nb_su_minus);
-        //if(debug) {
+        if(debug) {
             printf("Initializing cardinalities for SP improved pruning : \n");
             printf("Got %d protected positives, %d protected negatives, %d unprotected positives, %d unprotected negatives.\n", nb_sp_plus, nb_sp_minus, nb_su_plus, nb_su_minus);
-        //}
+        }
         rule_vfree(&captured_it);
         int U = accuracyUpperBound * (tree->nsamples());
-        //if(debug) {
-            printf("U is %d/%d.\n", U, tree->nsamples());
-        //}
         if(debug) {
+            printf("U is %d/%d.\n", U, tree->nsamples());
+        }
+        if(Gupper_bound_filtering==0){
+                std::cout << "Using old U computation" << std::endl;
+            } else{
+                std::cout << "Using new U computation" << std::endl;
+            }
+        if(debug) {
+            
             if(fairness == 1 && filteringMode)
                 printf("will perform improved SP pruning\n");
             else if(fairness == 2 && filteringMode)
@@ -482,6 +504,11 @@ void evaluate_children(CacheTree* tree,
             }
         }*/
     }
+    //printf("Prefix captured %d instances.\n", tree->nsamples()-count_ones_vector(not_captured_yet, tree->nsamples()));
+    //printf("There are %d inconsistent examples in minority (=> min errors)\n", count_ones_vector(incons_min_errs->truthtable, tree->nsamples()));
+    //int tot = 0;
+   
+    //printf("There were %d bits 1 in parent_not_captured.\n", tot);
   /*  if(nbRules != 3){
         prefixMatched = false;
     }
@@ -501,17 +528,10 @@ void evaluate_children(CacheTree* tree,
     bool prefixPassedCP = true;
     if((filteringMode == 1 || filteringMode == 3)&& best_rl_length > 0 && (fairness == 1 || fairness == 3 || fairness == 4 || fairness == 5)){  // Here occurs the PPC Filtering
 			int L = (1 - (tree->min_objective()  - (len_prefix*c) ) )*tree->nsamples();
-            
             // old, wrong computation : (1 - (tree->min_objective() + ((best_rl_length-len_prefix)*c)))*tree->nsamples(); // (1 - misc)*nb_samples = nb inst well classif by current best model
-			int U = accuracyUpperBound * (tree->nsamples());
-            if(L > 35000){
-                if(temoin){
-                    printf("L = %d\nU=%d\n", L, U);
-                    temoin = false;
-                }
-            
-            }
-			float fairness_tolerence = 1-min_fairness_acceptable; // equiv max unfairness acceptable
+			
+			
+            float fairness_tolerence = 1-min_fairness_acceptable; // equiv max unfairness acceptable
 
             confusion_matrix_groups cmg = compute_confusion_matrix_prefix(preds_prefix, tree, parent_not_captured,
                                                                                  maj_v, min_v, prediction, default_prediction);
@@ -524,7 +544,31 @@ void evaluate_children(CacheTree* tree,
 			int FPu = cmg.majority.nFP;
 			int TNu = cmg.majority.nTN;
 			int FNu = cmg.majority.nFN;
-
+            int U;
+            // old, fixed but easy, cheap and safe computation: int U = accuracyUpperBound * (tree->nsamples());
+            if(Gupper_bound_filtering==0){
+                U = accuracyUpperBound * (tree->nsamples());
+            }else{
+                int remainingInconsErrors = countUncapturedIncons(parent_not_captured, tree->nsamples());
+                U =   tree->nsamples() - (remainingInconsErrors + FNp + FPp + FNu + FPu);
+                int oldU = accuracyUpperBound * (tree->nsamples());
+                if(oldU>U){
+                    U_improved++;
+                }else if(oldU<U){
+                    std::cout << "oldU = " << oldU << ", new U = " << U << std::endl;
+                    exit(-1);
+                }
+                
+            }
+            
+            //int oldU = accuracyUpperBound * (tree->nsamples());
+            /*if(oldU < U){
+                printf("------------------\n");
+                printf("remainingInconsErrors=%d, Total FP=%d, Total FN=%d, Total TP=%d, TotalTN=%d\n", remainingInconsErrors, FPp+FPu, FNp+FNu, TPp+TPu, TNp+TNu);
+                printf("old U = %d/%d\n", oldU, tree->nsamples());
+                printf("new U = %d/%d\n", U, tree->nsamples());
+                printf("This situation is not normal. Exiting!\n");
+            }*/
             int config = 0;
             if(fairness == 1){
                 config = 8;
@@ -635,7 +679,7 @@ void evaluate_children(CacheTree* tree,
             // Filtering performed to know whether extension will be a viable prefix, hence the +1
             // Note that solver can say UNSAT for chlidren and RL meet the fairness constraint
             // old, wrong computation : (1 - (tree->min_objective() + ((best_rl_length-len_prefix)*c)))*tree->nsamples(); // (1 - misc)*nb_samples = nb inst well classif by current best model
-			int U = accuracyUpperBound * (tree->nsamples());
+			// int U = accuracyUpperBound * (tree->nsamples());
 			float fairness_tolerence = 1-min_fairness_acceptable; // equiv max unfairness acceptable
 
 			int TPp = cmg.minority.nminTP;
@@ -646,42 +690,43 @@ void evaluate_children(CacheTree* tree,
 			int FPu = cmg.majority.nminFP;
 			int TNu = cmg.majority.nminTN;
 			int FNu = cmg.majority.nminFN;
-            //printf("FNu = %d\n", FNu);
+
+            // old, fixed but easy, cheap and safe computation: int U = accuracyUpperBound * (tree->nsamples());
+            
+            int U;
+            if(Gupper_bound_filtering==0){
+                U = accuracyUpperBound * (tree->nsamples());
+            }else{
+                int remainingInconsErrors = countUncapturedIncons(not_captured, tree->nsamples());
+                U =   tree->nsamples() - (remainingInconsErrors + FNp + FPp + FNu + FPu);
+                int oldU = accuracyUpperBound * (tree->nsamples());
+                if(oldU>U){
+                    U_improved++;
+                }else if(oldU<U){
+                    std::cout << "oldU = " << oldU << ", new U = " << U << std::endl;
+                    exit(-1);
+                }
+                
+            }
+
+            //int oldU = accuracyUpperBound * (tree->nsamples());
+            /*if(oldU < U){
+                printf("------------------\n");
+                printf("remainingInconsErrors=%d, Total FP=%d, Total FN=%d, Total TP=%d, TotalTN=%d\n", remainingInconsErrors, FPp+FPu, FNp+FNu, TPp+TPu, TNp+TNu);
+                printf("old U = %d/%d\n", oldU, tree->nsamples());
+                printf("new U = %d/%d\n", U, tree->nsamples());
+                printf("This situation is not normal. Exiting!\n");
+            }*/
+
             int config = 0;
             if(fairness == 1){
                 config = 8;
             } else if(fairness == 4){
                 config = 2;
             }
-            bool ok = true;
-            if(TPp < 0 || FPp < 0 ||TNp <0 || FNp <0 ||TPu <0 || FPu<0 || TNu <0 || FNu<0 || 
-            nb_sp_plus <0 || nb_sp_minus <0|| nb_su_plus<0 || nb_su_minus<0){
-                ok = false;
-            }
-            if((TPp+FNp) > nb_sp_plus || (FPp+TNp) > nb_sp_minus ){
-                ok = false;
-            }
-            if((TPu+FNu) > nb_su_plus || (FPu+TNu) > nb_su_minus ){
-                ok = false;
-            }
-            if(nb_su_plus > 45000 || nb_sp_minus > 45000 || nb_sp_plus > 45000 || nb_su_minus > 45000){
-                    ok = false;
-            }
-            //if(!ok){
-
-            //printf("percent captured = %lf\n", (float)(TPp+TNp+FPp+FNp+TPu+TNu+FPu+FNu)/(float) (nb_sp_plus+nb_sp_minus +nb_su_plus+nb_su_minus));
-            
-            //printf("Got parameters: nb_protected_negative=%d, nb_unprotected_negative=%d,nb_protected_positive=%d,nb_unprotected_positive=%d.\n",nb_sp_minus, nb_su_minus,nb_sp_plus, nb_su_plus);
-            //printf("captured: TPp=%d, FPp=%d, TNp=%d, FNp=%d, TPu=%d, FPu=%d, TNu=%d, FNu=%d\n", TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu);
-
-            //}
-
             //FilteringStatisticalParity check_bounds(nb_sp_plus,nb_sp_minus, nb_su_plus, nb_su_minus, L,U , fairness_tolerence, TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu);
             //check_bounds.run(0, 0);
             double maxSolvingTime = 5*10e9; // <- 5 seconds is already a lot, it simply helps avoiding to get stuck
-            //printf("parameters: fairness=%d, config=%d, nb_sp_plus=%d, nb_sp_plus=%d,nb_sp_minus=%d, nb_su_plus=%d, nb_su_minus=%d\n", config, nb_sp_plus,nb_sp_minus, nb_su_plus, nb_su_minus);
-            //printf("L=%d,U=%d, fairness_tolerence=%lf\n", L,U , fairness_tolerence);
-            //printf("captured: TPp=%d, FPp=%d, TNp=%d, FNp=%d, TPu=%d, FPu=%d, TNu=%d, FNu=%d\n", TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu);
             struct runResult res = runFiltering(fairness, //metric
                                 config, //solver config
                                 nb_sp_plus,nb_sp_minus, 
@@ -697,12 +742,7 @@ void evaluate_children(CacheTree* tree,
                 //prefixPassedCP = false;
                 //continue;
                 filteringOK = false;
-            }   else if(res.result == LIMITOUT){
-                tout_cnt++;
-                printf("Time out %d times.\n", tout_cnt);
-            } /*else if(res.result == SAT){
-                printf("SAT.\n");
-            }*/
+            }   
             /*if(! strcmp(tree->rule(i).features, "not_age_middle") && prefixMatched){
                 printf("Rule list found, result of filtering = %d!\n", res.result);
             }*/
@@ -1213,7 +1253,13 @@ static double start = 0.0;
  * Explores the search space by using a queue to order the search process.
  * The queue can be ordered by DFS, BFS, or an alternative priority metric (e.g. lower bound).
  */
-void bbound_begin(CacheTree* tree, Queue* q) {
+void bbound_begin(CacheTree* tree, Queue* q, rule_t* G_incons_min_errs, int upper_bound_filtering) {
+    Gupper_bound_filtering = upper_bound_filtering;
+    if(Gupper_bound_filtering > 0){
+        rule_vinit(tree->nsamples(), &incons_remaining);
+    }        
+
+    incons_min_errs = G_incons_min_errs;
     start = timestamp();
     num_iter = 0;
     rule_vinit(tree->nsamples(), &captured);
@@ -1298,7 +1344,10 @@ void bbound_loop(CacheTree* tree,
 std::vector<unsigned long> bbound_end(CacheTree* tree, Queue* q, PermutationMap* p, bool early, rule_t* rules, rule_t* labels) {
     int verbosity = logger->getVerbosity();
     bool print_queue = 0;
-    printf("tout_cnt=%d\n",tout_cnt);
+    if(Gupper_bound_filtering > 0){
+        std::cout << "Improved upper bound " << U_improved << "/" << improvedPruningCntTot << " times." << std::endl;
+        rule_vfree(&incons_remaining);
+    }   
     if(debug) {
         printf("explored %lu nodes.\n", exploredNodes);
         printf("using new filtering pruned %d/%d nodes.\n", improvedPruningCnt, improvedPruningCntTot);

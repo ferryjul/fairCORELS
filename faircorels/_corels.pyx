@@ -32,7 +32,7 @@ cdef extern from "src/corels/src/run.hh":
                       int nsamples, rule_t* rules, rule_t* labels, rule_t* meta, 
                       int freq, char* log_fname, int BFSmode, int seed, int forbidSensAttr_val,
                       rule_t* maj_v, int nmaj_v, rule_t* min_v, int nmin_v, double accuracy_upper_bound,
-                      int max_calls)
+                      int max_calls, rule_t* incons_minerrs_vecs, int nbInconsErrs, int upper_bound_filtering)
 
     int run_corels_loop(size_t max_num_nodes, double beta, int fairness,
                     int mode, int filteringMode, double min_fairness_acceptable, int kBest, int restart, int initNBNodes, double geomReason)
@@ -224,7 +224,7 @@ cdef rule_t* labels_vecs = NULL
 
 cdef rule_t* maj_vecs = NULL
 cdef rule_t* min_vecs = NULL
-
+cdef rule_t* incons_minerrs_vecs = NULL
 cdef rule_t* minor = NULL
 cdef int n_rules = 0
 
@@ -233,7 +233,11 @@ def fit_wrap_begin(np.ndarray[np.uint8_t, ndim=2] samples,
              features, int max_card, double min_support, verbosity_str, int mine_verbose,
              int minor_verbose, double c, int policy, int map_type, int ablation,
              int calculate_size, int forbidSensAttr, int BFSmode, int seed, np.ndarray[np.uint8_t, ndim=2] maj_vect,  
-             np.ndarray[np.uint8_t, ndim=2] min_vect, double accuracy_upper_bound, int max_calls):
+             np.ndarray[np.uint8_t, ndim=2] min_vect, double accuracy_upper_bound, int max_calls, 
+             np.ndarray[np.uint8_t, ndim=2] incons_minerrs, int nbInconsErrs, int upper_bound_filtering):
+
+
+
     global rules
     global labels_vecs
     global minor
@@ -241,7 +245,12 @@ def fit_wrap_begin(np.ndarray[np.uint8_t, ndim=2] samples,
 
     global maj_vecs
     global min_vecs
-
+    global incons_minerrs_vecs
+    # for upper bound computation -
+    cdef int n_incons_minerrs = 0
+    cdef int upper_bound_filtering_int = upper_bound_filtering
+    incons_minerrs_vecs = _to_vector(incons_minerrs, &n_incons_minerrs)
+    # -----------------------------
 
     cdef int nfeatures = 0
     cdef rule_t* samples_vecs = _to_vector(samples, &nfeatures)
@@ -305,8 +314,6 @@ def fit_wrap_begin(np.ndarray[np.uint8_t, ndim=2] samples,
 
     verbosity_ascii = verbosity_str.encode("ascii")
     cdef char* verbosity = verbosity_ascii
-
-
 
 
 
@@ -506,7 +513,8 @@ def fit_wrap_begin(np.ndarray[np.uint8_t, ndim=2] samples,
     """
     cdef int rb = run_corels_begin(c, verbosity, policy, map_type, ablation, calculate_size,
                    n_rules, 2, nsamples, rules, labels_vecs, minor, 0, NULL, BFSmode_val, seed_val, 
-                   forbidSensAttr_val, maj_vecs, n_maj_vecs, min_vecs, n_min_vecs, accuracy_upper_bound, max_calls)
+                   forbidSensAttr_val, maj_vecs, n_maj_vecs, min_vecs, n_min_vecs, accuracy_upper_bound, max_calls,
+                   incons_minerrs_vecs, nbInconsErrs, upper_bound_filtering_int)
 
     if rb == -1:
         if labels_vecs != NULL:
@@ -555,6 +563,7 @@ def fit_wrap_end(int early):
     global n_rules
     global maj_vecs
     global min_vecs
+    global incons_minerrs_vecs
 
     cdef int rulelist_size = 0
     cdef int* rulelist = NULL
@@ -596,4 +605,7 @@ def fit_wrap_end(int early):
     if min_vecs != NULL:
         _free_vector(min_vecs, 2)
         min_vecs = NULL
+    if incons_minerrs_vecs != NULL:
+        _free_vector(incons_minerrs_vecs, 2)
+        incons_minerrs_vecs = NULL
     return [r_out, runStats[0], runStats[1]]

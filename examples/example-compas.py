@@ -9,7 +9,7 @@ N_ITER = 1*10**7 # The maximum number of nodes in the prefix tree
 sensitive_attr_column = 0 # Column of the dataset used to define protected group membership (=> sensitive attribute)
 unsensitive_attr_column = 1 
 
-X, y, features, prediction = load_from_csv("./data/compas_rules_full.csv")#("./data/adult_full.csv") # Load the dataset
+X, y, features, prediction = load_from_csv("./data/compas_rules_full_single.csv")#("./data/adult_full.csv") # Load the dataset
 
 print("Sensitive attribute is ", features[sensitive_attr_column])
 print("Unsensitive attribute is ", features[unsensitive_attr_column])
@@ -17,19 +17,24 @@ print("Unsensitive attribute is ", features[unsensitive_attr_column])
 # parser initialization
 parser = argparse.ArgumentParser(description='Analysis of FairCORELS results')
 parser.add_argument('--epsilon', type=float, default=0.0, help='epsilon value (min fairness acceptable) for epsilon-constrained method')
-parser.add_argument('--uselb', type=int, default=1, help='use filtering : 0  no, 1  yes')
+parser.add_argument('--filteringMode', type=int, default=1, help='use filtering : 0  no, 1  yes')
 parser.add_argument('--metric', type=int, default=1, help='fairness metric: 1 statistical_parity, 2 predictive_parity, 3 predictive_equality, 4 equal_opportunity, 5 Equalized Odds, 6 Conditional use accuracy equality')
+parser.add_argument('--newub', type=int, default=1, help='use new ub computation: 1=yes, 0=no')
+
+max_time = 1200
+max_memory=4000
 
 args = parser.parse_args()
 
 epsilon = args.epsilon
 fairnessMetric = args.metric
+newub = args.newub
 bools = [False, True]
-useLB = bools[args.uselb]
+filteringMode = args.filteringMode
 lambdaParam = 1e-3 # The regularization parameter penalizing rule lists length
 
 # We prepare the folds for our 5-folds cross-validation
-kf = KFold(n_splits=5, shuffle=True, random_state=42)
+kf = KFold(n_splits=10, shuffle=True, random_state=42)
 folds = []
 for train_index, test_index in kf.split(X):
     X_train, X_test = X[train_index], X[test_index]
@@ -82,17 +87,19 @@ def oneFold(foldIndex, X_fold_data): # This part could be multithreaded for bett
                             policy="bfs", # exploration heuristic: BFS
                             bfs_mode=2, # type of BFS: objective-aware
                             mode=3, # epsilon-constrained mode
-                            filteringMode=useLB,
+                            filteringMode=filteringMode,
                             forbidSensAttr=False,
                             fairness=fairnessMetric, 
+                            map_type="none",
                             epsilon=epsilon, # fairness constrait
                             verbosity=[], # don't print anything
                             maj_vect=unSensVect_train, # vector defining unprotected group
+                            upper_bound_filtering=newub,
                             min_vect=sensVect_train, # vector defining protected group
                             min_support = 0.01 
                             )
     # Train it
-    clf.fit(X_train_unprotected, y_train, features=features[2:], prediction_name="(recidivism:yes)")#, time_limit = 10)# max_evals=100000) # time_limit=8100, 
+    clf.fit(X_train_unprotected, y_train, features=features[2:], prediction_name="(recidivism:yes)", time_limit = max_time, memory_limit=max_memory)#, time_limit = 10)# max_evals=100000) # time_limit=8100, 
 
     # Print the fitted model
     print("Fold ", foldIndex, " :", clf.rl_)
@@ -116,7 +123,7 @@ def oneFold(foldIndex, X_fold_data): # This part could be multithreaded for bett
     return [foldIndex, accTraining, unfTraining, objF, accTest, unfTest, exploredBeforeBest, cacheSizeAtExit, length]
 
 # Run training/evaluation for all folds using multi-threading
-ret = Parallel(n_jobs=-1)(delayed(oneFold)(foldIndex, X_fold_data) for foldIndex, X_fold_data in enumerate(folds))
+ret = Parallel(n_jobs=1)(delayed(oneFold)(foldIndex, X_fold_data) for foldIndex, X_fold_data in enumerate(folds))
 
 # Unwrap the results
 accuracy = [ret[i][4] for i in range(0,5)]
@@ -134,7 +141,7 @@ print("=========> Test Unfairness (average)= ", np.average(unfairness))
 resPerFold = dict()
 for aRes in ret:
     resPerFold[aRes[0]] = [aRes[1], aRes[2], aRes[3], aRes[4], aRes[5], aRes[6], aRes[7], aRes[8]]
-with open('./results/faircorels_eps%f_metric%d_LB%d.csv' %(epsilon, fairnessMetric, useLB), mode='w') as csv_file:
+with open('./results/faircorels_eps%f_metric%d_LB%d.csv' %(epsilon, fairnessMetric, filteringMode), mode='w') as csv_file:
     csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
     csv_writer.writerow(['Fold#', 'Training accuracy', 'Training Unfairness(%d)' %fairnessMetric, 'Training objective function', 'Test accuracy', 'Test unfairness', '#Nodes explored for best solution', 'Cache size for best solution', 'Average length'])#, 'Fairness STD', 'Accuracy STD'])
     for index in range(5):

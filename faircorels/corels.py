@@ -126,6 +126,11 @@ class FairCorelsClassifier:
     random_state: int optional (default=42)
         Random seed for randomized search
 
+    upper_bound_filtering: int optional (default=0)
+        controls the way upper bound over well classified examples (for advanced pruning) is computed
+        0 to use simple upper bound computation (use if dataset does not contain inconsistencies)
+        1 to perform vector operations leveraging inconsistent examples (slower, but tight)
+
     Arguments for .fit :
 
     performRestarts : int optional (default=0)
@@ -165,7 +170,7 @@ class FairCorelsClassifier:
                  verbosity=["rulelist"], ablation=0, max_card=2, min_support=0.01,
                  beta=0.0, fairness=1, maj_pos=-1, min_pos=2, maj_vect = np.empty(shape=(0)), min_vect = np.empty(shape=(0)),
                  mode=4, filteringMode=False, epsilon=0.0, kbest=1, forbidSensAttr=False,
-                 bfs_mode=0, random_state=42):
+                 bfs_mode=0, random_state=42, upper_bound_filtering=0):
         self.c = c
         self.n_iter = n_iter
         self.map_type = map_type
@@ -214,7 +219,7 @@ class FairCorelsClassifier:
         self.kbest = kbest
         self.bfs_mode = bfs_mode
         self.random_state = random_state
-
+        self.upper_bound_filtering = upper_bound_filtering
     
     def get_solving_status(self):
         """
@@ -284,6 +289,10 @@ class FairCorelsClassifier:
             raise TypeError("Max nodes must be an integer, got: " + str(type(self.n_iter)))
         if self.n_iter < 0:
             raise ValueError("Max nodes must be positive, got: " + str(self.n_iter))
+        if not isinstance(self.upper_bound_filtering, int):
+            raise TypeError("upper_bound_filtering must be an integer, got: " + str(type(self.upper_bound_filtering)))
+        if not self.upper_bound_filtering in [0, 1]:
+            raise ValueError("upper_bound_filtering must be either 0 or 1, got: " + str(self.upper_bound_filtering))
         if not isinstance(self.ablation, int):
             raise TypeError("Ablation must be an integer, got: " + str(type(self.ablation)))
         if self.ablation > 2 or self.ablation < 0:
@@ -404,12 +413,26 @@ class FairCorelsClassifier:
 
         map_id = map_types.index(self.map_type)
         policy_id = policies.index(self.policy)
-        accuracy_upper_bound = computeAccuracyUpperBound(X, y, verbose=0)
+        self.accuracy_upper_bound, self.inconsistent_groups_reprs, self.inconsistent_groups_min_errs, self.miscIds = computeAccuracyUpperBound(X, y, verbose=0)
+        #self.inconsistentNb = len(self.miscIds)
+        miscIdsArray = np.zeros(labels.shape[1], dtype=int)
+        miscIdsArray[np.asarray(self.miscIds)] = 1
+        # for verification only -------------------
+        incons_sum = 0
+        for i in self.inconsistent_groups_min_errs:
+            incons_sum+=i
+        #print("Min #errs = ", incons_sum)
+        #print("#1's in miscIds", np.count_nonzero(miscIdsArray))
+        # -----------------------------------------
+        miscIdRule = np.stack([ miscIdsArray, np.invert(miscIdsArray) ])
+        #for i in range(self.inconsistentGroupsNb):
+        #    print("Inconsistent examples group %d: representant is examples #%d, min #errors = %d\n" %(i, self.inconsistent_groups_reprs[i], self.inconsistent_groups_min_errs[i]))
         fr = fit_wrap_begin(samples.astype(np.uint8, copy=False),
                              labels.astype(np.uint8, copy=False), rl.features,
                              self.max_card, self.min_support, verbose, mine_verbose, minor_verbose,
                              self.c, policy_id, map_id, self.ablation, False, self.forbidSensAttr, self.bfs_mode, self.random_state,
-                             self.maj_vect.astype(np.uint8, copy=False), self.min_vect.astype(np.uint8, copy=False), accuracy_upper_bound, max_evals)
+                             self.maj_vect.astype(np.uint8, copy=False), self.min_vect.astype(np.uint8, copy=False), self.accuracy_upper_bound, max_evals,
+                             miscIdRule.astype(np.uint8, copy=False), incons_sum, self.upper_bound_filtering)
         
         if fr:
             early = False

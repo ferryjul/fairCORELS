@@ -33,12 +33,12 @@ cart_product = []
 # -----------------------------------------------------
 datasets= ["compas"]#["adult", "compas"]
 
-epsilons = [0.70, 0.75, 0.80, 0.85, 0.90, 0.91, 0.92, 0.93, 0.94, 0.95, 0.96, 0.97, 0.98, 0.985, 0.99, 0.995] #0.7, 0.8, 0.9,
+epsilons = [0.95, 0.98, 0.99, 0.995] #0.7, 0.8, 0.9,
 seeds = []
 for i in range(0,20):
     seeds.append(i)
 
-metrics=[1] #, 3, 4, 5]#,3,4,5]
+metrics=[1, 3, 4, 5]#,3,4,5]
 
 #max_times=[120, 300, 600, 1200] #
 
@@ -154,9 +154,9 @@ cacheSizeAtExit = int(clf.nbCache)
 
 
 if max_time is None: 
-    fileName = './results_same_arch_4Go/%s_eps%f_metric%d_LB%d_%s_single_seed%d_broadwell.csv' %(dataset, epsilon, fairnessMetric, filteringMode, policy, seed)
+    fileName = './results/%s_eps%f_metric%d_LB%d_%s_single_seed%d.csv' %(dataset, epsilon, fairnessMetric, filteringMode, policy, seed)
 else:
-    fileName = './results_same_arch_4Go/%s_eps%f_metric%d_LB%d_%s_tLimit%d_single_seed%d_broadwell.csv' %(dataset, epsilon, fairnessMetric, filteringMode, policy, max_time, seed)
+    fileName = './results/%s_eps%f_metric%d_LB%d_%s_tLimit%d_single_seed%d.csv' %(dataset, epsilon, fairnessMetric, filteringMode, policy, max_time, seed)
 with open(fileName, mode='w') as csv_file:
     csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
     csv_writer.writerow(['Seed', 'Training accuracy', 'Training Unfairness(%d)' %fairnessMetric, 'Training objective function', 'Test accuracy', 'Test unfairness', '#Nodes explored for best solution', 'Cache size for best solution', 'Average length', 'CPU running time (s)', 'Solving Status', 'Model'])#, 'Fairness STD', 'Accuracy STD'])

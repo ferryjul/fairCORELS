@@ -177,7 +177,7 @@ class Queue {
 
 
 
-extern void bbound_begin(CacheTree* tree, Queue* q);
+extern void bbound_begin(CacheTree* tree, Queue* q, rule_t* G_incons_min_errs, int upper_bound_filtering);
 
 extern std::vector<unsigned long> bbound_end(CacheTree* tree, Queue* q, PermutationMap* p, bool early, rule_t* rules, rule_t* labels);
 
