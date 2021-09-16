@@ -103,9 +103,11 @@ class FairCorelsClassifier:
         1: weigted sum, 2: maximum fairness, 3: epsilon-constraint, 4: maximum accuracy
 
     filteringMode: bool optional (default=False)
-        Use the unfairness lower bound
-        -> Use the CP filtering when it is implemented, else uses a simple (less efficient) lower bound.        
-        Note that the simple lower bound effect may be negligible, depending on the search heuristic and the max. size of the prefix tree.
+        -> 0: no filtering
+        -> 1: SAT filtering, Lazy
+        -> 2: SAT filtering, Eager
+        -> 3: SAT filtering, both Lazy and Eager (not recommended)
+        -> 4: OPT filtering (Eager)
 
         Note that the CP filtering is implemented for SP (metric 1) and EO (metric 4) only.
         Implementation for the other metrics is coming soon !
@@ -170,7 +172,7 @@ class FairCorelsClassifier:
                  verbosity=["rulelist"], ablation=0, max_card=2, min_support=0.01,
                  beta=0.0, fairness=1, maj_pos=-1, min_pos=2, maj_vect = np.empty(shape=(0)), min_vect = np.empty(shape=(0)),
                  mode=4, filteringMode=False, epsilon=0.0, kbest=1, forbidSensAttr=False,
-                 bfs_mode=0, random_state=42, upper_bound_filtering=0):
+                 bfs_mode=0, random_state=42, upper_bound_filtering=0, pruning_memoisation=1):
         self.c = c
         self.n_iter = n_iter
         self.map_type = map_type
@@ -183,6 +185,7 @@ class FairCorelsClassifier:
         self.status = -1
         self.beta = beta
         self.fairness = fairness
+        self.pruning_memoisation = pruning_memoisation
         if(maj_vect.size == 0):
             # Majority group is not explicitely defined
             # We will have to use maj_pos to compute the associated vector
@@ -432,7 +435,7 @@ class FairCorelsClassifier:
                              self.max_card, self.min_support, verbose, mine_verbose, minor_verbose,
                              self.c, policy_id, map_id, self.ablation, False, self.forbidSensAttr, self.bfs_mode, self.random_state,
                              self.maj_vect.astype(np.uint8, copy=False), self.min_vect.astype(np.uint8, copy=False), self.accuracy_upper_bound, max_evals,
-                             miscIdRule.astype(np.uint8, copy=False), incons_sum, self.upper_bound_filtering)
+                             miscIdRule.astype(np.uint8, copy=False), incons_sum, self.upper_bound_filtering, self.pruning_memoisation, self.filteringMode)
         
         if fr:
             early = False
@@ -442,7 +445,7 @@ class FairCorelsClassifier:
                 if time_limit is None: 
                     exitCode = 0
                     while exitCode == 0:
-                        exitCode = fit_wrap_loop(self.n_iter, self.beta, self.fairness, self.mode, self.filteringMode, self.epsilon, self.kbest, performRestarts, initNBNodes, geomRReason)
+                        exitCode = fit_wrap_loop(self.n_iter, self.beta, self.fairness, self.mode, self.epsilon, self.kbest, performRestarts, initNBNodes, geomRReason)
                         if not (memory_limit is None):
                             mem_used = (psutil.Process(os.getpid()).memory_info().rss / 1024 ** 2)
                             if mem_used > memory_limit:
@@ -454,7 +457,7 @@ class FairCorelsClassifier:
                     start = time.clock()
                     exitCode = 0
                     while exitCode == 0:
-                        exitCode = fit_wrap_loop(self.n_iter, self.beta, self.fairness, self.mode, self.filteringMode, self.epsilon, self.kbest, performRestarts, initNBNodes, geomRReason)
+                        exitCode = fit_wrap_loop(self.n_iter, self.beta, self.fairness, self.mode, self.epsilon, self.kbest, performRestarts, initNBNodes, geomRReason)
                         end = time.clock()
                         if not (memory_limit is None):
                             mem_used = (psutil.Process(os.getpid()).memory_info().rss / 1024 ** 2)

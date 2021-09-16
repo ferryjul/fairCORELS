@@ -33,6 +33,10 @@ class Node {
     inline int get_num();
     inline int set_num(int val);
     inline int set_unfairness(double unf);
+
+    inline double get_opt_bound();
+    inline int set_opt_bound(double val);
+
     // Returns pair of prefixes and predictions for the path from this node to the root
     inline std::pair<tracking_vector<unsigned short, DataStruct::Tree>, tracking_vector<bool, DataStruct::Tree> >
       get_prefix_and_predictions();
@@ -57,6 +61,7 @@ class Node {
     Node* parent_;
     double lower_bound_;
     int num_insert;
+    double opt_bound;
     double objective_;
     double unfairness_;
     double equivalent_minority_;
@@ -209,6 +214,16 @@ inline int Node::set_num(int val){
     num_insert = val;
     return 0;
 }
+
+inline double Node::get_opt_bound(){
+    return opt_bound;
+}
+
+inline int Node::set_opt_bound(double val){
+    opt_bound = val;
+    return 0;
+}
+
 
 inline int Node::set_unfairness(double unf){
     unfairness_= unf;

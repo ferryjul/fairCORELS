@@ -9,7 +9,8 @@ N_ITER = 1*10**7 # The maximum number of nodes in the prefix tree
 sensitive_attr_column = 0 # Column of the dataset used to define protected group membership (=> sensitive attribute)
 unsensitive_attr_column = 1 
 
-X, y, features, prediction = load_from_csv("./data/compas_rules_full_single.csv")#("./data/adult_full.csv") # Load the dataset
+dataset= "compas" #"german_credit" #"compas"
+X, y, features, prediction = load_from_csv("./data/%s_rules_full_single.csv" %dataset)#("./data/adult_full.csv") # Load the dataset
 
 print("Sensitive attribute is ", features[sensitive_attr_column])
 print("Unsensitive attribute is ", features[unsensitive_attr_column])
@@ -20,12 +21,23 @@ parser.add_argument('--epsilon', type=float, default=0.0, help='epsilon value (m
 parser.add_argument('--filteringMode', type=int, default=1, help='use filtering : 0  no, 1  yes')
 parser.add_argument('--metric', type=int, default=1, help='fairness metric: 1 statistical_parity, 2 predictive_parity, 3 predictive_equality, 4 equal_opportunity, 5 Equalized Odds, 6 Conditional use accuracy equality')
 parser.add_argument('--newub', type=int, default=1, help='use new ub computation: 1=yes, 0=no')
+parser.add_argument('--memoisation', type=int, default=1, help='use new ub computation: 1=yes, 0=no')
+parser.add_argument('--policy', type=int, default=0, help='0 bfs, 1 filtering-obj guided')
 
-max_time = 1200
+max_time = 3000
 max_memory=4000
 
 args = parser.parse_args()
 
+if args.policy == 0:
+    gen_policy="bfs"
+elif args.policy == 1:
+    gen_policy="lower_bound"
+elif args.policy == 2: 
+    gen_policy="objective"
+else:
+    print("Wrong value for args policy (%d). Exiting." %args.policy)
+    exit()
 epsilon = args.epsilon
 fairnessMetric = args.metric
 newub = args.newub
@@ -84,7 +96,7 @@ def oneFold(foldIndex, X_fold_data): # This part could be multithreaded for bett
     clf = FairCorelsClassifier(n_iter=N_ITER,
                             c=lambdaParam, # sparsity regularization parameter
                             max_card=1, # one rule = one attribute
-                            policy="bfs", # exploration heuristic: BFS
+                            policy=gen_policy, # exploration heuristic: BFS
                             bfs_mode=2, # type of BFS: objective-aware
                             mode=3, # epsilon-constrained mode
                             filteringMode=filteringMode,
@@ -96,7 +108,8 @@ def oneFold(foldIndex, X_fold_data): # This part could be multithreaded for bett
                             maj_vect=unSensVect_train, # vector defining unprotected group
                             upper_bound_filtering=newub,
                             min_vect=sensVect_train, # vector defining protected group
-                            min_support = 0.01 
+                            min_support = 0.01,
+                            pruning_memoisation=args.memoisation
                             )
     # Train it
     clf.fit(X_train_unprotected, y_train, features=features[2:], prediction_name="(recidivism:yes)", time_limit = max_time, memory_limit=max_memory)#, time_limit = 10)# max_evals=100000) # time_limit=8100, 

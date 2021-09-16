@@ -17,6 +17,15 @@ static std::function<bool(Node*, Node*)> base_cmp = [](Node* left, Node* right) 
 
 // order based on unfairness
 
+// orders based on depth (BFS)
+static std::function<bool(Node*, Node*)> filtering_based_bfs_cmp = [](Node* left, Node* right) {
+    if(left->depth() == right->depth()) {
+        return (left->get_opt_bound() <= right->get_opt_bound());
+    } else {
+        return left->depth() >= right->depth();
+    }
+};
+
 
 // Custom BFS policies
 static std::function<bool(Node*, Node*)> base_cmp_fifo = [](Node* left, Node* right) {
@@ -73,6 +82,11 @@ static std::function<bool(Node*, Node*)> objective_cmp = [](Node* left, Node* ri
 // orders based on depth (DFS)
 static std::function<bool(Node*, Node*)> dfs_cmp = [](Node* left, Node* right) {
     return left->depth() <= right->depth();
+};
+
+// filtering-bound guided search
+static std::function<bool(Node*, Node*)> filtering_based_cmp = [](Node* left, Node* right) {
+    return left->get_opt_bound() <= right->get_opt_bound();
 };
 
 class Queue {

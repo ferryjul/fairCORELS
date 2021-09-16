@@ -5,6 +5,9 @@
 #include <math.h>
 #include "filtering_algorithms.cpp"
 //#include <time.h> // for cp filtering running time measures
+#include "../../../_corels.h" // for opt pruning
+#include <ctime> // for solver RT measurements
+#include <numeric> // for solver RT measurements
 
 Queue::Queue(std::function<bool(Node*, Node*)> cmp, char const *type)
     : q_(new q (cmp)), type_(type) {}
@@ -25,7 +28,7 @@ bool firstPass = true;
 bool firstPass2 = true;
 unsigned long nodesBeforeBest = 0;
 unsigned long cacheBeforeBest = 0;
-
+int filtering_modeG = -1;
 // Global variables for improved pruning
 int nb_sp_plus;
 int nb_sp_minus;
@@ -46,6 +49,7 @@ rule_t* incons_min_errs;
 VECTOR incons_remaining;
 int Gupper_bound_filtering = 0;
 int U_improved = 0;
+std::vector<double> timesTot; 
 // -----------------------------
 
 double max2El(double e1, double e2) {
@@ -389,6 +393,7 @@ void evaluate_children(CacheTree* tree,
                         double accuracyUpperBound){
     
     if(firstCall){
+        filtering_modeG = filteringMode;
         firstCall = false;
         VECTOR captured_it;
         rule_vinit(tree->nsamples(), &captured_it);
@@ -561,14 +566,7 @@ void evaluate_children(CacheTree* tree,
                 
             }
             
-            //int oldU = accuracyUpperBound * (tree->nsamples());
-            /*if(oldU < U){
-                printf("------------------\n");
-                printf("remainingInconsErrors=%d, Total FP=%d, Total FN=%d, Total TP=%d, TotalTN=%d\n", remainingInconsErrors, FPp+FPu, FNp+FNu, TPp+TPu, TNp+TNu);
-                printf("old U = %d/%d\n", oldU, tree->nsamples());
-                printf("new U = %d/%d\n", U, tree->nsamples());
-                printf("This situation is not normal. Exiting!\n");
-            }*/
+
             int config = 0;
             if(fairness == 1){
                 config = 8;
@@ -674,7 +672,10 @@ void evaluate_children(CacheTree* tree,
             printf("Working on RL\n");
         }*/
         bool filteringOK = true;
-        if((filteringMode == 2 || filteringMode == 3) && best_rl_length > 0 && (fairness == 1 || fairness == 3 || fairness == 4 || fairness == 5)){  // Here occurs the PPC Filtering
+        int res_opt = tree->nsamples();
+
+        // && best_rl_length > 0 <- Was also in condition of the 'if' below !
+        if((filteringMode == 2 || filteringMode == 3 || filteringMode == 4)  && (fairness == 1 || fairness == 3 || fairness == 4 || fairness == 5)){  // Here occurs the PPC Filtering
             int L = (1 - (tree->min_objective()  - ((len_prefix+1)*c) ) )*tree->nsamples();
             // Filtering performed to know whether extension will be a viable prefix, hence the +1
             // Note that solver can say UNSAT for chlidren and RL meet the fairness constraint
@@ -708,22 +709,6 @@ void evaluate_children(CacheTree* tree,
                 
             }
 
-            //int oldU = accuracyUpperBound * (tree->nsamples());
-            /*if(oldU < U){
-                printf("------------------\n");
-                printf("remainingInconsErrors=%d, Total FP=%d, Total FN=%d, Total TP=%d, TotalTN=%d\n", remainingInconsErrors, FPp+FPu, FNp+FNu, TPp+TPu, TNp+TNu);
-                printf("old U = %d/%d\n", oldU, tree->nsamples());
-                printf("new U = %d/%d\n", U, tree->nsamples());
-                printf("This situation is not normal. Exiting!\n");
-            }*/
-
-            int config = 0;
-            if(fairness == 1){
-                config = 8;
-            } else if(fairness == 4){
-                config = 2;
-            }
-
             // print all parameters provided to solver
             /*std::cout << "---------------------------------------" << std::endl;
             std::cout << "L = " << L << ";" << std::endl;
@@ -743,29 +728,48 @@ void evaluate_children(CacheTree* tree,
             std::cout << "tolerence = " << fairness_tolerence << ";" << std::endl;*/
             // ---------------------------------------
 
+            if(filteringMode == 2 || filteringMode == 3){
 
-            //FilteringStatisticalParity check_bounds(nb_sp_plus,nb_sp_minus, nb_su_plus, nb_su_minus, L,U , fairness_tolerence, TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu);
-            //check_bounds.run(0, 0);
-            double maxSolvingTime = 5*10e9; // <- 5 seconds is already a lot, it simply helps avoiding to get stuck
-            struct runResult res = runFiltering(fairness, //metric
-                                config, //solver config
-                                nb_sp_plus,nb_sp_minus, 
-                                nb_su_plus, nb_su_minus, 
-                                L,U , 
-                                fairness_tolerence, 
-                                TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu,
-                                maxSolvingTime //timeout (nanoseconds, or -1 for no timeout)
-                                );
+                std::clock_t start = std::clock();
 
-            if(res.result == UNSAT){ // no solution => the fairness constraint can never be satisfied using the current prefix -> we skip its evaluation without adding it to the queue
-                improvedPruningCnt++;
-                //prefixPassedCP = false;
-                //continue;
-                filteringOK = false;
-            }   
-            /*if(! strcmp(tree->rule(i).features, "not_age_middle") && prefixMatched){
-                printf("Rule list found, result of filtering = %d!\n", res.result);
-            }*/
+                int config = 0;
+                if(fairness == 1){
+                    config = 8;
+                } else if(fairness == 4){
+                    config = 2;
+                }
+                double maxSolvingTime = 5*10e9; // <- 5 seconds is already a lot, it simply helps avoiding to get stuck
+                struct runResult res = runFiltering(fairness, //metric
+                                    config, //solver config
+                                    nb_sp_plus,nb_sp_minus, 
+                                    nb_su_plus, nb_su_minus, 
+                                    L,U , 
+                                    fairness_tolerence, 
+                                    TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu,
+                                    maxSolvingTime //timeout (nanoseconds, or -1 for no timeout)
+                                    );
+
+                if(res.result == UNSAT){ // no solution => the fairness constraint can never be satisfied using the current prefix -> we skip its evaluation without adding it to the queue
+                    improvedPruningCnt++;
+
+                    filteringOK = false;
+                }   
+
+                std::clock_t end = std::clock();
+                double cpu_time_used_microsecs = ((double) (end - start) * 1000000) / CLOCKS_PER_SEC;
+                timesTot.push_back(cpu_time_used_microsecs);
+            } else if(filteringMode == 4){
+                std::clock_t start = std::clock();
+                res_opt = perform_opt_pruning_wrapper(nb_sp_plus, nb_sp_minus, nb_su_plus, nb_su_minus, L, U, TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu);
+                if(res_opt < 0){ // no solution => the fairness constraint can never be satisfied using the current prefix -> we skip its evaluation without adding it to the queue
+                    improvedPruningCnt++;
+                    filteringOK = false;
+                }   
+                std::clock_t end = std::clock();
+                double cpu_time_used_microsecs = ((double) (end - start) * 1000000) / CLOCKS_PER_SEC;
+                timesTot.push_back(cpu_time_used_microsecs);
+            }
+            
     }
 
         fairness_metrics fm = compute_fairness_metrics(cmg);
@@ -853,8 +857,8 @@ void evaluate_children(CacheTree* tree,
                 if((1-unfairness) > min_fairness_acceptable) {
                     best_rl_length = len_prefix;
                     //if(debug) {
-                    printf("min(objectivee): %1.5f -> %1.5f, length: %d (check -> %d), cache size: %zu, explored %lu nodes, pushed %d nodes (opt pruning = %d/%d), arriveHere = %d, permBound = %d.\n",
-                    tree->min_objective(), objective, len_prefix, best_rl_length, tree->num_nodes(), exploredNodes, pushingTicket, improvedPruningCnt, improvedPruningCntTot, arriveHere, permBound);
+                    printf("min(objectivee): %1.5f -> %1.5f, length: %d (check -> %d), cache size: %zu, explored %lu nodes, pushed %d nodes (opt pruning = %d/%d), arriveHere = %d, permBound = %d, parent bound opt was: %lf.\n",
+                    tree->min_objective(), objective, len_prefix, best_rl_length, tree->num_nodes(), exploredNodes, pushingTicket, improvedPruningCnt, improvedPruningCntTot, arriveHere, permBound, parent->get_opt_bound());
                     //printf("(1-unfairness) = %lf, min_fairness_acceptable = %lf, fairnessLB=%lf\n",(1-unfairness),min_fairness_acceptable,fairnesslb);
                     //printf("TPmaj=%d, FPmaj=%d, TNmaj=%d, FNmaj=%d, TPmin=%d, FPmin=%d, TNmin=%d, FNmin=%d\n", cmg.majority.nTP,cmg.majority.nFP,cmg.majority.nTN,cmg.majority.nFN,cmg.minority.nTP,cmg.minority.nFP,cmg.minority.nTN,cmg.minority.nFN);
                     //printf("explored %d nodes before best solution.\n", exploredNodes);
@@ -921,6 +925,13 @@ void evaluate_children(CacheTree* tree,
                 pushingTicket++;
                 n->set_num(pushingTicket);
                 n->set_unfairness(unfairness);
+                // opt bound for queue ordering
+                double opt_bound = ((len_prefix+1)*c)+(((double)tree->nsamples() - (double)res_opt)/(double)tree->nsamples());
+                //if(opt_bound <= (len_prefix+2)*c ){
+                //    std::cout << "opt bound is " << opt_bound << "(lambda part = " << ((len_prefix+1)*c) << ", error part = " << (((double)tree->nsamples() - (double)res_opt)/(double)tree->nsamples()) << ")" << std::endl;
+                //    std::cout << "tree->nsamples()=" << tree->nsamples() << ", res_opt=" << res_opt << std::endl;
+                //}
+                n->set_opt_bound(opt_bound);
                 double t4 = timestamp();
                 tree->insert(n);
                 logger->incTreeInsertionNum();
@@ -1067,6 +1078,12 @@ std::vector<unsigned long> bbound_end(CacheTree* tree, Queue* q, PermutationMap*
         std::cout << "Improved upper bound " << U_improved << "/" << improvedPruningCntTot << " times." << std::endl;
         rule_vfree(&incons_remaining);
     }   
+    if(filtering_modeG == 4){
+        print_memo_info_opt_pruning_auditor();
+    }
+    if(filtering_modeG == 2 || filtering_modeG == 4){
+        std::cout << "Average solving time was " << std::accumulate(timesTot.begin(), timesTot.end(), 0)/timesTot.size() << " microsecs." << std::endl;
+    }
     if(debug) {
         printf("explored %lu nodes.\n", exploredNodes);
         printf("using new filtering pruned %d/%d nodes.\n", improvedPruningCnt, improvedPruningCntTot);

@@ -32,10 +32,10 @@ cdef extern from "src/corels/src/run.hh":
                       int nsamples, rule_t* rules, rule_t* labels, rule_t* meta, 
                       int freq, char* log_fname, int BFSmode, int seed, int forbidSensAttr_val,
                       rule_t* maj_v, int nmaj_v, rule_t* min_v, int nmin_v, double accuracy_upper_bound,
-                      int max_calls, rule_t* incons_minerrs_vecs, int nbInconsErrs, int upper_bound_filtering)
+                      int max_calls, rule_t* incons_minerrs_vecs, int nbInconsErrs, int upper_bound_filtering, int pruning_memoisation, int filteringMode)
 
     int run_corels_loop(size_t max_num_nodes, double beta, int fairness,
-                    int mode, int filteringMode, double min_fairness_acceptable, int kBest, int restart, int initNBNodes, double geomReason)
+                    int mode, double min_fairness_acceptable, int kBest, int restart, int initNBNodes, double geomReason)
 
     double run_corels_end(int** rulelist, int* rulelist_size, 
     int** classes, double** confScores, int early, int latex_out, 
@@ -234,7 +234,7 @@ def fit_wrap_begin(np.ndarray[np.uint8_t, ndim=2] samples,
              int minor_verbose, double c, int policy, int map_type, int ablation,
              int calculate_size, int forbidSensAttr, int BFSmode, int seed, np.ndarray[np.uint8_t, ndim=2] maj_vect,  
              np.ndarray[np.uint8_t, ndim=2] min_vect, double accuracy_upper_bound, int max_calls, 
-             np.ndarray[np.uint8_t, ndim=2] incons_minerrs, int nbInconsErrs, int upper_bound_filtering):
+             np.ndarray[np.uint8_t, ndim=2] incons_minerrs, int nbInconsErrs, int upper_bound_filtering, int pruning_memoisation, int filtering_mode):
 
 
 
@@ -249,6 +249,8 @@ def fit_wrap_begin(np.ndarray[np.uint8_t, ndim=2] samples,
     # for upper bound computation -
     cdef int n_incons_minerrs = 0
     cdef int upper_bound_filtering_int = upper_bound_filtering
+    cdef int pruning_memoisation_int = pruning_memoisation
+    cdef int filtering_mode_int = filtering_mode
     incons_minerrs_vecs = _to_vector(incons_minerrs, &n_incons_minerrs)
     # -----------------------------
 
@@ -514,7 +516,7 @@ def fit_wrap_begin(np.ndarray[np.uint8_t, ndim=2] samples,
     cdef int rb = run_corels_begin(c, verbosity, policy, map_type, ablation, calculate_size,
                    n_rules, 2, nsamples, rules, labels_vecs, minor, 0, NULL, BFSmode_val, seed_val, 
                    forbidSensAttr_val, maj_vecs, n_maj_vecs, min_vecs, n_min_vecs, accuracy_upper_bound, max_calls,
-                   incons_minerrs_vecs, nbInconsErrs, upper_bound_filtering_int)
+                   incons_minerrs_vecs, nbInconsErrs, upper_bound_filtering_int, pruning_memoisation_int, filtering_mode_int)
 
     if rb == -1:
         if labels_vecs != NULL:
@@ -540,21 +542,20 @@ def fit_wrap_begin(np.ndarray[np.uint8_t, ndim=2] samples,
 
 
 def fit_wrap_loop(size_t max_nodes, double beta, int fairness,
-                int mode, int filteringMode, double min_fairness_acceptable, int kBest, int restart, int initNBNodes, double geomReason):
+                int mode, double min_fairness_acceptable, int kBest, int restart, int initNBNodes, double geomReason):
     
     cdef size_t max_num_nodes = max_nodes
     cdef double beta_val = beta
     cdef int fairness_metric = fairness
     cdef int mode_val = mode
-    cdef int filteringMode_val = filteringMode
     cdef double min_fairness_acceptable_val = min_fairness_acceptable
     cdef int kBest_val = kBest
     cdef int restart_val = restart
     cdef double geomReason_val = geomReason
     cdef int initNBNodes_val = initNBNodes
     # This is where the magic happens
-    #return (run_corels_loop(max_num_nodes, beta_val, fairness_metric, mode_val, filteringMode_val, min_fairness_acceptable_val, kBest_val, restart_val, initNBNodes_val, geomReason_val) != -1)
-    return run_corels_loop(max_num_nodes, beta_val, fairness_metric, mode_val, filteringMode_val, min_fairness_acceptable_val, kBest_val, restart_val, initNBNodes_val, geomReason_val)
+    #return (run_corels_loop(max_num_nodes, beta_val, fairness_metric, mode_val, min_fairness_acceptable_val, kBest_val, restart_val, initNBNodes_val, geomReason_val) != -1)
+    return run_corels_loop(max_num_nodes, beta_val, fairness_metric, mode_val, min_fairness_acceptable_val, kBest_val, restart_val, initNBNodes_val, geomReason_val)
 
 def fit_wrap_end(int early):
     global rules
@@ -609,3 +610,25 @@ def fit_wrap_end(int early):
         _free_vector(incons_minerrs_vecs, 2)
         incons_minerrs_vecs = NULL
     return [r_out, runStats[0], runStats[1]]
+
+# ----- Everything below is for CPLEX Python filtering
+from .filtering_optimization import OptimizationPruningWrapper
+#auditor_pruning = OptimizationPruningWrapper()
+
+# declare your function as cdef
+cdef public void init_opt_pruning_auditor(int memoisation, double fairness_tolerence, int fairnessMetric):
+    #print 'doing some python here', memoisation
+    global auditor_pruning
+    auditor_pruning = OptimizationPruningWrapper(memoisation=memoisation, fairnessMetric=fairnessMetric, fairness_tolerence=fairness_tolerence, check_response=False, debug=0)
+    #print("Initialized opt pruning auditor")
+
+cdef public int perform_opt_pruning_wrapper(int nb_sp_plus,	int nb_sp_minus, int nb_su_plus, int nb_su_minus, int L, int U, int TPp, int FPp, int TNp, int FNp, int TPu, int FPu, int TNu, int FNu):
+    #print 'doing some python here', memoisation
+    global auditor_pruning
+    audit_result = auditor_pruning.perform_opt_pruning(nb_sp_plus,	nb_sp_minus, nb_su_plus, nb_su_minus, L, U, TPp, FPp, TNp, FNp, TPu, FPu, TNu, FNu)
+    return audit_result
+
+cdef public void print_memo_info_opt_pruning_auditor():
+    #print 'doing some python here', memoisation
+    global auditor_pruning
+    auditor_pruning.print_memo_statistics()

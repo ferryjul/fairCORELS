@@ -4,6 +4,7 @@
 
 #include "queue.hh"
 #include "run.hh"
+#include "../../../_corels.h" // for opt pruning
 
 #define BUFSZ 512
 
@@ -42,17 +43,21 @@ rule_t* Gmin_vect;
 bool debugRun = false; // for printing more info while running/exploring
 rule_t* Gincons_minerrs_vecs;
 int upper_bound_filteringG;
+bool firstCallLoop = true;
+int pruning_memoisationG=-1;
+int filteringModeGlob = -1;
 
 int run_corels_begin(double c, char* vstring, int curiosity_policy,
                   int map_type, int ablation, int calculate_size, int nrules, int nlabels,
                   int nsamples, rule_t* rules, rule_t* labels, rule_t* meta, int freq, 
                   char* log_fname, int BFSmode, int seed, bool forbidSensAttr_val, rule_t* maj_v, int nmaj_v,
                   rule_t* min_v, int nmin_v, double accuracy_upper_bound, int max_calls, 
-                  rule_t* incons_minerrs_vecs, int nbInconsErrs, int upper_bound_filtering)
-{
-
+                  rule_t* incons_minerrs_vecs, int nbInconsErrs, int upper_bound_filtering, int pruning_memoisation, int filteringMode)
+{  
+    pruning_memoisationG=pruning_memoisation;
     Gincons_minerrs_vecs =  incons_minerrs_vecs;
     upper_bound_filteringG = upper_bound_filtering;
+    filteringModeGlob = filteringMode;
     callsNB = max_calls;
     initCallsNB = max_calls;
     if(debugRun) {
@@ -191,8 +196,14 @@ int run_corels_begin(double c, char* vstring, int curiosity_policy,
         g_queue = new Queue(curious_cmp, run_type);
         type = "curious";
     } else if (curiosity_policy == 2) {
-        strcat(run_type, "LOWER BOUND");
-        g_queue = new Queue(lb_cmp, run_type);
+        //strcat(run_type, "LOWER BOUND");
+        //g_queue = new Queue(lb_cmp, run_type);
+        if (filteringModeGlob == 4){
+            strcat(run_type, "Filtering-Bound guided");
+            g_queue = new Queue(filtering_based_cmp, run_type);
+        } else {
+            exit(1); //error
+        }
     } else if (curiosity_policy == 3) {
         strcat(run_type, "OBJECTIVE");
         g_queue = new Queue(objective_cmp, run_type);
@@ -200,27 +211,36 @@ int run_corels_begin(double c, char* vstring, int curiosity_policy,
         strcat(run_type, "DFS");
         g_queue = new Queue(dfs_cmp, run_type);
     } else {
-        strcat(run_type, "BFS");
-        switch(BFSmode) {
-            case 0:
-                g_queue = new Queue(base_cmp, run_type);
-                break;
-            case 1:
-                g_queue = new Queue(base_cmp_fifo, run_type);
-                break;
-            case 2:
-                g_queue = new Queue(base_cmp_obj, run_type);
-               // printf("Using objective-aware BFS");
-                break;
-            case 3:
-                g_queue = new Queue(base_cmp_lb, run_type);
-                break;
-            case 4:
-                g_queue = new Queue(base_cmp_random, run_type);
-                break;
+        if (filteringModeGlob == 4){
+            strcat(run_type, "Filtering-Bound guided BFS");
+            g_queue = new Queue(filtering_based_bfs_cmp, run_type);
+        } else {
+            strcat(run_type, "BFS");
+            switch(BFSmode) {
+                case 0:
+                    g_queue = new Queue(base_cmp, run_type);
+                    break;
+                case 1:
+                    g_queue = new Queue(base_cmp_fifo, run_type);
+                    strcat(run_type, " FIFO");
+                    break;
+                case 2:
+                    g_queue = new Queue(base_cmp_obj, run_type);
+                // printf("Using objective-aware BFS");
+                    strcat(run_type, " Objective-Aware");
+                    break;
+                case 3:
+                    g_queue = new Queue(base_cmp_lb, run_type);
+                    strcat(run_type, " Lower-Bound Aware");
+                    break;
+                case 4:
+                    g_queue = new Queue(base_cmp_random, run_type);
+                    strcat(run_type, " Random");
+                    break;
+            }
         }
     }
-
+    std::cout << run_type << std::endl;
     if (map_type == 1) {
         strcat(run_type, " Prefix Map\n");
         PrefixPermutationMap* prefix_pmap = new PrefixPermutationMap;
@@ -242,8 +262,13 @@ int run_corels_begin(double c, char* vstring, int curiosity_policy,
     return 0;
 }
 
-int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int mode, int filteringMode,
+int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int mode,
                         double min_fairness_acceptable, int kBest, int restart, int initNBNodes, double geomReason) {
+
+    if(firstCallLoop){
+        init_opt_pruning_auditor(pruning_memoisationG, 1.0-min_fairness_acceptable, fairness);
+        firstCallLoop = false;
+    }
     // Check arguments
     if(mode < 1 || mode > 4) {
         printf("Error : mode should be in {1, 2, 3, 4}\n");
@@ -269,7 +294,7 @@ int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int mode, i
             printf("Will perform geometric restarts from %d to %lu.\n", currLimit, max_num_nodes);
         }
         if((g_tree->num_nodes() < currLimit) && !g_queue->empty()) {
-            bbound_loop(g_tree, g_queue, g_pmap, beta, fairness, Gmaj_vect, Gmin_vect, mode, filteringMode,
+            bbound_loop(g_tree, g_queue, g_pmap, beta, fairness, Gmaj_vect, Gmin_vect, mode, filteringModeGlob,
                             min_fairness_acceptable, kBest, forbidSensAttr, accUpperBound); 
             return 0;
         } else {
@@ -400,7 +425,7 @@ int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int mode, i
             //printf("Initial limit = %d \n", currLimit);
         }
         if((g_tree->num_nodes() < currLimit) && !g_queue->empty()) {
-            bbound_loop(g_tree, g_queue, g_pmap, beta, fairness, Gmaj_vect, Gmin_vect, mode, filteringMode,
+            bbound_loop(g_tree, g_queue, g_pmap, beta, fairness, Gmaj_vect, Gmin_vect, mode, filteringModeGlob,
                             min_fairness_acceptable, kBest, forbidSensAttr, accUpperBound); 
             return 0;
         } else {
@@ -494,7 +519,7 @@ int run_corels_loop(size_t max_num_nodes, double beta, int fairness, int mode, i
     } 
     else { // Normal run (no restart)
             if((g_tree->num_nodes() < max_num_nodes) && !g_queue->empty() && (callsNB > 0)) {
-                bbound_loop(g_tree, g_queue, g_pmap, beta, fairness, Gmaj_vect, Gmin_vect, mode, filteringMode,
+                bbound_loop(g_tree, g_queue, g_pmap, beta, fairness, Gmaj_vect, Gmin_vect, mode, filteringModeGlob,
                                 min_fairness_acceptable, kBest, forbidSensAttr, accUpperBound);
                 callsNB--;
                 /*if(callsNB == 0){
