@@ -3,6 +3,7 @@
 Welcome to FairCorels, a Python library for learning fair and interpretable models
 using the Certifiably Optimal RulE ListS (CORELS) algorithm! 
 This repository contains the implementation of the method introduced in the paper [Learning fair rule lists](https://arxiv.org/abs/1909.03977).
+We presented our package in a Demo paper [FairCORELS, an Open-Source Library for Learning Fair Rule Lists](https://dl.acm.org/doi/abs/10.1145/3459637.3481965) at the 30th ACM International Conference on Information & Knowledge Management (CIKM'21).
 The use of Python 3 is strongly recommended !
 ## Overview
 
