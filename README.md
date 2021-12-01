@@ -22,7 +22,7 @@ We presented our package in a Demo paper [FairCORELS, an Open-Source Library for
 
 FairCORELS is a bi-objective extension of the CORELS algorithm, handling jointly accuracy and fairness.
 The main classifier object included in our module is `FairCorelsClassifier`.  It implements the fairCORELS method. 
-The currently supported fairness notions are : statistical parity, predictive parity, predictive equality, equal opportunity, equalized odds, and conditional use accuracy equality.
+The currently supported fairness notions are : statistical parity, predictive parity, predictive equality, equal opportunity, equalized odds, and conditional use accuracy equality (see Table 1 of [2] for details of the computations).
 However, the core algorithm is metric-agnostic and any function of the confusion matrix of a classifier could be integrated.
 
 Our module also includes a wrapper for ensemble learning: `FairCorelsBagging`. 
