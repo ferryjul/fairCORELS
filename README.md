@@ -1,27 +1,101 @@
 # Faircorels
 
-Welcome to FairCorels, a Python library for learning fair and interpretable models
-using the Certifiably Optimal RulE ListS (CORELS) algorithm! 
+Welcome to FairCorels, a Python library for learning fair and interpretable models.
 The use of Python 3 is strongly recommended !
+Feel free to point out any issue you may encounter while using our package, or to recommend new features!
+
+Email contact: [Julien Ferry](jferry@laas.fr)
 
 ## References
 
 This repository contains the implementation of the method introduced in the paper [Learning fair rule lists](https://arxiv.org/abs/1909.03977):
 ```
-Aïvodji, Ulrich, Julien Ferry, Sébastien Gambs, Marie-José Huguet, and Mohamed Siala. "Learning fair rule lists." arXiv preprint arXiv:1909.03977 (2019).
+[1] Ulrich Aïvodji, Julien Ferry, Sébastien Gambs, Marie-José Huguet, and Mohamed Siala. 2019. "Learning fair rule lists." arXiv preprint arXiv:1909.03977.
 ```
 
 We presented our package in a Demo paper [FairCORELS, an Open-Source Library for Learning Fair Rule Lists](https://dl.acm.org/doi/abs/10.1145/3459637.3481965) at the 30th ACM International Conference on Information & Knowledge Management (CIKM'21):
 ```
-Ulrich Aïvodji, Julien Ferry, Sébastien Gambs, Marie-José Huguet, and Mohamed Siala. 2021. FairCORELS, an Open-Source Library for Learning Fair Rule Lists. In Proceedings of the 30th ACM International Conference on Information & Knowledge Management (CIKM '21). Association for Computing Machinery, New York, NY, USA, 4665–4669. DOI:https://doi.org/10.1145/3459637.3481965
+[2] Ulrich Aïvodji, Julien Ferry, Sébastien Gambs, Marie-José Huguet, and Mohamed Siala. 2021. FairCORELS, an Open-Source Library for Learning Fair Rule Lists. In Proceedings of the 30th ACM International Conference on Information & Knowledge Management (CIKM '21). Association for Computing Machinery, New York, NY, USA, 4665–4669. DOI:https://doi.org/10.1145/3459637.3481965
 ```
 
 ## Overview
 
-FairCORELS is a modified version of CORELS to learn fair rule list. 
-Our module includes two classifier methods : `FairCorelsClassifier` and `FairCorelsBagging`. 
-The `FairCorelsClassifier` class implements the fairCORELS method. The `FairCorelsBagging` class provides a wrapper to perform the Bagging ensemble method using `FairCorelsClassifier` as a base learner.
+FairCORELS is a bi-objective extension of the CORELS algorithm, handling jointly accuracy and fairness.
+The main classifier object included in our module is `FairCorelsClassifier`.  It implements the fairCORELS method. 
 The currently supported fairness notions are : statistical parity, predictive parity, predictive equality, equal opportunity, equalized odds, and conditional use accuracy equality.
+However, the core algorithm is metric-agnostic and any function of the confusion matrix of a classifier could be integrated.
+
+Our module also includes a wrapper for ensemble learning: `FairCorelsBagging`. 
+The `FairCorelsBagging` class provides a wrapper to perform the Bagging ensemble method using `FairCorelsClassifier` as a base learner.
+Note that `FairCorelsBagging` is not maintained.
+
+## Examples
+
+### Basic example
+
+```python
+from faircorels import *
+
+# Load the dataset
+X, y, features, prediction = load_from_csv("data/compas_rules_full.csv")
+
+# Define protected and unprotected groups
+# Here, we want them to correspond to features 0 and 1 (which we display)
+# However, they can be any binary vector
+sensitive_attr_column = 0
+unsensitive_attr_column = 1
+print("Sensitive attribute is ", features[sensitive_attr_column])
+print("Unsensitive attribute is ", features[unsensitive_attr_column])
+sensVect =  X[:,sensitive_attr_column]
+unSensVect =  X[:,unsensitive_attr_column] 
+
+# Define the desired fairness level (which is exactly (1.0 minus the unfairness tolerance) - see Table 1 of [2] for details of the computation)
+epsilon = 0.98 # max. unfairness tolerance of 0.02 (fairness level of 98%)
+
+# Create the model, with 10000 as the maximum number of iterations 
+c = FairCorelsClassifier(n_iter=1000000, # maximum number of nodes in the prefix tree
+                        c=0.001, # regularization parameter for sparsity
+                        max_card=1, # each antecedent will have cardinality one (recommended if rule mining is done as preprocessing)
+                        min_support = 0.01, # each rule antecedent must capture at least 1% of the training instances
+                        policy="bfs", # exploration heuristic
+                        bfs_mode=2, # exploration heuristic
+                        mode=3, # epsilon-constrained mode
+                        fairness=1, # statistical fairness metric to be used, 1 stands for statistical parity
+                        epsilon=epsilon,  # epsilon is the unfairness tolerance
+                        maj_vect=unSensVect, # unSensVect is a binary vector indicating unprotected group membership for all examples of X
+                        min_vect=sensVect # unSensVect is a binary vector indicating protected group membership for all examples of X
+                        )
+
+# Fit the classifier
+c.fit(X, y, features=features, prediction_name=prediction)
+
+# Score the model on the training set
+a = c.score(X, y)
+
+# Compute its unfairness
+cm = ConfusionMatrix(sensVect, unSensVect, c.predict(X), y)
+cm_minority, cm_majority = cm.get_matrix()
+fm = Metric(cm_minority, cm_majority)
+unf = fm.statistical_parity()
+
+# Print the model's performances
+print("Training accuracy = %f, training unfairness = %f" %(a, unf))
+
+# Print the model itself
+print(c.rl_)
+```
+
+### Complete examples
+
+A step-by-step example notebook `Demo-fairCORELS.ipynb` can be found under the `example` folder.
+
+Detailed example files, using 5-folds cross-validation for the COMPAS dataset, are also provided in the `example` directory :
+
+* `example-compas.py` uses the `FairCorelsClassifier` classifier
+
+* `example-bagging-compas.py` uses the `FairCorelsBagging` classifier
+
+All files show how to load data, how to train our classifiers, how to evaluate them, and how to store results in a clear and easily exploitable manner.
 
 
 ## Installation
@@ -49,35 +123,6 @@ Note: Python 2 is currently NOT supported on Windows.
 pip install faircorels
 ```
 
-
-## Examples
-
-### Simple, minimal example
-
-```python
-from faircorels import *
-
-# Load the dataset
-X, y = load_from_csv("data/compas_rules_full.csv")
-
-# Create the model, with 10000 as the maximum number of iterations 
-c = FairCorelsClassifier(n_iter=10000)
-
-# Fit, and score the model on the training set
-a = c.fit(X, y).score(X, y)
-
-# Print the model's accuracy on the training set
-print(a)
-```
-
-### Complete examples
-Detailed example files, using 5-folds cross-validation for the COMPAS dataset, are provided in the `example` directory :
-
-* `example-compas.py` uses the `FairCorelsClassifier` classifier
-
-* `example-bagging-compas.py` uses the `FairCorelsBagging` classifier
-
-Both files show how to load data, how to train our classifiers, how to evaluate them, and how to store results in a clear and easily exploitable manner.
 
 ## Detail of the classifiers' parameters :
 
