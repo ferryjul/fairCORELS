@@ -4,7 +4,7 @@ Welcome to FairCorels, a Python library for learning fair and interpretable mode
 The use of Python 3 is strongly recommended !
 Feel free to point out any issue you may encounter while using our package, or to recommend new features!
 
-Email contact: [Julien Ferry](jferry@laas.fr)
+Email contact: <jferry@laas.fr>
 
 ## References
 
