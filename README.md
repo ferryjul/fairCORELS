@@ -6,6 +6,8 @@ Feel free to point out any issue you may encounter while using our package, or t
 
 Email contact: <jferry@laas.fr>
 
+Note that we released a new version of this module, named [FairCORELSV2](https://github.com/ferryjul/fairCORELSV2), integrating advanced pruning techniques to efficiently explore the search space of fair rule lists.
+
 ## References
 
 This repository contains the implementation of the method introduced in the paper [Learning fair rule lists](https://arxiv.org/abs/1909.03977):
